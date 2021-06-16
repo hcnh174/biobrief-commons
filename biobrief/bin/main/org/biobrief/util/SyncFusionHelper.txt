@@ -1,0 +1,592 @@
+package org.gangenome.util;
+
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.compress.utils.Lists;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+public class SyncFusionHelper
+{
+	@Data
+	public static class FileManager
+	{
+		protected String basedir;
+		protected Date skipBefore;
+		protected List<String> skipDirs=Lists.newArrayList();
+		protected List<String> skipPrefixes=Lists.newArrayList();
+		protected List<String> skipSuffixes=Lists.newArrayList();
+		
+		public FileManager(String basedir)
+		{
+			this.basedir=basedir;
+		}
+		
+		///////////////////////////////////
+		
+		public ActionResponse action(ActionRequest request)
+		{
+			if (request.getAction().equals("read"))
+				return read(request);
+			else if (request.getAction().equals("details"))
+				return details(request);
+			else throw new UnhandledCaseException(request.getAction());
+		}
+		
+		/////////////////////////////////
+		
+		public ReadResponse read(ActionRequest request)
+		{
+			System.out.println("read request="+JsonHelper.toJson(request));
+			String dir=getPath(request);
+			ReadResponse response=new ReadResponse(request, dir);
+
+			for (String filename : FileHelper.listFiles(dir, true))
+			{
+				File item=new File(filename);
+				if (item.isDirectory())
+				{
+					if (!isDirSkipped(filename))
+						response.addDir(filename);
+				}
+				else
+				{
+					if (!isFileSkipped(filename))
+						response.addFile(filename);
+				}
+				
+			}
+			//System.out.println("response="+JsonHelper.toJson(response));
+			return response;
+		}
+		
+		public String getPath(ActionRequest request)
+		{
+			String dir=request.getPath();
+//			if (!StringHelper.hasContent(dir))
+//				dir="/";
+			return basedir+dir;
+		}
+		
+		public void skipBefore(Date date)
+		{
+			System.out.println("skipBefore: "+date);
+			this.skipBefore=date;
+		}
+		
+		public void skipDir(String dir)
+		{
+			skipDirs.add(dir);
+		}
+		
+		public void skipPrefix(String suffix)
+		{
+			skipSuffixes.add(suffix);
+		}
+		
+		public void skipSuffix(String suffix)
+		{
+			skipSuffixes.add(suffix);
+		}
+		
+		private boolean isDirSkipped(String path)
+		{
+			if (!isAfter(path))
+				return true;
+			String dir=FileHelper.stripPath(path);
+			for (String dirname : skipDirs)
+			{
+				if (dir.equals(dirname))
+					return true;
+			}
+			return false;
+		}
+		
+		private boolean isFileSkipped(String path)
+		{
+			if (!isAfter(path))
+				return true;
+			String filename=FileHelper.stripPath(path);
+			for (String prefix : skipPrefixes)
+			{
+				if (filename.startsWith(prefix))
+					return true;
+			}
+			for (String suffix : skipSuffixes)
+			{
+				if (filename.endsWith(suffix))
+					return true;
+			}
+			return false;
+		}
+		
+		public boolean isAfter(String path)
+		{
+			if (skipBefore==null)
+				return true;
+			File file=new File(path);
+			Date date=new Date(file.lastModified());
+			return date.compareTo(skipBefore)>0;
+		}
+		
+		public CreateResponse create(ActionRequest request)
+		{
+			CreateResponse response=new CreateResponse(request);
+			return response;
+		}
+		
+		public DeleteResponse delete(ActionRequest request)
+		{
+			DeleteResponse response=new DeleteResponse(request);
+			return response;
+		}
+		
+		public RenameResponse rename(ActionRequest request)
+		{
+			RenameResponse response=new RenameResponse(request);
+			return response;
+		}
+		
+		public SearchResponse search(ActionRequest request)
+		{
+			SearchResponse response=new SearchResponse(request);
+			return response;
+		}
+		
+		public DetailsResponse details(ActionRequest request)
+		{
+			DetailsResponse response=new DetailsResponse(request);
+			return response;
+		}
+		
+		public CopyResponse copy(ActionRequest request)
+		{
+			CopyResponse response=new CopyResponse(request);
+			return response;
+		}
+		
+		public MoveResponse move(ActionRequest request)
+		{
+			MoveResponse response=new MoveResponse(request);
+			return response;
+		}
+		
+		public UploadResponse upload(UploadRequest request)
+		{
+			UploadResponse response=new UploadResponse(request);
+			return response;
+		}
+		
+		public DownloadResponse download(DownloadRequest request)
+		{
+			DownloadResponse response=new DownloadResponse(request);
+			return response;
+		}
+		
+		//////////////////////////////////////////////////////
+		
+		@Data
+		private static abstract class AbstractRequest
+		{
+			
+		}
+		
+		@Data
+		private static abstract class AbstractResponse
+		{
+			public AbstractResponse(AbstractRequest request)
+			{
+				System.out.println("request="+JsonHelper.toJson(request));
+			}
+		}
+		
+		//////////////////////////////////////////////////////
+		
+		@Data @EqualsAndHashCode(callSuper=true)
+		public static class ActionRequest extends AbstractRequest
+		{
+			private String action;
+			private String path;
+			private Boolean showHiddenItems;
+			private List<FileManagerDirectoryContent> data;
+		}
+
+		@Data @EqualsAndHashCode(callSuper=true)
+		public static class ActionResponse extends AbstractResponse
+		{
+			public ActionResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		//////////////////////////////////////////////////////
+		
+//		@Data @EqualsAndHashCode(callSuper=true)
+//		public static class ReadRequest extends AbstractRequest
+//		{
+//			private String path;
+//			private Boolean showHiddenItems=false; // false
+//			private List<FileManagerDirectoryContent> data;
+//			
+//			public ReadRequest()
+//			{
+//				super("read");
+//			}
+//			
+//			//public String getPath(){return this.path;}
+//			//public void setPath(final String path){this.path=path;}
+//		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class ReadResponse extends ActionResponse
+		{
+			private FileManagerDirectoryContent cwd=new FileManagerDirectoryContent();
+			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
+			private ErrorDetails error;
+			private Details details;
+			@JsonIgnore private String filterPath;
+			
+			public ReadResponse(ActionRequest request, String dir)
+			{
+				super(request);
+				System.out.println("dir="+dir);
+				this.cwd=new FileManagerDirectoryContent(dir);
+				this.filterPath=getFilterPath(request);
+				this.cwd.filterPath=this.filterPath;
+				System.out.println(" filterPath="+filterPath);
+			}
+			
+			public FileManagerDirectoryContent addFile(String filename)
+			{
+				return add(new File(filename));
+			}
+			
+			public FileManagerDirectoryContent addDir(String dir)
+			{
+				return add(new File(dir));
+			}
+			
+			public FileManagerDirectoryContent add(File file)
+			{
+				return add(new FileManagerDirectoryContent(file));
+			}
+			
+			public FileManagerDirectoryContent add(FileManagerDirectoryContent file)
+			{
+				this.files.add(file);
+				file.setFilterPath(filterPath);
+				return file;
+			}
+			
+			private String getFilterPath(ActionRequest request)
+			{
+				String path=request.getPath();
+				return StringHelper.replace(path, "/", "\\");
+			}
+		}
+		
+		///////////////////////////////////////////////////
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class CreateRequest extends AbstractRequest
+//		{
+//			private String action;
+//			private String path;
+//			private String name; 
+//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
+//			
+//			public CreateRequest()
+//			{
+//				super("create");
+//			}
+//		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class CreateResponse extends ActionResponse
+		{
+			private List<FileManagerDirectoryContent> files;
+			private ErrorDetails error;
+			
+			public CreateResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		////////////////////////////////////////////
+		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class DeleteRequest extends AbstractRequest
+//		{
+//			private String action;
+//			private String path;
+//			private String name; 
+//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
+//			
+//			public DeleteRequest()
+//			{
+//				super("delete");
+//			}
+//		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class DeleteResponse extends ActionResponse
+		{
+			private List<FileManagerDirectoryContent> files;
+			private ErrorDetails error;
+			
+			public DeleteResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		////////////////////////////////////////////
+		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class RenameRequest extends AbstractRequest
+//		{
+//			private String action;
+//			private String path;
+//			private String name;
+//			private String newname; 
+//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
+//			
+//			public RenameRequest()
+//			{
+//				super("rename");
+//			}
+//		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class RenameResponse extends ActionResponse
+		{
+			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
+			private ErrorDetails error;
+			
+			public RenameResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		///////////////////////////////////////////////////
+		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class SearchRequest extends AbstractRequest
+//		{
+//			private String action;
+//			private String path;
+//			private List<String> names=Lists.newArrayList();
+//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
+//			
+//			public SearchRequest()
+//			{
+//				super("search");
+//			}
+//		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class SearchResponse extends ActionResponse
+		{
+			private List<FileManagerDirectoryContent> files;
+			private ErrorDetails error;
+			
+			public SearchResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		///////////////////////////////////////////////////
+		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class DetailsRequest extends AbstractRequest
+//		{
+//			private String action;
+//			private String path;
+//			private List<String> names=Lists.newArrayList();
+//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
+//			
+//			public DetailsRequest()
+//			{
+//				super("details");
+//			}
+//		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class DetailsResponse extends ActionResponse
+		{
+			private List<FileManagerDirectoryContent> files;
+			private ErrorDetails error;
+			
+			public DetailsResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		///////////////////////////////////////////////////
+		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class CopyRequest extends AbstractRequest
+//		{
+//			public CopyRequest()
+//			{
+//				super("copy");
+//			}
+//		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class CopyResponse extends ActionResponse
+		{
+			public CopyResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		///////////////////////////////////////////////////
+		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class MoveRequest extends AbstractRequest
+//		{
+//			public MoveRequest()
+//			{
+//				super("move");
+//			}
+//		}
+//		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class MoveResponse extends ActionResponse
+		{
+			public MoveResponse(ActionRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		///////////////////////////////////////////////////
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class UploadRequest extends AbstractRequest
+		{
+			private String action;
+		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class UploadResponse extends AbstractResponse
+		{
+			public UploadResponse(UploadRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		///////////////////////////////////////////////////
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class DownloadRequest extends AbstractRequest
+		{
+			
+		}
+		
+		@Data  @EqualsAndHashCode(callSuper=true)
+		public static class DownloadResponse extends AbstractResponse
+		{
+			public DownloadResponse(DownloadRequest request)
+			{
+				super(request);
+			}
+		}
+		
+		///////////////////////////////////////////////////
+		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class GetImageRequest extends AbstractRequest
+//		{
+//			public GetImageRequest()
+//			{
+//				super("create");
+//			}
+//		}
+//		
+//		@Data  @EqualsAndHashCode(callSuper=true)
+//		public static class GetImageResponse extends ActionResponse
+//		{
+//		
+//		}
+		
+		///////////////////////////////////////////////////
+		@Data
+		public static class FileManagerDirectoryContent
+		{
+			protected String name;
+			protected Long size;
+			protected String dateCreated;
+			protected String dateModified;
+			protected Boolean hasChild;
+			protected Boolean isFile;
+			protected String type; // ".xlsx"
+			protected String filterPath;
+			
+			public FileManagerDirectoryContent() {}
+			
+			public FileManagerDirectoryContent(File file)
+			{
+				this.name=file.getName();
+				this.size=file.length();
+				this.dateCreated=formatDate(FileHelper.getCreatedDate(file));
+				this.dateModified=formatDate(file.lastModified());
+				this.hasChild=file.isDirectory();
+				this.isFile=file.isFile();
+				if (file.isFile())
+					this.type=FileHelper.getSuffix(file.getName());
+				else this.type="";
+				this.filterPath=null;// todo - what?
+			}
+			
+			public FileManagerDirectoryContent(String filename)
+			{
+				this(new File(filename));
+			}
+			
+			private String formatDate(long timestamp)
+			{
+				return formatDate(new Date(timestamp));
+			}
+			
+			private String formatDate(Date date)
+			{
+				return DateHelper.format(date, DateHelper.ISO_PATTERN);
+			}
+		}
+		
+		@Data
+		public static class ErrorDetails
+		{
+			protected String code;//	String	-	Error code
+			protected String message;//	String	-	Error message
+			protected List<String> fileExists=Lists.newArrayList();//	-	List of duplicate file names
+		}
+		
+		@Data
+		public static class Details
+		{
+			protected String name;//	String	-	File name
+			protected String dateDeleted;//	String	-	Date in which file was created (UTC Date string).
+			protected String dateModified;//	String	-	Date in which file was last modified (UTC Date string).
+			protected String filterPath;//	String	-	Relative path to the file or folder.
+			protected Boolean hasChild;//	Boolean	-	Defines this folder has any child folder or not.
+			protected Boolean isFile;//	Boolean	-	Say whether the item is file or folder.
+			protected Integer size;//	Number	-	File size
+			protected String type;//	String	-	File extension
+			protected List<String> multipleFiles=Lists.newArrayList();
+		}
+	}
+}
