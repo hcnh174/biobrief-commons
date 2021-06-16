@@ -183,7 +183,7 @@ public class TestPowerPointHelper
 		}
 	}
 	
-	@Test
+	//@Test
 	public void createPowerPoint()
 	{
 		String filename=Constants.TMP_DIR+"/presentation.pptx";

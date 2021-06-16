@@ -44,7 +44,7 @@ public class TestImageHelper
 		System.out.println("created thumbnail: "+thumbnail);
 	}
 	
-	@Test
+	//@Test
 	public void convertEmfToJpg()
 	{
 		//String path="C:\\Program Files\\ImageMagick-7.0.10-Q16-HDRI";

@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 //gradle --stacktrace --info :biobrief-util:test --tests *TestHlsgSshHelper
 public class TestSshHelper
 {
-	@Test
+	//@Test
 	public void executeLs()
 	{
 		SshHelper.SshCredentials credentials=getCredentials();
@@ -19,7 +19,7 @@ public class TestSshHelper
 		System.out.println("ls="+output);
 	}
 	
-	@Test
+	//@Test
 	public void executePwd()
 	{
 		SshHelper.SshCredentials credentials=getCredentials();
@@ -28,7 +28,7 @@ public class TestSshHelper
 		System.out.println("pwd="+output);
 	}
 	
-	@Test
+	//@Test
 	public void executeSinfo()
 	{
 		SshHelper.SshCredentials credentials=getCredentials();

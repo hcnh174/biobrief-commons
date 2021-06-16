@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 //gradle :biobrief-util:test --stacktrace --info --tests *TestDocx4jHelper
 public class TestDocx4jHelper
 {
-	@Test
+	//@Test
 	public void loadFile()
 	{
-		String filename="C:\\projects\\expertpanel\\エキスパートパネル関係\\HU20190051\\SeqHU20190051.docx";
-		String password="20190051";
+		String filename="C:\\temp\\word.docx";
+		String password="secret";
 		
 		String prefix=FileHelper.getRoot(filename);
 		String outdir=Constants.TEMP_DIR+"/word";

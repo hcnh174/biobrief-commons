@@ -27,3 +27,23 @@ hs_err_pid*
 
 # Ignore Gradle build output directory
 build
+
+
+*.egg-info
+*.rds
+.apt_generated
+.coverage
+.DS_Store
+.temp
+.private
+bin
+build
+spring-shell.log
+target
+keystore.p12
+cert.pem
+hostKey.ser
+key.pem
+.Rproj.user
+.Rhistory
+users.txt

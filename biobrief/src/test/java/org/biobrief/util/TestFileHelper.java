@@ -12,7 +12,7 @@ import com.google.common.collect.Multimap;
 //gradle --stacktrace --info :biobrief-util:test --tests *TestFileHelper
 public class TestFileHelper
 {	
-	//@Test
+	@Test
 	public void getBaseDirectory()
 	{
 		System.out.println("current dir="+FileHelper.getCurrentDirectory());
@@ -60,7 +60,7 @@ public class TestFileHelper
 		FileHelper.checkExists(dir);
 	}
 	
-	@Test
+	//@Test
 	public void getDirectoryMap()
 	{
 		String dir="x:";

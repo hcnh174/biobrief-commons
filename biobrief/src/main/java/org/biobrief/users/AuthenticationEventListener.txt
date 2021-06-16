@@ -1,0 +1,41 @@
+package org.hlsg.users;
+
+import javax.annotation.Resource;
+
+import org.hlsg.users.dao.LoginDao;
+import org.hlsg.users.entities.Login;
+import org.hlsg.util.EmailService;
+import org.hlsg.util.LogUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionEvent;
+import org.springframework.stereotype.Component;
+
+@Component
+//http://stackoverflow.com/questions/182160/spring-security-adding-on-successful-login-event-listener
+public class AuthenticationEventListener implements ApplicationListener<AbstractAuthenticationEvent>
+{
+	//@Autowired private LoginRepository loginRepository;
+	@Autowired private LoginDao loginDao;
+	@Resource(name="emailService") private EmailService emailService;
+	
+	@Override
+	public void onApplicationEvent(AbstractAuthenticationEvent event)
+	{
+		if (event instanceof SessionFixationProtectionEvent)
+			return;
+		//Authentication auth=event.getAuthentication();
+		Login login=new Login(event);
+		//String message="Login attempt with username: " + auth.getName() + "\t\tSuccess: " + auth.isAuthenticated()+"\tevent="+event.getClass().getName();
+		logLogin(login.getMessage());
+		emailService.sendEmail("nelsonhayes4@gmail.com", "Login: "+login.getUsername(), login.getMessage());
+		loginDao.save(login);
+	}
+	
+	public static void logLogin(String message)
+	{
+		String logfile="logins.txt";
+		LogUtil.logMessage(logfile, message);
+	}
+}

@@ -157,7 +157,28 @@ dependencies {
 	
 	// email
 	implementation("com.sendgrid:sendgrid-java:${property('sendgrid.version')}")
-    
+	
+	// jpa
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("org.postgresql:postgresql:${property('postgresql.version')}")
+	implementation("com.healthmarketscience.jackcess:jackcess:${property('jackcess.version')}")
+	
+	// mongodb
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	
+	// solr
+	implementation("org.apache.solr:solr-solrj:${property('solr.version')}")
+	implementation("org.apache.tika:tika-parsers:${property('tika.version')}")
+	
+	// web
+	implementation("org.springframework.boot:spring-boot-starter-freemarker")
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation("org.springframework.boot:spring-boot-starter-websocket")
+
+	// users	
+	implementation("org.springframework.boot:spring-boot-starter-security")	
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 }
 
 //version = '0.1.0'
