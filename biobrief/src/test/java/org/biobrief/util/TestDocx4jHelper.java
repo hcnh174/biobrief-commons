@@ -2,7 +2,7 @@ package org.biobrief.util;
 
 import org.junit.jupiter.api.Test;
 
-//gradle :biobrief-util:test --stacktrace --info --tests *TestDocx4jHelper
+//gradle test --stacktrace --info --tests *TestDocx4jHelper
 public class TestDocx4jHelper
 {
 	//@Test
@@ -12,7 +12,7 @@ public class TestDocx4jHelper
 		String password="secret";
 		
 		String prefix=FileHelper.getRoot(filename);
-		String outdir=Constants.TEMP_DIR+"/word";
+		String outdir=Constants.BIOBRIEF_DIR+"/.temp/word";
 		FileHelper.createDirectory(outdir);
 	
 		String xml=Docx4jHelper.extractText(filename, password);

@@ -8,7 +8,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-//gradle  --stacktrace --info :biobrief-util:test --tests *TestDateHelper
+//gradle  --stacktrace --info test --tests *TestDateHelper
 public class TestDateHelper
 {
 	//@Test

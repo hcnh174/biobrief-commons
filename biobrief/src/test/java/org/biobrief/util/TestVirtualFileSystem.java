@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.biobrief.util.VirtualFileSystem.IFolder;
 import org.junit.jupiter.api.Test;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestVirtualFileSystem
+//gradle --stacktrace --info test --tests *TestVirtualFileSystem
 public class TestVirtualFileSystem
 {
 	@Test

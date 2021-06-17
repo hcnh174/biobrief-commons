@@ -50,8 +50,9 @@ public class PowerPointHelper
 	public static final Double TEXT_WIDTH_ADJUST=13.0;
 	public static final Integer BORDER_WIDTH=1;
 	public static final Color BORDER_COLOR=Color.BLACK;
-	public static final String PPTX_TEMPLATE=Constants.DATA_DIR+"/templates/ppt/template-variant-report.pptx";
-	public static final XMLSlideShow TEMP_PPTX=loadPptxFile(PPTX_TEMPLATE);
+	//public static final String PPTX_TEMPLATE=Constants.DATA_DIR+"/templates/ppt/template-variant-report.pptx";
+	public static final String TEMP_PPTX_TEMPLATE=Constants.BIOBRIEF_DIR+"/data/templates/ppt/template.pptx";
+	public static final XMLSlideShow TEMP_PPTX=loadPptxFile(TEMP_PPTX_TEMPLATE);
 	public static final XSLFSlide TEMP_SLIDE=TEMP_PPTX.createSlide();
 
 	public static Dimension getScreenSize(float width, float height)
@@ -70,7 +71,7 @@ public class PowerPointHelper
 			System.out.println("pptfile already exists. deleting: "+pptfile);
 			FileHelper.deleteFile(pptfile);
 		}
-		String script=Constants.BASE_DIR+"/biobrief-scripts/vba/convert_pptx_to_ppt.vbs";
+		String script=Constants.SCRIPTS_DIR+"/scripts/vba/convert_pptx_to_ppt.vbs";
 		CCommandLine command=new CCommandLine("CSCRIPT");
 		command.addArg(script);
 		command.addArg(StringHelper.doubleQuote(pptxfile));

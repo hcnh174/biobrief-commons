@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestBeanHelper
+//gradle --stacktrace --info test --tests *TestBeanHelper
 public class TestBeanHelper
 {	
 	@Test

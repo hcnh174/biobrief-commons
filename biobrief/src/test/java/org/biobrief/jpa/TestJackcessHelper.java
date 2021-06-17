@@ -6,7 +6,7 @@ import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 
 
-//gradle --stacktrace --info :biobrief-jpa:test --tests *TestJackcessHelper
+//gradle --stacktrace --info test --tests *TestJackcessHelper
 public class TestJackcessHelper
 {	
 	//private static final String DATAROOM_DIR="h:/sync/dataroom";

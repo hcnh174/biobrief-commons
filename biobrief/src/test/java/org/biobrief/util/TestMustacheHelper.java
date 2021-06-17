@@ -3,7 +3,7 @@ package org.biobrief.util;
 //import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Test;
 
-//gradle  --stacktrace --info :biobrief-util:test --tests *TestMustacheHelper
+//gradle  --stacktrace --info test --tests *TestMustacheHelper
 public class TestMustacheHelper
 {
 	@Test

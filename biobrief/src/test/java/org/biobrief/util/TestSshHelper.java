@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Lists;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestHlsgSshHelper
+//gradle --stacktrace --info test --tests *TestHlsgSshHelper
 public class TestSshHelper
 {
 	//@Test

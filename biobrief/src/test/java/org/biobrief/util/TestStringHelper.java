@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-//gradle  --stacktrace --info :biobrief-util:test --tests *TestStringHelper
+//gradle  --stacktrace --info test --tests *TestStringHelper
 public class TestStringHelper
 {
 	//@Test

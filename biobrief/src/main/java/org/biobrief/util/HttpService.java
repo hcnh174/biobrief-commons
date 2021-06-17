@@ -63,8 +63,8 @@ public class HttpService
 	
 	private void setValue(String key, String html)
 	{
-		String filename=Constants.TMP_DIR+"/httpcache/"+DateHelper.getTimestamp()+".html";
-		FileHelper.writeFile(filename, html);
+		//String filename=Constants.TMP_DIR+"/httpcache/"+DateHelper.getTimestamp()+".html";
+		//FileHelper.writeFile(filename, html);
 		cache.setValue(key, html);
 	}
 	

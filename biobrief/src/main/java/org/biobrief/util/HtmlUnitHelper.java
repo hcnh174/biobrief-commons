@@ -18,7 +18,7 @@ public class HtmlUnitHelper
 			//Assert.assertEquals("HtmlUnit - Welcome to HtmlUnit", page.getTitleText());
 			System.out.println("title="+page.getTitleText());
 			String xml = page.asXml();
-			FileHelper.writeFile(Constants.TMP_DIR+"/htmlunit.xml", xml);///)
+			//FileHelper.writeFile(Constants.TMP_DIR+"/htmlunit.xml", xml);///)
 			System.out.println("xml="+xml);
 			//String text = page.asText();
 			////System.out.println("text="+text);

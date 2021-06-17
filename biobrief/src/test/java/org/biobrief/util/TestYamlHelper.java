@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Maps;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestYamlHelper
+//gradle --stacktrace --info test --tests *TestYamlHelper
 public class TestYamlHelper
 {
 	@Test

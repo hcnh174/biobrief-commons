@@ -39,39 +39,39 @@ dependencyManagement
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    //testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-    implementation 'com.google.guava:guava:30.1-jre'
+   // implementation 'com.google.guava:guava:30.1-jre'
 
-	implementation('org.springframework.boot:spring-boot-starter')
-	implementation("com.google.guava:guava:${property('guava.version')}")
-	implementation("org.springframework.boot:spring-boot")
-	implementation("org.springframework.data:spring-data-rest-webmvc")
-	implementation("javax.validation:validation-api")
+	api('org.springframework.boot:spring-boot-starter')
+	api("com.google.guava:guava:${property('guava.version')}")
+	api("org.springframework.boot:spring-boot")
+	api("org.springframework.data:spring-data-rest-webmvc")
+	api("javax.validation:validation-api")
 	
-	implementation("com.fasterxml.jackson.core:jackson-core")
-	implementation("com.fasterxml.jackson.core:jackson-annotations")
-	implementation("com.fasterxml.jackson.core:jackson-databind")
+	api("com.fasterxml.jackson.core:jackson-core")
+	api("com.fasterxml.jackson.core:jackson-annotations")
+	api("com.fasterxml.jackson.core:jackson-databind")
 	
-	implementation("org.apache.poi:poi:${property('poi.version')}")
-	implementation("org.apache.poi:poi-ooxml:${property('poi.version')}")
-	//implementation("org.apache.poi:poi-ooxml-full:${property('poi.version')}")
-	implementation("org.apache.poi:poi-ooxml-schemas:${property('poi.version')}")
-	implementation("org.apache.poi:poi-scratchpad:${property('poi.version')}")
+	api("org.apache.poi:poi:${property('poi.version')}")
+	api("org.apache.poi:poi-ooxml:${property('poi.version')}")
+	//api("org.apache.poi:poi-ooxml-full:${property('poi.version')}")
+	api("org.apache.poi:poi-ooxml-schemas:${property('poi.version')}")
+	api("org.apache.poi:poi-scratchpad:${property('poi.version')}")
 	
-	implementation("org.mongodb:mongodb-driver-core:${property('mongodb.version')}")
-	implementation("org.mongodb:mongodb-driver-sync:${property('mongodb.version')}")
+	api("org.mongodb:mongodb-driver-core:${property('mongodb.version')}")
+	api("org.mongodb:mongodb-driver-sync:${property('mongodb.version')}")
 	
 	//https://www.baeldung.com/lombok-ide
 	//https://projectlombok.org/setup/gradle
 	compileOnly("org.projectlombok:lombok:${property('lombok.version')}")//compileOnly
 	annotationProcessor("org.projectlombok:lombok:${property('lombok.version')}")
 	
-	implementation("javax.xml.bind:jaxb-api:${property('javax-xml-bind.version')}")
+	api("javax.xml.bind:jaxb-api:${property('javax-xml-bind.version')}")
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation("org.junit.jupiter:junit-jupiter-api:${property('junit-jupiter.version')}")
@@ -79,47 +79,47 @@ dependencies {
 	
 	///////////////////////////////
 	// spring
-	implementation("org.springframework.boot:spring-boot-starter-mail")
+	api("org.springframework.boot:spring-boot-starter-mail")
 	testImplementation("org.springframework.boot:spring-boot-starter-test"){
 		exclude(module: "commons-logging")
 	}
-	implementation("org.springframework.boot:spring-boot-configuration-processor")
-	implementation("org.springframework.boot:spring-boot-starter-cache")
+	api("org.springframework.boot:spring-boot-configuration-processor")
+	api("org.springframework.boot:spring-boot-starter-cache")
 
 	// general utilities
-	implementation("org.apache.commons:commons-lang3:${property('commons.lang.version')}")
-	implementation("org.apache.commons:commons-exec:${property('commons.exec.version')}")
-	implementation("org.zeroturnaround:zt-exec:${property('ztexec.version')}")
-	implementation("org.zeroturnaround:zt-process-killer:${property('ztprocesskiller.version')}")
+	api("org.apache.commons:commons-lang3:${property('commons.lang.version')}")
+	api("org.apache.commons:commons-exec:${property('commons.exec.version')}")
+	api("org.zeroturnaround:zt-exec:${property('ztexec.version')}")
+	api("org.zeroturnaround:zt-process-killer:${property('ztprocesskiller.version')}")
 		
-	implementation("commons-io:commons-io:${property('commons.io.version')}")
-	implementation("com.google.guava:guava:${property('guava.version')}")
-	implementation("org.hibernate.validator:hibernate-validator")
+	api("commons-io:commons-io:${property('commons.io.version')}")
+	api("com.google.guava:guava:${property('guava.version')}")
+	api("org.hibernate.validator:hibernate-validator")
 	
 	// zip files
-	implementation("net.lingala.zip4j:zip4j:${property('zip4j.version')}")
-	implementation("com.jcraft:jzlib:${property('jzlib.version')}")	
+	api("net.lingala.zip4j:zip4j:${property('zip4j.version')}")
+	api("com.jcraft:jzlib:${property('jzlib.version')}")	
 	
 	// networking
-	implementation("com.hierynomus:sshj:${property('sshj.version')}")
-	implementation("org.apache.httpcomponents:httpclient:${property('httpclient.version')}");
-	implementation("org.apache.httpcomponents:fluent-hc:${property('httpclient.version')}");
+	api("com.hierynomus:sshj:${property('sshj.version')}")
+	api("org.apache.httpcomponents:httpclient:${property('httpclient.version')}");
+	api("org.apache.httpcomponents:fluent-hc:${property('httpclient.version')}");
 	
 	// json
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${property('jackson.version')}")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${property('jackson.version')}")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-properties:${property('jackson.version')}")
-	implementation("com.github.bohnman:squiggly-filter-jackson:${property('squiggly.version')}")
+	api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${property('jackson.version')}")
+	api("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${property('jackson.version')}")
+	api("com.fasterxml.jackson.dataformat:jackson-dataformat-properties:${property('jackson.version')}")
+	api("com.github.bohnman:squiggly-filter-jackson:${property('squiggly.version')}")
 	
 	// encoding
-	implementation("com.ibm.icu:icu4j:${property('icu4j.version')}")
-	implementation("com.atilika.kuromoji:kuromoji-ipadic:${property('kuromoji.version')}")
-	implementation("com.googlecode.juniversalchardet:juniversalchardet:${property('juniversalchardet.version')}")
+	api("com.ibm.icu:icu4j:${property('icu4j.version')}")
+	api("com.atilika.kuromoji:kuromoji-ipadic:${property('kuromoji.version')}")
+	api("com.googlecode.juniversalchardet:juniversalchardet:${property('juniversalchardet.version')}")
 	
 	// csv parsers	
-	implementation("com.googlecode.jcsv:jcsv:${property('jcsv.version')}")
+	api("com.googlecode.jcsv:jcsv:${property('jcsv.version')}")
 
-	implementation("org.docx4j:docx4j:${property('docx4j.version')}"){
+	api("org.docx4j:docx4j:${property('docx4j.version')}"){
 		exclude(module: "log4j")
 		exclude(module: "slf4j-log4j12")
 		exclude(module: "commons-logging")
@@ -127,58 +127,57 @@ dependencies {
 	}
 
 	// pdf
-	implementation("com.itextpdf:itextpdf:${property('itext.version')}")
-	implementation("com.itextpdf:itext-asian:${property('itext.asian.version')}")
-	implementation("org.apache.pdfbox:pdfbox:${property('pdfbox.version')}")
+	api("com.itextpdf:itextpdf:${property('itext.version')}")
+	api("com.itextpdf:itext-asian:${property('itext.asian.version')}")
+	api("org.apache.pdfbox:pdfbox:${property('pdfbox.version')}")
 
 	// javascript
-	implementation("org.eclipse.birt.runtime:org.mozilla.javascript:${property('javascript.version')}")
+	api("org.eclipse.birt.runtime:org.mozilla.javascript:${property('javascript.version')}")
 	
 	// barcode scanner
-	implementation("com.google.zxing:javase:${property('zxing.version')}"){
+	api("com.google.zxing:javase:${property('zxing.version')}"){
 		exclude(module: "jcommander")
 	}
 	
 	// template engines
-	implementation("com.github.spullara.mustache.java:compiler:${property('mustache.version')}")
+	api("com.github.spullara.mustache.java:compiler:${property('mustache.version')}")
 	
 	// xml parser
-	implementation("org.dom4j:dom4j:${property('org-dom4j.version')}")
-	implementation("jaxen:jaxen:${property('jaxen.version')}"){
+	api("org.dom4j:dom4j:${property('org-dom4j.version')}")
+	api("jaxen:jaxen:${property('jaxen.version')}"){
 		exclude(module: "xmlParserAPIs")
 	}
 	
 	// html parsers
-	implementation("org.jsoup:jsoup:${property('jsoup.version')}")
-	implementation("net.sourceforge.htmlunit:htmlunit:${property('htmlunit.version')}")
+	api("org.jsoup:jsoup:${property('jsoup.version')}")
+	api("net.sourceforge.htmlunit:htmlunit:${property('htmlunit.version')}")
 	
 	// image manipulation
-	implementation("org.im4java:im4java:${property('im4java.version')}")
+	api("org.im4java:im4java:${property('im4java.version')}")
 	
 	// email
-	implementation("com.sendgrid:sendgrid-java:${property('sendgrid.version')}")
+	api("com.sendgrid:sendgrid-java:${property('sendgrid.version')}")
 	
 	// jpa
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	api("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("org.postgresql:postgresql:${property('postgresql.version')}")
-	implementation("com.healthmarketscience.jackcess:jackcess:${property('jackcess.version')}")
+	api("com.healthmarketscience.jackcess:jackcess:${property('jackcess.version')}")
 	
 	// mongodb
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	api("org.springframework.boot:spring-boot-starter-data-mongodb")
 	
 	// solr
-	implementation("org.apache.solr:solr-solrj:${property('solr.version')}")
-	implementation("org.apache.tika:tika-parsers:${property('tika.version')}")
+	api("org.apache.solr:solr-solrj:${property('solr.version')}")
+	api("org.apache.tika:tika-parsers:${property('tika.version')}")
 	
 	// web
-	implementation("org.springframework.boot:spring-boot-starter-freemarker")
-	implementation('org.springframework.boot:spring-boot-starter-actuator')
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation("org.springframework.boot:spring-boot-starter-websocket")
+	api("org.springframework.boot:spring-boot-starter-freemarker")
+	api('org.springframework.boot:spring-boot-starter-actuator')
+	api('org.springframework.boot:spring-boot-starter-web')
+	api("org.springframework.boot:spring-boot-starter-websocket")
 
 	// users	
-	implementation("org.springframework.boot:spring-boot-starter-security")	
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	api("org.springframework.boot:spring-boot-starter-security")
 }
 
 //version = '0.1.0'

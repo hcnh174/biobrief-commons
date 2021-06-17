@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestJsonHelper
+//gradle --stacktrace --info test --tests *TestJsonHelper
 public class TestJsonHelper
 {
 	@Test

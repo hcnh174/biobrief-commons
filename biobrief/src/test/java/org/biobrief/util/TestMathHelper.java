@@ -2,7 +2,7 @@ package org.biobrief.util;
 
 import org.junit.jupiter.api.Test;
 
-//gradle  --stacktrace --info :biobrief-util:test --tests *TestMathHelper
+//gradle  --stacktrace --info test --tests *TestMathHelper
 public class TestMathHelper
 {
 	//https://www.dreamincode.net/forums/topic/344766-scientific-notation-in-java/

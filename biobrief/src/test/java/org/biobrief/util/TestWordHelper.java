@@ -2,7 +2,7 @@ package org.biobrief.util;
 
 import org.junit.jupiter.api.Test;
 
-//gradle :biobrief-util:test --stacktrace --info --tests *TestWordHelper
+//gradle test --stacktrace --info --tests *TestWordHelper
 public class TestWordHelper
 {
 	//@Test
@@ -12,7 +12,7 @@ public class TestWordHelper
 		String password="secret";
 		
 		String prefix=FileHelper.getRoot(filename);
-		String outdir=Constants.TEMP_DIR+"/word";
+		String outdir=Constants.BIOBRIEF_DIR+"/.temp/word";
 		FileHelper.createDirectory(outdir);
 		
 		StringBuilder buffer=new StringBuilder();

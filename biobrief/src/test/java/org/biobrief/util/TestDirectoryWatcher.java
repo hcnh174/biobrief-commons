@@ -1,6 +1,6 @@
 package org.biobrief.util;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestDirectoryWatcher
+//gradle --stacktrace --info test --tests *TestDirectoryWatcher
 public class TestDirectoryWatcher
 {	
 //	@Test

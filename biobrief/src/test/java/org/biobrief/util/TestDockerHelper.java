@@ -5,7 +5,7 @@ import org.biobrief.util.DockerHelper.Volumes;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestDockerHelper
+//gradle --stacktrace --info test --tests *TestDockerHelper
 public class TestDockerHelper
 {	
 	@Test

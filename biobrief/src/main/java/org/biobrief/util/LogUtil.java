@@ -56,7 +56,8 @@ public class LogUtil
 	
 	public static String getLogDir()
 	{
-		String dir=RuntimeHelper.getEnvironmentVariable("GANGENOME_LOG_DIR", Constants.LOG_DIR);
+		String dflt=FileHelper.getBaseDirectory()+"/.temp/logs";
+		String dir=RuntimeHelper.getEnvironmentVariable("GANGENOME_LOG_DIR", dflt);
 		return dir+"/"+TIMESTAMP;
 	}
 	

@@ -5,7 +5,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 
-//gradle  --stacktrace --info :biobrief-util:test --tests *TestJsoupHelper
+//gradle  --stacktrace --info test --tests *TestJsoupHelper
 public class TestJsoupHelper
 {
 	@Test

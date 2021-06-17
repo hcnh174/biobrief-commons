@@ -2,7 +2,7 @@ package org.biobrief.util;
 
 import org.junit.jupiter.api.Test;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestSendGridHelper
+//gradle --stacktrace --info test --tests *TestSendGridHelper
 public class TestSendGridHelper
 {
 	//@Test

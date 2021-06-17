@@ -22,7 +22,7 @@ import org.biobrief.util.StringHelper;
 import org.junit.jupiter.api.Test;
 
 //https://lucene.apache.org/solr/guide/8_1/using-solrj.html
-//gradle --stacktrace --info :biobrief-solr:test --tests *TestSolrHelper
+//gradle --stacktrace --info test --tests *TestSolrHelper
 public class TestSolrHelper
 {
 	//@Test
@@ -111,7 +111,7 @@ public class TestSolrHelper
 			}
 			QueryResponse response = request.process(client, collection);
 			String json=response.jsonStr();
-			FileHelper.writeFile(Constants.TMP_DIR+"/solr/facets.json", json);
+			FileHelper.writeFile(Constants.BIOBRIEF_DIR+"/.temp/tmp"+"/solr/facets.json", json);
 			
 			Facets facets=new Facets();
 			

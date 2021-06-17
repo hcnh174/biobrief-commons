@@ -22,7 +22,7 @@ import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.junit.jupiter.api.Test;
 
-//gradle :biobrief-util:test --stacktrace --info --tests *TestPowerPointHelper
+//gradle test --stacktrace --info --tests *TestPowerPointHelper
 public class TestPowerPointHelper
 {
 	//@Test
@@ -41,7 +41,7 @@ public class TestPowerPointHelper
 		String password="TODO";
 		
 		String prefix=FileHelper.getRoot(filename);
-		String outdir=Constants.TEMP_DIR+"/ppt";
+		String outdir=Constants.BIOBRIEF_DIR+"/.temp/ppt";
 		FileHelper.createDirectory(outdir);
 		
 		StringBuilder buffer=new StringBuilder();
@@ -99,7 +99,7 @@ public class TestPowerPointHelper
 		String password="TODO";
 		
 		String prefix=FileHelper.getRoot(filename);
-		String outdir="D:/temp/ppt";//Constants.TEMP_DIR+"/ppt";
+		String outdir="D:/temp/ppt";//Constants.BIOBRIEF_DIR+"/.temp/ppt";
 		FileHelper.createDirectory(outdir);
 				
 		StringBuilder buffer=new StringBuilder();
@@ -158,7 +158,7 @@ public class TestPowerPointHelper
 		String password="TODO";
 		
 		String prefix=FileHelper.getRoot(filename);
-		String outdir=Constants.TEMP_DIR+"/ppt/images";
+		String outdir=Constants.BIOBRIEF_DIR+"/.temp/ppt/images";
 		FileHelper.createDirectory(outdir);
 		
 		StringBuilder buffer=new StringBuilder();
@@ -186,7 +186,7 @@ public class TestPowerPointHelper
 	//@Test
 	public void createPowerPoint()
 	{
-		String filename=Constants.TMP_DIR+"/presentation.pptx";
+		String filename=Constants.BIOBRIEF_DIR+"/.temp/tmp/presentation.pptx";
 		
 		//https://stackoverflow.com/questions/50137576/create-a-table-in-powerpoint-with-apache-poi
 		XMLSlideShow powerpoint = new XMLSlideShow();

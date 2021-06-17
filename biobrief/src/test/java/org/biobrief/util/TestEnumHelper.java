@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestEnumHelper
+//gradle --stacktrace --info test --tests *TestEnumHelper
 public class TestEnumHelper
 {	
 	@Test

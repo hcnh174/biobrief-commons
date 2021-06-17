@@ -3,10 +3,8 @@ package org.biobrief.util;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.biobrief.util.RestHelper.Headers;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -103,8 +101,8 @@ public class RestService
 	
 	private void setValue(String key, String json)
 	{
-		String filename=Constants.TMP_DIR+"/restcache/"+DateHelper.getTimestamp()+".json";
-		FileHelper.writeFile(filename, json);
+		//String filename=Constants.TMP_DIR+"/restcache/"+DateHelper.getTimestamp()+".json";
+		//FileHelper.writeFile(filename, json);
 		cache.setValue(key, json);
 	}
 	

@@ -20,8 +20,6 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.util.NamedList;
 import org.biobrief.util.CException;
-import org.biobrief.util.Constants;
-import org.biobrief.util.FileHelper;
 import org.biobrief.util.JsonHelper;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -178,7 +176,7 @@ public class SolrHelper
 			}
 			QueryResponse response = request.process(client, collection);
 			String json=response.jsonStr();
-			FileHelper.writeFile(Constants.TMP_DIR+"/solr/facets.json", json);
+			//FileHelper.writeFile(Constants.TMP_DIR+"/solr/facets.json", json);
 			
 			Facets facets=new Facets();
 			

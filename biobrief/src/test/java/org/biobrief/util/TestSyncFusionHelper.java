@@ -7,7 +7,7 @@ import org.biobrief.util.SyncFusionHelper.FileManager.ActionRequest;
 import org.biobrief.util.SyncFusionHelper.FileManager.ReadResponse;
 import org.junit.jupiter.api.Test;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestSyncFusionHelper
+//gradle --stacktrace --info test --tests *TestSyncFusionHelper
 public class TestSyncFusionHelper
 {
 	@Test
@@ -38,7 +38,7 @@ public class TestSyncFusionHelper
 		FileManager manager=new FileManager(vfs);		
 		ReadResponse response=manager.read(request);
 		String json=JsonHelper.toJson(response);
-		//FileHelper.writeFile(Constants.TMP_DIR+"/files.json", json);
+		//FileHelper.writeFile(Constants.BIOBRIEF_DIR+"/.temp/tmp"+"/files.json", json);
 		System.out.println(json);
 		assertThat(true).isEqualTo(true);
 	}
@@ -73,7 +73,7 @@ public class TestSyncFusionHelper
 		ActionRequest request=new ActionRequest();
 		request.setPath("/meetings/");
 		ReadResponse response=manager.read(request);
-		FileHelper.writeFile(Constants.TMP_DIR+"/files.json", JsonHelper.toJson(response));
+		FileHelper.writeFile(Constants.BIOBRIEF_DIR+"/.temp/tmp"+"/files.json", JsonHelper.toJson(response));
 		//System.out.println(response);
 		assertThat(true).isEqualTo(true);
 	}

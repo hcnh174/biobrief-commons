@@ -3,7 +3,7 @@ package org.biobrief.util;
 import org.junit.jupiter.api.Test;
 
 //mvn -Dtest=TestPdfBoxHelper test
-//gradle :biobrief-util:test --tests *TestPdfBoxHelper
+//gradle test --tests *TestPdfBoxHelper
 public class TestPdfBoxHelper
 {
 	//@Test

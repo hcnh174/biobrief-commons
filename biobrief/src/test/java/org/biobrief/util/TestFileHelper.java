@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Multimap;
 
-//gradle --stacktrace --info :biobrief-util:test --tests *TestFileHelper
+//gradle --stacktrace --info test --tests *TestFileHelper
 public class TestFileHelper
 {	
 	@Test

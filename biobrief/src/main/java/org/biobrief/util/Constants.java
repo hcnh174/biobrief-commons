@@ -2,13 +2,21 @@ package org.biobrief.util;
 
 public interface Constants
 {
-	public static final String BASE_DIR=FileHelper.getBaseDirectory();
-	public static final String DATA_DIR=BASE_DIR+"/data";
-	public static final String CONFIG_DIR=DATA_DIR+"/config";
-	public static final String TEMP_DIR=BASE_DIR+"/.temp";
-	public static final String TMP_DIR=TEMP_DIR+"/tmp";
-	public static final String LOG_DIR=TEMP_DIR+"/logs";
-	public static final String SCRIPTS_DIR=BASE_DIR+"/biobrief-scripts";
+//	public static final String BASE_DIR=FileHelper.getBaseDirectory();
+//	public static final String TEMP_DIR=BASE_DIR+"/.temp";
+//	public static final String TMP_DIR=TEMP_DIR+"/tmp";
+//	public static final String LOG_DIR=TEMP_DIR+"/logs";
+	
+	public static final String BIOBRIEF_DIR=FileHelper.getWorkspaceDirectory()+"/biobrief-commons";
+	public static final String SCRIPTS_DIR=BIOBRIEF_DIR+"/scripts";
+	
+//	public static final String BASE_DIR=FileHelper.getBaseDirectory("biobrief-commons");
+//	public static final String DATA_DIR=BASE_DIR+"/data";
+//	public static final String CONFIG_DIR=DATA_DIR+"/config";
+//	public static final String TEMP_DIR=BASE_DIR+"/.temp";
+//	public static final String TMP_DIR=TEMP_DIR+"/tmp";
+//	public static final String LOG_DIR=TEMP_DIR+"/logs";
+//	public static final String SCRIPTS_DIR=BASE_DIR+"/biobrief-scripts";
 	
 	public static final String TIMESTAMP=DateHelper.getTimestamp();
 	public static final String DATE_PATTERN=DateHelper.YYYYMMDD_PATTERN;

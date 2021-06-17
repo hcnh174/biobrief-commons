@@ -3,7 +3,7 @@ package org.biobrief.util;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-//gradle  --stacktrace --info :biobrief-util:test --tests *TestKafkaHelper
+//gradle  --stacktrace --info test --tests *TestKafkaHelper
 public class TestKafkaHelper
 {
 	@Test
