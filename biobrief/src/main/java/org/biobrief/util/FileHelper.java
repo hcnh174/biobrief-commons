@@ -1329,22 +1329,6 @@ public final class FileHelper
 		return normalize(Paths.get(".").toAbsolutePath().normalize().toString());
 	}
 	
-//	public static String getBaseDirectory()
-//	{
-//		return getBaseDirectory("biobrief");
-//	}
-	
-//	public static String getBaseDirectory(String dirname)
-//	{
-//		String pwd=getCurrentDirectory();
-//		if (!pwd.endsWith("/"))
-//			pwd+="/";
-//		int index=pwd.lastIndexOf("/"+dirname+"/");
-//		if (index==-1)
-//			throw new CException("could not find expected base directory name ["+dirname+"] in current path: "+pwd);
-//		return pwd.substring(0, index+dirname.length()+1);
-//	}
-	
 	public static String getWorkspaceDirectory()
 	{
 		String pwd=getCurrentDirectory();
@@ -1360,16 +1344,16 @@ public final class FileHelper
 		String pwd=getCurrentDirectory();
 		if (!pwd.endsWith("/"))
 			pwd+="/";
-		System.out.println("FileHelper.getBaseDir: pwd="+pwd);
+		//System.out.println("FileHelper.getBaseDir: pwd="+pwd);
 		String target="/workspace/";
 		int index=pwd.indexOf(target);
 		if (index==-1)
 			throw new CException("could not find base directory name in current path: "+pwd);
-		System.out.println("index="+index);
+		//System.out.println("index="+index);
 		index=index+target.length()+1;
-		System.out.println("new index="+index);
+		//System.out.println("new index="+index);
 		index=pwd.indexOf("/", index);
-		System.out.println("final index="+index+" (pwd="+pwd+")");
+		//System.out.println("final index="+index+" (pwd="+pwd+")");
 		return pwd.substring(0, index);
 	}
 	
