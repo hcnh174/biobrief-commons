@@ -51,6 +51,7 @@ public class PowerPointHelper
 	public static final Integer BORDER_WIDTH=1;
 	public static final Color BORDER_COLOR=Color.BLACK;
 	//public static final String PPTX_TEMPLATE=Constants.DATA_DIR+"/templates/ppt/template-variant-report.pptx";
+	///home/nelson/workspace/g/biobrief-commons/data/templates/ppt/template.pptx
 	public static final String TEMP_PPTX_TEMPLATE=Constants.BIOBRIEF_DIR+"/data/templates/ppt/template.pptx";
 	public static final XMLSlideShow TEMP_PPTX=loadPptxFile(TEMP_PPTX_TEMPLATE);
 	public static final XSLFSlide TEMP_SLIDE=TEMP_PPTX.createSlide();

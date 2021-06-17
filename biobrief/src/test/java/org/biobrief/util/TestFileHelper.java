@@ -20,6 +20,14 @@ public class TestFileHelper
 		//assertThat(FileHelper.getBaseDirectory()).endsWith("/workspace/biobrief");
 	}
 	
+	@Test
+	public void getWorkspaceDirectory()
+	{
+		String dir=FileHelper.getWorkspaceDirectory();
+		System.out.println("workspace dir="+dir);
+		assertThat(dir).isEqualTo("C:/workspace");
+	}
+	
 	//@Test
 	public void stripPath()
 	{

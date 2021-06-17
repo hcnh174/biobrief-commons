@@ -1336,7 +1336,7 @@ public final class FileHelper
 		int index=pwd.indexOf(target);
 		if (index==-1)
 			throw new CException("could not find base directory name in current path: "+pwd);
-		return pwd.substring(0, index+target.length()+1);
+		return pwd.substring(0, index+target.length()-1);
 	}
 	
 	public static String getBaseDirectory()
