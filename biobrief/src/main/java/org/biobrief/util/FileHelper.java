@@ -463,13 +463,12 @@ public final class FileHelper
 		}
 	}
 
-
 	public static boolean deleteFile(String filename)
 	{
-		File file=new File(filename);
-		
+		if (!FileHelper.exists(filename))
+			throw new CException("file to delete does not exist: "+filename);
+		File file=new File(filename);		
 		boolean result=false;
-
 		try
 		{
 			if (!file.isFile())

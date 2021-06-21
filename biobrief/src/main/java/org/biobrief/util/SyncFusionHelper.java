@@ -2,14 +2,11 @@ package org.biobrief.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.compress.utils.Lists;
-import org.springframework.core.io.ByteArrayResource;
+import org.biobrief.util.VirtualFileSystem.IFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,15 +30,27 @@ public class SyncFusionHelper
 		public ActionResponse action(ActionRequest request)
 		{
 			if (request.getAction().equals("read"))
-				return read(request);
+				return read((IReadRequest)request);
+			else if (request.getAction().equals("create"))
+				return create((ICreateRequest)request);
+			else if (request.getAction().equals("rename"))
+				return rename((IRenameRequest)request);
+			else if (request.getAction().equals("delete"))
+				return delete((IDeleteRequest)request);
 			else if (request.getAction().equals("details"))
-				return details(request);
+				return details((IDetailsRequest)request);
+			else if (request.getAction().equals("search"))
+				return search((ISearchRequest)request);
+			else if (request.getAction().equals("copy"))
+				return copy((ICopyRequest)request);
+			else if (request.getAction().equals("move"))
+				return move((IMoveRequest)request);
 			else throw new UnhandledCaseException(request.getAction());
 		}
 		
 		/////////////////////////////////
 		
-		public ReadResponse read(ActionRequest request)
+		public ReadResponse read(IReadRequest request)
 		{
 			//System.out.println("read request="+JsonHelper.toJson(request));
 			VirtualFileSystem.IFolder folder=vfs.findDir(request.getPath());
@@ -53,44 +62,66 @@ public class SyncFusionHelper
 			return response;
 		}
 		
-		public CreateResponse create(ActionRequest request)
+		public CreateResponse create(ICreateRequest request)
 		{
 			CreateResponse response=new CreateResponse(request);
 			return response;
 		}
 		
-		public DeleteResponse delete(ActionRequest request)
+		public DeleteResponse delete(IDeleteRequest request)
 		{
+			vfs.delete(request.getPathList());
 			DeleteResponse response=new DeleteResponse(request);
 			return response;
 		}
 		
-		public RenameResponse rename(ActionRequest request)
+		public RenameResponse rename(IRenameRequest request)
 		{
+			String oldfilename=request.getPath()+request.getName();
+			String newfilename=request.getPath()+request.getNewname();
+			vfs.rename(oldfilename, newfilename);
 			RenameResponse response=new RenameResponse(request);
 			return response;
 		}
 		
-		public SearchResponse search(ActionRequest request)
+		public SearchResponse search(ISearchRequest request)
 		{
-			SearchResponse response=new SearchResponse(request);
+			List<IFile> files=vfs.search(request.getPath(), request.getSearchString(), request.getCaseSensitive());
+			SearchResponse response=new SearchResponse(request, files);
 			return response;
 		}
 		
-		public DetailsResponse details(ActionRequest request)
+		public DetailsResponse details(IDetailsRequest request)
 		{
-			DetailsResponse response=new DetailsResponse(request);
+			List<IFile> files=vfs.details(request.getPath(), request.getNames());
+			DetailsResponse response=new DetailsResponse(request, files);
 			return response;
 		}
 		
-		public CopyResponse copy(ActionRequest request)
+		public CopyResponse copy(ICopyRequest request)
 		{
+			for (int index=0; index<request.getNames().size(); index++)
+			{
+				String fromname=request.getNames().get(index);
+				String toname=request.getRenameFiles().get(index);
+				String from=request.getPath()+fromname;
+				String to=request.getTargetPath()+toname;
+				vfs.copy(from, to);
+			}
 			CopyResponse response=new CopyResponse(request);
 			return response;
 		}
 		
-		public MoveResponse move(ActionRequest request)
+		public MoveResponse move(IMoveRequest request)
 		{
+			for (int index=0; index<request.getNames().size(); index++)
+			{
+				String fromname=request.getNames().get(index);
+				String toname=request.getRenameFiles().get(index);
+				String from=request.getPath()+fromname;
+				String to=request.getTargetPath()+toname;
+				vfs.move(from, to);
+			}
 			MoveResponse response=new MoveResponse(request);
 			return response;
 		}
@@ -131,8 +162,10 @@ public class SyncFusionHelper
 		
 		//////////////////////////////////////////////////////
 		
+		public interface IRequest {}
+		
 		@Data
-		private static abstract class AbstractRequest
+		private static abstract class AbstractRequest implements IRequest
 		{
 			
 		}
@@ -140,7 +173,7 @@ public class SyncFusionHelper
 		@Data
 		private static abstract class AbstractResponse
 		{
-			public AbstractResponse(AbstractRequest request)
+			public AbstractResponse(IRequest request)
 			{
 				//System.out.println("request="+JsonHelper.toJson(request));
 			}
@@ -148,41 +181,102 @@ public class SyncFusionHelper
 		
 		//////////////////////////////////////////////////////
 		
+		public interface IActionRequest extends IRequest
+		{
+			String getAction();
+			String getPath();
+			List<FileManagerDirectoryContent> getData();
+		}
+	
+		public interface IReadRequest extends IActionRequest
+		{
+			Boolean getShowHiddenItems();
+		}
+		
+		public interface ICreateRequest extends IActionRequest
+		{
+			String getName();
+		}
+		
+		public interface IRenameRequest extends IActionRequest
+		{
+			String getName();
+			String getNewname();
+		}
+		
+		public interface IDeleteRequest extends IActionRequest
+		{
+			List<String> getNames();
+			List<String> getPathList();
+		}
+		
+		public interface IDetailsRequest extends IActionRequest
+		{
+			List<String> getNames();
+		}
+		
+		public interface ISearchRequest extends IActionRequest
+		{
+			Boolean getShowHiddenItems();
+			Boolean getCaseSensitive();
+			String getSearchString();
+		}
+		
+		public interface ICopyRequest extends IActionRequest
+		{
+			List<String> getNames();
+			String getTargetPath();
+			List<String> getRenameFiles();
+		}
+
+		public interface IMoveRequest extends IActionRequest
+		{
+			List<String> getNames();
+			String getTargetPath();
+			List<String> getRenameFiles();
+		}
+		
+		/////////////////////////////////////////////
+		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class ActionRequest extends AbstractRequest
+			implements IActionRequest,
+			IReadRequest, ICreateRequest, IDeleteRequest,
+			IDetailsRequest, ISearchRequest, ICopyRequest, IMoveRequest
 		{
 			private String action;
 			private String path;
+			private List<String> names=Lists.newArrayList(); //used by: delete
 			private Boolean showHiddenItems;
 			private List<FileManagerDirectoryContent> data;
+			private String name; //used by: rename
+			private String newname; //used by: name
+			private List<String> renameFiles=Lists.newArrayList(); //used by: copy, move
+			private String searchString; //used by: search
+			private String targetPath; //used by: copy, move
+			private Boolean caseSensitive; // used by: search
+			
+			@JsonIgnore public List<String> getPathList()
+			{
+				List<String> list=Lists.newArrayList();
+				for (String name : names)
+				{
+					list.add(path+name);
+				}
+				return list;
+			}
 		}
 
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class ActionResponse extends AbstractResponse
 		{
-			public ActionResponse(ActionRequest request)
+			public ActionResponse(IActionRequest request)
 			{
 				super(request);
 			}
 		}
 		
 		//////////////////////////////////////////////////////
-		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class ReadRequest extends AbstractRequest
-//		{
-//			private String path;
-//			private Boolean showHiddenItems=false; // false
-//			private List<FileManagerDirectoryContent> data;
-//			
-//			public ReadRequest()
-//			{
-//				super("read");
-//			}
-//			
-//			//public String getPath(){return this.path;}
-//			//public void setPath(final String path){this.path=path;}
-//		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class ReadResponse extends ActionResponse
@@ -193,7 +287,7 @@ public class SyncFusionHelper
 			private Details details;
 			@JsonIgnore private String filterPath;
 			
-			public ReadResponse(ActionRequest request, String dir)
+			public ReadResponse(IReadRequest request, String dir)
 			{
 				super(request);
 //				System.out.println("dir="+dir);
@@ -230,7 +324,7 @@ public class SyncFusionHelper
 				return file;
 			}
 			
-			private String getFilterPath(ActionRequest request)
+			private String getFilterPath(IReadRequest request)
 			{
 				String path=request.getPath();
 				return StringHelper.replace(path, "/", "\\");
@@ -238,19 +332,6 @@ public class SyncFusionHelper
 		}
 		
 		///////////////////////////////////////////////////
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class CreateRequest extends AbstractRequest
-//		{
-//			private String action;
-//			private String path;
-//			private String name; 
-//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
-//			
-//			public CreateRequest()
-//			{
-//				super("create");
-//			}
-//		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class CreateResponse extends ActionResponse
@@ -258,27 +339,13 @@ public class SyncFusionHelper
 			private List<FileManagerDirectoryContent> files;
 			private ErrorDetails error;
 			
-			public CreateResponse(ActionRequest request)
+			public CreateResponse(ICreateRequest request)
 			{
 				super(request);
 			}
 		}
 		
 		////////////////////////////////////////////
-		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class DeleteRequest extends AbstractRequest
-//		{
-//			private String action;
-//			private String path;
-//			private String name; 
-//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
-//			
-//			public DeleteRequest()
-//			{
-//				super("delete");
-//			}
-//		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class DeleteResponse extends ActionResponse
@@ -286,7 +353,7 @@ public class SyncFusionHelper
 			private List<FileManagerDirectoryContent> files;
 			private ErrorDetails error;
 			
-			public DeleteResponse(ActionRequest request)
+			public DeleteResponse(IDeleteRequest request)
 			{
 				super(request);
 			}
@@ -294,48 +361,19 @@ public class SyncFusionHelper
 		
 		////////////////////////////////////////////
 		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class RenameRequest extends AbstractRequest
-//		{
-//			private String action;
-//			private String path;
-//			private String name;
-//			private String newname; 
-//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
-//			
-//			public RenameRequest()
-//			{
-//				super("rename");
-//			}
-//		}
-		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class RenameResponse extends ActionResponse
 		{
 			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
 			private ErrorDetails error;
 			
-			public RenameResponse(ActionRequest request)
+			public RenameResponse(IRenameRequest request)
 			{
 				super(request);
 			}
 		}
 		
 		///////////////////////////////////////////////////
-		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class SearchRequest extends AbstractRequest
-//		{
-//			private String action;
-//			private String path;
-//			private List<String> names=Lists.newArrayList();
-//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
-//			
-//			public SearchRequest()
-//			{
-//				super("search");
-//			}
-//		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class SearchResponse extends ActionResponse
@@ -343,27 +381,17 @@ public class SyncFusionHelper
 			private List<FileManagerDirectoryContent> files;
 			private ErrorDetails error;
 			
-			public SearchResponse(ActionRequest request)
+			public SearchResponse(ISearchRequest request, List<IFile> files)
 			{
 				super(request);
+				for (IFile file : files)
+				{
+					this.files.add(new FileManagerDirectoryContent(file));
+				}
 			}
 		}
 		
 		///////////////////////////////////////////////////
-		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class DetailsRequest extends AbstractRequest
-//		{
-//			private String action;
-//			private String path;
-//			private List<String> names=Lists.newArrayList();
-//			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
-//			
-//			public DetailsRequest()
-//			{
-//				super("details");
-//			}
-//		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class DetailsResponse extends ActionResponse
@@ -371,47 +399,33 @@ public class SyncFusionHelper
 			private List<FileManagerDirectoryContent> files;
 			private ErrorDetails error;
 			
-			public DetailsResponse(ActionRequest request)
+			public DetailsResponse(IDetailsRequest request, List<IFile> files)
 			{
 				super(request);
+				for (IFile file : files)
+				{
+					this.files.add(new FileManagerDirectoryContent(file));
+				}
 			}
 		}
 		
 		///////////////////////////////////////////////////
-		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class CopyRequest extends AbstractRequest
-//		{
-//			public CopyRequest()
-//			{
-//				super("copy");
-//			}
-//		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class CopyResponse extends ActionResponse
 		{
-			public CopyResponse(ActionRequest request)
+			public CopyResponse(ICopyRequest request)
 			{
 				super(request);
 			}
 		}
 		
 		///////////////////////////////////////////////////
-		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class MoveRequest extends AbstractRequest
-//		{
-//			public MoveRequest()
-//			{
-//				super("move");
-//			}
-//		}
-//		
+
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class MoveResponse extends ActionResponse
 		{
-			public MoveResponse(ActionRequest request)
+			public MoveResponse(IMoveRequest request)
 			{
 				super(request);
 			}

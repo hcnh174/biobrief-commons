@@ -1032,6 +1032,23 @@ public class ExcelHelper
 		return (value!=null && !value.toString().trim().equals(""));
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////
+	
+	public static Row insertRow(Sheet sheet, int startRow)
+	{
+		int numRows=1;
+		return insertRows(sheet, startRow, numRows);
+	}
+	
+	public static Row insertRows(Sheet sheet, int startRow, int numRows)
+	{
+		int lastRow = sheet.getLastRowNum(); 
+		sheet.shiftRows(startRow, lastRow, numRows, true, true);
+		return sheet.createRow(startRow);
+	}
+	
+	////////////////////////////////////////////////////////	
+	
 //	//http://poi.apache.org/spreadsheet/quick-guide.html#NamedRanges
 //	public void getNamedRanges(Workbook workbook)
 //	{

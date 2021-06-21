@@ -3,8 +3,6 @@ package org.biobrief.util;
 import java.util.Date;
 import java.util.List;
 
-import org.biobrief.util.VirtualFileSystem.IFolder;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
@@ -22,6 +20,86 @@ public class VirtualFileSystem
 	public VirtualFileSystem(String dir)
 	{
 		this.root=new VirtualFileSystem.VirtualFolder(dir, "root");
+	}
+	
+	public void move(String from, String to)
+	{
+		String filename=getRealPath(from);
+		String newfilename=getRealPath(to);
+		System.out.println("moving file from "+filename+" to "+newfilename);
+		//FileHelper.moveFile(filename, newfilename);
+	}
+	
+	public List<IFile> search(String path, String searchString, Boolean caseSensitive)
+	{
+		List<IFile> list=Lists.newArrayList();
+		if (!caseSensitive)
+			searchString=searchString.toLowerCase();
+		IFolder folder=findDir(FileHelper.getDirFromFilename(path));
+		for (INode node : folder.getNodes())
+		{
+			if (!node.isFile())
+				continue;
+			IFile file=(IFile)node;
+			String name=file.getName();
+			if (!caseSensitive)
+				name=name.toLowerCase();
+			if (name.contains(searchString))
+				list.add(file);
+		}
+		return list;
+	}
+	
+	public void copy(String from, String to)
+	{
+		String filename=getRealPath(from);
+		String newfilename=getRealPath(to);
+		//String newfilename=FileHelper.stripExtension(filename)+"-copy"+FileHelper.getSuffix(filename);
+		System.out.println("renaming file "+filename+" to "+newfilename);
+		//FileHelper.copyFile(filename, newfilename);
+	}
+	
+	public void rename(String path, String newname)
+	{
+		String filename=getRealPath(path);
+		String dir=FileHelper.stripPath(filename);
+		String newfilename=dir+"/"+newname;
+		System.out.println("renaming file "+filename+" to "+newfilename);
+		//FileHelper.moveFile(filename, newfilename);
+	}
+	
+	public List<IFile> details(String dir, List<String> names)
+	{
+		List<IFile> list=Lists.newArrayList();
+		IFolder folder=findDir(dir);
+		for (INode node : folder.getNodes())
+		{
+			if (!node.isFile())
+				continue;
+			IFile file=(IFile)node;
+			for (String name : names)
+			{
+				if (file.getName().equals(name))
+					list.add(file);
+			}
+		}
+		return list;
+	}
+	
+	
+	public void delete(List<String> paths)
+	{
+		for (String path : paths)
+		{
+			delete(path);
+		}
+	}
+	
+	public void delete(String path)
+	{
+		String filename=getRealPath(path);
+		System.out.println("about to delete file: "+filename);
+		//FileHelper.deleteFile(filename);
 	}
 	
 	public String getRealPath(String path)
