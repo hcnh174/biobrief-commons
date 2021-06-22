@@ -197,24 +197,7 @@ public class ExcelHelper
 	}
 	
 	/////////////////////////////////////////////////
-	
-//	@SuppressWarnings("rawtypes")
-//	public DataFrame extractDataFrame(Sheet sheet)
-//	{
-//		DataFrame<String> dataframe=new DataFrame<String>();
-//		boolean isHeader=true;
-//		for (Row row : sheet)
-//		{
-//			if (isHeader)
-//			{
-//				extractHeaderRow(row, dataframe);
-//				isHeader=false;
-//			}
-//			else extractRow(row, dataframe);
-//		}
-//		return dataframe;
-//	}
-	
+
 	public StringDataFrame extractDataFrame(Sheet sheet)
 	{
 		return extractDataFrame(sheet, 0);
@@ -223,6 +206,11 @@ public class ExcelHelper
 	public StringDataFrame extractDataFrame(Sheet sheet, int headerrow)
 	{
 		StringDataFrame dataframe=new StringDataFrame();
+		return extractDataFrame(sheet, headerrow, dataframe);
+	}
+	
+	public StringDataFrame extractDataFrame(Sheet sheet, int headerrow, StringDataFrame dataframe)
+	{
 		for (Row row : sheet)
 		{
 			if (row.getRowNum()<headerrow)
@@ -236,7 +224,6 @@ public class ExcelHelper
 	
 	private void extractHeaderRow(Row row, DataFrame<?> dataframe)
 	{
-		//CTable.Row trow=table.getHeader();
 		for (Cell cell : row)
 		{
 			String colname=cell.getStringCellValue();
@@ -257,7 +244,7 @@ public class ExcelHelper
 		//CTable.Row trow=table.addRow();
 		// only read as many columns as there are header fields
 		//for (int colnum=0; colnum<table.getHeader().size();colnum++)
-		String rowname=getIdentifierCellValue(row.getCell(0));		
+		String rowname=getIdentifierCellValue(row.getCell(0));
 		for (int colnum=1; colnum<dataframe.getNumCols(); colnum++)
 		{
 			Cell cell=row.getCell(colnum);
@@ -991,18 +978,19 @@ public class ExcelHelper
 		return headerStyle;
 	}
 	
-	public CellStyle createBorderedCellStyle(Workbook workbook)
+	public CellStyle createBorderedCellStyle(Workbook workbook, BorderStyle borderStyle)
 	{
 		CellStyle style=workbook.createCellStyle();
-		style.setBorderTop(BorderStyle.MEDIUM);
-		style.setBorderBottom(BorderStyle.MEDIUM);
-		style.setBorderLeft(BorderStyle.MEDIUM);
-		style.setBorderRight(BorderStyle.MEDIUM);
-//		style.setBorderTop(CellStyle.BORDER_MEDIUM);
-//		style.setBorderBottom(CellStyle.BORDER_MEDIUM);
-//		style.setBorderLeft(CellStyle.BORDER_MEDIUM);
-//		style.setBorderRight(CellStyle.BORDER_MEDIUM);
+		style.setBorderTop(borderStyle);
+		style.setBorderBottom(borderStyle);
+		style.setBorderLeft(borderStyle);
+		style.setBorderRight(borderStyle);
 		return style;
+	}
+	
+	public CellStyle createBorderedCellStyle(Workbook workbook)
+	{
+		return createBorderedCellStyle(workbook, BorderStyle.MEDIUM);
 	}
 	
 	public void setCellComment(Cell cell, String text)

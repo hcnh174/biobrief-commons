@@ -59,12 +59,12 @@ public class VirtualFileSystem
 		//FileHelper.copyFile(filename, newfilename);
 	}
 	
-	public void rename(String path, String newname)
+	public void rename(String path, String oldname, String newname)
 	{
-		String filename=getRealPath(path);
-		String dir=FileHelper.stripPath(filename);
-		String newfilename=dir+"/"+newname;
-		System.out.println("renaming file "+filename+" to "+newfilename);
+		String dir=getRealPath(path);
+		String oldfilename=dir+oldname;
+		String newfilename=dir+newname;
+		System.out.println("renaming file "+oldfilename+" to "+newfilename);
 		//FileHelper.moveFile(filename, newfilename);
 	}
 	

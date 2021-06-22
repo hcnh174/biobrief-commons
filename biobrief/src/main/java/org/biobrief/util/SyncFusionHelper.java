@@ -77,9 +77,7 @@ public class SyncFusionHelper
 		
 		public RenameResponse rename(IRenameRequest request)
 		{
-			String oldfilename=request.getPath()+request.getName();
-			String newfilename=request.getPath()+request.getNewname();
-			vfs.rename(oldfilename, newfilename);
+			vfs.rename(request.getPath(), request.getName(), request.getNewName());
 			RenameResponse response=new RenameResponse(request);
 			return response;
 		}
@@ -201,7 +199,7 @@ public class SyncFusionHelper
 		public interface IRenameRequest extends IActionRequest
 		{
 			String getName();
-			String getNewname();
+			String getNewName();
 		}
 		
 		public interface IDeleteRequest extends IActionRequest
@@ -241,7 +239,7 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class ActionRequest extends AbstractRequest
 			implements IActionRequest,
-			IReadRequest, ICreateRequest, IDeleteRequest,
+			IReadRequest, ICreateRequest, IDeleteRequest, IRenameRequest,
 			IDetailsRequest, ISearchRequest, ICopyRequest, IMoveRequest
 		{
 			private String action;
@@ -250,7 +248,7 @@ public class SyncFusionHelper
 			private Boolean showHiddenItems;
 			private List<FileManagerDirectoryContent> data;
 			private String name; //used by: rename
-			private String newname; //used by: name
+			private String newName; //used by: name
 			private List<String> renameFiles=Lists.newArrayList(); //used by: copy, move
 			private String searchString; //used by: search
 			private String targetPath; //used by: copy, move
@@ -290,7 +288,7 @@ public class SyncFusionHelper
 			public ReadResponse(IReadRequest request, String dir)
 			{
 				super(request);
-//				System.out.println("dir="+dir);
+				//System.out.println("dir="+dir);
 				this.cwd=new FileManagerDirectoryContent(dir);
 				this.filterPath=getFilterPath(request);
 				this.cwd.filterPath=this.filterPath;
@@ -336,7 +334,7 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class CreateResponse extends ActionResponse
 		{
-			private List<FileManagerDirectoryContent> files;
+			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
 			private ErrorDetails error;
 			
 			public CreateResponse(ICreateRequest request)
@@ -350,7 +348,7 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class DeleteResponse extends ActionResponse
 		{
-			private List<FileManagerDirectoryContent> files;
+			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
 			private ErrorDetails error;
 			
 			public DeleteResponse(IDeleteRequest request)
@@ -378,7 +376,7 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class SearchResponse extends ActionResponse
 		{
-			private List<FileManagerDirectoryContent> files;
+			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
 			private ErrorDetails error;
 			
 			public SearchResponse(ISearchRequest request, List<IFile> files)
@@ -396,7 +394,7 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class DetailsResponse extends ActionResponse
 		{
-			private List<FileManagerDirectoryContent> files;
+			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
 			private ErrorDetails error;
 			
 			public DetailsResponse(IDetailsRequest request, List<IFile> files)
