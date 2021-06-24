@@ -33,7 +33,8 @@ public class UsersConfiguration
 	@Bean
 	public PasswordEncoder passwordEncoder()
 	{
-		return new BCryptPasswordEncoder();
+		//return new PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		return new BCryptPasswordEncoder(16);
 	}
 	
 	@Bean

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.compress.utils.Lists;
 import org.biobrief.util.VirtualFileSystem.IFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -53,7 +54,7 @@ public class SyncFusionHelper
 		public ReadResponse read(IReadRequest request)
 		{
 			//System.out.println("read request="+JsonHelper.toJson(request));
-			VirtualFileSystem.IFolder folder=vfs.findDir(request.getPath());
+			VirtualFileSystem.IFolder folder=vfs.read(request.getPath());
 			ReadResponse response=new ReadResponse(request, folder.getPath());
 			for (VirtualFileSystem.INode item : folder.getNodes())
 			{	
@@ -64,36 +65,32 @@ public class SyncFusionHelper
 		
 		public CreateResponse create(ICreateRequest request)
 		{
-			CreateResponse response=new CreateResponse(request);
-			return response;
+			vfs.createDirectory(request.getPath(), request.getName());
+			return new CreateResponse(request);
 		}
 		
 		public DeleteResponse delete(IDeleteRequest request)
 		{
 			vfs.delete(request.getPathList());
-			DeleteResponse response=new DeleteResponse(request);
-			return response;
+			return new DeleteResponse(request);
 		}
 		
 		public RenameResponse rename(IRenameRequest request)
 		{
 			vfs.rename(request.getPath(), request.getName(), request.getNewName());
-			RenameResponse response=new RenameResponse(request);
-			return response;
+			return new RenameResponse(request);
 		}
 		
 		public SearchResponse search(ISearchRequest request)
 		{
 			List<IFile> files=vfs.search(request.getPath(), request.getSearchString(), request.getCaseSensitive());
-			SearchResponse response=new SearchResponse(request, files);
-			return response;
+			return new SearchResponse(request, files);
 		}
 		
 		public DetailsResponse details(IDetailsRequest request)
 		{
 			List<IFile> files=vfs.details(request.getPath(), request.getNames());
-			DetailsResponse response=new DetailsResponse(request, files);
-			return response;
+			return new DetailsResponse(request, files);
 		}
 		
 		public CopyResponse copy(ICopyRequest request)
@@ -106,8 +103,7 @@ public class SyncFusionHelper
 				String to=request.getTargetPath()+toname;
 				vfs.copy(from, to);
 			}
-			CopyResponse response=new CopyResponse(request);
-			return response;
+			return new CopyResponse(request);
 		}
 		
 		public MoveResponse move(IMoveRequest request)
@@ -120,42 +116,29 @@ public class SyncFusionHelper
 				String to=request.getTargetPath()+toname;
 				vfs.move(from, to);
 			}
-			MoveResponse response=new MoveResponse(request);
-			return response;
+			return new MoveResponse(request);
 		}
 		
-		public UploadResponse upload(UploadRequest request)
+		//https://github.com/spring-guides/gs-uploading-files/blob/main/complete/src/main/java/com/example/uploadingfiles/storage/FileSystemStorageService.java
+		public void upload(UploadRequest request)
 		{
-			UploadResponse response=new UploadResponse(request);
-			return response;
+			for (MultipartFile file : request.getFiles())
+			{
+				vfs.upload(request.getPath(), file);
+			}
 		}
-		
+	
 		//https://stackoverflow.com/questions/35680932/download-a-file-from-spring-boot-rest-service
 		public DownloadResponse download(DownloadRequest request)
 		{
-			try
-			{
-				//System.out.println("download request: "+JsonHelper.toJson(request));
-				if (request.getNames().isEmpty())
-					throw new CException("no file found in download list");
-				if (request.getNames().size()>1)
-					throw new CException("not yet supported. please download one file at a time");
-				String filename=vfs.getRealPath(request.getPath()+"/"+request.getNames().get(0));
-				DownloadResponse response=new DownloadResponse(request, filename);
-				return response;
-			}
-			catch(Exception e)
-			{
-				throw new CException("failed to download file: "+JsonHelper.toJson(request));
-			}
+			String filename=vfs.download(request.getPath(), request.getNames());
+			return new DownloadResponse(request, filename);
 		}
 		
 		public GetImageResponse getImage(GetImageRequest request)
 		{
-			String filename=vfs.getRealPath(request.getPath());
-			BufferedImage image=ImageHelper.readImage(filename);
-			GetImageResponse response=new GetImageResponse(request, image);
-			return response;
+			BufferedImage image=vfs.getImage(request.getPath());
+			return new GetImageResponse(request, image);
 		}
 		
 		//////////////////////////////////////////////////////
@@ -434,17 +417,32 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class UploadRequest extends AbstractRequest
 		{
-			private String action;
-		}
-		
-		@Data @EqualsAndHashCode(callSuper=true)
-		public static class UploadResponse extends AbstractResponse
-		{
-			public UploadResponse(UploadRequest request)
+			private String path;
+			private List<MultipartFile> files=Lists.newArrayList();
+			
+			public UploadRequest(String path, MultipartFile[] files)
 			{
-				super(request);
+				this.path=path;
+				for (MultipartFile file : files)
+				{
+					add(file);
+				}
+			}
+			
+			public void add(MultipartFile file)
+			{
+				this.files.add(file);
 			}
 		}
+		
+//		@Data @EqualsAndHashCode(callSuper=true)
+//		public static class UploadResponse extends AbstractResponse
+//		{
+//			public UploadResponse(UploadRequest request)
+//			{
+//				super(request);
+//			}
+//		}
 		
 		///////////////////////////////////////////////////
 		

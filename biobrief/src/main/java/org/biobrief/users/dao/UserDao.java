@@ -19,11 +19,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDao extends AbstractMongoDao<User, UserRepository>
-{
-	//private static final String ADMIN_USER="";
-	//private static final String ADMIN_USER_ID="";
-	//private static final String ADMIN_USER_PASSWORD="";
-	
+{	
 	@Autowired private UserRepository repository;
 	@Autowired private PasswordEncoder passwordEncoder;
 	

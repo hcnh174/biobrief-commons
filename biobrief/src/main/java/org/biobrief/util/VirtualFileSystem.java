@@ -1,7 +1,12 @@
 package org.biobrief.util;
 
+import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
+
+import org.biobrief.web.LoginHelper;
+import org.biobrief.web.WebHelper;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
@@ -22,16 +27,24 @@ public class VirtualFileSystem
 		this.root=new VirtualFileSystem.VirtualFolder(dir, "root");
 	}
 	
+	public VirtualFileSystem.IFolder read(String path)
+	{
+		log("reading path: "+path);
+		VirtualFileSystem.IFolder folder=findDir(path);
+		return folder;
+	}
+	
 	public void move(String from, String to)
 	{
 		String filename=getRealPath(from);
 		String newfilename=getRealPath(to);
-		System.out.println("moving file from "+filename+" to "+newfilename);
+		log("moving file from "+filename+" to "+newfilename);
 		//FileHelper.moveFile(filename, newfilename);
 	}
 	
 	public List<IFile> search(String path, String searchString, Boolean caseSensitive)
 	{
+		log("searching path="+path+" searchString="+searchString+" caseSensitive="+caseSensitive);
 		List<IFile> list=Lists.newArrayList();
 		if (!caseSensitive)
 			searchString=searchString.toLowerCase();
@@ -50,12 +63,19 @@ public class VirtualFileSystem
 		return list;
 	}
 	
+	public void createDirectory(String path, String name)
+	{
+		IFolder folder=findDir(path);
+		String dir=folder.getPath()+name;
+		log("creating directory: path="+path+" name="+name+" dir="+dir);
+		//FileHelper.createDirectory(name);
+	}
+	
 	public void copy(String from, String to)
 	{
 		String filename=getRealPath(from);
 		String newfilename=getRealPath(to);
-		//String newfilename=FileHelper.stripExtension(filename)+"-copy"+FileHelper.getSuffix(filename);
-		System.out.println("renaming file "+filename+" to "+newfilename);
+		log("copy file from "+filename+" to "+newfilename);
 		//FileHelper.copyFile(filename, newfilename);
 	}
 	
@@ -64,12 +84,13 @@ public class VirtualFileSystem
 		String dir=getRealPath(path);
 		String oldfilename=dir+oldname;
 		String newfilename=dir+newname;
-		System.out.println("renaming file "+oldfilename+" to "+newfilename);
+		log("renaming file from "+oldfilename+" to "+newfilename);
 		//FileHelper.moveFile(filename, newfilename);
 	}
 	
 	public List<IFile> details(String dir, List<String> names)
 	{
+		log("details file: dir="+dir+" names="+StringHelper.join(names));
 		List<IFile> list=Lists.newArrayList();
 		IFolder folder=findDir(dir);
 		for (INode node : folder.getNodes())
@@ -86,7 +107,6 @@ public class VirtualFileSystem
 		return list;
 	}
 	
-	
 	public void delete(List<String> paths)
 	{
 		for (String path : paths)
@@ -98,11 +118,47 @@ public class VirtualFileSystem
 	public void delete(String path)
 	{
 		String filename=getRealPath(path);
-		System.out.println("about to delete file: "+filename);
+		log("deleting file: "+filename);
 		//FileHelper.deleteFile(filename);
 	}
 	
-	public String getRealPath(String path)
+	public void upload(String path, MultipartFile file)
+	{
+		String dir=findDir(path).getPath();
+		dir="c:/temp/upload";// todo hack!	
+		log("uploading file: "+dir+"/"+file.getOriginalFilename());
+		WebHelper.writeFile(dir, file);
+	}
+	
+	public String download(String path, List<String> names)
+	{	
+		try
+		{
+			log("downloading: path="+path+" names="+StringHelper.join(names));
+			if (names.isEmpty())
+				throw new CException("no file found in download list");
+			if (names.size()>1)
+				throw new CException("not yet supported. please download one file at a time");
+			String filename=getRealPath(path+"/"+names.get(0));
+			FileHelper.checkExists(filename);
+			return filename;
+		}
+		catch(Exception e)
+		{
+			throw new CException("failed to download file: path="+path+" names="+StringHelper.join(names));
+		}
+	}
+	
+	public BufferedImage getImage(String path)
+	{
+		log("getImage: path="+path);
+		String filename=getRealPath(path);
+		return ImageHelper.readImage(filename);
+	}
+	
+	////////////////////////////////////////
+	
+	private String getRealPath(String path)
 	{
 		IFolder folder=findDir(FileHelper.getDirFromFilename(path));
 		String filename=folder.getPath()+"/"+FileHelper.stripPath(path);
@@ -111,7 +167,7 @@ public class VirtualFileSystem
 	}
 	
 	// "/" or "/schedule/meeting-2021-06-08/A01234567/"
-	public IFolder findDir(String path)
+	private IFolder findDir(String path)
 	{
 		//System.out.println("findDir path="+path);
 		if (path.equals("/"))
@@ -180,6 +236,15 @@ public class VirtualFileSystem
 				return true;
 		}
 		return false;
+	}
+	
+	public static void log(String message)
+	{
+		String logfile="filemanager.txt";
+		String username=LoginHelper.getUsername().orElse("none");
+		String line=username+"\t"+message;
+		System.out.println(line);
+		LogUtil.logMessage(logfile, line);
 	}
 	
 	////////////////////////////////

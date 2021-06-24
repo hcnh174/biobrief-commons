@@ -1,8 +1,6 @@
 package org.biobrief.web;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,6 +12,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -37,12 +39,17 @@ import org.biobrief.util.MessageWriter;
 import org.biobrief.util.StringHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 //import org.springframework.data.domain.PageRequest;
 //import org.springframework.data.domain.Pageable;
 //import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -50,7 +57,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public final class WebHelper
 {	
@@ -912,28 +918,46 @@ public final class WebHelper
 	
 	////////////////////////////////////////////////////
 	
+//	public static String writeFile(String dir, MultipartFile file)
+//	{
+//		if (file.isEmpty())
+//			throw new CException("Uploaded multipart file was empty");
+//		BufferedOutputStream stream=null;
+//		try
+//		{
+//			String filename=dir+"/"+file.getOriginalFilename();
+//			stream=new BufferedOutputStream(new FileOutputStream(new File(filename)));
+//			FileCopyUtils.copy(file.getInputStream(), stream);
+//			return filename;
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CException("You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage());
+//		}
+//		finally
+//		{
+//			FileHelper.closeStream(stream);
+//		}
+//	}
+	
+	//https://github.com/spring-guides/gs-uploading-files/blob/main/complete/src/main/java/com/example/uploadingfiles/storage/FileSystemStorageService.java
 	public static String writeFile(String dir, MultipartFile file)
 	{
 		if (file.isEmpty())
 			throw new CException("Uploaded multipart file was empty");
-		BufferedOutputStream stream=null;
-		try
+		String filename=dir+"/"+file.getOriginalFilename();
+		if (FileHelper.exists(filename))
+			throw new CException("file already exists: "+filename);
+		try (InputStream inputStream = file.getInputStream())
 		{
-			String filename=dir+"/"+file.getOriginalFilename();
-			stream=new BufferedOutputStream(new FileOutputStream(new File(filename)));
-			FileCopyUtils.copy(file.getInputStream(), stream);
+			Files.copy(inputStream, Paths.get(filename), StandardCopyOption.REPLACE_EXISTING);
 			return filename;
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
-			throw new CException("You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage());
-		}
-		finally
-		{
-			FileHelper.closeStream(stream);
+			throw new CException("Failed to store file: "+filename, e);
 		}
 	}
-	
 	
 	public static List<String> writeFiles(String dir, List<MultipartFile> files)
 	{
@@ -948,4 +972,27 @@ public final class WebHelper
 	
 	/////////////////////////////////////////////////
 
+	//https://stackoverflow.com/questions/35680932/download-a-file-from-spring-boot-rest-service
+	//https://stackoverflow.com/questions/16601428/how-to-set-content-disposition-and-filename-when-using-filesystemresource-to
+	public static ResponseEntity<Resource> download(String filename) throws Exception
+	{
+		File file=new File(filename);
+		Path path = Paths.get(file.getAbsolutePath());
+		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+		
+		ContentDisposition contentDisposition = ContentDisposition.builder("inline")
+			.filename(FileHelper.stripPath(filename))
+			.build();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(contentDisposition);
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+		
+		return ResponseEntity.ok()
+			.headers(headers)
+			.contentLength(file.length())
+			.contentType(MediaType.APPLICATION_OCTET_STREAM)
+			.body(resource);
+	}
 }
