@@ -17,6 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class VirtualFileSystem
 {	
+	protected final String dir;
 	protected IFolder root;
 	@JsonIgnore protected List<String> skipDirs=Lists.newArrayList();
 	@JsonIgnore protected List<String> skipPrefixes=Lists.newArrayList();
@@ -24,8 +25,21 @@ public class VirtualFileSystem
 	
 	public VirtualFileSystem(String dir)
 	{
+		this.dir=dir;
+		load();
+	}
+	
+	private void load()
+	{
+		System.out.println("loading virtual file system: "+dir);
 		this.root=new VirtualFileSystem.VirtualFolder(dir, "root");
 	}
+
+//	public void reload(String path)
+//	{
+//		VirtualFileSystem.IFolder folder=findDir(path);
+//		folder.reload();
+//	}
 	
 	public VirtualFileSystem.IFolder read(String path)
 	{
@@ -40,6 +54,7 @@ public class VirtualFileSystem
 		String newfilename=getRealPath(to);
 		log("moving file from "+filename+" to "+newfilename);
 		//FileHelper.moveFile(filename, newfilename);
+		load();
 	}
 	
 	public List<IFile> search(String path, String searchString, Boolean caseSensitive)
@@ -66,9 +81,12 @@ public class VirtualFileSystem
 	public void createDirectory(String path, String name)
 	{
 		IFolder folder=findDir(path);
-		String dir=folder.getPath()+name;
+		if (folder.isVirtual())
+			throw new CException("cannot create new directory within virtual directory: path="+path+" name="+name);
+		String dir=folder.getPath()+"/"+name;
 		log("creating directory: path="+path+" name="+name+" dir="+dir);
-		//FileHelper.createDirectory(name);
+		//FileHelper.createDirectory(dir);
+		load();
 	}
 	
 	public void copy(String from, String to)
@@ -77,6 +95,7 @@ public class VirtualFileSystem
 		String newfilename=getRealPath(to);
 		log("copy file from "+filename+" to "+newfilename);
 		//FileHelper.copyFile(filename, newfilename);
+		load();
 	}
 	
 	public void rename(String path, String oldname, String newname)
@@ -86,6 +105,7 @@ public class VirtualFileSystem
 		String newfilename=dir+newname;
 		log("renaming file from "+oldfilename+" to "+newfilename);
 		//FileHelper.moveFile(filename, newfilename);
+		load();
 	}
 	
 	public List<IFile> details(String dir, List<String> names)
@@ -120,14 +140,19 @@ public class VirtualFileSystem
 		String filename=getRealPath(path);
 		log("deleting file: "+filename);
 		//FileHelper.deleteFile(filename);
+		load();
 	}
 	
 	public void upload(String path, MultipartFile file)
 	{
-		String dir=findDir(path).getPath();
-		dir="c:/temp/upload";// todo hack!	
-		log("uploading file: "+dir+"/"+file.getOriginalFilename());
+		IFolder folder=findDir(path);
+		if (folder.isVirtual())
+			throw new CException("cannot upload to virtual directory: path"+path+"/"+file.getOriginalFilename());
+		String dir=folder.getPath();
+		dir="c:/temp/upload";// todo hack!
+		log("uploading file: "+path+"/"+file.getOriginalFilename());
 		WebHelper.writeFile(dir, file);
+		load();
 	}
 	
 	public String download(String path, List<String> names)
@@ -268,6 +293,8 @@ public class VirtualFileSystem
 		IFile add(IFile file);
 		IFolder findDir(List<String> arr);
 		List<INode> getNodes();
+		//void reload();
+		boolean isVirtual();
 	}
 	
 	public interface IFile extends INode
@@ -379,7 +406,7 @@ public class VirtualFileSystem
 	{
 		public Folder(String path)
 		{
-			super(path);//, FileHelper.stripPath(path));
+			super(path);
 			//System.out.println("Folder: path="+path);
 			for (String dir : FileHelper.listDirectories(path, true))
 			{
@@ -392,6 +419,8 @@ public class VirtualFileSystem
 					add(new File(filename));
 			}
 		}
+		
+		public boolean isVirtual() {return false;}
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
@@ -403,6 +432,8 @@ public class VirtualFileSystem
 			this.name=name;
 			//System.out.println("VirtualFolder: path="+path+" name="+name);
 		}
+		
+		public boolean isVirtual() {return true;}
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
