@@ -34,12 +34,6 @@ public class VirtualFileSystem
 		System.out.println("loading virtual file system: "+dir);
 		this.root=new VirtualFileSystem.VirtualFolder(dir, "root");
 	}
-
-//	public void reload(String path)
-//	{
-//		VirtualFileSystem.IFolder folder=findDir(path);
-//		folder.reload();
-//	}
 	
 	public VirtualFileSystem.IFolder read(String path)
 	{
@@ -53,7 +47,7 @@ public class VirtualFileSystem
 		String filename=getRealPath(from);
 		String newfilename=getRealPath(to);
 		log("moving file from "+filename+" to "+newfilename);
-		//FileHelper.moveFile(filename, newfilename);
+		FileHelper.moveFile(filename, newfilename);
 		load();
 	}
 	
@@ -85,7 +79,7 @@ public class VirtualFileSystem
 			throw new CException("cannot create new directory within virtual directory: path="+path+" name="+name);
 		String dir=folder.getPath()+"/"+name;
 		log("creating directory: path="+path+" name="+name+" dir="+dir);
-		//FileHelper.createDirectory(dir);
+		FileHelper.createDirectory(dir);
 		load();
 	}
 	
@@ -94,7 +88,7 @@ public class VirtualFileSystem
 		String filename=getRealPath(from);
 		String newfilename=getRealPath(to);
 		log("copy file from "+filename+" to "+newfilename);
-		//FileHelper.copyFile(filename, newfilename);
+		FileHelper.copyFile(filename, newfilename);
 		load();
 	}
 	
@@ -104,7 +98,7 @@ public class VirtualFileSystem
 		String oldfilename=dir+oldname;
 		String newfilename=dir+newname;
 		log("renaming file from "+oldfilename+" to "+newfilename);
-		//FileHelper.moveFile(filename, newfilename);
+		FileHelper.moveFile(oldfilename, newfilename);
 		load();
 	}
 	
@@ -139,7 +133,7 @@ public class VirtualFileSystem
 	{
 		String filename=getRealPath(path);
 		log("deleting file: "+filename);
-		//FileHelper.deleteFile(filename);
+		FileHelper.deleteFile(filename);
 		load();
 	}
 	
@@ -149,7 +143,7 @@ public class VirtualFileSystem
 		if (folder.isVirtual())
 			throw new CException("cannot upload to virtual directory: path"+path+"/"+file.getOriginalFilename());
 		String dir=folder.getPath();
-		dir="c:/temp/upload";// todo hack!
+		//dir="c:/temp/upload";// todo hack!
 		log("uploading file: "+path+"/"+file.getOriginalFilename());
 		WebHelper.writeFile(dir, file);
 		load();
@@ -229,8 +223,6 @@ public class VirtualFileSystem
 	
 	private boolean isDirSkipped(String path)
 	{
-//		if (!isAfter(path))
-//			return true;
 		String dir=FileHelper.stripPath(path);
 		for (String dirname : skipDirs)
 		{
@@ -247,8 +239,6 @@ public class VirtualFileSystem
 	
 	private boolean isFileSkipped(String path)
 	{
-//		if (!isAfter(path))
-//			return true;
 		String filename=FileHelper.stripPath(path);
 		for (String prefix : skipPrefixes)
 		{
@@ -293,7 +283,6 @@ public class VirtualFileSystem
 		IFile add(IFile file);
 		IFolder findDir(List<String> arr);
 		List<INode> getNodes();
-		//void reload();
 		boolean isVirtual();
 	}
 	

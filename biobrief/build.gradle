@@ -177,6 +177,7 @@ dependencies {
 
 	// users	
 	api("org.springframework.boot:spring-boot-starter-security")
+	api("org.passay:passay:${property('passay.version')}")
 }
 
 //version = '0.1.0'

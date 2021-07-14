@@ -3,6 +3,7 @@ package org.biobrief.web;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.Cookie;
@@ -12,6 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import org.biobrief.util.CException;
 import org.biobrief.util.StringHelper;
+import org.passay.CharacterCharacteristicsRule;
+import org.passay.CharacterData;
+import org.passay.CharacterRule;
+import org.passay.EnglishCharacterData;
+import org.passay.PasswordGenerator;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -226,7 +232,43 @@ public final class LoginHelper
 	{
 		SecurityContextHolder.clearContext(); //invalidate authentication
 	}
+	
+	////////////////////////////////////////////////////////////////
+	
+	//https://www.passay.org/
+	//https://www.baeldung.com/java-generate-secure-password
+	//https://www.passay.org/reference/
+	//https://www.baeldung.com/java-passay
+	public static String generatePassword(int length)
+	{
+		CharacterRule specialCharacters=new CharacterRule(new CharacterData() {
+			@Override
+			public String getErrorCode() {
+				return CharacterCharacteristicsRule.ERROR_CODE;
+			}
 
+			@Override
+			public String getCharacters() {
+				return "!@#$%&*+";//return "!@#$%^&*()_+";
+			}
+		}, 1);
+		
+		List<CharacterRule> rules = Arrays.asList(
+			// at least one upper-case character
+			new CharacterRule(EnglishCharacterData.UpperCase, 1),
+			// at least one lower-case character
+			new CharacterRule(EnglishCharacterData.LowerCase, 1),
+			// at least one digit character
+			new CharacterRule(EnglishCharacterData.Digit, 1),
+			// at least one symbol (special character)
+			//new CharacterRule(EnglishCharacterData.Special, 1),
+			specialCharacters
+		);
+		PasswordGenerator generator = new PasswordGenerator();
+		// Generated password is 12 characters long, which complies with polic
+		return generator.generatePassword(length, rules);
+	}
+	
 	////////////////////////////////////////////////////////////////
 
 	public enum LoginStatus
