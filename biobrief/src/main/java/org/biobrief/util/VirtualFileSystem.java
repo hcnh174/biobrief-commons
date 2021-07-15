@@ -3,6 +3,7 @@ package org.biobrief.util;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.biobrief.web.LoginHelper;
 import org.biobrief.web.WebHelper;
@@ -279,7 +280,8 @@ public class VirtualFileSystem
 	{
 		void add(INode node);
 		VirtualFolder addVirtualFolder(String path, String name);
-		Folder addFolder(String path);
+		//Folder addFolder(String path);
+		Optional<Folder> addFolder(String path);
 		IFile add(IFile file);
 		IFolder findDir(List<String> arr);
 		List<INode> getNodes();
@@ -359,11 +361,13 @@ public class VirtualFileSystem
 		}
 		
 		@Override
-		public Folder addFolder(String path)
+		public Optional<Folder> addFolder(String path)
 		{
+			if (!FileHelper.exists(path))
+				return Optional.empty();
 			Folder folder=new Folder(path);
 			add(folder);
-			return folder;
+			return Optional.of(folder);
 		}
 		
 		@Override
