@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SendGridEmailServiceImpl extends AbstractEmailService
 {
-	public static final Integer WARNING=10;
-	public static final Integer MAX=20;
+	public static final Integer WARNING=50;
+	public static final Integer MAX=80;
 	
 	protected Integer counter=0;
 	

@@ -23,15 +23,11 @@ public class VirtualFileSystem
 	@JsonIgnore protected List<String> skipDirs=Lists.newArrayList();
 	@JsonIgnore protected List<String> skipPrefixes=Lists.newArrayList();
 	@JsonIgnore protected List<String> skipSuffixes=Lists.newArrayList();
+	@JsonIgnore protected List<String> skipPatterns=Lists.newArrayList();
 	
 	public VirtualFileSystem(String dir)
 	{
 		this.dir=dir;
-		load();
-	}
-	
-	private void load()
-	{
 		System.out.println("loading virtual file system: "+dir);
 		this.root=new VirtualFileSystem.VirtualFolder(dir, "root");
 	}
@@ -49,7 +45,9 @@ public class VirtualFileSystem
 		String newfilename=getRealPath(to);
 		log("moving file from "+filename+" to "+newfilename);
 		FileHelper.moveFile(filename, newfilename);
-		load();
+		//load();
+		reloadPath(from);
+		reloadPath(to);
 	}
 	
 	public List<IFile> search(String path, String searchString, Boolean caseSensitive)
@@ -81,7 +79,8 @@ public class VirtualFileSystem
 		String dir=folder.getPath()+"/"+name;
 		log("creating directory: path="+path+" name="+name+" dir="+dir);
 		FileHelper.createDirectory(dir);
-		load();
+		//load();
+		reloadPath(path);
 	}
 	
 	public void copy(String from, String to)
@@ -90,7 +89,11 @@ public class VirtualFileSystem
 		String newfilename=getRealPath(to);
 		log("copy file from "+filename+" to "+newfilename);
 		FileHelper.copyFile(filename, newfilename);
-		load();
+		
+		// reload both parent directories
+		//load();
+		reloadPath(from);
+		reloadPath(to);
 	}
 	
 	public void rename(String path, String oldname, String newname)
@@ -100,7 +103,8 @@ public class VirtualFileSystem
 		String newfilename=dir+newname;
 		log("renaming file from "+oldfilename+" to "+newfilename);
 		FileHelper.moveFile(oldfilename, newfilename);
-		load();
+		//load();
+		reloadPath(path);
 	}
 	
 	public List<IFile> details(String dir, List<String> names)
@@ -135,7 +139,8 @@ public class VirtualFileSystem
 		String filename=getRealPath(path);
 		log("deleting file: "+filename);
 		FileHelper.deleteFile(filename);
-		load();
+		//load();
+		reloadPath(path);
 	}
 	
 	public void upload(String path, MultipartFile file)
@@ -147,7 +152,8 @@ public class VirtualFileSystem
 		//dir="c:/temp/upload";// todo hack!
 		log("uploading file: "+path+"/"+file.getOriginalFilename());
 		WebHelper.writeFile(dir, file);
-		load();
+		//load();
+		reloadPath(path);
 	}
 	
 	public String download(String path, List<String> names)
@@ -198,6 +204,12 @@ public class VirtualFileSystem
 		return root.findDir(arr);
 	}
 	
+	private void reloadPath(String path)
+	{
+		System.out.println("reloading path: "+path);
+		findDir(FileHelper.getDirFromFilename(path)).load();
+	}
+	
 	private String cleanPath(String path)
 	{
 		if (!path.startsWith("/"))
@@ -220,6 +232,11 @@ public class VirtualFileSystem
 	public void skipSuffix(String suffix)
 	{
 		skipSuffixes.add(suffix);
+	}
+	
+	public void skipPattern(String suffix)
+	{
+		skipPatterns.add(suffix);
 	}
 	
 	private boolean isDirSkipped(String path)
@@ -251,6 +268,11 @@ public class VirtualFileSystem
 			if (filename.endsWith(suffix))
 				return true;
 		}
+		for (String pattern : skipPatterns)
+		{
+			if (filename.contains(pattern))
+				return true;
+		}
 		return false;
 	}
 	
@@ -274,6 +296,9 @@ public class VirtualFileSystem
 		Date getLastModified();
 		boolean isFile();
 		boolean isDirectory();
+		
+//		void setParent(IFolder parent);
+//		IFolder getParent();
 	}
 	
 	public interface IFolder extends INode
@@ -286,6 +311,7 @@ public class VirtualFileSystem
 		IFolder findDir(List<String> arr);
 		List<INode> getNodes();
 		boolean isVirtual();
+		void load();
 	}
 	
 	public interface IFile extends INode
@@ -298,6 +324,7 @@ public class VirtualFileSystem
 	@Data
 	public abstract class Node implements INode
 	{
+		protected IFolder parent;
 		protected String path;
 		protected String name;
 		protected Long length;
@@ -337,18 +364,19 @@ public class VirtualFileSystem
 	
 		public void add(INode node)
 		{
+		//	node.setParent(this);
 			this.nodes.add(node);
 		}
 		
 		public IFolder add(IFolder folder)
 		{
-			this.nodes.add(folder);
+			add((INode)folder);
 			return folder;
 		}
 		
 		public IFile add(IFile file)
 		{
-			this.nodes.add(file);
+			add((INode)file);
 			return file;
 		}
 		
@@ -386,7 +414,12 @@ public class VirtualFileSystem
 					return folder.findDir(StringHelper.subList(arr, 1));
 				}
 			}
-			throw new CException("cannot find subfolder with name: "+subdir);
+			throw new CException("cannot find subfolder with name: ["+subdir+"]");
+		}
+		
+		public void load()
+		{
+			// do nothing unless real folder
 		}
 		
 		@Override public boolean isFile() {return false;}
@@ -400,7 +433,13 @@ public class VirtualFileSystem
 		public Folder(String path)
 		{
 			super(path);
-			//System.out.println("Folder: path="+path);
+			load();
+		}
+		
+		public void load()
+		{
+			System.out.println("loading folder: path="+path);
+			nodes.clear();
 			for (String dir : FileHelper.listDirectories(path, true))
 			{
 				if (!isDirSkipped(dir))

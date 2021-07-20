@@ -435,15 +435,6 @@ public class SyncFusionHelper
 			}
 		}
 		
-//		@Data @EqualsAndHashCode(callSuper=true)
-//		public static class UploadResponse extends AbstractResponse
-//		{
-//			public UploadResponse(UploadRequest request)
-//			{
-//				super(request);
-//			}
-//		}
-		
 		///////////////////////////////////////////////////
 		
 		@Data @EqualsAndHashCode(callSuper=true)
