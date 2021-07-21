@@ -51,7 +51,7 @@ public class NotificationService
 	
 	public boolean isIgnored(String username)
 	{
-		System.out.println("isIgnored: username="+username+" ignoreUsers="+StringHelper.toString(ignoreUsers));
+		//System.out.println("isIgnored: username="+username+" ignoreUsers="+StringHelper.toString(ignoreUsers));
 		return ignoreUsers.contains(username);
 	}
 }
