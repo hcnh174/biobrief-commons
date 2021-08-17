@@ -1770,10 +1770,16 @@ public final class StringHelper
 		return parseBoolean(value)!=null;
 	}
 	
+	public static Boolean isTrue(Boolean value)
+	{
+		return value!=null && value==true;
+	}
+	
 	public static Boolean isTrue(String value)
 	{
 		Boolean result=parseBoolean(value);
-		return result!=null && result==true;
+		return isTrue(result);
+		//return result!=null && result==true;
 	}
 	
 	public static Boolean parseBoolean(String value)

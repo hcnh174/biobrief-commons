@@ -12,6 +12,4 @@ public class UnhandledCaseException extends CException
 	{
 		this("no handler for case: ", state);
 	}
-	
-
 }
