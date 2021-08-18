@@ -887,8 +887,14 @@ public final class StringHelper
 	
 	public static void checkHasContent(Object obj)
 	{
+		String message="expected content. trimmed value is null or empty string: ["+obj+"]";
+		checkHasContent(obj, message);
+	}
+	
+	public static void checkHasContent(Object obj, String message)
+	{
 		if (!hasContent(obj))
-			throw new CException("expected content. trimmed value is null or empty string: ["+obj+"]");
+			throw new CException(message);
 	}
 	
 	// slightly optimized to only trim if not null and length>0

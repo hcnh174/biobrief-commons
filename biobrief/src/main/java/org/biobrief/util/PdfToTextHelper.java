@@ -7,7 +7,7 @@ public class PdfToTextHelper
 	public static int convertPdfToText(String infile, String outfile, String password)
 	{
 		System.out.println("pdffile="+infile);
-		StringHelper.checkHasContent(password);
+		StringHelper.checkHasContent(password, "the supplied password is null or empty: "+password);
 		FileHelper.checkExists(infile);
 		String command=Constants.SCRIPTS_DIR+"/run_pdftotext.sh --pdffile "+infile+" --password "+password+" --textfile "+outfile;
 		return execute(command, outfile);
