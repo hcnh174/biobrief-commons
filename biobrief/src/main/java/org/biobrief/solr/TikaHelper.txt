@@ -7,6 +7,7 @@ import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.biobrief.util.CException;
 import org.biobrief.util.FileHelper;
@@ -14,7 +15,9 @@ import org.xml.sax.ContentHandler;
 
 //https://www.baeldung.com/apache-tika
 public class TikaHelper
-{
+{	
+
+	
 	public static String extractContent(String filename)
 	{
 		InputStream stream=null;
@@ -75,10 +78,10 @@ public class TikaHelper
 	{
 		try
 		{
-			AutoDetectParser parser = new AutoDetectParser();
-			BodyContentHandler handler = new BodyContentHandler();
+			Parser parser = new AutoDetectParser();
+			ContentHandler handler = new BodyContentHandler();
 			Metadata metadata = new Metadata();
-			ParseContext context = new ParseContext();
+			ParseContext context = new ParseContext();			 
 			parser.parse(stream, handler, metadata, context);
 			return handler.toString();
 		}
