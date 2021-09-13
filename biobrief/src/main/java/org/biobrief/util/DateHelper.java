@@ -325,11 +325,28 @@ public final class DateHelper
 		return (setToMidnight(date1).compareTo(setToMidnight(date2))==0);
 	}
 	
+	// null safe - does not set to midnight - uses built-in after function
+	public static boolean isAfter(Date date1, Date date2)
+	{
+		if (date1==null || date2==null)
+			return false;
+		return date1.after(date2);
+	}
+	
+	public static boolean isBefore(Date date1, Date date2)
+	{
+		if (date1==null || date2==null)
+			return false;
+		return date1.before(date2);
+	}
+	
+	@Deprecated
 	public static boolean before(Date date1, Date date2)
 	{
 		return (setToMidnight(date2).compareTo(setToMidnight(date1))<0);
 	}
-	
+
+	@Deprecated
 	public static boolean after(Date date1, Date date2)
 	{
 		return (setToMidnight(date2).compareTo(setToMidnight(date1))>0);
