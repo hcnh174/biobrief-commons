@@ -85,7 +85,6 @@ public final class JackcessHelper
 	}
 	
 	//https://github.com/jahlborn/jackcess/blob/master/src/main/java/com/healthmarketscience/jackcess/Row.java
-	@SuppressWarnings("deprecation")
 	private static Object getValue(Row row, Column col)
 	{
 		String colname=col.getName();

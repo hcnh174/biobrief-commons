@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 
+import org.biobrief.util.DataFrame.StringDataFrame;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -19,6 +21,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.common.collect.Lists;
 
 import lombok.Data;
 
@@ -33,23 +36,38 @@ public final class GoogleHelper
 	 * Prints the names and majors of students in a sample spreadsheet:
 	 * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
 	 */
-	public static void loadSpreadsheet(Query query)
+	public static StringDataFrame loadSpreadsheet(Query query)
 	{
 		Sheets service=openSpreadsheet(query);
 		List<List<Object>> values = querySpreadsheet(service, query);
-		if (values == null || values.isEmpty())
+		return createDataFrame(values);
+	}
+	
+	private static StringDataFrame createDataFrame(List<List<Object>> values)
+	{
+		List<String> colnames=Lists.newArrayList();
+		for (Object value : values.get(0))
 		{
-			System.out.println("No data found.");
+			colnames.add(value.toString());
 		}
-		else
+		StringDataFrame dataframe=new StringDataFrame();
+		for (String colname : colnames)
 		{
-			System.out.println("Name, Major");
-			for (List<Object> row : values)
+			dataframe.addColumn(colname);
+		}
+		int rownum=1;
+		for (List<Object> row : StringHelper.subList(values, 1))
+		{
+			String rowname=""+(rownum++);
+			dataframe.addRow(rowname);
+			for (int col=0; col<colnames.size(); col++)
 			{
-				// Print columns A and E, which correspond to indices 0 and 4.
-				System.out.printf("%s, %s\n", row.get(0), row.get(4));
+				String colname=colnames.get(col);
+				Object value=row.get(col);
+				dataframe.setValue(colname, rowname, value);
 			}
 		}
+		return dataframe;
 	}
 	
 	private static List<List<Object>> querySpreadsheet(Sheets service, Query query)
@@ -67,11 +85,11 @@ public final class GoogleHelper
 		}
 	}
 	
+	// Build a new authorized API client service.
 	private static Sheets openSpreadsheet(Query query)
 	{
 		try
 		{
-			// Build a new authorized API client service.
 			final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 			Credential credentials=getCredentials(query, HTTP_TRANSPORT);
 			Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials)
