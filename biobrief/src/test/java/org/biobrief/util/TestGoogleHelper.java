@@ -11,7 +11,12 @@ public class TestGoogleHelper
 	public void testSomething() throws Exception
 	{
 		System.out.println("testing something");
-		GoogleHelper.main();
-		assertThat("google").endsWith("gle");
+		GoogleHelper.Query query=new GoogleHelper.Query();
+		query.setCredentialsFile("c:/workspace/sheets/src/main/resources/credentials.json");
+		query.setTokensDir("c:/workspace/sheets/tokens");
+		query.setSpreadsheetId("1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms");
+		query.setRange("Class Data!A2:E");
+		GoogleHelper.loadSpreadsheet(query);
+		//assertThat("google").endsWith("gle");
 	}
 }
