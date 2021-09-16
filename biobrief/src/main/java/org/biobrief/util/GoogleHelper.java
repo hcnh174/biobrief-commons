@@ -28,7 +28,7 @@ import lombok.Data;
 //https://developers.google.com/sheets/api/quickstart/java
 public final class GoogleHelper
 {
-	private static final String APPLICATION_NAME = "gangenome";
+	//private static final String APPLICATION_NAME = "gangenome";
 	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 	
@@ -93,7 +93,7 @@ public final class GoogleHelper
 			final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 			Credential credentials=getCredentials(query, HTTP_TRANSPORT);
 			Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials)
-					.setApplicationName(APPLICATION_NAME)
+					.setApplicationName(query.getApplicationName())
 					.build();
 			return service;
 		}
@@ -136,6 +136,7 @@ public final class GoogleHelper
 	@Data
 	public static class Query
 	{
+		protected String applicationName="biobrief";
 		protected String credentialsFile;
 		protected String tokensDir;
 		protected Integer port=9876;//8888
