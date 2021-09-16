@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.biobrief.util.DataFrame.StringDataFrame;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -131,10 +134,10 @@ public final class GoogleHelper
 	@Data
 	public static class GoogleProperties
 	{
-		protected String applicationName="biobrief";
-		protected String credentialsFile;
-		protected String tokensDir;
-		protected Integer port=9876;//8888
+		@Valid @NotNull protected String applicationName="biobrief";
+		@Valid @NotNull protected String credentialsFile;
+		@Valid @NotNull protected String tokensDir;
+		@Valid @NotNull protected Integer port=9876;//8888
 	}
 	
 	@Data

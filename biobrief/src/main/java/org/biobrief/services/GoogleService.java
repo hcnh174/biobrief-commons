@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.biobrief.util.DataFrame.StringDataFrame;
 import org.biobrief.util.GoogleHelper;
+import org.biobrief.util.MessageWriter;
 import org.biobrief.util.GoogleHelper.GoogleProperties;
 import org.biobrief.util.GoogleHelper.GoogleSheetsQuery;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,9 @@ public class GoogleService
 		this.properties=properties;
 	}
 	
-	public StringDataFrame loadSpreadsheet(GoogleProperties properties, GoogleSheetsQuery query)
+	public StringDataFrame loadSpreadsheet(GoogleSheetsQuery query, MessageWriter out)
 	{
+		out.println("opending spreadsheet: spreadsheetId="+query.getSpreadsheetId()+" range="+query.getRange());
 		Sheets service=GoogleHelper.openSpreadsheet(properties);
 		List<List<Object>> values=GoogleHelper.querySpreadsheet(service, query);
 		return GoogleHelper.createDataFrame(values);

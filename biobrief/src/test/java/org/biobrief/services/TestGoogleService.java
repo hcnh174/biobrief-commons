@@ -3,6 +3,7 @@ package org.biobrief.services;
 import org.biobrief.util.DataFrame.StringDataFrame;
 import org.biobrief.util.GoogleHelper;
 import org.biobrief.util.GoogleHelper.GoogleProperties;
+import org.biobrief.util.MessageWriter;
 import org.biobrief.util.RuntimeHelper;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,8 @@ public class TestGoogleService
 		GoogleHelper.GoogleSheetsQuery query=new GoogleHelper.GoogleSheetsQuery(spreadsheetId, range);
 		
 		GoogleService service=new GoogleService(properties);
-		StringDataFrame dataframe=service.loadSpreadsheet(properties, query);
+		MessageWriter out=new MessageWriter();
+		StringDataFrame dataframe=service.loadSpreadsheet(query, out);
 		System.out.println("sample data:");
 		System.out.println(dataframe.toString());
 		//assertThat("google").endsWith("gle");
