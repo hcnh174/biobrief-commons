@@ -1,5 +1,7 @@
-package org.biobrief.util;
+package org.biobrief.services;
 
+import org.biobrief.util.CException;
+import org.biobrief.util.SendGridHelper;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;

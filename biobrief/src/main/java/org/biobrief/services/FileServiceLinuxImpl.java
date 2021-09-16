@@ -1,4 +1,4 @@
-package org.biobrief.util;
+package org.biobrief.services;
 
 import org.springframework.stereotype.Service;
 

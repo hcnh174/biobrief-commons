@@ -1,7 +1,9 @@
-package org.biobrief.util;
+package org.biobrief.services;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+
+import org.biobrief.util.RuntimeHelper;
 
 public interface FileService
 {	

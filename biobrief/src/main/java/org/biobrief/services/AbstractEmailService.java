@@ -1,7 +1,10 @@
-package org.biobrief.util;
+package org.biobrief.services;
 
 import java.util.List;
 
+import org.biobrief.util.CException;
+import org.biobrief.util.LogUtil;
+import org.biobrief.util.StringHelper;
 import org.springframework.mail.SimpleMailMessage;
 
 //http://docs.spring.io/spring/docs/4.1.6.RELEASE/spring-framework-reference/htmlsingle/#mail

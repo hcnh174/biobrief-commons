@@ -1,5 +1,6 @@
-package org.biobrief.util;
+package org.biobrief.services;
 
+import org.biobrief.util.CException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;

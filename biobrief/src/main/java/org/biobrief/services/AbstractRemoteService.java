@@ -1,6 +1,12 @@
-package org.biobrief.util;
+package org.biobrief.services;
 
 import java.util.List;
+
+import org.biobrief.util.CCommandLine;
+import org.biobrief.util.CException;
+import org.biobrief.util.RemoteProperties;
+import org.biobrief.util.SshHelper;
+import org.biobrief.util.StringHelper;
 
 import com.google.common.collect.Lists;
 

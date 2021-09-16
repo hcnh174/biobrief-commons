@@ -1,7 +1,12 @@
-package org.biobrief.util;
+package org.biobrief.services;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+
+import org.biobrief.util.CException;
+import org.biobrief.util.FileHelper;
+import org.biobrief.util.ImageHelper;
+import org.biobrief.util.StringHelper;
 
 public class AbstractFileService implements FileService
 {

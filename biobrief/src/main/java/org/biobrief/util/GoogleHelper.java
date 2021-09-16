@@ -28,22 +28,17 @@ import lombok.Data;
 //https://developers.google.com/sheets/api/quickstart/java
 public final class GoogleHelper
 {
-	//private static final String APPLICATION_NAME = "gangenome";
 	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 	
-	/**
-	 * Prints the names and majors of students in a sample spreadsheet:
-	 * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-	 */
-	public static StringDataFrame loadSpreadsheet(Query query)
-	{
-		Sheets service=openSpreadsheet(query);
-		List<List<Object>> values = querySpreadsheet(service, query);
-		return createDataFrame(values);
-	}
+//	public static StringDataFrame loadSpreadsheet(GoogleProperties properties, GoogleSheetsQuery query)
+//	{
+//		Sheets service=openSpreadsheet(properties);
+//		List<List<Object>> values = querySpreadsheet(service, query);
+//		return createDataFrame(values);
+//	}
 	
-	private static StringDataFrame createDataFrame(List<List<Object>> values)
+	public static StringDataFrame createDataFrame(List<List<Object>> values)
 	{
 		List<String> colnames=Lists.newArrayList();
 		for (Object value : values.get(0))
@@ -70,7 +65,7 @@ public final class GoogleHelper
 		return dataframe;
 	}
 	
-	private static List<List<Object>> querySpreadsheet(Sheets service, Query query)
+	public static List<List<Object>> querySpreadsheet(Sheets service, GoogleSheetsQuery query)
 	{
 		try
 		{
@@ -86,14 +81,14 @@ public final class GoogleHelper
 	}
 	
 	// Build a new authorized API client service.
-	private static Sheets openSpreadsheet(Query query)
+	public static Sheets openSpreadsheet(GoogleProperties props)
 	{
 		try
 		{
 			final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-			Credential credentials=getCredentials(query, HTTP_TRANSPORT);
+			Credential credentials=getCredentials(props, HTTP_TRANSPORT);
 			Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials)
-					.setApplicationName(query.getApplicationName())
+					.setApplicationName(props.getApplicationName())
 					.build();
 			return service;
 		}
@@ -109,22 +104,22 @@ public final class GoogleHelper
 	 * @return An authorized Credential object.
 	 * @throws IOException If the credentials.json file cannot be found.
 	 */
-	private static Credential getCredentials(final Query query, final NetHttpTransport HTTP_TRANSPORT)
+	private static Credential getCredentials(final GoogleProperties props, final NetHttpTransport HTTP_TRANSPORT)
 			//throws IOException
 	{
 		try
 		{
-			// Load client secrets
-			InputStream in = FileHelper.openFileInputStream(query.getCredentialsFile());
-			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+			InputStream in = FileHelper.openFileInputStream(props.getCredentialsFile());
+			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, 
+					new InputStreamReader(in));
 	
 			// Build flow and trigger user authorization request.
 			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 					HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-					.setDataStoreFactory(new FileDataStoreFactory(new java.io.File(query.getTokensDir())))
+					.setDataStoreFactory(new FileDataStoreFactory(new java.io.File(props.getTokensDir())))
 					.setAccessType("offline")
 					.build();
-			LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(query.getPort()).build();
+			LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(props.getPort()).build();
 			return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
 		}
 		catch(IOException e)
@@ -134,13 +129,24 @@ public final class GoogleHelper
 	}
 	
 	@Data
-	public static class Query
+	public static class GoogleProperties
 	{
 		protected String applicationName="biobrief";
 		protected String credentialsFile;
 		protected String tokensDir;
 		protected Integer port=9876;//8888
+	}
+	
+	@Data
+	public static class GoogleSheetsQuery
+	{
 		protected String spreadsheetId;
 		protected String range;
+		
+		public GoogleSheetsQuery(String spreadsheetId, String range)
+		{
+			this.spreadsheetId=spreadsheetId;
+			this.range=range;
+		}
 	}
 }
