@@ -57,6 +57,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 
 public final class WebHelper
 {	
@@ -210,6 +211,7 @@ public final class WebHelper
 		}
 		return buffer.toString();
 	}
+
 	
 	public static String getOriginalFilename(HttpServletRequest request, String name)
 	{		

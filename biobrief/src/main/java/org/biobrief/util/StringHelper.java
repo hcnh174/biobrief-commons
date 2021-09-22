@@ -930,12 +930,26 @@ public final class StringHelper
 		return value1.equals(value2);
 	}
 	
-	public static String createQueryString(Map<String,Object> params)
+	public static String createQueryString(Map<String, Object> params)
 	{
 		List<String> pairs=new ArrayList<String>();
 		for (Map.Entry<String,Object> entry : params.entrySet())
 		{
 			pairs.add(entry.getKey()+"="+entry.getValue());
+		}
+		return StringHelper.join(pairs,"&");
+	}
+	
+	public static String createQueryString(Multimap<String, Object> multimap)
+	{
+		Map<String, Collection<Object>> map=multimap.asMap();
+		List<String> pairs=new ArrayList<String>();
+		for (String name : map.keySet())
+		{
+			for (Object value : map.get(name))
+			{
+				pairs.add(name+"="+value);
+			}
 		}
 		return StringHelper.join(pairs,"&");
 	}
@@ -2358,10 +2372,11 @@ public final class StringHelper
 	///////////////////////////////////////////////////////////
 	
 	//https://stackoverflow.com/questions/994331/how-to-unescape-html-character-entities-in-java
+	//ttps://stackoverflow.com/questions/11145681/how-to-convert-a-string-with-unicode-encoding-to-a-string-of-letters
 	public static String unescapeHtmlEntities(String text)
 	{
 		boolean strictMode = true;
-		return org.jsoup.parser.Parser.unescapeEntities(text, strictMode); 
+		return org.jsoup.parser.Parser.unescapeEntities(text, strictMode);
 	}
 	
 	/////////////////////////////////////////////////////////////
