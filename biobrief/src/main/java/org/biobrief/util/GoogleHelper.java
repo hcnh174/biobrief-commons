@@ -23,6 +23,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.AppendValuesResponse;
+import com.google.api.services.sheets.v4.model.ClearValuesRequest;
+import com.google.api.services.sheets.v4.model.ClearValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.google.common.collect.Lists;
 
@@ -32,14 +35,7 @@ import lombok.Data;
 public final class GoogleHelper
 {
 	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-	private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
-	
-//	public static StringDataFrame loadSpreadsheet(GoogleProperties properties, GoogleSheetsQuery query)
-//	{
-//		Sheets service=openSpreadsheet(properties);
-//		List<List<Object>> values = querySpreadsheet(service, query);
-//		return createDataFrame(values);
-//	}
+	private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);//SPREADSHEETS_READONLY
 	
 	public static StringDataFrame createDataFrame(List<List<Object>> values)
 	{
@@ -68,14 +64,52 @@ public final class GoogleHelper
 		return dataframe;
 	}
 	
-	public static List<List<Object>> querySpreadsheet(Sheets service, GoogleSheetsQuery query)
+	public static List<List<Object>> readSpreadsheet(Sheets service, GoogleSheetsRange range)
 	{
 		try
 		{
 			ValueRange response = service.spreadsheets()
-					.values().get(query.getSpreadsheetId(), query.getRange()).execute();
+					.values().get(range.getSpreadsheetId(), range.getRange()).execute();
 			List<List<Object>> values = response.getValues();
 			return values;
+		}
+		catch(IOException e)
+		{
+			throw new CException();
+		}
+	}
+	
+	public static void clearRange(Sheets service, GoogleSheetsRange range)
+	{
+		try
+		{
+			ClearValuesRequest requestBody = new ClearValuesRequest();
+			Sheets.Spreadsheets.Values.Clear request = service.spreadsheets().values().clear(range.getSpreadsheetId(), range.getRange(), requestBody);
+			ClearValuesResponse response = request.execute();
+			System.out.println(response);
+		}
+		catch(IOException e)
+		{
+			throw new CException();
+		}
+	}
+	
+	public static void writeTable(Sheets service, GoogleSheetsRange range, CTable table)
+	{
+		try
+		{
+			ValueRange requestBody = new ValueRange();
+			requestBody.setRange(range.getRange());
+			requestBody.setMajorDimension("ROWS");
+			requestBody.setValues(GoogleHelper.getValues(table));
+
+			Sheets.Spreadsheets.Values.Append request =
+				service.spreadsheets().values().append(range.getSpreadsheetId(), range.getRange(), requestBody);
+			request.setValueInputOption("USER_ENTERED"); // RAW
+			request.setInsertDataOption("OVERWRITE"); // INSERT
+
+			AppendValuesResponse response = request.execute();
+			System.out.println(response);
 		}
 		catch(IOException e)
 		{
@@ -131,6 +165,17 @@ public final class GoogleHelper
 		}
 	}
 	
+	public static List<List<Object>> getValues(CTable table)
+	{
+		List<List<Object>> values=Lists.newArrayList();
+		values.add(table.getHeader().getValues());
+		for (CTable.Row row : table.getRows())
+		{
+			values.add(row.getValues());
+		}
+		return values;
+	}
+	
 	@Data
 	public static class GoogleProperties
 	{
@@ -141,12 +186,12 @@ public final class GoogleHelper
 	}
 	
 	@Data
-	public static class GoogleSheetsQuery
+	public static class GoogleSheetsRange
 	{
 		protected String spreadsheetId;
 		protected String range;
 		
-		public GoogleSheetsQuery(String spreadsheetId, String range)
+		public GoogleSheetsRange(String spreadsheetId, String range)
 		{
 			this.spreadsheetId=spreadsheetId;
 			this.range=range;

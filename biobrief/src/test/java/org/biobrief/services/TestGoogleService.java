@@ -20,11 +20,11 @@ public class TestGoogleService
 		
 		String spreadsheetId="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
 		String range="Class Data!A2:E";
-		GoogleHelper.GoogleSheetsQuery query=new GoogleHelper.GoogleSheetsQuery(spreadsheetId, range);
+		GoogleHelper.GoogleSheetsRange query=new GoogleHelper.GoogleSheetsRange(spreadsheetId, range);
 		
 		GoogleService service=new GoogleService(properties);
 		MessageWriter out=new MessageWriter();
-		StringDataFrame dataframe=service.loadSpreadsheet(query, out);
+		StringDataFrame dataframe=service.readSpreadsheet(query, out);
 		System.out.println("sample data:");
 		System.out.println(dataframe.toString());
 		//assertThat("google").endsWith("gle");
