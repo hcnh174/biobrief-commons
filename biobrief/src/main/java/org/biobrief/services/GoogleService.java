@@ -41,6 +41,7 @@ public class GoogleService
 	{
 		out.println("writing table: spreadsheetId="+range.getSpreadsheetId()+" range="+range.getRange());
 		Sheets service=GoogleHelper.openSpreadsheet(properties);
+		GoogleHelper.clearRange(service, range);
 		GoogleHelper.writeTable(service, range, table);
 	}
 }
