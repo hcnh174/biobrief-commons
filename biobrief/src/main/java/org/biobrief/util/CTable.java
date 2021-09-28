@@ -366,7 +366,7 @@ public class CTable
 		return buffer.toString();
 	}
 	
-	public String getJson()
+	public String toJson()
 	{
 		StringBuilder buffer=new StringBuilder();
 		buffer.append("[\n");
@@ -378,10 +378,11 @@ public class CTable
 			{
 				String name=this.header.getCell(c).getValue().toString();
 				Object value=row.getCell(c).getValue();
-				buffer.append("\t").append(name).append(": ");
+				buffer.append("\t").append(StringHelper.doubleQuote(name)).append(": ");
 				if (value instanceof Integer || value instanceof Float || value instanceof Boolean)
 					buffer.append(value);
-				else buffer.append("\"").append(value).append("\"");
+				//else buffer.append("\"").append(value).append("\"");
+				else buffer.append(StringHelper.doubleQuote(value.toString()));
 				if (c<this.header.getCells().size()-1)
 					buffer.append(",");
 				buffer.append("\n");
