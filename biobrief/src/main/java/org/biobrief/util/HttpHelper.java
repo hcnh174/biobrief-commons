@@ -30,6 +30,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import com.google.common.collect.Multimap;
+
 //https://hc.apache.org/httpcomponents-client-ga/
 //https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/QuickStart.java
 //https://hc.apache.org/httpcomponents-client-ga/tutorial/html/index.html
@@ -107,12 +109,26 @@ public class HttpHelper
 		return getRequest(url, params);
 	}
 	
+	//////////////////
+	
 	public static String postRequest(String url, Map<String,Object> params)
+	{
+		List<NameValuePair> pairs=createNameValuePairs(params);
+		return postRequest(url, pairs);
+	}
+	
+	public static String postRequest(String url, Multimap<String, Object> params)
+	{
+		List<NameValuePair> pairs=createNameValuePairs(params);
+		return postRequest(url, pairs);
+	}
+		
+	public static String postRequest(String url, List<NameValuePair> pairs)
 	{
 		try
 		{
 			return Request.Post(url)
-					.bodyForm(createNameValuePairs(params))
+					.bodyForm(pairs)
 					.execute()
 					.returnContent().asString();
 		}
@@ -146,6 +162,32 @@ public class HttpHelper
 		}
 		return form.build();
 	}
+	
+	private static List<NameValuePair> createNameValuePairs(Multimap<String, Object> params)
+	{
+		Form form=Form.form();//.add("username",  "vip").add("password",  "secret").build()
+		for (String key : params.keySet())
+		{
+			for (Object value : params.get(key))
+			{
+				form.add(key, value.toString());
+			}
+		}
+		return form.build();
+	}
+	
+//	private static List<NameValuePair> createNameValuePairs(MultiValueMap<String, Object> params)
+//	{
+//		Form form=Form.form();//.add("username",  "vip").add("password",  "secret").build()
+//		for (Entry<String, List<Object>> entry : params.entrySet())
+//		{
+//			for (Object value : entry.getValue())
+//			{
+//				form.add(entry.getKey(), value.toString());
+//			}
+//		}
+//		return form.build();
+//	}
 	
 	/*
 	public static String getRequest(String url, Map<String,Object> model)
