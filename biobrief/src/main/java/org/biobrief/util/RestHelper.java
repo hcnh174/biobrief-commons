@@ -54,7 +54,7 @@ public class RestHelper
 	public static <T> T get(RestTemplate restTemplate, String server, RestParams params, Class<?> cls)
 	{
 		Map<String, Object> vars = params.getVars();
-		String url=server+"/"+params.getUrl();
+		String url=server+params.getUrl();//"/" // todo breaking change! check for errors
 		System.out.println("RestHelper.get url="+url);
 		T result = (T)restTemplate.getForObject(url, cls, vars);
 		return result;
@@ -79,7 +79,7 @@ public class RestHelper
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		MultiValueMap<String, Object> map=createMultiValueMap(params);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(map, headers);
-		String url=server+"/"+params.getUrl();
+		String url=server+params.getUrl();//"/"+ // todo breaking change! check for errors
 		System.out.println("RestHelper.post url="+url);
 		ResponseEntity<T> response = (ResponseEntity<T>)restTemplate.postForEntity(url, request , cls);
 		System.out.println(StringHelper.toString(response));

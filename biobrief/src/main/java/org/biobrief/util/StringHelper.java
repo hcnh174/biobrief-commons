@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
@@ -2537,6 +2538,27 @@ public final class StringHelper
 				return true;
 		}
 		return false;
+	}
+	
+	//https://stackoverflow.com/questions/6120657/how-to-generate-a-unique-hash-code-for-string-input-in-android
+	public static String createHash(String str)
+	{
+		try
+		{
+			MessageDigest messageDigest=MessageDigest.getInstance("MD5");
+			messageDigest.update(str.getBytes(),0,str.length());
+			return new BigInteger(1,messageDigest.digest()).toString(16);
+		}
+		catch (Exception e)
+		{
+			throw new CException(e);
+		}
+	}
+	
+	//https://stackoverflow.com/questions/6120657/how-to-generate-a-unique-hash-code-for-string-input-in-android
+	public static long getUniqueLongFromString (String value)
+	{
+		return UUID.nameUUIDFromBytes(value.getBytes()).getMostSignificantBits();
 	}
 	
 //	public static void banner(String message)
