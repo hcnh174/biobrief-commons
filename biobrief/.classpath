@@ -104,47 +104,42 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-sheets/v4-rev20210629-1.32.1/509d3011b96196ee53134e692f5b024f79a29873/google-api-services-sheets-v4-rev20210629-1.32.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-sheets/v4-rev20210629-1.32.1/9f51b6639b9e7ca036e45c767c92f6c9929247c6/google-api-services-sheets-v4-rev20210629-1.32.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-sheets/v4-rev581-1.25.0/ce3b5fdfd9bc7ea042c5f8c2338cca832ff7a02f/google-api-services-sheets-v4-rev581-1.25.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-sheets/v4-rev581-1.25.0/374b2acd30fdf7017ba1f211f99d50c9d55a1e4/google-api-services-sheets-v4-rev581-1.25.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.32.2/c59fe10de181f1dff161d6e1418a3e46d629ce83/google-api-client-1.32.2-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.32.2/e9bd262652619c5cb23d8a7994b581220c788161/google-api-client-1.32.2.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.30.4/7a6416b790908916400b7472dbb4548fe2796569/google-api-client-1.30.4-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.30.4/6fea4e85d81cae031d424cd25059f9fda23e598b/google-api-client-1.30.4.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-jetty/1.32.1/b8c6341a4638a15a8125802ab48093901d26b063/google-oauth-client-jetty-1.32.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-jetty/1.32.1/5aef54fa0d7a2ec4d0526106fd6cc4d874fdb4f9/google-oauth-client-jetty-1.32.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-jetty/1.30.6/75c97015ffc2da26eb88e87d0559fec59ee7b9de/google-oauth-client-jetty-1.30.6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-jetty/1.30.6/6581207a298133f0349632364bd26da64a85942c/google-oauth-client-jetty-1.30.6.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-java6/1.32.1/741e1e75a7fed534214c0b50296fd0cac4ba57e2/google-oauth-client-java6-1.32.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-java6/1.32.1/40a5f5e77896fc6f588388624946341cdef73a1f/google-oauth-client-java6-1.32.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-java6/1.30.6/ece9bb692d3a3e65f940cc3b136859ecf90ac604/google-oauth-client-java6-1.30.6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-java6/1.30.6/6c744e05b99325030625d9c7df7f3306f3e80a4e/google-oauth-client-java6-1.30.6.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.32.1/c5e6d7fa24c38a6e5eb3df16ce6fc042cbe86236/google-oauth-client-1.32.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.32.1/58edd8b2fd2e10eef6fd194ebb9c933054c4a744/google-oauth-client-1.32.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.30.6/e3aebbef5ea64bff4706e72742cc2fc4b0ba8b87/google-oauth-client-1.30.6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.30.6/5c9a0e62e0cbda2bad495fa72147a331617f2e99/google-oauth-client-1.30.6.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.40.1/ac6093276dfbf5aaa26cc0e1712ec1f9c27b3087/google-http-client-gson-1.40.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.40.1/3c9ce115e5f9c19bd16585a281140fc8c95e5b1f/google-http-client-gson-1.40.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.32.1/dbfe3da57918dbf7f26e07a5633d1e56fba5889f/google-http-client-jackson2-1.32.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.32.1/9bae3bc3b295fa5f281f105e4ab41094f06e83d8/google-http-client-jackson2-1.32.1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-apache-v2/1.40.1/9e6d13d5fafeda4b07ec3a6f9d86abab1bb2c3ee/google-http-client-apache-v2-1.40.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-apache-v2/1.40.1/f50c6c36f29c74c561b702acfb20bf872c8c9c43/google-http-client-apache-v2-1.40.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.34.2/b468298617f4be10aee45a35cac25c05018fdd37/google-http-client-1.34.2-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.34.2/58b4c500b5ce58271f1a6c5f6767aa8721158ea4/google-http-client-1.34.2.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.40.1/100577a1205b74a577156c4176a195ce8224e048/google-http-client-1.40.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.40.1/23e18f41fe9280eee4a6c43790ae3e89ed4d2759/google-http-client-1.40.1.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-contrib-http-util/0.28.0/2acc13da03d14176e2e7299e5e13084f60db6ddc/opencensus-contrib-http-util-0.28.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-contrib-http-util/0.28.0/f6cb276330197d51dd65327fc305a3df7e622705/opencensus-contrib-http-util-0.28.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-contrib-http-util/0.24.0/bde318fc486d8655159d87cee8dfb2d43be2cf6/opencensus-contrib-http-util-0.24.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-contrib-http-util/0.24.0/6d96406c272d884038eb63b262458df75b5445/opencensus-contrib-http-util-0.24.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1079,16 +1074,6 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.8/c0f02b42d0474823279fc9606a81338896d59941/gson-2.8.8-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.8/431fc3cbc0ff81abdbfde070062741089c3ba874/gson-2.8.8.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-api/0.28.0/2405538307d22fe513cbbc790d72b593437e606a/opencensus-api-0.28.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-api/0.28.0/fc0d06a9d975a38c581dff59b99cf31db78bd99/opencensus-api-0.28.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.2.6/2c59d37fdc293ee9329ebb0bb22bc709eafa1f56/logback-core-1.2.6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.2.6/25be1abb32e870ff042e698a799b56587e0dca9a/logback-core-1.2.6.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
@@ -1139,7 +1124,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.27.2/56fd774c8d930300b48bf0b8b280ac8e2002d3cf/grpc-context-1.27.2-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.27.2/1789190601b7a5361e4fa52b6bc95ec2cd71e854/grpc-context-1.27.2.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-api/0.24.0/41c65bc38d0225e9563491fcbe24d3a763450b7e/opencensus-api-0.24.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-api/0.24.0/f974451b19007ce820f433311ce8adb88e2b7d2c/opencensus-api-0.24.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1150,6 +1135,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.minidev/accessors-smart/2.4.7/6369c6c389cd6e1e1ee42d8ea8823a78decae735/accessors-smart-2.4.7-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.minidev/accessors-smart/2.4.7/3970cfc505e6657ca60f3aa57c849f6043000d7a/accessors-smart-2.4.7.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.22.1/7f751bfc4b40d578028113d842fcd275c589ccf4/grpc-context-1.22.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.22.1/1a074f9cf6f367b99c25e70dc68589f142f82d11/grpc-context-1.22.1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
