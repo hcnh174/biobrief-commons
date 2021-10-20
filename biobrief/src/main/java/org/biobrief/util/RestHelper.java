@@ -36,14 +36,14 @@ public class RestHelper
 {
 	public static final Integer TIMEOUT=10;//seconds
 	
-	public static String get(RestTemplate restTemplate, String url)
+	public static String get(RestTemplate restTemplate, String url, MessageWriter out)
 	{
 		Map<String, Object> vars = Maps.newLinkedHashMap();
 		return (String)restTemplate.getForObject(url, String.class, vars);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T> T get(RestTemplate restTemplate, String url, Class<?> cls)
+	public static <T> T get(RestTemplate restTemplate, String url, Class<?> cls, MessageWriter out)
 	{
 		Map<String, Object> vars = Maps.newLinkedHashMap();
 		T result = (T)restTemplate.getForObject(url, cls, vars);
@@ -51,7 +51,7 @@ public class RestHelper
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T> T get(RestTemplate restTemplate, String server, RestParams params, Class<?> cls)
+	public static <T> T get(RestTemplate restTemplate, String server, RestParams params, Class<?> cls, MessageWriter out)
 	{
 		Map<String, Object> vars = params.getVars();
 		String url=server+params.getUrl();//"/" // todo breaking change! check for errors
@@ -63,7 +63,7 @@ public class RestHelper
 	//https://attacomsian.com/blog/spring-boot-resttemplate-get-request-parameters-headers
 	//https://stackoverflow.com/questions/21101250/sending-get-request-with-authentication-headers-using-resttemplate
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static String get(RestTemplate restTemplate, String url, Headers headers)
+	public static String get(RestTemplate restTemplate, String url, Headers headers, MessageWriter out)
 	{
 		HttpEntity request = new HttpEntity(headers.getHttpHeaders());
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class, 1);
@@ -73,7 +73,7 @@ public class RestHelper
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T> T post(RestTemplate restTemplate, String server, RestParams params, Class<?> cls)
+	public static <T> T post(RestTemplate restTemplate, String server, RestParams params, Class<?> cls, MessageWriter out)
 	{
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -86,16 +86,16 @@ public class RestHelper
 		return response.getBody();
 	}
 	
-	public static <P> String post(RestTemplate restTemplate, String url, P params)
+	public static <P> String post(RestTemplate restTemplate, String url, P params, MessageWriter out)
 	{
 		HttpEntity<P> request = new HttpEntity<P>(params);
 		ResponseEntity<String> response = (ResponseEntity<String>)restTemplate.postForEntity(url, request , String.class);
 		return response.getBody();
 	}
 	
-	public static BufferedImage getImage(String server, String url)
+	public static BufferedImage getImage(String server, String url, MessageWriter out)
 	{
-		return ImageHelper.getImage(server+"/"+url);
+		return ImageHelper.getImage(server+"/"+url, out);
 	}
 	
 	///////////////////////////////////////////////////////

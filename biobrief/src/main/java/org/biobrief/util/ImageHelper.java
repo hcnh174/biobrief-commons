@@ -159,10 +159,11 @@ public final class ImageHelper
 	
 	////////////////////////////////////////////////////////	
 	
-	public static BufferedImage getImage(String path)
+	public static BufferedImage getImage(String path, MessageWriter out)
 	{
 		try
 		{
+			out.println("loading image from: "+path);
 			URL url=new URL(path);
 			return ImageIO.read(url);
 		}

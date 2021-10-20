@@ -2561,6 +2561,15 @@ public final class StringHelper
 		return UUID.nameUUIDFromBytes(value.getBytes()).getMostSignificantBits();
 	}
 	
+	// returns a hash using two different methods appended to minimize the chance of collisions
+	public static String getHash(String text)
+	{
+		if (!StringHelper.hasContent(text))
+			throw new CException("cannot create hash: text value is null or empty: "+text);
+		String key=StringHelper.createHash(text)+"-"+StringHelper.getUniqueLongFromString(text);
+		return key;
+	}
+	
 //	public static void banner(String message)
 //	{
 //		System.out.println("********************************");
