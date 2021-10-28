@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
@@ -16,8 +17,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,7 +62,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 
 public final class WebHelper
 {	
@@ -996,5 +1000,28 @@ public final class WebHelper
 			.contentLength(file.length())
 			.contentType(MediaType.APPLICATION_OCTET_STREAM)
 			.body(resource);
+	}
+	
+	//////////////////////////
+	
+	//https://stackoverflow.com/questions/7999258/get-the-last-modified-date-of-an-url
+	public static Date getLastModifiedDate(String link)
+	{
+		try
+		{
+			URL url=new URL(link);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			Long millis = connection.getLastModified();
+			connection.disconnect();
+			Date date=new Date(millis);
+			//System.out.println("Last-Modified Date: " + date);
+			//ZonedDateTime urlLastModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(dateTime), ZoneId.of("GMT"));
+			//System.out.println("Last-Modified ZonedDateTime: " + urlLastModified.toString());
+			return date;
+		}
+		catch(Exception e)
+		{
+			throw new CException(e);
+		}
 	}
 }

@@ -922,6 +922,13 @@ public final class StringHelper
 		return true;
 	}
 	
+	public static <T> Optional<T> hasContentOr(T obj)
+	{
+		if (!hasContent(obj))
+			return Optional.empty();
+		return Optional.of(obj);
+	}
+	
 	// null safe string comparison
 	public static boolean isEqual(Object value1, Object value2)
 	{
