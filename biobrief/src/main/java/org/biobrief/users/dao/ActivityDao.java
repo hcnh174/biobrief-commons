@@ -9,11 +9,6 @@ import org.springframework.stereotype.Repository;
 public class ActivityDao
 {
 	@Autowired private ActivityRepository repository;
-	
-	protected ActivityRepository getRepository()
-	{
-		return repository;
-	}
 
 	public Activity logActivity(String username, String url)
 	{

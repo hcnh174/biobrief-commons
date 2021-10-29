@@ -33,11 +33,12 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 {
 	@Autowired protected MongoTemplate mongoTemplate;
 	@Autowired protected MongoMappingContext mongoMappingContext;
+	@Autowired protected R repository;
 	protected Class<T> entityClass;
 	protected List<String> ignore=Lists.newArrayList("id","createdBy","createdDate","lastModifiedBy","lastModifiedDate","patient_id");
 	protected BeanHelper beanhelper=new BeanHelper();
 
-	protected abstract R getRepository();
+	protected final R getRepository() {return repository;}
 	
 	public MongoTemplate getMongoTemplate() {return mongoTemplate;} // todo hack!
 	
@@ -45,6 +46,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	public AbstractMongoDao()
 	{
 		//https://stackoverflow.com/questions/4837190/java-generics-get-class
+		//https://stackoverflow.com/questions/3437897/how-do-i-get-a-class-instance-of-generic-type-t
 		this.entityClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		//System.out.println("AbstractMongoDao() entityClass="+entityClass.getCanonicalName());
 	}
@@ -60,7 +62,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 		
 	public Optional<T> findById(String id)
 	{
-		return getRepository().findById(id);
+		return repository.findById(id);
 	}
 	
 	public T getOne(String id)
@@ -73,25 +75,25 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	
 	public List<T> findAll()
 	{
-		return getRepository().findAll();
+		return repository.findAll();
 	}
 	
 	public Page<T> findAll(Pageable paging)
 	{
-		return getRepository().findAll(paging);
+		return repository.findAll(paging);
 	}
 	
 	//https://stackoverflow.com/questions/44172159/spring-data-mongodb-repository-how-can-i-search-by-a-list-of-ids
 	//https://stackoverflow.com/questions/30123810/repository-query-with-a-list-parameter-in-spring-data-mongodb/47551966
 	public List<T> findAllById(List<String> ids)
 	{
-		return asList(getRepository().findAllById(ids));
+		return asList(repository.findAllById(ids));
 	}
 	
 	/*
 	public Page<T> findAll(Predicate predicate, Pageable paging)
 	{
-		//return getRepository().findAll(predicate, paging);
+		//return repository.findAll(predicate, paging);
 		throw new CException("Page<T> findAll(String query, Pageable paging) not implemented for "+this.getClass().getName());
 	}
 	*/
@@ -121,18 +123,18 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	public boolean save(T item)
 	{
 		//log.debug("saving entity: "+StringHelper.toString(item));
-		getRepository().save(item);
+		repository.save(item);
 		return true;
 	}
 	
 	public <U extends T> List<U> saveAll(Collection<U> items)
 	{
-		return getRepository().saveAll(items);
+		return repository.saveAll(items);
 	}
 	
 	public void delete(String id)
 	{
-		getRepository().deleteById(id);
+		repository.deleteById(id);
 	}
 	
 	public T addOrUpdate(T item)
@@ -144,7 +146,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	
 	public T add(T item)
 	{
-		return (T)getRepository().save(item);
+		return (T)repository.save(item);
 	}
 		
 	public T update(T item) // T item
@@ -152,7 +154,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 		T entity=getOne(item.getId());
 		//log.debug("updating: "+item.toString());
 		copyProperties(entity,item);
-		return (T)getRepository().save(entity);
+		return (T)repository.save(entity);
 	}
 	
 	protected boolean setProperty(T entity, String property, Object value)
@@ -195,17 +197,17 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	
 	public void deleteItem(T item)
 	{
-		getRepository().delete(item);
+		repository.delete(item);
 	}
 	
 	public void deleteById(String id)
 	{
-		getRepository().deleteById(id);
+		repository.deleteById(id);
 	}
 	
 	public void deleteAll()
 	{
-		getRepository().deleteAll();
+		repository.deleteAll();
 	}
 	
 	////////////////////////////////////////////////////////

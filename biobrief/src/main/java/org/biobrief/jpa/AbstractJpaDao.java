@@ -19,14 +19,15 @@ import org.biobrief.util.CException;
 public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaRepository>
 {
 	@Autowired protected DataSource dataSource;
+	@Autowired protected R repository;
 	protected List<String> ignore=Lists.newArrayList("id","createdBy","createdDate","lastModifiedBy","lastModifiedDate","patient_id");
 	protected BeanHelper beanhelper=new BeanHelper();
 
-	protected abstract R getRepository();
+	protected final R getRepository() {return repository;}
 	
 	public Optional<T> findById(Integer id)
 	{
-		return getRepository().findById(id);
+		return repository.findById(id);
 	}
 	
 	public T findOne(Integer id, boolean check)
@@ -39,17 +40,17 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	
 	public T getOne(Integer id)
 	{
-		return (T)getRepository().getOne(id);
+		return (T)repository.getOne(id);
 	}
 	
 	public List<T> findAll()
 	{
-		return getRepository().findAll();
+		return repository.findAll();
 	}
 	
 	public Page<T> findAll(Pageable paging)
 	{
-		return getRepository().findAll(paging);
+		return repository.findAll(paging);
 	}
 
 	public List<T> findAll(String query)
@@ -78,13 +79,13 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	public void save(T item)
 	{
 		//log.debug("saving entity: "+StringHelper.toString(item));
-		getRepository().save(item);
+		repository.save(item);
 	}
 	
 	public void saveAll(Iterable<T> items)
 	{
 		//log.debug("saving entity: "+StringHelper.toString(item));
-		getRepository().saveAll(items);
+		repository.saveAll(items);
 	}
 	
 	// alias for saveAll but can be overriden to implement more efficient inserts
@@ -95,17 +96,17 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	
 	public void delete(Integer id)
 	{
-		getRepository().delete(id);
+		repository.delete(id);
 	}
 	
 	public void deleteAll()
 	{
-		getRepository().deleteAll();
+		repository.deleteAll();
 	}
 	
 	public void flush()
 	{
-		getRepository().flush();
+		repository.flush();
 	}
 	
 	public T addOrUpdate(T item)
@@ -117,7 +118,7 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	
 	public T add(T item)
 	{
-		return (T)getRepository().save(item);
+		return (T)repository.save(item);
 	}
 	
 	public T update(T item) // T item
@@ -125,7 +126,7 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 		T entity=findOne(item.getId(), true);
 		//log.debug("updating: "+item.toString());
 		copyProperties(entity,item);
-		return (T)getRepository().save(entity);
+		return (T)repository.save(entity);
 	}
 	
 	protected boolean setProperty(T entity, String property, Object value)
@@ -154,7 +155,7 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	{
 		//try
 		//{
-			getRepository().delete(item);
+			repository.delete(item);
 //		}
 //		catch (Throwable e)
 //		{

@@ -19,15 +19,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDao extends AbstractMongoDao<User, UserRepository>
-{	
-	@Autowired private UserRepository repository;
+{
 	@Autowired private PasswordEncoder passwordEncoder;
-	
-	@Override
-	protected UserRepository getRepository()
-	{
-		return repository;
-	}
 	
 	public Optional<User> findByUsername(String username)
 	{

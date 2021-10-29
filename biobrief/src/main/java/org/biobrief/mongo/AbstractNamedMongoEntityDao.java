@@ -7,27 +7,18 @@ import java.util.Optional;
 import org.biobrief.util.CException;
 import org.biobrief.util.DataFrame;
 import org.biobrief.util.MessageWriter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public abstract class AbstractNamedMongoEntityDao<T extends AbstractNamedMongoEntity, R extends NamedMongoEntityRepository<T>>
 	extends AbstractMongoDao<T, R>
 {
-	@Autowired protected R repository;
-	
-	protected R getRepository()
-	{
-		return repository;
-	}
-	
 	public boolean load(String filename, MessageWriter writer)
 	{
 		DataFrame<String> dataframe=parseFile(filename);
 		for (String rowname : dataframe.getRowNames())
 		{
 			String id=dataframe.getStringValue("id", rowname);
-			//String name=dataframe.hasColumn("name") ? dataframe.getStringValue("name", rowname) : id;
 			String name=dataframe.getStringValue("name", rowname, id); // use id if no name column
 			T entity=findOrCreate(id, name);
 			for (String property : dataframe.getColNames())
