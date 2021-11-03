@@ -57,9 +57,9 @@ dependencies {
 	api("com.fasterxml.jackson.core:jackson-databind")
 	
 	api("org.apache.poi:poi:${property('poi.version')}")
-	api("org.apache.poi:poi-ooxml:${property('poi.version')}")
-	//api("org.apache.poi:poi-ooxml-full:${property('poi.version')}")
-	api("org.apache.poi:poi-ooxml-schemas:${property('poi.version')}")
+	api("org.apache.poi:poi-ooxml:${property('poi.version')}")//v 4.1
+	api("org.apache.poi:poi-ooxml-schemas:${property('poi.version')}")//v 4.1
+	//api("org.apache.poi:poi-ooxml-full:${property('poi.version')}")//v 5.1	
 	api("org.apache.poi:poi-scratchpad:${property('poi.version')}")
 	
 	api("org.mongodb:mongodb-driver-core:${property('mongodb.version')}")

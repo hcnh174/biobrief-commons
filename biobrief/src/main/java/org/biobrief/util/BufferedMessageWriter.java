@@ -3,7 +3,7 @@ package org.biobrief.util;
 import java.io.PrintWriter;
 import java.util.List;
 
-import org.apache.commons.compress.utils.Lists;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
