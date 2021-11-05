@@ -24,7 +24,7 @@ plugins {
 repositories {
     mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://dl.bintray.com/sbuettner/maven' }
+	//maven { url 'https://dl.bintray.com/sbuettner/maven' }
 }
 
 dependencyManagement
@@ -61,6 +61,7 @@ dependencies {
 	//api("org.apache.poi:poi-ooxml-schemas:${property('poi.version')}")//v 4.1
 	api("org.apache.poi:poi-ooxml-full:${property('poi.version')}")//v 5.1	
 	api("org.apache.poi:poi-scratchpad:${property('poi.version')}")
+	api("org.apache.poi:ooxml-security:1.1")
 	
 	api("org.mongodb:mongodb-driver-core:${property('mongodb.version')}")
 	api("org.mongodb:mongodb-driver-sync:${property('mongodb.version')}")
@@ -118,13 +119,15 @@ dependencies {
 	// csv parsers	
 	api("com.googlecode.jcsv:jcsv:${property('jcsv.version')}")
 
+	//api("org.docx4j:docx4j-core:${property('docx4j.version')}")
+	/*
 	api("org.docx4j:docx4j:${property('docx4j.version')}"){
 		exclude(module: "log4j")
 		exclude(module: "slf4j-log4j12")
 		exclude(module: "commons-logging")
 		exclude(module: "batik-js")
 	}
-
+	*/
 	// pdf
 	api("com.itextpdf:itextpdf:${property('itext.version')}")
 	api("com.itextpdf:itext-asian:${property('itext.asian.version')}")
