@@ -61,6 +61,8 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
 import com.ibm.icu.text.Transliterator;
 
+//https://www.baeldung.com/java-string-split-multiple-delimiters
+//https://www.baeldung.com/java-remove-start-end-double-quote
 public final class StringHelper
 {
 	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(StringHelper.class);

@@ -1516,6 +1516,12 @@ public final class FileHelper
 		return sb.toString();
 	}
 	
+	//http://useof.org/java/java-removing-invalid-characters-from-a-file-name
+	public static String replaceUnsupportedFileNameChars(String fileName, String replacement)
+	{
+	    return fileName.replaceAll("[\\\\/:*?\"<>|]", replacement!=null?replacement:"_");
+	}
+	
 	public static void waitForFile(String filename, int milliseconds, int tries)
 	{
 		waitForFile(filename, milliseconds, tries, true);
