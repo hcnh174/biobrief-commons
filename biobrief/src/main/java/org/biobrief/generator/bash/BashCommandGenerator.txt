@@ -1,0 +1,30 @@
+package org.biobrief.generator.bash;
+
+import org.biobrief.generator.AbstractGenerator;
+import org.biobrief.generator.GeneratorParams;
+import org.biobrief.generator.GeneratorProperties;
+import org.biobrief.generator.Util;
+import org.biobrief.generator.Util.FileType;
+
+public final class BashCommandGenerator extends AbstractGenerator
+{
+	public static void generate(GeneratorParams params)
+	{
+		BashCommandGenerator generator=new BashCommandGenerator(params);
+		generator.generate();
+	}
+	
+	private BashCommandGenerator(GeneratorParams params)
+	{
+		super(params);
+	}
+	
+	private void generate()
+	{
+		String name="longshot";
+		String script="";
+		String filename=properties.getScriptsDir()+"/run_"+name+".sh";
+		String outfile=Util.replaceFile(FileType.SH, filename, script, params.getOverwrite());
+		System.out.println("wrote generated bash script to file: "+outfile);
+	}
+}

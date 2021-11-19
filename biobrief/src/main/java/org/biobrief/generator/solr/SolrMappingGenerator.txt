@@ -1,0 +1,124 @@
+package org.biobrief.generator.solr;
+
+import org.biobrief.dictionary.Dictionary;
+import org.biobrief.dictionary.EntityDefinition;
+import org.biobrief.dictionary.FieldDefinition;
+import org.biobrief.generator.AbstractGenerator;
+import org.biobrief.generator.GeneratorProperties;
+import org.biobrief.generator.Util;
+import org.biobrief.generator.Util.FileType;
+import org.biobrief.util.Constants.ElasticType;
+import org.biobrief.util.SimpleMap;
+import org.biobrief.util.StringHelper;
+
+public final class SolrMappingGenerator extends AbstractGenerator
+{
+	private final Dictionary dictionary;
+	private final boolean overwrite;
+	
+	public static void generate(GeneratorProperties properties, Dictionary dictionary, boolean overwrite)
+	{
+		SolrMappingGenerator generator=new SolrMappingGenerator(properties, dictionary, overwrite);
+		generator.generate();
+	}
+	
+	private SolrMappingGenerator(GeneratorProperties properties, Dictionary dictionary, boolean overwrite)
+	{
+		super(properties);
+		this.dictionary=dictionary;
+		this.overwrite=overwrite;
+	}
+	
+	private void generate()
+	{
+		for (Index index : Index.values())
+		{
+			createIndex(index);
+		}
+	}
+	
+	private void createIndex(Index index)
+	{
+		SimpleMap root=createMapping(index);		
+		String filename=properties.getSolrDir()+"/"+index.name()+".txt";
+		//System.out.println("filename:"+filename);
+		String json=root.toJson();
+		Util.replaceFile(FileType.SOLR_MAPPING, filename, json, overwrite);
+	}
+	
+	private SimpleMap createMapping(Index index)
+	{
+		SimpleMap map=new SimpleMap();
+		EntityDefinition entity=dictionary.getGroup(index.getGroup()).getEntity(index.getEntity());
+		createProperties(map, entity);
+		return map;
+	}
+	
+	private void createProperties(SimpleMap parent, EntityDefinition entityType)
+	{
+		SimpleMap properties=new SimpleMap();
+		createProperty(properties, "id", ElasticType.KEYWORD);
+		for (FieldDefinition field : entityType.getIndexedFields())
+		{
+			createProperty(properties, field);
+		}
+		createProperty(properties, "suggest", ElasticType.COMPLETION);
+		createNestedProperties(properties, entityType);
+		parent.put("properties", properties);
+	}
+	
+	private void createNestedProperties(SimpleMap properties, EntityDefinition entityType)
+	{
+		for (EntityDefinition childType : entityType.getChildren())
+		{
+			if (!childType.isIndexed())
+				continue;
+			createNestedMapping(properties, childType);
+		}
+	}
+	
+	private void createProperty(SimpleMap properties, FieldDefinition field)
+	{
+		createProperty(properties, field.getName(), field.getElasticType());
+	}
+	
+	private void createProperty(SimpleMap properties, String name, ElasticType type)
+	{
+		SimpleMap property=new SimpleMap();
+		property.put("type", type.getType());
+		properties.put(name, property);
+	}
+	
+	private void createNestedMapping(SimpleMap parent, EntityDefinition entityType)
+	{
+		String name=entityType.getCollection();
+		SimpleMap properties=new SimpleMap();
+		for (FieldDefinition field : entityType.getIndexedFields())
+		{
+			createProperty(properties, field);
+		}
+		SimpleMap root=new SimpleMap();
+		root.put("type",  "nested");
+		root.put("properties",  properties);
+		parent.put(name, root);
+	}
+	
+	public static class Index
+	{		
+		private String display;
+		private EntityGroup group;
+		private String entity;
+		
+		private Index(String label, EntityGroup group, String entity)
+		{
+			this.display=label;
+			this.group=group;
+			this.entity=entity;
+		}
+		
+		public String getDisplay(){return display;}
+		public EntityGroup getGroup(){return group;}
+		public String getEntity() {return entity;}
+		@Override public String toString(){return StringHelper.toString(this, display);}
+	}
+}

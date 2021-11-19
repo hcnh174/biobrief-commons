@@ -1,0 +1,37 @@
+package org.biobrief.generator.angular;
+
+import java.util.List;
+import java.util.Map;
+
+import org.biobrief.dictionary.Dictionary;
+import org.biobrief.generator.Util;
+import org.biobrief.generator.Util.FileType;
+import org.biobrief.util.CException;
+import org.biobrief.util.EnumHelper;
+import org.biobrief.util.FileHelper;
+import org.biobrief.util.JsonHelper;
+import org.biobrief.util.MessageWriter;
+
+public class EnumGenerator
+{	
+	@SuppressWarnings("rawtypes")
+	public static void generate(Dictionary dictionary, List<Class> enumclasses,
+			boolean overwrite, MessageWriter writer)
+	{
+		String filename=Util.ANGULAR_APP_DIRECTORY+"/service/enum.service.ts";
+		if (!FileHelper.exists(filename))
+			throw new CException("cannot find enum service file: "+filename);
+		String str=FileHelper.readFile(filename);
+		
+		//Map<String, List<Map<String, Object>>> fields=FieldGenerator.generate(dictionary);
+		List<Map<String, Object>> enums=EnumHelper.getEnumList(enumclasses);
+		//String js="private _enums="+JsonHelper.toJson(enums)+";\n\n";
+		String js="let enumdata = "+JsonHelper.toJson(enums)+";\n\n";
+		//js+="private _fields="+JsonHelper.toJson(fields)+";";
+		//js=StringHelper.indent(js);
+		//js=StringHelper.replace(js, "		  ", "			");
+		
+		str=Util.insertText(Util.DECLARATIONS, str, js, true);
+		Util.replaceFile(FileType.ANGULAR_SERVICE, filename, str, overwrite);
+	}
+}

@@ -1,0 +1,34 @@
+package org.biobrief.generator.sql;
+
+import org.biobrief.dictionary.Dictionary;
+import org.biobrief.generator.GeneratorProperties;
+import org.biobrief.util.Constants.EntityType;
+import org.junit.jupiter.api.Test;
+
+//gradle --stacktrace --info :hlsg-generator:test --tests *TestSqlViewGenerator
+public class TestSqlViewGenerator
+{	
+	@Test
+	public void generate()
+	{
+		System.out.println("generate");
+		Dictionary dict=new Dictionary("../data/dictionary");
+		GeneratorProperties properties=new GeneratorProperties();
+		properties.setDir("../");
+		properties.setAngularDir("../data/templates");
+		boolean overwrite=false;
+		
+		SqlViewGenerator.generate(properties, dict.getEntity(EntityType.PATIENTS_PATIENT), overwrite);
+		SqlViewGenerator.generate(properties, dict.getEntity(EntityType.PATIENTS_INTERVIEW), overwrite);
+		SqlViewGenerator.generate(properties, dict.getEntity(EntityType.PATIENTS_HBV), overwrite);
+		SqlViewGenerator.generate(properties, dict.getEntity(EntityType.PATIENTS_HCV), overwrite);
+		SqlViewGenerator.generate(properties, dict.getEntity(EntityType.PATIENTS_HCC), overwrite);
+		SqlViewGenerator.generate(properties, dict.getEntity(EntityType.PATIENTS_CONDITION), overwrite);
+		SqlViewGenerator.generate(properties, dict.getEntity(EntityType.PATIENTS_SNPDATA), overwrite);		
+	}	
+	
+//	private void log(String message)
+//	{
+//		FileHelper.appendFile(".temp/logs/mergeviewgenerator.txt", message);
+//	}
+}

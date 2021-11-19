@@ -1,0 +1,139 @@
+package org.biobrief.generator.sql;
+
+import java.util.List;
+
+import org.biobrief.core.CoreConstants;
+import org.biobrief.dictionary.DictionaryConstants.IdType;
+import org.biobrief.dictionary.EntityDefinition;
+import org.biobrief.dictionary.FieldDefinition;
+import org.biobrief.dictionary.MergeSourceMap;
+import org.biobrief.dictionary.MergeSourceMap.Source;
+import org.biobrief.generator.AbstractGenerator;
+import org.biobrief.generator.GeneratorProperties;
+import org.biobrief.generator.Util;
+import org.biobrief.generator.Util.FileType;
+//import org.biobrief.util.JpaHelper;
+import org.biobrief.util.StringHelper;
+
+import com.google.common.collect.Lists;
+
+public final class SqlViewGenerator extends AbstractGenerator
+{
+	public static String generate(GeneratorProperties properties, EntityDefinition entityType, boolean overwrite)
+	{
+		SqlViewGenerator generator=new SqlViewGenerator(properties);
+		return generator.generate(entityType, overwrite);
+	}
+	
+	private SqlViewGenerator(GeneratorProperties properties)
+	{
+		super(properties);
+	}
+	
+	private String generate(EntityDefinition entityType, boolean overwrite)
+	{
+		String sql=getMergeViewSql(entityType);
+		String viewname="vw_"+entityType.getGroup().getName()+"_"+entityType.getName().toLowerCase()+"fields";
+		String view=createView(viewname, sql);
+		String filename=properties.getViewDir()+"/"+viewname+".sql";
+		String outfile=Util.replaceFile(FileType.SQL, filename, view, overwrite, "views");
+		System.out.println("wrote generated view to file: "+outfile);
+		return viewname;
+	}
+	
+	private String getMergeViewSql(EntityDefinition entityType)
+	{
+		List<String> queries=getMergeViewSqlQueries(entityType);
+		if (queries.isEmpty())
+			return "SELECT NULL AS id, NULL AS field, NULL AS value, NULL AS converter, NULL AS source WHERE 1=2";
+		StringBuilder sql=new StringBuilder();
+		sql.append("SELECT id, field, value, converter, source\n");//DISTINCT
+		sql.append("FROM\n(\n");
+		sql.append(StringHelper.indent(StringHelper.join(queries, "\n\nUNION ALL\n\n")));
+		sql.append("\n) tmp\n");
+		sql.append("WHERE id IS NOT NULL\n");
+		sql.append("ORDER BY id, field\n");
+		return sql.toString();
+	}
+	
+	private String createView(String name, String sql) 
+	{
+		StringBuilder buffer=new StringBuilder();
+		buffer.append("DROP VIEW IF EXISTS ").append(name).append(" CASCADE;\n\n");
+		buffer.append("CREATE VIEW ").append(name).append(" AS\n\n");
+		buffer.append(sql).append(";\n\n");
+		buffer.append("ALTER TABLE ").append(name).append(" OWNER TO "+CoreConstants.DBOWNER+";\n");
+		return buffer.toString();
+	}
+
+	private List<String> getMergeViewSqlQueries(EntityDefinition entityType)
+	{
+		List<String> queries=Lists.newArrayList();
+		queries.add(getMergeViewSqlByIdType(entityType, IdType.DBNO));
+		queries.add(getMergeViewSqlByIdType(entityType, IdType.HIRODAI));
+		queries.add(getMergeViewSqlByIdType(entityType, IdType.ACCESS));
+		return queries;
+	}
+	
+	private String getMergeViewSqlByIdType(EntityDefinition entityType, IdType idType)
+	{
+		List<String> queries=getMergeViewSqlQueriesByIdType(entityType, idType);
+		if (queries.isEmpty())
+			return "SELECT NULL AS id, NULL AS field, NULL AS value, NULL AS converter, NULL AS source WHERE 1=2";
+		String viewname="tmp_"+idType.name().toLowerCase();
+		String identifier=idType.getIdentifier();
+		StringBuilder sql=new StringBuilder();
+		sql.append("SELECT ids.id, field, source, value, converter\n");//DISTINCT
+		sql.append("FROM\n(\n");
+		sql.append(StringHelper.indent(StringHelper.join(queries, "\n\nUNION ALL\n\n")));
+		sql.append("\n) "+viewname+", ids\n");
+		sql.append("WHERE "+viewname+"."+identifier+"=ids."+identifier+"\n");
+		return sql.toString();
+	}
+	
+	private List<String> getMergeViewSqlQueriesByIdType(EntityDefinition entityType, IdType idType)
+	{
+		List<String> queries=Lists.newArrayList();
+		for (FieldDefinition fielddef : entityType.getFieldDefinitions())
+		{
+			//System.out.println("field: "+fielddef.getName()+" sources="+fielddef.getMergeMap().getSources().size());
+			for (Source source : fielddef.getMergeMap().getSources(idType))
+			{
+				System.out.println("adding union query for field: "+fielddef.getName()+" with idType: "+idType);
+				queries.add(getMergeSql(source, idType));
+			}
+		}
+		return queries;
+	}
+	
+	private String getMergeSql(MergeSourceMap.Source source, IdType idType)
+	{
+		String sql="SELECT";
+		sql+=" "+getIdentifierColumn(source, idType)+",";
+		sql+=" '"+source.getField()+"'::text as field,";
+		sql+=" '"+source.getTable()+"'::text as source,";
+		sql+=" "+getValueColumn(source)+"::text as value,";
+		sql+=" '"+source.getConverter()+"'::text as converter";
+		sql+=" FROM "+getTable(source);
+		return sql;
+	}
+
+	private String getTable(MergeSourceMap.Source source)
+	{
+		String table=source.getTable();
+		return source.getSource().getWrapped() ? "vw_"+table : table;
+	}
+	
+	private String getIdentifierColumn(MergeSourceMap.Source source, IdType idType)
+	{
+		return StringHelper.toUnderscore(idType.getIdentifier());
+	}
+	
+	private String getValueColumn(MergeSourceMap.Source source)
+	{
+		String column=source.getColumn();
+		if (source.getSource().getEscape())
+			return StringHelper.doubleQuote(column);
+		else return StringHelper.toUnderscore(column);
+	}
+}

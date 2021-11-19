@@ -1,0 +1,190 @@
+package org.biobrief.generator.graphql;
+
+import java.util.List;
+
+import org.biobrief.dictionary.EntityDefinition;
+import org.biobrief.dictionary.FieldDefinition;
+import org.biobrief.dictionary.GroupDefinition;
+import org.biobrief.generator.AbstractGenerator;
+import org.biobrief.generator.GeneratorParams;
+import org.biobrief.generator.Util;
+import org.biobrief.generator.Util.FileType;
+import org.biobrief.util.StringHelper;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+
+public final class GraphQLQueryGenerator extends AbstractGenerator
+{
+	private final Multimap<String, Type> types=ArrayListMultimap.create();//GroupDefinition
+	
+	public static void generate(GeneratorParams params)
+	{
+		GraphQLQueryGenerator generator=new GraphQLQueryGenerator(params);
+		generator.generate();
+	}
+	
+	private GraphQLQueryGenerator(GeneratorParams params)
+	{
+		super(params);
+	}
+	
+	/*
+	const NashPatientQuery = gql`
+	query NashPatient($hirodaiId: Int) {
+		nashpatient(hirodaiId: $hirodaiId) {
+		  hirodaiId
+		  name
+		  kana
+		  sex
+		  birthdate
+		  ctscans {
+			id
+			date
+			subcutaneousFatArea
+			visceralFatArea
+			waist
+			ctlsRatio
+		  }
+		  ogtts {
+			id
+			date
+			bs0m
+			bs30m
+			bs1h
+			bs2h
+			bs3h
+			iri0m
+			iri30m
+			iri1h
+			iri2h
+			iri3h
+			homaIr
+		  }
+		}
+	  }
+	`;
+	*/
+	private void generate()
+	{
+		createTypes();
+		write();
+	}
+	
+	private void createTypes()
+	{
+		for (EntityDefinition entityType : getEntities())
+		{
+			types.put(entityType.getGroup().getName(), new Type(entityType));
+		}
+	}
+	
+	private void write()
+	{
+		for (String group : types.keySet())
+		{
+			write(group);
+		}
+	}
+	
+	private void write(String group)
+	{
+		StringBuilder buffer=new StringBuilder();
+		for (Type type : types.get(group))
+		{
+			buffer.append(type).append("\n\n");
+		}
+		String str=buffer.toString();
+		String filename="src/main/resources/graphql/"+group+".graphqls";
+		Util.replaceFile(FileType.GRAPHQL, filename, str, params.getOverwrite());
+	}
+	
+	private List<EntityDefinition> getEntities()
+	{
+		List<EntityDefinition> list=Lists.newArrayList();
+		for (GroupDefinition group : params.getDictionary().getEntityGroups())
+		{
+			for (EntityDefinition entityType : group.getEntities())
+			{
+				if (!entityType.isClassEntity())
+					continue;
+				if (entityType.isChild())
+					continue;
+				list.add(entityType);
+			}
+		}
+		return list;
+	}
+	
+	////////////////////////////////////////////////////////
+	
+	public static class Type
+	{
+		private final String name;
+		private final List<Field> fields=Lists.newArrayList();
+		
+		public Type(EntityDefinition entityType)
+		{
+			this.name=entityType.getName();
+			this.fields.add(new Field("id", "String", true));
+			for (FieldDefinition fieldDefinition : entityType.getFieldDefinitions())
+			{
+				this.fields.add(new Field(fieldDefinition));
+			}
+		}
+
+		@Override
+		public String toString()
+		{
+			List<String> list=Lists.newArrayList();
+			for (Field field : fields)
+			{
+				list.add(field.toString());
+			}
+			String str="type "+name+" {\n";
+			str+=StringHelper.join(list, "\n")+"\n";
+			str+="}";
+			return str;
+		}
+	}
+	
+	///////////////////////////////////////////////////////////
+	
+	public static class Field
+	{
+		private final String name;
+		private final String type;
+		private final boolean notnull;
+		
+		public Field(String name, String type, boolean notnull)
+		{
+			this.name=name;
+			this.type=type;
+			this.notnull=notnull;
+		}
+		
+		public Field(FieldDefinition fieldDefinition)
+		{
+			this(fieldDefinition.getName(), getType(fieldDefinition), fieldDefinition.isNotNull());
+		}
+		
+		private static String getType(FieldDefinition fieldDefinition)
+		{
+			String type=fieldDefinition.getFieldType().getGraphQLType(fieldDefinition.getDeclaredType());
+			if (fieldDefinition.isMulti())
+				type="["+type+"]";
+			return type;
+		}
+		
+		@Override
+		public String toString()
+		{
+			String str="\t"+name+": "+type;
+			if (notnull)
+				str+="!";
+			return str;
+		}
+	}
+}
+

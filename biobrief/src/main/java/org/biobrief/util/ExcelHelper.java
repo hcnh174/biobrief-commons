@@ -61,7 +61,6 @@ public class ExcelHelper
 	private MessageWriter writer=new MessageWriter();
 	private List<CellStyle> styleList=Lists.newArrayList();
 	private DataFormatter formatter=new DataFormatter();
-	//private FileInputStream stream; 
 	
 	public ExcelHelper(){}
 	
@@ -1269,7 +1268,7 @@ public class ExcelHelper
 		}
 	}
 	
-	//@SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	private CellStyle getSameCellStyle(Cell oldCell, Cell newCell)
 	{
 		CellStyle styleToFind = oldCell.getCellStyle();
@@ -1422,14 +1421,14 @@ public class ExcelHelper
 		return style.getVerticalAlignment();
 	}
 	
-//	public static String getBgColor(Cell cell)
-//	{
-//		XSSFCellStyle style=getStyle(cell);
-//		XSSFColor fgcolor=style.getFillForegroundXSSFColor();
-//		if (fgcolor==null)
-//			return null;
-//		return ExcelHelper.getRgbColor(fgcolor);
-//	}
+	public static String getBgColor(Cell cell)
+	{
+		XSSFCellStyle style=getStyle(cell);
+		XSSFColor fgcolor=style.getFillForegroundXSSFColor();
+		if (fgcolor==null)
+			return null;
+		return ExcelHelper.getRgbColor(fgcolor);
+	}
 	
 //	public static String getBgColor(Cell cell)
 //	{
@@ -1557,8 +1556,9 @@ public class ExcelHelper
 			return style.getBorderLeft();
 		case RIGHT:
 			return style.getBorderRight();
+		default:
+			throw new UnhandledCaseException("unhandled border side: "+side);
 		}
-		throw new CException("unhandled border side: "+side);
 	}
 	
 //	public static BorderStyle getBorder(Cell cell, BorderSide side)

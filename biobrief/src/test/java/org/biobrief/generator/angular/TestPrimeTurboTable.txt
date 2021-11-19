@@ -1,0 +1,65 @@
+package org.hlsg.generator.angular;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.hlsg.dictionary.Dictionary;
+import org.hlsg.generator.Constants.RenderMode;
+import org.hlsg.generator.templates.Grid;
+import org.hlsg.generator.templates.Grid.GridParams;
+import org.hlsg.util.FileHelper;
+import org.hlsg.util.SimpleMap;
+import org.junit.jupiter.api.Test;
+
+//gradlew --stacktrace --info :hlsg-generator:test --tests *TestPrimeTurboTable
+public class TestPrimeTurboTable
+{	
+	@Test
+	public void canRender()
+	{
+		System.out.println("canRender");
+		Grid grid=buildGrid();
+		
+		PrimeTurboTable table=new PrimeTurboTable(grid);
+		assertThat(table).isNotNull();
+		
+		//FileHelper.writeFile(".temp/turbotable.html", table.render(new RenderParams(RenderMode.ANGULAR)));
+		//FileHelper.writeFile(".temp/turbotable.ftl", table.render(new RenderParams(RenderMode.FREEMARKER)));
+	}
+	
+	@Test
+	public void buildTurboTable()
+	{
+		Grid grid=buildGrid();
+		PrimeTurboTable table=new PrimeTurboTable(grid);
+		//PrimeTurboTable.TurboTable table=new PrimeTurboTable.TurboTable(grid);
+		FileHelper.writeFile(".temp/turbotable.html", table.render(new RenderParams(RenderMode.ANGULAR)));
+		//FileHelper.writeFile(".temp/turbotable.ts", table.toTypescript());
+	}
+	
+	////////////////////////////////////////
+	
+	private Grid buildGrid()
+	{
+		Dictionary dictionary=new Dictionary("../data/dictionary");
+		SimpleMap values=new SimpleMap();
+		values.put("group", "hirodai");
+		values.put("mode", "readonly");
+		values.put("entity", "Ultrasound");
+		values.put("title", "[AUTO]");
+		GridParams params=new GridParams(values);
+		Grid grid=new Grid("hirodai-ultrasounds", params, dictionary);
+		grid.addColumn("hirodaiId", params.createColumnParams("[AUTO]", 50));
+		grid.addColumn("name", params.createColumnParams("[AUTO]", 100));
+		grid.addColumn("kana", params.createColumnParams("[AUTO]", 100));
+		grid.addColumn("sex", params.createColumnParams("i18n.sex", 20));
+		grid.addColumn("age", params.createColumnParams("i18n.age", 20));
+		grid.addColumn("date", params.createColumnParams("[AUTO]", 30));
+		//FileHelper.writeFile(".temp/grid.txt", StringHelper.toString(grid));
+		return grid;
+	}
+	
+//	private void log(String message)
+//	{
+//		FileHelper.appendFile(".temp/logs/prime-turbo-table.txt", message);
+//	}
+}
