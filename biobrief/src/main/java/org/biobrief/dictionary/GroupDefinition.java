@@ -24,7 +24,7 @@ public class GroupDefinition
 		this.dictionary=dictionary;
 		this.name=map.get("name");
 		this.label=DictUtil.dfltIfEmpty(map.get("label"), this.name);
-		this.persistenceType=PersistenceType.valueOf(map.get("persistenceType"));
+		this.persistenceType=PersistenceType.valueOf(DictUtil.dfltIfEmpty(map.get("persistenceType"), "mongo"));
 		this.identifier=DictUtil.dfltIfEmpty(map.get("identifier"), "id");
 		this.index=DictUtil.nullIfEmpty(map.get("index"));
 		this.escape=DictUtil.asBoolean(map.get("escape"), true);	

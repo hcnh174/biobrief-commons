@@ -4,9 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.biobrief.dictionary.Dictionary;
 import org.biobrief.generator.GeneratorConstants.RenderMode;
-import org.biobrief.generator.GeneratorParams;
 import org.biobrief.generator.Util;
+import org.biobrief.generator.angular.AngularGeneratorParams.FormGeneratorParams;
 import org.biobrief.generator.templates.AbstractParams.Mode;
 import org.biobrief.generator.templates.ExcelTemplate;
 import org.biobrief.generator.templates.Fieldset;
@@ -24,36 +25,48 @@ import org.biobrief.util.UnhandledCaseException;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+//java -cp biobrief/build/libs/biobrief.jar org.biobrief.generator.angular.FormGenerator C:/workspace/gangenome/data/templates/forms/ekipane-forms.xlsx c:/temp
 public class FormGenerator extends AbstractLayoutGenerator
 {
 	public static enum Suffix{form, fieldset, fragment, tabset, table}
 	
 	private Set<String> forms=Sets.newLinkedHashSet();// keep track of the form names
 
-	public static void generate(AngularGeneratorParams params, MessageWriter writer)
+	public static void main(String[] argv)
 	{
-		FormGenerator generator=new FormGenerator(params, writer);
-		generator.generate();
+		String template=argv[0];
+		String outDir=argv[1];
+		System.out.println("template="+template);
+		System.out.println("outDir="+outDir);
+		
+		Dictionary dictionary=new Dictionary();
+		FormGeneratorParams params=new FormGeneratorParams(dictionary, template, outDir);
+		MessageWriter out=new MessageWriter();
+		generate(params, out);
 	}
 	
-	public static void generate(String name, AngularGeneratorParams params, MessageWriter writer)
+//	public static void generate(FormGeneratorParams params, MessageWriter writer)
+//	{
+//		FormGenerator generator=new FormGenerator(params, writer);
+//		generator.generate();
+//	}
+	
+	public static void generate(FormGeneratorParams params, MessageWriter writer)
 	{
-		Util.checkName(name);
-		FormGenerator generator=new FormGenerator(params, writer);
-		String filename=params.getDir()+"/"+name+".xlsx";
 		try
 		{
-			generator.generate(filename);
+			FormGenerator generator=new FormGenerator(params, writer);
+			generator.generate(params.getTemplate());
 		}
 		catch (Exception e)
 		{
-			throw new CException(e.getMessage()+": filename="+filename, e);
+			throw new CException(e.getMessage()+": filename="+params.getTemplate(), e);
 		}
 	}
 	
 	//////////////////////////////////////////////////////
 	
-	protected FormGenerator(AngularGeneratorParams params, MessageWriter writer)
+	protected FormGenerator(FormGeneratorParams params, MessageWriter writer)
 	{
 		super(params, writer);
 	}
@@ -61,20 +74,22 @@ public class FormGenerator extends AbstractLayoutGenerator
 	@Override
 	protected void generate(Workbook workbook)
 	{
-		FormBuilder builder=new FormBuilder(workbook);
+		FormBuilder builder=new FormBuilder(this, workbook);
 		for (String name : builder.forms.keySet())
 		{
 			if (forms.contains(name))
 				throw new CException("found duplicate form: "+name);
 			this.forms.add(name);
 		}
-		builder.write(mode);
+		builder.write(params.getMode());
 	}
 	
 	//////////////////////////////////////////////////////
 	
 	public class FormBuilder
 	{
+		private final FormGenerator generator;
+		private final Dictionary dictionary;
 		private final Map<String, Object> params;
 		private final Map<String, PrimeForm> forms=Maps.newLinkedHashMap();
 		private final Map<String, PrimeFieldset> fieldsets=Maps.newLinkedHashMap();
@@ -84,8 +99,10 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		//////////////////////////////////////////////////////
 		
-		protected FormBuilder(Workbook workbook)
+		protected FormBuilder(FormGenerator generator, Workbook workbook)
 		{
+			this.generator=generator;
+			this.dictionary=generator.params.getDictionary();
 			this.params=loadDefaultParams(workbook);
 			for (ExcelTemplate template : getTemplates(workbook))
 			{
@@ -212,21 +229,12 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected void write(PrimeForm form)
 		{
-			if (mode==RenderMode.ANGULAR)
+			if (generator.params.mode==RenderMode.ANGULAR)
 				writeAngular(form);
-			else if (mode==RenderMode.FREEMARKER)
+			else if (generator.params.mode==RenderMode.FREEMARKER)
 				writeFreemarker(form);
-			else throw new CException("no handler for render mode: "+mode);
+			else throw new UnhandledCaseException("no handler for render mode: "+generator.params.mode);
 		}
-		
-//		protected void writeAngular(PrimeForm form)
-//		{
-//			String html=render(form);
-//			html="<!-- HTML_START -->\n"+html+"<!-- HTML_END -->\n";
-//			if (overwrite)
-//				overwriteFile(Util.ANGULAR_APP_DIRECTORY+"/"+form.getFilename(), html);
-//			else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+form.getFilename(), html);
-//		}
 		
 		protected void writeAngular(PrimeForm form)
 		{
@@ -255,7 +263,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 			ftl+="</div>\n";
 			ftl+="</#list>\n";
 			ftl+="</@patientdb.print>\n";
-			if (overwrite)
+			if (generator.params.overwrite)
 				FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
 			else FileHelper.writeFile(".temp/generated/print/"+name+".ftl", ftl);
 		}
@@ -319,7 +327,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		{
 			//System.out.println("******************************************");
 			//System.out.println("rendering layout: "+layout.getName());
-			return new RenderParams(mode);//, false);//layout.isLight());
+			return new RenderParams(generator.params.mode);//, false);//layout.isLight());
 		}
 	}
 }

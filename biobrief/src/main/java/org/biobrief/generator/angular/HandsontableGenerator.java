@@ -3,7 +3,6 @@ package org.biobrief.generator.angular;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.biobrief.generator.GeneratorParams;
 import org.biobrief.generator.Util;
 import org.biobrief.generator.angular.AngularGeneratorParams.HandsontableGeneratorParams;
 import org.biobrief.generator.templates.ExcelTemplate;
@@ -19,17 +18,16 @@ public class HandsontableGenerator extends AbstractLayoutGenerator
 {
 	private final Map<String, Handsontable> handsontables=Maps.newLinkedHashMap();
 	
+//	public static void generate(HandsontableGeneratorParams params, MessageWriter writer)
+//	{
+//		HandsontableGenerator generator=new HandsontableGenerator(params, writer);
+//		generator.generate();
+//	}
+	
 	public static void generate(HandsontableGeneratorParams params, MessageWriter writer)
 	{
 		HandsontableGenerator generator=new HandsontableGenerator(params, writer);
-		generator.generate();
-	}
-	
-	public static void generate(String name, HandsontableGeneratorParams params, MessageWriter writer)
-	{
-		Util.checkName(name);
-		HandsontableGenerator generator=new HandsontableGenerator(params, writer);
-		generator.generate(params.getDir()+"/"+name+".xlsx");
+		generator.generate(params.getTemplate());
 	}
 	
 	protected HandsontableGenerator(HandsontableGeneratorParams params, MessageWriter writer)

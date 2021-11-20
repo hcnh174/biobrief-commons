@@ -6,6 +6,7 @@ import java.util.Map;
 import org.biobrief.util.CException;
 import org.biobrief.util.DataFrame;
 import org.biobrief.util.DataFrame.StringDataFrame;
+import org.biobrief.util.FileHelper;
 
 import com.google.common.collect.Maps;
 
@@ -14,6 +15,12 @@ public class Dictionary
 	private final Map<String, GroupDefinition> groups=Maps.newLinkedHashMap();
 	private final String baseDir;
 	private final MergeSources sources;
+	
+	public Dictionary()
+	{
+		this.baseDir=FileHelper.getBaseDirectory();
+		sources=new MergeSources();
+	}
 	
 	public Dictionary(String dir)
 	{
@@ -26,6 +33,23 @@ public class Dictionary
 			createFieldDefinitions(group);
 			addInheritedFieldDefinitions(group);
 		}
+	}
+	
+	public GroupDefinition findOrCreateDynamicGroup(String name)
+	{
+		if (!groups.containsKey(name))
+			createDynamicGroup(name);
+		return groups.get(name);
+	}
+	
+	public GroupDefinition createDynamicGroup(String name)
+	{
+		System.out.println("creating dynamic group: "+name);
+		Map<String, String> map=Maps.newLinkedHashMap();
+		map.put("name", name);
+		GroupDefinition group=new GroupDefinition(this, map);
+		groups.put(group.getName(), group);
+		return group;
 	}
 	
 	private void createEntityGroups()

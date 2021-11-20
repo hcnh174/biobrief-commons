@@ -18,8 +18,6 @@ public class TestTemplateUtils
 		assertThat(name).isEqualTo("accession");
 	}
 	
-	
-	
 	@Test
 	public void testFormatTemplateSimple()
 	{

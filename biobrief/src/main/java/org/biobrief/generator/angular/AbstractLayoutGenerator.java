@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.biobrief.dictionary.Dictionary;
-import org.biobrief.generator.GeneratorConstants.RenderMode;
+import org.biobrief.generator.angular.AngularGeneratorParams.AbstractTemplateGeneratorParams;
 import org.biobrief.generator.templates.ExcelTemplate;
 import org.biobrief.generator.templates.TemplateUtils;
 import org.biobrief.util.CException;
@@ -16,32 +15,32 @@ import org.biobrief.util.MessageWriter;
 public abstract class AbstractLayoutGenerator
 {
 	protected final ExcelHelper excel=new ExcelHelper();
-	protected final AngularGeneratorParams params;
+	protected final AbstractTemplateGeneratorParams params;
 //	protected final String dir;
-//	protected final String tmpDir;
-	protected final Dictionary dictionary;
-	protected final RenderMode mode;
-	protected final boolean overwrite;
+//	protected final String tmpDir;AbstractTemplateGeneratorParams
+	//protected final Dictionary dictionary;
+//	protected final RenderMode mode;
+//	protected final boolean overwrite;
 	protected final MessageWriter writer;	
 	
-	protected AbstractLayoutGenerator(AngularGeneratorParams params, MessageWriter writer)
+	protected AbstractLayoutGenerator(AbstractTemplateGeneratorParams params, MessageWriter writer)
 	{
 		this.params=params;
 //		this.dir=params.getDir();
 //		this.tmpDir=params.getTmpDir();
-		this.dictionary=params.getDictionary();
-		this.mode=params.getMode();
-		this.overwrite=params.getOverwrite();
+//		this.dictionary=params.getDictionary();
+//		this.mode=params.getMode();
+//		this.overwrite=params.getOverwrite();
 		this.writer=writer;
 	}
 	
-	protected void generate()
-	{
-		for (String filename : ExcelHelper.listFilesRecursively(params.getDir()))
-		{
-			generate(filename);
-		}
-	}
+//	protected void generate()
+//	{
+//		for (String filename : ExcelHelper.listFilesRecursively(params.getTemplateDir()))
+//		{
+//			generate(filename);
+//		}
+//	}
 	
 	protected void generate(String filename)
 	{
@@ -70,7 +69,7 @@ public abstract class AbstractLayoutGenerator
 	
 	protected void overwriteFile(String filename, String html)
 	{
-		if (!overwrite)
+		if (!params.getOverwrite())
 			return;
 		if (!FileHelper.exists(filename))
 			throw new CException("template file does not exist: "+filename);

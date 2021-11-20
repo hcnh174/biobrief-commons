@@ -15,6 +15,8 @@ public class MergeSources
 	
 	public Collection<MergeSource> getSources(){return sources.values();}
 	
+	public MergeSources() {}
+	
 	public MergeSources(String filename)
 	{
 		StringDataFrame dataframe=DataFrame.parseTabFile(filename);

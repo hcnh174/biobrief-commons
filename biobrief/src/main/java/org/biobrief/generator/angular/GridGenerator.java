@@ -1,6 +1,6 @@
 package org.biobrief.generator.angular;
 
-import org.biobrief.generator.Util;
+import org.biobrief.dictionary.Dictionary;
 import org.biobrief.generator.angular.AngularGeneratorParams.GridGeneratorParams;
 import org.biobrief.generator.templates.Grid;
 import org.biobrief.util.MessageWriter;
@@ -8,17 +8,23 @@ import org.biobrief.util.MessageWriter;
 //create an in-memory excel template
 public class GridGenerator extends AbstractGridGenerator
 {
-	public static void generate(GridGeneratorParams params, MessageWriter writer)
+	public static void main(String[] argv)
 	{
-		AbstractGridGenerator generator=new GridGenerator(params, writer);
-		generator.generate();
+		String template=argv[0];
+		String outDir=argv[1];
+		System.out.println("template="+template);
+		System.out.println("outDir="+outDir);
+		
+		Dictionary dictionary=new Dictionary();
+		GridGeneratorParams params=new GridGeneratorParams(dictionary, template, outDir);
+		MessageWriter out=new MessageWriter();
+		generate(params, out);
 	}
 	
-	public static void generate(String name, GridGeneratorParams params, MessageWriter writer)
+	public static void generate(GridGeneratorParams params, MessageWriter writer)
 	{
-		Util.checkName(name);
-		AbstractGridGenerator generator=new GridGenerator(params, writer);
-		generator.generate(params.getDir()+"/"+name+".xlsx");
+		GridGenerator generator=new GridGenerator(params, writer);
+		generator.generate(params.getTemplate());
 	}
 	
 	//////////////////////////////////////////

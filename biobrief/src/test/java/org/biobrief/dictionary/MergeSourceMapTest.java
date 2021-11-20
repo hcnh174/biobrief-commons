@@ -52,7 +52,7 @@ public class MergeSourceMapTest
 	
 	protected MergeSources getMergeSources()
 	{
-		String filename="../data/dictionary/sources.txt";
+		String filename="c:/workspace/hlsg/data/dictionary/sources.txt";
 		MergeSources sources=new MergeSources(filename);
 		//sources.add(new MergeSources.MergeSource("naika"));
 		//sources.add(new MergeSources.MergeSource("mergeinterview", false));

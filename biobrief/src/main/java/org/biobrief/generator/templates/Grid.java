@@ -35,11 +35,22 @@ public class Grid extends AbstractTemplate
 	
 	private EntityDefinition getEntity(Dictionary dictionary, String name)
 	{
-		GroupDefinition group=dictionary.getGroup(params.getGroup());
 		if (params.getDynamic())
+		{
+			GroupDefinition group=dictionary.findOrCreateDynamicGroup("dynamic");
 			return group.createDynamicEntity(name);
+		}
+		GroupDefinition group=dictionary.getGroup(params.getGroup());
 		return group.getEntity(params.getEntity());
 	}
+	
+//	private EntityDefinition getEntity(Dictionary dictionary, String name)
+//	{
+//		GroupDefinition group=dictionary.getGroup(params.getGroup());
+//		if (params.getDynamic())
+//			return group.createDynamicEntity(name);
+//		return group.getEntity(params.getEntity());
+//	}
 	
 	public Grid(ExcelTemplate template, GridParams defaultParams, Dictionary dictionary )
 	{
@@ -102,10 +113,10 @@ public class Grid extends AbstractTemplate
 		return (detailcell!=null) ? detailcell.getStringValue() : "";//"${enums.diagnostic(item)}";//"${id}";
 	}
 	
-	public String getGroup()
-	{
-		return TemplateUtils.getGroup(getEntity());
-	}
+//	public String getGroup()
+//	{
+//		return TemplateUtils.getGroup(getEntity());
+//	}
 	
 	public EntityDefinition getEntity(){return entity;}
 	public List<Column> getColumns(){return columns;}

@@ -3,7 +3,6 @@ package org.biobrief.generator.angular;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.biobrief.generator.Util;
 import org.biobrief.generator.angular.AngularGeneratorParams.GridGeneratorParams;
 import org.biobrief.generator.templates.ExcelTemplate;
 import org.biobrief.generator.templates.Grid;
@@ -34,7 +33,7 @@ public abstract class AbstractGridGenerator extends AbstractLayoutGenerator
 	protected void generate(ExcelTemplate template, Map<String, Object> params)
 	{
 		writer.println("generating grid: "+template.getName());
-		Grid grid=new Grid(template, new GridParams(params), dictionary);
+		Grid grid=new Grid(template, new GridParams(params), this.params.getDictionary());
 		AbstractAngularGrid nggrid=createAngularGrid(grid);
 		updateHtmlFile(nggrid);
 		updateTypescriptFile(nggrid);
@@ -45,31 +44,63 @@ public abstract class AbstractGridGenerator extends AbstractLayoutGenerator
 	private void updateHtmlFile(AbstractAngularGrid nggrid)
 	{
 		//String filename=Util.ANGULAR_APP_DIRECTORY+"/"+nggrid.getHtmlFilename();
-		String filename=params.getDir()+"/"+nggrid.getHtmlFilename();
-		if (!FileHelper.exists(filename))
-			throw new CException("cannot find grid template file: "+filename);
+		String filename=params.getOutDir()+"/"+nggrid.getName()+".component.html";
+//		if (!FileHelper.exists(filename))
+//			throw new CException("cannot find grid template file: "+filename);
 		writer.println("grid template file: "+filename);
-		String html=nggrid.render(new RenderParams(mode))+"\n";
+		String html=nggrid.render(new RenderParams(params.mode))+"\n";
 		//System.out.println("html="+html);
-		String str=FileHelper.readFile(filename);
-		str=Util.insertHtml(str, html, true);
+//		String str=FileHelper.readFile(filename);
+//		str=Util.insertHtml(str, html, true);
 //		if (overwrite)
 //			overwriteFile(filename, str);
 //		else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+nggrid.getHtmlFilename(), str);
+		FileHelper.writeFile(filename, html);
 	}
+	
+//	private void updateHtmlFile(AbstractAngularGrid nggrid)
+//	{
+//		//String filename=Util.ANGULAR_APP_DIRECTORY+"/"+nggrid.getHtmlFilename();
+////		String filename=nggrid.getHtmlFilename();
+////		if (!FileHelper.exists(filename))
+////			throw new CException("cannot find grid template file: "+filename);
+////		writer.println("grid template file: "+filename);
+////		String html=nggrid.render(new RenderParams(params.mode))+"\n";
+////		//System.out.println("html="+html);
+////		String str=FileHelper.readFile(filename);
+////		str=Util.insertHtml(str, html, true);
+////		if (overwrite)
+////			overwriteFile(filename, str);
+////		else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+nggrid.getHtmlFilename(), str);
+//	}
 	
 	private void updateTypescriptFile(AbstractAngularGrid nggrid)
 	{
-//		String filename=Util.ANGULAR_APP_DIRECTORY+"/"+nggrid.getTypescriptFilename();
-		String filename=params.getDir()+"/"+nggrid.getHtmlFilename();
-		if (!FileHelper.exists(filename))
-			throw new CException("cannot find grid typescript file: "+filename);
+		String filename=params.getOutDir()+"/"+nggrid.getName()+".component.ts";
+//		if (!FileHelper.exists(filename))
+//			throw new CException("cannot find grid typescript file: "+filename);
 		writer.println("grid typescript file: "+filename);
 		String ts=nggrid.toTypescript();//+"\n";
-		String str=FileHelper.readFile(filename);
-		str=Util.insertText(Util.INIT, str, ts, true);
+//		String str=FileHelper.readFile(filename);
+//		str=Util.insertText(Util.INIT, str, ts, true);
 //		if (overwrite)
 //			overwriteFile(filename, str);
 //		else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+nggrid.getTypescriptFilename(), str);
+		FileHelper.writeFile(filename, ts);
 	}
+	
+//	private void updateTypescriptFile(AbstractAngularGrid nggrid)
+//	{
+////		String filename=Util.ANGULAR_APP_DIRECTORY+"/"+nggrid.getTypescriptFilename();
+////		String filename=nggrid.getTypescriptFilename();
+////		if (!FileHelper.exists(filename))
+////			throw new CException("cannot find grid typescript file: "+filename);
+////		writer.println("grid typescript file: "+filename);
+////		String ts=nggrid.toTypescript();//+"\n";
+////		String str=FileHelper.readFile(filename);
+////		str=Util.insertText(Util.INIT, str, ts, true);
+////		if (overwrite)
+////			overwriteFile(filename, str);
+////		else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+nggrid.getTypescriptFilename(), str);
+//	}
 }

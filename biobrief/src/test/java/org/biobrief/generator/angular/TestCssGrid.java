@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 public class TestCssGrid
 {
 	private ExcelHelper excel=new ExcelHelper();
-	private Dictionary dictionary=new Dictionary("../data/dictionary");
-	private Workbook workbook=excel.openWorkbook("src/test/resources/forms.xlsx");
+	private Dictionary dictionary=new Dictionary("c:/workspace/hlsg/data/dictionary");
+	private Workbook workbook=excel.openWorkbook("c:/workspace/hlsg/hlsg-generator/src/test/resources/forms.xlsx");
 	private Map<String, Object> params=TemplateUtils.loadDefaultParams(workbook);
 	
 	/////////////////////////////////////////////////
@@ -47,9 +47,4 @@ public class TestCssGrid
 	{
 		return TemplateUtils.getTemplate(workbook, "basicinfo-fieldset");
 	}
-	
-//	private void log(String message)
-//	{
-//		FileHelper.appendFile(".temp/logs/css-grid.txt", message);
-//	}
 }

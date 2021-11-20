@@ -27,7 +27,7 @@ public class TestPrimeTable
 	
 	private Grid buildGrid()
 	{
-		Dictionary dictionary=new Dictionary("../data/dictionary");
+		Dictionary dictionary=new Dictionary("c:/workspace/hlsg/data/dictionary");
 		SimpleMap values=new SimpleMap();
 		values.put("group", "hirodai");
 		values.put("mode", "readonly");

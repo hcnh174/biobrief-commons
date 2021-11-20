@@ -1,7 +1,5 @@
 package org.biobrief.generator.angular;
 
-import java.util.List;
-
 //import org.biobrief.core.CoreConstants.PrintView;
 import org.biobrief.generator.AbstractGeneratorService;
 import org.biobrief.generator.angular.AngularGeneratorParams.FormGeneratorParams;
@@ -45,16 +43,16 @@ public class AngularGeneratorService extends AbstractGeneratorService
 		FormGenerator.generate(params, writer);
 	}
 	
-	public void generateForm(String name, FormGeneratorParams params, MessageWriter writer)
-	{
-//		GeneratorParams params=new GeneratorParams();
-//		params.setDir(formDir);
-//		params.setDictionary(getDictionary());
-//		params.setMode(RenderMode.ANGULAR);
-//		params.setOverwrite(overwrite);
-		FormGenerator.generate(name, params, writer);
-		//FormGenerator.generate(name, formDir, getDictionary(), RenderMode.ANGULAR, overwrite, writer);
-	}
+//	public void generateForm(String name, FormGeneratorParams params, MessageWriter writer)
+//	{
+////		GeneratorParams params=new GeneratorParams();
+////		params.setDir(formDir);
+////		params.setDictionary(getDictionary());
+////		params.setMode(RenderMode.ANGULAR);
+////		params.setOverwrite(overwrite);
+//		FormGenerator.generate(name, params, writer);
+//		//FormGenerator.generate(name, formDir, getDictionary(), RenderMode.ANGULAR, overwrite, writer);
+//	}
 	
 //	public void generatePrintForms(boolean overwrite, MessageWriter writer)
 //	{
@@ -71,10 +69,10 @@ public class AngularGeneratorService extends AbstractGeneratorService
 		GridGenerator.generate(params, writer);
 	}
 	
-	public void generateGrid(String name, GridGeneratorParams params, MessageWriter writer)
-	{
-		GridGenerator.generate(name, params, writer);
-	}
+//	public void generateGrid(String name, GridGeneratorParams params, MessageWriter writer)
+//	{
+//		GridGenerator.generate(name, params, writer);
+//	}
 	
 	////////////////////////////////////////////////
 	
@@ -83,10 +81,10 @@ public class AngularGeneratorService extends AbstractGeneratorService
 		HandsontableGenerator.generate(params, writer);
 	}
 	
-	public void generateSheet(String name, HandsontableGeneratorParams params, MessageWriter writer)
-	{
-		HandsontableGenerator.generate(name, params, writer);
-	}
+//	public void generateSheet(String name, HandsontableGeneratorParams params, MessageWriter writer)
+//	{
+//		HandsontableGenerator.generate(name, params, writer);
+//	}
 	
 	////////////////////////////////////////////////////
 	

@@ -8,7 +8,7 @@ public class DictionaryTest
 	@Test
 	public void dictionary()
 	{
-		Dictionary dictionary=new Dictionary("../data/dictionary");
+		Dictionary dictionary=new Dictionary("c:/workspace/hlsg/data/dictionary");
 		System.out.println(dictionary.toString());
 	}
 }
