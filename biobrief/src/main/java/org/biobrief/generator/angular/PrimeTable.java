@@ -179,7 +179,7 @@ public class PrimeTable extends AbstractAngularGrid
 			attr(buffer, "[value]", path);
 			attr(buffer, "dataKey", "id");
 			attr(buffer, "[columns]", "selectedColumns");
-			attr(buffer, "[virtualScroll]", true);
+			//attr(buffer, "[virtualScroll]", true);
 			
 			//attrIf(buffer, "[resizableColumns]", "true", grid.getParams().getResizable());
 			attrIf(buffer, "[reorderableColumns]", "true", grid.getParams().getReorderable());
@@ -461,48 +461,92 @@ public class PrimeTable extends AbstractAngularGrid
 				this.exportbutton=table.grid.getParams().getExportable();
 			}
 			
-//			@Override
-//			protected void renderAttributes(RenderParams params, StringBuilder buffer)
-//			{
-//				attr(buffer, "let-page");
-//			}
-			
+			/*
+			<div class="p-formgroup-inline">
+				<div class="p-field">
+					<div class="p-inputgroup">
+						<span class="p-inputgroup-addon"><i class="fa fa-search"></i></span>
+						<input type="text" pInputText [placeholder]="globalFilterPlaceholder" (input)="grid.filterGlobal($event.target.value, 'contains')" class="globalfilter">
+					</div>
+				</div>
+				<div class="p-field">
+					<p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+						[selectedItemsLabel]="selectedColumnsLabel" [style]="{minWidth: '100px', alignSelf: 'center', marginLeft: '2px', marginRight: '2px'}" defaultLabel="Choose columns"></p-multiSelect>
+				</div>
+				<p-button icon="fa fa-refresh" styleClass="p-button-raised p-button-secondary" (onClick)="refresh($event)" [style]="{marginRight: '.25em'}"></p-button>
+				<p-splitButton icon="fa fa-download" (onClick)="grid.exportCSV()" [model]="exportOptions" [style]="{marginRight: '2px'}"></p-splitButton>
+			</div>
+			*/
 			@Override
 			protected void renderBody(RenderParams params, StringBuilder buffer)
 			{
-				buffer.append("<div class=\"flexrow\">\n");
-				buffer.append("<i class=\"fa "+icon.getCls()+" fa-lg fa-fw\" style=\"align-self: center; margin-right: 2px\"></i>\n");				 
+				buffer.append("<div class=\"p-formgroup-inline\">\n");
+				//buffer.append("<i class=\"fa "+icon.getCls()+" fa-lg fa-fw\" style=\"align-self: center; margin-right: 2px\"></i>\n");				 
 				if (globalfilter)
 				{
-					buffer.append("<div class=\"ui-inputgroup\">\n");
-					buffer.append("\t<span class=\"ui-inputgroup-addon\">");
-					buffer.append("<i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\n");
-					buffer.append("</span>\n");
-					buffer.append("<input type=\"text\" pInputText");// size=\"30\"
-					buffer.append(" [placeholder]=\"globalFilterPlaceholder\"");
-					buffer.append(" (input)=\"grid.filterGlobal($event.target.value, 'contains')\"");
-					//buffer.append(" style=\"width:auto\">\n");
-					buffer.append(" class=\"globalfilter\">\n");
+					buffer.append("<div class=\"p-field\">\n");
+					buffer.append("\t<div class=\"p-inputgroup\">\n");
+					buffer.append("\t\t<span class=\"p-inputgroup-addon\"><i class=\"fa fa-search\"></i></span>\n");
+					buffer.append("\t\t<input type=\"text\" pInputText [placeholder]=\"globalFilterPlaceholder\"");
+					buffer.append(" (input)=\"grid.filterGlobal($event.target.value, 'contains')\" class=\"globalfilter\">\n");
+					buffer.append("\t</div>\n");
 					buffer.append("</div>\n");
 				}
 				if (coltoggler)
 				{
-					buffer.append("<p-multiSelect [options]=\"cols\"");
+					buffer.append("<div class=\"p-field\">\n");
+					buffer.append("\t<p-multiSelect [options]=\"cols\"");
 					buffer.append(" [(ngModel)]=\"selectedColumns\"");
-					buffer.append(" optionLabel=\"header\"\n");
+					buffer.append(" optionLabel=\"header\"");
 					buffer.append(" [selectedItemsLabel]=\"selectedColumnsLabel\"");
 					buffer.append(" [style]=\"{minWidth: '100px', alignSelf: 'center', marginLeft: '2px', marginRight: '2px'}\"");
 					buffer.append(" defaultLabel=\"Choose columns\">");
-					buffer.append("</p-multiSelect>\n");
+					buffer.append("\t</p-multiSelect>\n");
+					buffer.append("</div>\n");
 				}
 				if (refreshbutton)
 					buffer.append("<p-button icon=\"fa fa-refresh\" styleClass=\"ui-button-raised ui-button-secondary\" (onClick)=\"refresh($event)\" [style]=\"{marginRight: '.25em'}\"></p-button>\n");
 				if (exportbutton)
 					buffer.append("<p-splitButton icon=\"fa fa-download\" (onClick)=\"grid.exportCSV()\" [model]=\"exportOptions\" [style]=\"{marginRight: '2px'}\"></p-splitButton>\n");
-				
-				//buffer.append("<span style=\"align-self: center\">{{itemRange(page)}}</span>\n");
 				buffer.append("</div>\n");
 			}
+			
+//			@Override
+//			protected void renderBody(RenderParams params, StringBuilder buffer)
+//			{
+//				buffer.append("<div class=\"flexrow\">\n");
+//				buffer.append("<i class=\"fa "+icon.getCls()+" fa-lg fa-fw\" style=\"align-self: center; margin-right: 2px\"></i>\n");				 
+//				if (globalfilter)
+//				{
+//					buffer.append("<div class=\"ui-inputgroup\">\n");
+//					buffer.append("\t<span class=\"ui-inputgroup-addon\">");
+//					buffer.append("<i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\n");
+//					buffer.append("</span>\n");
+//					buffer.append("<input type=\"text\" pInputText");// size=\"30\"
+//					buffer.append(" [placeholder]=\"globalFilterPlaceholder\"");
+//					buffer.append(" (input)=\"grid.filterGlobal($event.target.value, 'contains')\"");
+//					//buffer.append(" style=\"width:auto\">\n");
+//					buffer.append(" class=\"globalfilter\">\n");
+//					buffer.append("</div>\n");
+//				}
+//				if (coltoggler)
+//				{
+//					buffer.append("<p-multiSelect [options]=\"cols\"");
+//					buffer.append(" [(ngModel)]=\"selectedColumns\"");
+//					buffer.append(" optionLabel=\"header\"\n");
+//					buffer.append(" [selectedItemsLabel]=\"selectedColumnsLabel\"");
+//					buffer.append(" [style]=\"{minWidth: '100px', alignSelf: 'center', marginLeft: '2px', marginRight: '2px'}\"");
+//					buffer.append(" defaultLabel=\"Choose columns\">");
+//					buffer.append("</p-multiSelect>\n");
+//				}
+//				if (refreshbutton)
+//					buffer.append("<p-button icon=\"fa fa-refresh\" styleClass=\"ui-button-raised ui-button-secondary\" (onClick)=\"refresh($event)\" [style]=\"{marginRight: '.25em'}\"></p-button>\n");
+//				if (exportbutton)
+//					buffer.append("<p-splitButton icon=\"fa fa-download\" (onClick)=\"grid.exportCSV()\" [model]=\"exportOptions\" [style]=\"{marginRight: '2px'}\"></p-splitButton>\n");
+//				
+//				//buffer.append("<span style=\"align-self: center\">{{itemRange(page)}}</span>\n");
+//				buffer.append("</div>\n");
+//			}
 		}
 		
 		public static class HeaderTemplate extends AbstractTemplate
