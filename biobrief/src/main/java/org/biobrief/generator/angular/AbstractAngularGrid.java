@@ -17,20 +17,20 @@ public abstract class AbstractAngularGrid extends AbstractHtmlRenderer implement
 		return grid.getName();
 	}
 	
-//	public String getHtmlFilename()
-//	{
-//		return getFilenameRoot()+".html";
-//	}
-//	
-//	public String getTypescriptFilename()
-//	{
-//		return getFilenameRoot()+".ts";
-//	}
+	public String getHtmlFilename(String srcDir)
+	{
+		return getFilenameRoot(srcDir)+".html";
+	}
 	
-//	private String getFilenameRoot()
-//	{
-//		return grid.getGroup()+"/view/grids/"+grid.getName()+".component";
-//	}
+	public String getTypescriptFilename(String srcDir)
+	{
+		return getFilenameRoot(srcDir)+".ts";
+	}
+	
+	private String getFilenameRoot(String srcDir)
+	{
+		return srcDir+"/"+grid.getName()+".component";
+	}
 	
 	public String toTypescript()
 	{

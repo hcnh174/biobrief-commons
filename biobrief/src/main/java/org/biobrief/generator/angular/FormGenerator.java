@@ -35,21 +35,16 @@ public class FormGenerator extends AbstractLayoutGenerator
 	public static void main(String[] argv)
 	{
 		String template=argv[0];
-		String outDir=argv[1];
+		String srcDir=argv[1];
+		String outDir=argv[2];
 		System.out.println("template="+template);
+		System.out.println("srcDir="+srcDir);
 		System.out.println("outDir="+outDir);
 		
-		Dictionary dictionary=new Dictionary();
-		FormGeneratorParams params=new FormGeneratorParams(dictionary, template, outDir);
+		FormGeneratorParams params=new FormGeneratorParams(template, srcDir, outDir);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}
-	
-//	public static void generate(FormGeneratorParams params, MessageWriter writer)
-//	{
-//		FormGenerator generator=new FormGenerator(params, writer);
-//		generator.generate();
-//	}
 	
 	public static void generate(FormGeneratorParams params, MessageWriter writer)
 	{

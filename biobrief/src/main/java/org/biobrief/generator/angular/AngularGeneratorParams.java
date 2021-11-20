@@ -10,24 +10,24 @@ import lombok.EqualsAndHashCode;
 @Data @EqualsAndHashCode(callSuper=true)
 public class AngularGeneratorParams extends EntityGeneratorParams
 {
-	//protected String dir;
+	protected String srcDir;
 	protected String outDir;
 	protected RenderMode mode=RenderMode.ANGULAR;
 	protected Boolean overwrite=false;
 	
-	public AngularGeneratorParams(Dictionary dictionary, String outDir)
+	public AngularGeneratorParams(String srcDir, String outDir)
 	{
-		super(dictionary);
-		//this.dir=dir;
+		super(new Dictionary());
+		this.srcDir=srcDir;
 		this.outDir=outDir;
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
 	public static class ModelGeneratorParams extends AngularGeneratorParams
 	{
-		public ModelGeneratorParams(Dictionary dictionary, String outDir)
+		public ModelGeneratorParams(String srcDir, String outDir)
 		{
-			super(dictionary, outDir);
+			super(srcDir, outDir);
 		}
 	}
 	
@@ -36,9 +36,9 @@ public class AngularGeneratorParams extends EntityGeneratorParams
 	{
 		protected String template;
 		
-		public AbstractTemplateGeneratorParams(Dictionary dictionary, String template, String outDir)
+		public AbstractTemplateGeneratorParams(String template, String srcDir, String outDir)
 		{
-			super(dictionary, outDir);
+			super(srcDir, outDir);
 			this.template=template;
 		}
 	}
@@ -47,27 +47,27 @@ public class AngularGeneratorParams extends EntityGeneratorParams
 	public static class FormGeneratorParams extends AbstractTemplateGeneratorParams
 	{
 		
-		public FormGeneratorParams(Dictionary dictionary, String template, String outDir)
+		public FormGeneratorParams(String template, String srcDir, String outDir)
 		{
-			super(dictionary, template, outDir);
+			super(template, srcDir, outDir);
 		}
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
 	public static class GridGeneratorParams extends AbstractTemplateGeneratorParams
 	{
-		public GridGeneratorParams(Dictionary dictionary, String template, String outDir)
+		public GridGeneratorParams(String template, String srcDir, String outDir)
 		{
-			super(dictionary, template, outDir);
+			super(template, srcDir, outDir);
 		}
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
 	public static class HandsontableGeneratorParams extends AbstractTemplateGeneratorParams
 	{
-		public HandsontableGeneratorParams(Dictionary dictionary, String template, String outDir)
+		public HandsontableGeneratorParams(String template, String srcDir, String outDir)
 		{
-			super(dictionary, template, outDir);
+			super(template, srcDir, outDir);
 		}
 	}
 }
