@@ -188,7 +188,7 @@ public class PrimeTable extends AbstractAngularGrid
 			if (grid.getParams().getResizable())
 			{
 				attr(buffer, "[resizableColumns]", "true");
-				attr(buffer, "columnResizeMode", "expand");
+				attr(buffer, "columnResizeMode", "fit");//expand
 			}			
 			if (grid.getParams().getContextmenu())
 			{
@@ -362,6 +362,7 @@ public class PrimeTable extends AbstractAngularGrid
 			buffer.append("<td");
 			attr(buffer, "*ngFor", "let col of columns");
 			attr(buffer, "[ngSwitch]", "col.field");
+			attr(buffer, "[style.maxWidth]", "col.width");// pending
 			attr(buffer, "class", "ui-resizable-column");
 			buffer.append(">\n");
 			for (FieldColumn column : columns)
@@ -863,6 +864,7 @@ public class PrimeTable extends AbstractAngularGrid
 		protected void renderColgroupAttributes(RenderParams params, StringBuilder buffer)
 		{
 			attr(buffer, "[style.width]", width);
+			//attr(buffer, "[style.maxWidth]", width);
 		}
 		
 		protected void renderHeaderAttributes(RenderParams params, StringBuilder buffer)
