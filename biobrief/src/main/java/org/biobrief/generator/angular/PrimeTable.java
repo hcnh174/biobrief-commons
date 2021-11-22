@@ -254,7 +254,6 @@ public class PrimeTable extends AbstractAngularGrid
 			{
 				add(new FieldColumn(column));
 			}
-			//addAuditColumns(grid);
 		}
 		
 		public String renderColumnOptions()
@@ -302,17 +301,6 @@ public class PrimeTable extends AbstractAngularGrid
 			boolean visible=false;
 			return new FieldColumn(grid, width, align, field, header, body, filtered, visible);
 		}
-
-//		@Override
-//		public String renderColgroup(RenderParams params)
-//		{
-//			StringBuilder buffer=new StringBuilder();
-//			buffer.append("<col");
-//			attr(buffer, "*ngFor", "let col of columns");
-//			attr(buffer, "[style.width]", "col.width");
-//			buffer.append(">\n");
-//			return buffer.toString();
-//		}
 		
 		@Override
 		public String renderHeader(RenderParams params)
@@ -335,26 +323,7 @@ public class PrimeTable extends AbstractAngularGrid
 			buffer.append("</th>\n");
 			return buffer.toString();
 		}
-		
-//		@Override
-//		public String renderFilter(RenderParams params)
-//		{
-//			StringBuilder buffer=new StringBuilder();
-//			buffer.append("<th");
-//			attr(buffer, "*ngFor", "let col of columns");
-//			attr(buffer, "[ngSwitch]", "col.field");
-//			attr(buffer, "class", "ui-resizable-column");
-//			buffer.append(">\n");
-//			for (FieldColumn column : columns)
-//			{
-//				buffer.append("\t");
-//				column.renderFilter(params, buffer);
-//				buffer.append("\n");
-//			}
-//			buffer.append("</th>\n");
-//			return buffer.toString();
-//		}
-		
+
 		@Override
 		public String renderBody(RenderParams params)
 		{
@@ -414,35 +383,7 @@ public class PrimeTable extends AbstractAngularGrid
 
 		protected void renderBody(RenderParams params, StringBuilder buffer){}
 		
-		
 		//////////////////////////////////////////////////////////////////////////
-		
-//		public static class ColgroupTemplate extends AbstractTemplate
-//		{
-//			public ColgroupTemplate(TurboTable table)
-//			{
-//				super(table, "colgroup");
-//			}
-//			
-//			@Override
-//			protected void renderAttributes(RenderParams params, StringBuilder buffer)
-//			{
-//				attr(buffer, "let-columns");
-//			}
-//			
-//			@Override
-//			protected void renderBody(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("<colgroup>\n");
-//				for (Column column : table.columns)
-//				{
-//					buffer.append(indent(column.renderColgroup(params))).append("\n");
-//				}
-//				buffer.append("</colgroup>\n");
-//			}
-//		}
-		
-		///////////////////////////////////////////////////////////
 		
 		public static class CaptionTemplate extends AbstractTemplate
 		{
@@ -462,22 +403,6 @@ public class PrimeTable extends AbstractAngularGrid
 				this.exportbutton=table.grid.getParams().getExportable();
 			}
 			
-			/*
-			<div class="p-formgroup-inline">
-				<div class="p-field">
-					<div class="p-inputgroup">
-						<span class="p-inputgroup-addon"><i class="fa fa-search"></i></span>
-						<input type="text" pInputText [placeholder]="globalFilterPlaceholder" (input)="grid.filterGlobal($event.target.value, 'contains')" class="globalfilter">
-					</div>
-				</div>
-				<div class="p-field">
-					<p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
-						[selectedItemsLabel]="selectedColumnsLabel" [style]="{minWidth: '100px', alignSelf: 'center', marginLeft: '2px', marginRight: '2px'}" defaultLabel="Choose columns"></p-multiSelect>
-				</div>
-				<p-button icon="fa fa-refresh" styleClass="p-button-raised p-button-secondary" (onClick)="refresh($event)" [style]="{marginRight: '.25em'}"></p-button>
-				<p-splitButton icon="fa fa-download" (onClick)="grid.exportCSV()" [model]="exportOptions" [style]="{marginRight: '2px'}"></p-splitButton>
-			</div>
-			*/
 			@Override
 			protected void renderBody(RenderParams params, StringBuilder buffer)
 			{
@@ -516,13 +441,11 @@ public class PrimeTable extends AbstractAngularGrid
 		public static class HeaderTemplate extends AbstractTemplate
 		{
 			private final Style headerStyle=new Style();
-			//private final Style filterStyle=new Style();
 			
 			public HeaderTemplate(TurboTable table)
 			{
 				super(table, "header");
 				headerStyle.addClass("header-row");
-				//filterStyle.addClass("filter-row");
 			}
 			
 			@Override
@@ -535,7 +458,6 @@ public class PrimeTable extends AbstractAngularGrid
 			protected void renderBody(RenderParams params, StringBuilder buffer)
 			{
 				renderHeaderRow(params, buffer);
-				//renderFilterRow(params, buffer);
 			}
 			
 			protected void renderHeaderRow(RenderParams params, StringBuilder buffer)
@@ -549,28 +471,13 @@ public class PrimeTable extends AbstractAngularGrid
 				}
 				buffer.append("</tr>\n");
 			}
-			
-//			protected void renderFilterRow(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("<tr");
-//				attrStyle(buffer, filterStyle);
-//				buffer.append(">\n");
-//				for (Column column : table.columns)
-//				{
-//					buffer.append(indent(column.renderFilter(params))).append("\n");
-//				}
-//				buffer.append("</tr>\n");
-//			}
 		}	
 		
 		public static class BodyTemplate extends AbstractTemplate
 		{			
-			//private final Style style=new Style();
-			
 			public BodyTemplate(TurboTable table)
 			{
 				super(table, "body");
-				//style.addClass("body-row");
 			}
 
 			@Override
@@ -586,7 +493,6 @@ public class PrimeTable extends AbstractAngularGrid
 			protected void renderBody(RenderParams params, StringBuilder buffer)
 			{
 				buffer.append("<tr");
-				//attrStyle(buffer, style);
 				attr(buffer, "[ngClass]", "rowClass(rowData)");
 				attr(buffer, "[pSelectableRow]", "rowData");
 				attr(buffer, "[pContextMenuRow]", "rowData");
@@ -615,8 +521,6 @@ public class PrimeTable extends AbstractAngularGrid
 				if (StringHelper.hasContent(template))
 					return TemplateUtils.formatTemplate(template);
 				else return "<yaml [model]=\"rowData\"></yaml>";
-				//else return "<json [model]=\"rowData\"></json>";
-				//else return "<div class=\"jsonexpander\"><pre>{{enums.diagnostic(rowData)}}</pre></div>";
 			}
 			
 			@Override
@@ -659,67 +563,6 @@ public class PrimeTable extends AbstractAngularGrid
 			}
 		}
 		
-		/*
-		public static class PaginatorLeftTemplate extends AbstractTemplate
-		{
-			private final boolean globalfilter;
-			private final boolean coltoggler;
-			private final boolean refreshbutton;
-			private final boolean exportbutton;
-			
-			public PaginatorLeftTemplate(TurboTable table)
-			{
-				super(table, "paginatorleft");
-				this.globalfilter=table.grid.getParams().getGlobalfilter();
-				this.coltoggler=table.grid.getParams().getColtoggler();
-				this.refreshbutton=table.grid.getParams().getRefreshbutton();
-				this.exportbutton=table.grid.getParams().getExportable();
-			}
-			
-			@Override
-			protected void renderAttributes(RenderParams params, StringBuilder buffer)
-			{
-				attr(buffer, "let-page");
-			}
-			
-			@Override
-			protected void renderBody(RenderParams params, StringBuilder buffer)
-			{
-				buffer.append("<div class=\"flexrow\">\n");
-				if (globalfilter)
-				{
-					buffer.append("<div class=\"ui-inputgroup\">\n");
-					buffer.append("\t<span class=\"ui-inputgroup-addon\">");
-					buffer.append("<i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\n");
-					buffer.append("</span>\n");
-					buffer.append("<input type=\"text\" pInputText");// size=\"30\"
-					buffer.append(" [placeholder]=\"globalFilterPlaceholder\"");
-					buffer.append(" (input)=\"grid.filterGlobal($event.target.value, 'contains')\"");
-					//buffer.append(" style=\"width:auto\">\n");
-					buffer.append(" class=\"globalfilter\">\n");
-					buffer.append("</div>\n");
-				}
-				if (coltoggler)
-				{
-					buffer.append("<p-multiSelect [options]=\"cols\"");
-					buffer.append(" [(ngModel)]=\"selectedColumns\"");
-					buffer.append(" optionLabel=\"header\"\n");
-					buffer.append(" [selectedItemsLabel]=\"selectedColumnsLabel\"");
-					buffer.append(" [style]=\"{minWidth: '100px', alignSelf: 'center', marginLeft: '2px', marginRight: '2px'}\"");
-					buffer.append(" defaultLabel=\"Choose columns\">");
-					buffer.append("</p-multiSelect>\n");
-				}
-				if (refreshbutton)
-					buffer.append("<p-button icon=\"fa fa-refresh\" styleClass=\"ui-button-raised ui-button-secondary\" (onClick)=\"refresh($event)\" [style]=\"{marginRight: '.25em'}\"></p-button>");
-				if (exportbutton)
-					buffer.append("<p-splitButton icon=\"fa fa-download\" (onClick)=\"grid.exportCSV()\" [model]=\"exportOptions\" [style]=\"{marginRight: '2px'}\"></p-splitButton>\n");
-				
-				//buffer.append("<span style=\"align-self: center\">{{itemRange(page)}}</span>\n");
-				buffer.append("</div>\n");
-			}
-		}
-		*/
-		
 		public static class PaginatorLeftTemplate extends AbstractTemplate
 		{			
 			public PaginatorLeftTemplate(TurboTable table)
@@ -753,9 +596,7 @@ public class PrimeTable extends AbstractAngularGrid
 	
 	public interface Column
 	{
-		//String renderColgroup(RenderParams params);
 		String renderHeader(RenderParams params);
-		//String renderFilter(RenderParams params);
 		String renderBody(RenderParams params);
 	}
 	
@@ -780,15 +621,6 @@ public class PrimeTable extends AbstractAngularGrid
 				bodyStyle.addClass("ui-resizable-column");
 		}
 
-//		public String renderColgroup(RenderParams params)
-//		{
-//			StringBuilder buffer=new StringBuilder();
-//			buffer.append("<col");
-//			renderColgroupAttributes(params, buffer);
-//			buffer.append(">");
-//			return buffer.toString();
-//		}
-		
 		public String renderHeader(RenderParams params)
 		{
 			StringBuilder buffer=new StringBuilder();
@@ -799,17 +631,6 @@ public class PrimeTable extends AbstractAngularGrid
 			buffer.append("</th>");
 			return buffer.toString();
 		}
-		
-//		public String renderFilter(RenderParams params)
-//		{
-//			StringBuilder buffer=new StringBuilder();
-//			buffer.append("<th");
-//			renderFilterAttributes(params, buffer);
-//			buffer.append(">");
-//			renderFilter(params, buffer);
-//			buffer.append("</th>");
-//			return buffer.toString();
-//		}
 		
 		public String renderBody(RenderParams params)
 		{
@@ -823,12 +644,6 @@ public class PrimeTable extends AbstractAngularGrid
 		}
 		
 		//////////////////////////////
-		
-		protected void renderColgroupAttributes(RenderParams params, StringBuilder buffer)
-		{
-			attr(buffer, "[style.width]", width);
-			//attr(buffer, "[style.maxWidth]", width);
-		}
 		
 		protected void renderHeaderAttributes(RenderParams params, StringBuilder buffer)
 		{
@@ -909,19 +724,7 @@ public class PrimeTable extends AbstractAngularGrid
 				renderFilter(params, buffer);
 				buffer.append("\t</colname-renderer>");
 			}
-			
-//			@Override
-//			protected void renderHeader(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("<span");
-//				switchCase(buffer, this.field);
-//				attr(buffer, "title", Util.renderText(params, header));
-//				buffer.append(">");
-//				super.renderHeader(params, buffer);
-//				buffer.append("<p-sortIcon field=\""+field+"\"></p-sortIcon>");
-//				buffer.append("</span>");
-//			}
-			
+
 			@Override
 			protected void renderFilter(RenderParams params, StringBuilder buffer)
 			{
@@ -1196,22 +999,8 @@ public class PrimeTable extends AbstractAngularGrid
 				if (body.contains("<"))
 					return;
 				String title=TemplateUtils.formatTemplate(this.body);
-//				title=StringHelper.replace(title, "${", "");
-//				title=StringHelper.replace(title, "}", "");
-//				System.out.println("getMouseoverText: "+title);
 				attr(buffer, "title", title);
 			}
-			
-//			protected void mouseOverText(StringBuilder buffer)
-//			{
-//				if (body.contains("<"))
-//					return;
-//				String title=body;
-//				title=StringHelper.replace(title, "${", "");
-//				title=StringHelper.replace(title, "}", "");
-//				System.out.println("getMouseoverText: "+title);
-//				attr(buffer, "[title]", title);
-//			}
 			
 			@Override
 			protected void renderFreemarker(RenderParams params, StringBuilder buffer)
@@ -1254,7 +1043,6 @@ public class PrimeTable extends AbstractAngularGrid
 				super(body, field);
 			}
 			
-			//<date-renderer [date]="rowData.date"></date-renderer>			
 			@Override
 			protected void renderAngular(RenderParams params, StringBuilder buffer)
 			{
@@ -1295,17 +1083,6 @@ public class PrimeTable extends AbstractAngularGrid
 				return type+"-renderer";
 			}
 			
-//			protected void renderAngular(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("<enum-renderer");
-//				switchCase(buffer, this.field.getName());
-//				attr(buffer, "type", field.getType());
-//				attr(buffer, "[value]", "rowData."+field.getName());
-//				attr(buffer, "[grid]", "grid");
-//				buffer.append(">");
-//				buffer.append("</enum-renderer>");
-//			}
-			
 			protected void renderFreemarker(RenderParams params, StringBuilder buffer)
 			{
 				buffer.append("${item."+field+"}: <span style=\"color:red\">enums.getEnum('"+field.getType()+"', item[col.field])</span>");
@@ -1333,11 +1110,6 @@ public class PrimeTable extends AbstractAngularGrid
 				buffer.append(">");
 				buffer.append("</"+tag+">");
 			}
-			
-//			protected void renderFreemarker(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("${item."+field+"}: <span style=\"color:red\">enums.getMaster('"+enumtype+"', item[col.field])</span>");
-//			}
 		}
 	}
 
@@ -1390,25 +1162,10 @@ public class PrimeTable extends AbstractAngularGrid
 			{
 				buffer.append("<text-filter");
 				attr(buffer, "field", field.getName());
-//				switchCase(buffer);
-//				attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-//				attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</text-filter>");
 				
 			}
-			
-//			@Override
-//			protected void render(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("<text-filter");
-//				switchCase(buffer);
-//				attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-//				attr(buffer, "[grid]", "grid");
-//				buffer.append(">");
-//				buffer.append("</text-filter>");
-//				
-//			}
 		}
 
 		public static class NumberFilter extends Filter
@@ -1442,25 +1199,10 @@ public class PrimeTable extends AbstractAngularGrid
 			{
 				buffer.append("<enum-filter");
 				attr(buffer, "field", field.getName());
-				//switchCase(buffer);
 				attr(buffer, "type", field.getType());
-				//attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</enum-filter>");
 			}
-			
-//			@Override
-//			protected void render(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("<enum-filter");
-//				switchCase(buffer);
-//				attr(buffer, "type", field.getType());
-//				attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-//				attr(buffer, "[grid]", "grid");
-//				buffer.append(">");
-//				buffer.append("</enum-filter>");
-//			}
 		}
 		
 		//<sample-filter *ngSwitchCase="'sample'" (onChange)="grid.filter($event, 'sample', 'equals')"></sample-filter>
@@ -1477,24 +1219,9 @@ public class PrimeTable extends AbstractAngularGrid
 				String tag=Util.renderTag(field.getType(), "filter");
 				buffer.append("<"+tag);
 				attr(buffer, "field", field.getName());
-				//switchCase(buffer);
-				//attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</"+tag+">");
 			}
-			
-//			@Override
-//			protected void render(RenderParams params, StringBuilder buffer)
-//			{
-//				String tag=Util.renderTag(field.getType(), "filter");
-//				buffer.append("<"+tag);
-//				switchCase(buffer);
-//				attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-//				attr(buffer, "[grid]", "grid");
-//				buffer.append(">");
-//				buffer.append("</"+tag+">");
-//			}
 		}
 		
 		public static class DateFilter extends Filter
@@ -1509,23 +1236,9 @@ public class PrimeTable extends AbstractAngularGrid
 			{
 				buffer.append("<date-filter");
 				attr(buffer, "field", field.getName());
-				//switchCase(buffer);
-				//attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</date-filter>");
 			}
-			
-//			@Override
-//			protected void render(RenderParams params, StringBuilder buffer)
-//			{
-//				buffer.append("<date-filter");
-//				switchCase(buffer);
-//				attr(buffer, "(onChange)", "grid.filter($event, '"+field.getName()+"', '"+matchMode+"')");
-//				attr(buffer, "[grid]", "grid");
-//				buffer.append(">");
-//				buffer.append("</date-filter>");
-//			}
 		}
 	}
 	
@@ -1578,7 +1291,6 @@ public class PrimeTable extends AbstractAngularGrid
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
-	
 	
 	public static abstract class Container extends AbstractHtmlRenderer
 	{
