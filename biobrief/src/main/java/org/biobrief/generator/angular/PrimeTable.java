@@ -988,7 +988,7 @@ public class PrimeTable extends AbstractAngularGrid
 				buffer.append("<text-renderer");
 				switchCase(buffer, this.field.getName());
 				mouseOverText(buffer);				
-				attr(buffer, "[grid]", "grid");
+				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append(body);
 				buffer.append("</text-renderer>");
@@ -1023,7 +1023,7 @@ public class PrimeTable extends AbstractAngularGrid
 				buffer.append("<boolean-renderer");
 				switchCase(buffer, this.field.getName());
 				attr(buffer, "[value]", "rowData."+field.getName());
-				attr(buffer, "[grid]", "grid");
+				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</boolean-renderer>");
 			}
@@ -1049,7 +1049,7 @@ public class PrimeTable extends AbstractAngularGrid
 				buffer.append("<date-renderer");
 				switchCase(buffer, this.field.getName());
 				attr(buffer, "[date]", "rowData."+field.getName());
-				attr(buffer, "[grid]", "grid");
+				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</date-renderer>");
 			}
@@ -1071,7 +1071,7 @@ public class PrimeTable extends AbstractAngularGrid
 				switchCase(buffer, this.field.getName());
 				attr(buffer, "type", field.getType());
 				attr(buffer, "[value]", "rowData."+field.getName());
-				attr(buffer, "[grid]", "grid");
+				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</"+tag+">");
 			}
@@ -1106,7 +1106,7 @@ public class PrimeTable extends AbstractAngularGrid
 				switchCase(buffer, this.field.getName());
 				attr(buffer, "type", field.getType());
 				attr(buffer, "[id]", "rowData."+field.getName());
-				attr(buffer, "[grid]", "grid");
+				//attr(buffer, "[grid]", "grid");
 				buffer.append(">");
 				buffer.append("</"+tag+">");
 			}
