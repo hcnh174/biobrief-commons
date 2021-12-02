@@ -45,6 +45,12 @@ public final class LoginHelper
 	{
 		Collection<GrantedAuthority> authorities=copyAuthorities(user);
 		UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(user,EMPTY_PASSWORD,authorities);
+		//SecurityContextHolder.getContext().setAuthentication(token);
+		setToken(token);
+	}
+	
+	public static void setToken(UsernamePasswordAuthenticationToken token)
+	{
 		SecurityContextHolder.getContext().setAuthentication(token);
 	}
 

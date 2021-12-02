@@ -31,14 +31,14 @@ public class SshHelper
 	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(SshHelper.class);
 	private static final boolean enabled=true;
 	
-	public static SshCredentials getCredentials(String username, String password, String host)
+	public static SshCredentials getCredentials(String username, String password, String host, Integer port)
 	{
-		return new SshHelper.SshCredentials(username, password, host);
+		return new SshHelper.SshCredentials(username, password, host, port);
 	}
 	
-	public static SshCredentials getCredentials(String username, String password, String host, String keyfile)
+	public static SshCredentials getCredentials(String username, String password, String host, Integer port, String keyfile)
 	{
-		return new SshHelper.SshCredentials(username, password, host, keyfile);
+		return new SshHelper.SshCredentials(username, password, host, port, keyfile);
 	}
 	
 	//http://www.thegeeky.space/2014/02/how-to-use-ls-bash-command-10-tips-and-tricks.html
@@ -135,13 +135,13 @@ public class SshHelper
 			session = client.startSession();
 			Command cmd = session.exec(command);
 			
-			String input=IOUtils.readFully(cmd.getInputStream()).toString();
 			String output=IOUtils.readFully(cmd.getInputStream()).toString();
+			//String output=IOUtils.readFully(cmd.getOutputStream()).toString();
 			String err=IOUtils.readFully(cmd.getErrorStream()).toString();
 			
 			Integer status=cmd.getExitStatus();
 			
-			log(logfile, "input="+input);
+			//log(logfile, "input="+input);
 			log(logfile, "output="+output);
 			log(logfile, "err="+err);
 			log(logfile, "status="+status);
@@ -232,14 +232,14 @@ public class SshHelper
 			System.out.println("using private key: "+credentials.keyfile);
 			File privateKey=new File(credentials.keyfile.get());
 			KeyProvider keys=client.loadKeys(privateKey.getPath(), finder);
-			client.connect(credentials.host);
+			client.connect(credentials.host, credentials.port);
 			client.authPublickey(credentials.username, keys);
 		}
 		else
 		{
 			System.out.println("using password");// "+credentials.password);
 			client.addHostKeyVerifier(new PromiscuousVerifier());
-			client.connect(credentials.host);
+			client.connect(credentials.host, credentials.port);
 			client.authPassword(credentials.username, credentials.password);
 			
 		}
@@ -289,21 +289,24 @@ public class SshHelper
 		private final String username;
 		private final String password;
 		private final String host;
+		private final Integer port;
 		private final Optional<String> keyfile;
 
-		public SshCredentials(String username, String password, String host, String keyfile)
+		public SshCredentials(String username, String password, String host, Integer port, String keyfile)
 		{
 			this.username=username;
 			this.password=password;
 			this.host=host;
+			this.port=port;
 			this.keyfile=Optional.ofNullable(keyfile);
 		}
 		
-		public SshCredentials(String username, String password, String host)
+		public SshCredentials(String username, String password, String host, Integer port)
 		{
 			this.username=username;
 			this.password=password;
 			this.host=host;
+			this.port=port;
 			this.keyfile=Optional.empty();
 		}
 	}

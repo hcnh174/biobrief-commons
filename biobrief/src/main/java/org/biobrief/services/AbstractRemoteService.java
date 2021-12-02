@@ -57,6 +57,7 @@ public abstract class AbstractRemoteService implements RemoteService
 	
 	protected SshHelper.SshCredentials getCredentials()
 	{
-		return SshHelper.getCredentials(properties.getUsername(), properties.getPassword(), properties.getHost());
+		return SshHelper.getCredentials(properties.getUsername(), properties.getPassword(),
+				properties.getHost(), properties.getPort());
 	}
 }
