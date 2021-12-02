@@ -77,9 +77,9 @@ public class SshHelper
 			List<FileInfo> files=Lists.newArrayList();
 			for (String line : StringHelper.splitLines(str))
 			{
-				System.out.println("line="+line);
+				//System.out.println("line="+line);
 				String[] tokens = line.split("\\s+");
-				System.out.println("parts="+tokens.length);
+				//System.out.println("parts="+tokens.length);
 				if (tokens.length!=8)
 					continue;
 				FileInfo info=new FileInfo();
@@ -136,12 +136,10 @@ public class SshHelper
 			Command cmd = session.exec(command);
 			
 			String output=IOUtils.readFully(cmd.getInputStream()).toString();
-			//String output=IOUtils.readFully(cmd.getOutputStream()).toString();
 			String err=IOUtils.readFully(cmd.getErrorStream()).toString();
 			
 			Integer status=cmd.getExitStatus();
 			
-			//log(logfile, "input="+input);
 			log(logfile, "output="+output);
 			log(logfile, "err="+err);
 			log(logfile, "status="+status);
@@ -163,7 +161,7 @@ public class SshHelper
 	
 	private static void log(String logfile, String message)
 	{
-		System.out.println(message);		
+		//System.out.println(message);
 		FileHelper.appendFile(logfile, message);
 	}
 	
