@@ -2,9 +2,12 @@ package org.biobrief.services;
 
 import java.util.List;
 
+import org.biobrief.util.MessageWriter;
+
 public interface RemoteService
 {
-	String execute(String... commands);
-	List<String> execute(List<String> commands);
-	int executeLocal(String command);
+	//String execute(String... commands);
+	String execute(String command, MessageWriter out);
+	List<String> execute(List<String> commands, MessageWriter out);
+	int executeLocal(String command, MessageWriter out);
 }

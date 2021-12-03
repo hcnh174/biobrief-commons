@@ -44,12 +44,12 @@ public class SshHelper
 	//http://www.thegeeky.space/2014/02/how-to-use-ls-bash-command-10-tips-and-tricks.html
 	//http://giantdorks.org/alain/make-ls-output-date-in-long-iso-format-instead-of-short-month/
 	//https://unix.stackexchange.com/questions/141480/ls-content-of-a-directory-ignoring-symlinks
-	public static List<FileInfo> listFiles(SshCredentials credentials, String dir)
+	public static List<FileInfo> listFiles(SshCredentials credentials, String dir, MessageWriter out)
 	{
 		//ls -l | grep -v ^l
 		//String command="ls -lh --time-style long-iso --block-size=K "+dir+" | grep -v ^l";
 		String command="ls -lhL --time-style long-iso --block-size=K "+dir;
-		String str=execute(credentials, command);
+		String str=execute(credentials, command, out);
 		return FileInfo.parse(str);
 	}
 	
@@ -111,20 +111,20 @@ public class SshHelper
 //		return execute(credentials, command);
 //	}
 	
-	public static List<String> execute(SshCredentials credentials, List<String> commands)
+	public static List<String> execute(SshCredentials credentials, List<String> commands, MessageWriter out)
 	{
 		List<String> output=Lists.newArrayList();
 		for (String command : commands)
 		{
-			output.add(execute(credentials, command));
+			output.add(execute(credentials, command, out));
 		}
 		return output;
 	}
 	
 	//https://github.com/hierynomus/sshj/blob/master/examples/src/main/java/net/schmizz/sshj/examples/Exec.java
-	public static String execute(SshCredentials credentials, String command)
+	public static String execute(SshCredentials credentials, String command, MessageWriter out)
 	{
-		String logfile=logCommand(command);
+		String logfile=logCommand(command, out);
 		if (!enabled)
 			return "";
 		SSHClient client=null;
@@ -140,9 +140,9 @@ public class SshHelper
 			
 			Integer status=cmd.getExitStatus();
 			
-			log(logfile, "output="+output);
-			log(logfile, "err="+err);
-			log(logfile, "status="+status);
+			log(logfile, "output="+output, out);
+			log(logfile, "err="+err, out);
+			log(logfile, "status="+status, out);
 
 			if (status!=null && status!=0)
 				throw new CException("ssh command return non-zero exit status: status="+status+"; command="+command);
@@ -159,9 +159,9 @@ public class SshHelper
 		}
 	}
 	
-	private static void log(String logfile, String message)
+	private static void log(String logfile, String message, MessageWriter out)
 	{
-		//System.out.println(message);
+		out.println(message);
 		FileHelper.appendFile(logfile, message);
 	}
 	
@@ -273,9 +273,10 @@ public class SshHelper
 		}
 	}
 	
-	public static String logCommand(String command)
+	public static String logCommand(String command, MessageWriter out)
 	{
 		String filename=LogUtil.getLogDir()+"/ssh/"+new Date().getTime()+".sh";
+		out.println(command);
 		FileHelper.writeFile(filename, command);
 		return filename;
 	}
