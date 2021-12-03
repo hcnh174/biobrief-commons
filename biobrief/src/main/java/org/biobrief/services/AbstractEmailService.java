@@ -92,7 +92,7 @@ public abstract class AbstractEmailService implements EmailService
 	
 	protected void checkEmailAddresses(List<String> values, String field)
 	{
-		if (!values.isEmpty())
+		if (values.isEmpty())
 			throw new CException(field+" email address list is empty");
 		for (String value : values)
 		{
