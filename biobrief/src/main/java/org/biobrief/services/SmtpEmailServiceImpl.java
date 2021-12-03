@@ -1,6 +1,7 @@
 package org.biobrief.services;
 
 import org.biobrief.util.CException;
+import org.biobrief.util.MessageWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
@@ -18,7 +19,7 @@ public class SmtpEmailServiceImpl extends AbstractEmailService
 	//////////////////////////////////////////////////
 	
 	@Override
-	public void sendEmail(SimpleMailMessage message)
+	public void sendEmail(SimpleMailMessage message, MessageWriter out)
 	{
 		if (message.getTo().length==0)
 			throw new CException("No To: addresses specified in email with subject: "+message.getSubject());
@@ -26,17 +27,15 @@ public class SmtpEmailServiceImpl extends AbstractEmailService
 		{
 			if (isEmailException())
 				return;
-//			if (message.getFrom()==null)
-//				message.setFrom(this.fromAddress);
-			logEmail(message);
+			logEmail(message, out);
 			this.mailSender.send(message);
 		}
 		catch(MailException e)
 		{
 			//log.debug(e.getMessage());
 			e.printStackTrace();
-			logEmailError(message, e);
-			throw new CException(e);//todo
+			logEmailError(message, e, out);
+			throw new CException(e);
 		}
 	}
 }

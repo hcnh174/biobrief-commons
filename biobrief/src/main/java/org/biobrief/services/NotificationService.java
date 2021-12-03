@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.biobrief.util.CException;
 import org.biobrief.util.LogUtil;
+import org.biobrief.util.MessageWriter;
 import org.biobrief.util.StringHelper;
 import org.springframework.stereotype.Component;
 
@@ -19,38 +20,30 @@ public class NotificationService
 	private final List<String> toEmailAddresses=Lists.newArrayList();
 	
 	public NotificationService(EmailService emailService, Boolean notify, 
-			String fromEmailAddress, List<String> toEailAddresses, List<String> ignoreUsers)
+			String fromEmailAddress, List<String> toEmailAddresses, List<String> ignoreUsers)
 	{
 		if (!StringHelper.hasContent(fromEmailAddress))
 			throw new CException("notification from: email address has not been set");
-//		if (!StringHelper.hasContent(toEmailAddress))
-//			throw new CException("notification to: email address has not been set");
+		if (toEmailAddresses.isEmpty())
+			throw new CException("notification to: email address has not been set");
 		this.emailService=emailService;
 		this.notify=notify;
 		this.fromEmailAddress=fromEmailAddress;
 		this.toEmailAddresses.addAll(toEmailAddresses);
 		this.ignoreUsers.addAll(ignoreUsers);
-//		System.out.println("notificationService: "+StringHelper.toString(this));
 	}
 	
-//	public void notify(String username, List<String> toEmailAddresses, String subject, String message)
-//	{
-//		if (isIgnored(username))
-//			return;
-//		notify(toEmailAddresses, subject, message);
-//	}
-	
-	public void notify(String subject, String message)
+	public void notify(String subject, String message, MessageWriter out)
 	{
-		notify(this.toEmailAddresses, subject, message);
+		notify(this.toEmailAddresses, subject, message, out);
 	}
 	
-	public void notify(List<String> toEmailAddresses, String subject, String message)
+	public void notify(List<String> toEmailAddresses, String subject, String message, MessageWriter out)
 	{
 		try
 		{
 			if (notify)
-				emailService.sendEmail(fromEmailAddress, toEmailAddresses, subject, message);
+				emailService.sendEmail(fromEmailAddress, toEmailAddresses, subject, message, out);
 		}
 		catch(Exception e)
 		{

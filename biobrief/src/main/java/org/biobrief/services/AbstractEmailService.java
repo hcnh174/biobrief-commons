@@ -3,7 +3,9 @@ package org.biobrief.services;
 import java.util.List;
 
 import org.biobrief.util.CException;
+import org.biobrief.util.JsonHelper;
 import org.biobrief.util.LogUtil;
+import org.biobrief.util.MessageWriter;
 import org.biobrief.util.StringHelper;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -13,10 +15,10 @@ import org.springframework.mail.SimpleMailMessage;
 public abstract class AbstractEmailService implements EmailService
 {
 	@Override
-	public void sendEmail(String from, List<String> to, String subject, String body)
+	public void sendEmail(String from, List<String> to, String subject, String body, MessageWriter out)
 	{	
-		check(from, "from");
-		check(to, "to");
+		checkEmailAddress(from, "from");
+		checkEmailAddresses(to, "to");
 		check(subject, "subject");
 		check(body, "body");
 		
@@ -24,14 +26,14 @@ public abstract class AbstractEmailService implements EmailService
 		message.setTo(StringHelper.convertToArray(to));
 		message.setSubject(subject);
 		message.setText(body);
-		sendEmail(message);
+		sendEmail(message, out);
 	}
 	
 	@Override
-	public void sendEmail(String from, String to, String subject, String body)
+	public void sendEmail(String from, String to, String subject, String body, MessageWriter out)
 	{	
-		check(from, "from");
-		check(to, "to");
+		checkEmailAddress(from, "from");
+		checkEmailAddress(to, "to");
 		check(subject, "subject");
 		check(body, "body");
 		
@@ -40,10 +42,10 @@ public abstract class AbstractEmailService implements EmailService
 		message.setTo(to);
 		message.setSubject(subject);
 		message.setText(body);
-		sendEmail(message);
+		sendEmail(message, out);
 	}
 	
-	public abstract void sendEmail(SimpleMailMessage message);
+	public abstract void sendEmail(SimpleMailMessage message, MessageWriter out);
 	
 	////////////////////////////////////////////////
 	
@@ -52,18 +54,20 @@ public abstract class AbstractEmailService implements EmailService
 		return false;
 	}
 
-	protected void logEmail(SimpleMailMessage email)
+	protected void logEmail(SimpleMailMessage email, MessageWriter out)
 	{
 		String logfile="email.txt";
 		String message="Sent email to "+StringHelper.join(email.getTo(), ",")+" subject="+email.getSubject();
+		out.println(message);
 		LogUtil.logMessage(logfile, message);
 	}
 	
-	protected void logEmailError(SimpleMailMessage email, Exception e)
+	protected void logEmailError(SimpleMailMessage email, Exception e, MessageWriter out)
 	{
 		String logfile="email-errors.txt";
 		String message="Failed to send email to "+StringHelper.join(email.getTo(), ",")+" subject="+email.getSubject()+" reason="+e.getMessage();
-		LogUtil.logMessage(message, logfile);
+		out.println(message);
+		LogUtil.logMessage(logfile, message);
 	}
 	
 	protected void check(String value, String field)
@@ -76,5 +80,23 @@ public abstract class AbstractEmailService implements EmailService
 	{
 		if (!StringHelper.hasContent(values))
 			throw new CException(field+" field is not set: ["+StringHelper.join(values)+"]");
+	}
+	
+	protected void checkEmailAddress(String value, String field)
+	{
+		if (!StringHelper.hasContent(value))
+			throw new CException(field+" field is not set: ["+value+"]");
+		if (!StringHelper.isEmailAddress(value))
+			throw new CException(field+" field does not seem to be an email address: ["+value+"]");	
+	}
+	
+	protected void checkEmailAddresses(List<String> values, String field)
+	{
+		if (!values.isEmpty())
+			throw new CException(field+" email address list is empty");
+		for (String value : values)
+		{
+			checkEmailAddress(value, field);
+		}
 	}
 }
