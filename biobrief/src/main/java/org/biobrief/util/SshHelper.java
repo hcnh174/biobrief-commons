@@ -159,9 +159,17 @@ public class SshHelper
 		}
 	}
 	
+	public static String logCommand(String command, MessageWriter out)
+	{
+		String filename=LogUtil.getLogDir()+"/ssh/"+new Date().getTime()+".sh";
+		out.println(command);
+		FileHelper.writeFile(filename, command);
+		return filename;
+	}
+	
 	private static void log(String logfile, String message, MessageWriter out)
 	{
-		out.println(message);
+		//out.println(message);
 		FileHelper.appendFile(logfile, message);
 	}
 	
@@ -271,14 +279,6 @@ public class SshHelper
 		{
 			System.err.println(e);
 		}
-	}
-	
-	public static String logCommand(String command, MessageWriter out)
-	{
-		String filename=LogUtil.getLogDir()+"/ssh/"+new Date().getTime()+".sh";
-		out.println(command);
-		FileHelper.writeFile(filename, command);
-		return filename;
 	}
 	
 	//////////////////////////////////////////////////////////////////////////
