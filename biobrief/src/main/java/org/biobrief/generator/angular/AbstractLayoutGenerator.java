@@ -42,13 +42,22 @@ public abstract class AbstractLayoutGenerator
 //		}
 //	}
 	
+//	protected void generate(String filename)
+//	{
+//		String copy=params.getOutDir()+"/"+FileHelper.stripPath(filename);
+//		System.out.println("create temporary copy of Excel file: filename="+filename+" copy="+copy);
+//		if (FileHelper.exists(copy))
+//			FileHelper.deleteFile(copy);
+//		FileHelper.copyFile(filename, copy);
+//		Workbook workbook=excel.openWorkbook(copy);
+//		generate(workbook);
+//		excel.closeWorkbook(workbook);
+//		FileHelper.deleteFile(copy);
+//	}
+	
 	protected void generate(String filename)
 	{
-		String copy=params.getOutDir()+"/"+FileHelper.stripPath(filename);
-		System.out.println("create temporary copy of Excel file: filename="+filename+" copy="+copy);
-		if (FileHelper.exists(copy))
-			FileHelper.deleteFile(copy);
-		FileHelper.copyFile(filename, copy);
+		String copy=excel.createCopy(filename, params.getOutDir(), writer);
 		Workbook workbook=excel.openWorkbook(copy);
 		generate(workbook);
 		excel.closeWorkbook(workbook);

@@ -298,7 +298,7 @@ public class SynologyHelper
 			buffer.append(" '"+StringHelper.escapeSingleQuotes(fullname)+"'");
 			buffer.append(" ").append(expired ? "1" : "0");
 			buffer.append(" '"+StringHelper.dflt(email)+"'");
-			//buffer.append(" "+getAppPrivilege());
+			buffer.append(" "+getAppPrivilege());
 			buffer.append("\n");
 		}
 		

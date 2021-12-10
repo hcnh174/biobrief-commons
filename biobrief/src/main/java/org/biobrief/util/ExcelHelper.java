@@ -88,6 +88,18 @@ public class ExcelHelper
 		return filenames;
 	}
 	
+	///////////////////////////
+	
+	public static String createCopy(String filename, String tmpDir, MessageWriter out)
+	{
+		String copy=tmpDir+"/"+FileHelper.stripPath(filename);
+		out.println("create temporary copy of Excel file: filename="+filename+" copy="+copy);
+		if (FileHelper.exists(copy))
+			FileHelper.deleteFile(copy);
+		FileHelper.copyFile(filename, copy);
+		return copy;
+	}
+	
 	//////////////////////////////////////////////////////////
 	
 	// try to create a table based on a cells in the first sheet of a spreadsheet
@@ -1029,7 +1041,7 @@ public class ExcelHelper
 	
 	public static Row insertRows(Sheet sheet, int startRow, int numRows)
 	{
-		int lastRow = sheet.getLastRowNum(); 
+		int lastRow = sheet.getLastRowNum();
 		sheet.shiftRows(startRow, lastRow, numRows, true, true);
 		return sheet.createRow(startRow);
 	}
