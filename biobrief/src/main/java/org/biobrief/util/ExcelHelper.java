@@ -884,7 +884,8 @@ public class ExcelHelper
 	public Cell setCell(Sheet sheet, int c, int r, Object value, CellStyle style)
 	{
 		Cell cell=setCell(sheet, c, r, value);
-		cell.setCellStyle(style);
+		if (cell!=null)
+			cell.setCellStyle(style);
 		return cell;
 	}
 	
