@@ -435,17 +435,6 @@ public class SynologyHelper
 			buffer.append("\n");
 		}
 		
-		/*
-		Group Name: [expertpanel]
-		Group Type: [AUTH_LOCAL]
-		Group ID:   [65536]
-		Group Members:
-		0:[a-toshida]
-		1:[nakahara]
-		2:[nelson]
-		3:[nhayes]
-		4:[thinoi]
-		 */
 		public static Result parse(String str)
 		{
 			Result result=new Result();

@@ -563,6 +563,22 @@ public final class DateHelper
 		}
 	}
 	
+	public static Date parseJapaneseDate(String value, boolean strict)//平成26年03月26日
+	{
+		if (!StringHelper.hasContent(value) && !strict)
+			return null;
+		try
+		{
+			return parseJapaneseDate(value);
+		}
+		catch (Exception e)
+		{
+			if (!strict)
+				return null;
+			throw e;
+		}
+	}
+	
 	//////////////////////////////////////////////////////////////
 
 	public static Date findClosestDate(Date target, Date min, Date max, Collection<Date> dates)
