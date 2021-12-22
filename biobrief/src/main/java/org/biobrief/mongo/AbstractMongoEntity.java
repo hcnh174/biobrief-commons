@@ -15,10 +15,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+//https://stackoverflow.com/questions/35584271/spring-data-mongodb-annotation-createddate-isnt-working-when-id-is-assigned-m
+//https://medium.com/@manika09singh/enable-auditing-using-spring-data-jpa-2f62587ccb23
 @JsonIgnoreProperties(ignoreUnknown=true)
-public abstract class AbstractMongoEntity extends AbstractEntity<String> implements MongoDocument
+public abstract class AbstractMongoEntity extends AbstractEntity<String>
+	implements MongoDocument//, Persistable<String>
 {	
 	@Id
 	protected String id;
@@ -26,16 +30,16 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String> impleme
 	//@Version
 	//private Long version;
 	
-	@CreatedBy
+	@CreatedBy @JsonIgnore
 	protected String createdBy;
 	
-	@CreatedDate
+	@CreatedDate @JsonIgnore
 	protected Date createdDate;
 	
-	@LastModifiedBy
+	@LastModifiedBy @JsonIgnore
 	protected String lastModifiedBy;
 	
-	@LastModifiedDate
+	@LastModifiedDate @JsonIgnore
 	protected Date lastModifiedDate;
 	
 	public AbstractMongoEntity() {}
@@ -50,6 +54,12 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String> impleme
 	public Date getCreatedDate(){return this.createdDate;}
 	public String getLastModifiedBy(){return this.lastModifiedBy;}
 	public Date getLastModifiedDate(){return this.lastModifiedDate;}
+	
+//	@Override
+//	public boolean isNew()
+//	{
+//		return id==null;
+//	}
 	
 	///////////////////////////////////////////////////////////////
 	
