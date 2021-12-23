@@ -7,20 +7,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
-public class SimpleMap extends LinkedHashMap<String, Object>
+public class SimpleMap<T> extends LinkedHashMap<String, T>
 {
 	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(SimpleMap.class);
 	
 	public SimpleMap() {}
 	
-	public SimpleMap(Map<String, Object> map)
+	public SimpleMap(Map<String, T> map)
 	{
 		super(map);
 	}
 	
-	public SimpleMap(Object... args)
+//	public SimpleMap(T... args)
+//	{
+//		super(StringHelper.createMap(args));
+//	}
+	
+	@Override
+	public T put(String key, T value)
 	{
-		super(StringHelper.createMap(args));
+		checkKey(key);
+		checkValue(key, value);
+		return super.put(key, value);
 	}
 	
 	public String toJson()
@@ -37,5 +45,19 @@ public class SimpleMap extends LinkedHashMap<String, Object>
 	public String toString()
 	{
 		return StringHelper.toString(this);
+	}
+	
+	////////////////
+	
+	private void checkKey(String key)
+	{
+		if (!StringHelper.hasContent(key))
+			throw new CException("SimpleMap: key is null or empty: ["+key+"]");
+	}
+	
+	private void checkValue(String key, Object value)
+	{
+		if (value==null)
+			throw new CException("SimpleMap: key is null or empty: ["+key+"]");
 	}
 }
