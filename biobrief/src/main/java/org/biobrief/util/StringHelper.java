@@ -72,6 +72,7 @@ public final class StringHelper
 	public static final String JP_SPACE="　";
 	public static final String SPACE=" ";
 	public static final String COMMA=",";
+	public static final String DASH="-";
 	public static final String NEWLINE="\n";
 	public static final String TAB="\t";
 	public static final String UTF8="UTF-8";
@@ -2577,6 +2578,73 @@ public final class StringHelper
 			throw new CException("cannot create hash: text value is null or empty: "+text);
 		String key=StringHelper.createHash(text)+"-"+StringHelper.getUniqueLongFromString(text);
 		return key;
+	}
+	
+	////////////////////////////////////////////////////
+	
+	public static boolean isDash(String value)
+	{
+		value=fixDashes(value);
+		return value.equals(DASH);
+	}
+	
+	public static String fixNumbers(String value)
+	{
+		value=StringHelper.replace(value, "０", "0");
+		value=StringHelper.replace(value, "１", "1");
+		value=StringHelper.replace(value, "２", "2");
+		value=StringHelper.replace(value, "３", "3");
+		value=StringHelper.replace(value, "４", "4");
+		value=StringHelper.replace(value, "５", "5");
+		value=StringHelper.replace(value, "６", "6");
+		value=StringHelper.replace(value, "７", "7");
+		value=StringHelper.replace(value, "８", "8");
+		value=StringHelper.replace(value, "９", "9");
+		return value;
+	}
+	
+	public static String fixDashes(String value)
+	{
+		return fixDashes(value, DASH);
+	}
+	
+	public static String fixDashes(String value, String dash)
+	{
+		value=StringHelper.replace(value, "-", dash);
+		value=StringHelper.replace(value, "－", dash);
+		value=StringHelper.replace(value, "―", dash);
+		value=StringHelper.replace(value, "ー", dash);
+		return value;
+	}
+	
+	public static String fixParentheses(String value)
+	{
+		value=StringHelper.replace(value, "（", "(");
+		value=StringHelper.replace(value, "）", ")");
+		return value;
+	}
+	
+	public static String fixSpaces(String value)
+	{
+		value=StringHelper.replace(value, "　", " ");
+		value=StringHelper.replace(value, " ", " ");
+		return value;
+	}
+	
+	public static String stripParentheses(String value)
+	{
+		value=fixParentheses(value);
+		if (!value.contains("("))
+			return value;
+		System.out.println("stripping parentheses: "+value);
+		int start=StringHelper.indexOf(value, "(");
+		int end=StringHelper.indexOf(value, ")", start+1);
+		String newvalue="";
+		if (start!=0)
+			newvalue=value.substring(0, start);
+		newvalue+=value.substring(end+1);
+		newvalue=newvalue.trim();
+		return stripParentheses(newvalue);
 	}
 	
 //	public static void banner(String message)
