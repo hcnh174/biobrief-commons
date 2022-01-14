@@ -2636,7 +2636,7 @@ public final class StringHelper
 		value=fixParentheses(value);
 		if (!value.contains("("))
 			return value;
-		System.out.println("stripping parentheses: "+value);
+		//System.out.println("stripping parentheses: "+value);
 		int start=StringHelper.indexOf(value, "(");
 		int end=StringHelper.indexOf(value, ")", start+1);
 		String newvalue="";
