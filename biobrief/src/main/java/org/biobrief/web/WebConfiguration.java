@@ -3,6 +3,7 @@ package org.biobrief.web;
 import java.util.Properties;
 
 import org.biobrief.util.StringHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +17,14 @@ public class WebConfiguration
 {	
 	{System.out.println("WebConfiguration");}
 	
+	@Autowired WebProperties properties;
+	
 	@Bean
 	public FreeMarkerConfigurer freemarkerConfigurer()
 	{
 		FreeMarkerConfigurer configurer=new FreeMarkerConfigurer();
-		String freemarkerPath="file:biobrief-app/src/main/resources/templates/";
+		//String freemarkerPath="file:biobrief-app/src/main/resources/templates/";
+		String freemarkerPath=properties.getFreemarkerPath();
 		configurer.setTemplateLoaderPath(freemarkerPath);
 		configurer.setDefaultEncoding(StringHelper.UTF8);
 		Properties settings=new Properties();

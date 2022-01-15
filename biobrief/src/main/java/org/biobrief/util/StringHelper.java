@@ -2647,6 +2647,26 @@ public final class StringHelper
 		return stripParentheses(newvalue);
 	}
 	
+	//https://www.regextester.com/97925
+	public static boolean containsWord(String text, String word)
+	{
+		return text.matches(".*\\b"+word+"\\b.*");
+	}
+	
+	public static String replaceWord(String text, String target, String replace)
+	{
+		Pattern pattern=Pattern.compile("\\b"+target+"\\b");
+		Matcher matcher=pattern.matcher(text);
+		if (!matcher.find())
+			return text;
+		return matcher.replaceAll(replace);
+	}
+	
+	public static String removeWord(String text, String target)
+	{
+		return replaceWord(text, target, "");
+	}
+	
 //	public static void banner(String message)
 //	{
 //		System.out.println("********************************");

@@ -102,4 +102,20 @@ public class TestStringHelper
 		assertThat(StringHelper.containsJapaneseText("年齢: 69")).isTrue();
 	}
 	
+	@Test
+	public void containsWord()
+	{
+		String value="TP53,TMB-H,FGF3";
+		assertThat(StringHelper.containsWord(value, "TMB-H")).isTrue();
+		
+		value="TP53,TMB-High,FGF3";
+		assertThat(StringHelper.containsWord(value, "TMB-H")).isFalse();
+	}
+	
+	@Test
+	public void replaceWord()
+	{
+		String value="TP53,TMB-High,FGF3";
+		assertThat(StringHelper.removeWord(value, "TMB-High")).isEqualTo( "TP53,,FGF3");
+	}
 }
