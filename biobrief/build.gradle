@@ -101,7 +101,9 @@ dependencies {
 	api("com.jcraft:jzlib:${property('jzlib.version')}")	
 	
 	// networking
-	api("com.hierynomus:sshj:${property('sshj.version')}")
+	api("com.hierynomus:sshj:${property('sshj.version')}"){
+		exclude(group: "org.bouncycastle")
+	}
 	api("org.apache.httpcomponents:httpclient:${property('httpclient.version')}");
 	api("org.apache.httpcomponents:fluent-hc:${property('httpclient.version')}");
 	
