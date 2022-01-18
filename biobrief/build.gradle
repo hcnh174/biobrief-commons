@@ -102,7 +102,7 @@ dependencies {
 	
 	// networking
 	api("com.hierynomus:sshj:${property('sshj.version')}"){
-		exclude(group: "org.bouncycastle")
+		//exclude(group: "org.bouncycastle")
 	}
 	api("org.apache.httpcomponents:httpclient:${property('httpclient.version')}");
 	api("org.apache.httpcomponents:fluent-hc:${property('httpclient.version')}");
@@ -201,8 +201,8 @@ dependencies {
 //version = '0.1.0'
 group = 'org.biobrief'
 
-sourceCompatibility = 1.15
-targetCompatibility = 1.15
+sourceCompatibility = 1.17
+targetCompatibility = 1.17
 
 tasks.withType(JavaCompile)
 {
