@@ -133,7 +133,7 @@ dependencies {
 	// pdf
 	api("com.itextpdf:itextpdf:${property('itext.version')}")
 	api("com.itextpdf:itext-asian:${property('itext.asian.version')}")
-	api("org.apache.pdfbox:pdfbox:${property('pdfbox.version')}")
+	//api("org.apache.pdfbox:pdfbox:${property('pdfbox.version')}")
 
 	// javascript
 	api("org.eclipse.birt.runtime:org.mozilla.javascript:${property('javascript.version')}")
