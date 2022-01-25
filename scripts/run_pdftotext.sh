@@ -47,3 +47,7 @@ checkFileExists $textfile || exit 1
  
 echo "finished pdftotext"
 
+######################################
+
+
+

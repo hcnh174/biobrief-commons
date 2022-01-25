@@ -22,7 +22,7 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	//maven { url 'https://dl.bintray.com/sbuettner/maven' }
 }
@@ -173,10 +173,12 @@ dependencies {
 	// solr
 	api("org.apache.solr:solr-solrj:${property('solr.version')}")
 	//api("org.apache.tika:tika-parsers:${property('tika.version')}")
-	api("org.apache.tika:tika-core:${property('tika.version')}")
-	api("org.apache.tika:tika-parsers:${property('tika.version')}")
+	//api("org.apache.tika:tika-core:${property('tika.version')}")
+	//api("org.apache.tika:tika-parsers:${property('tika.version')}")
 	//api('org.apache.tika:tika-core:2.0.0')
 	//api('org.apache.tika:tika-parsers:2.0.0')
+	api("org.apache.tika:tika-core:${property('tika.version')}")
+	api("org.apache.tika:tika-parsers-standard-package:${property('tika.version')}")
 	
 	// web
 	api("org.springframework.boot:spring-boot-starter-freemarker")
