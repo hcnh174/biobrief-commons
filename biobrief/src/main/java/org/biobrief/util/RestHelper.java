@@ -1,6 +1,9 @@
 package org.biobrief.util;
 
 import java.awt.image.BufferedImage;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -96,6 +99,29 @@ public class RestHelper
 	public static BufferedImage getImage(String server, String url, MessageWriter out)
 	{
 		return ImageHelper.getImage(server+"/"+url, out);
+	}
+	
+	//https://javadeveloperzone.com/spring-boot/spring-boot-resttemplate-download-file-example/
+	public static boolean downloadFile(RestTemplate restTemplate, String url, String filename, MessageWriter out)
+	{
+		try
+		{
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
+			HttpEntity<String> entity = new HttpEntity<>(headers);
+			ResponseEntity<byte[]> response = restTemplate
+					.exchange(url, HttpMethod.GET, entity, byte[].class);
+			byte[] body=response.getBody();
+			System.out.println("respone body: "+body);
+			if (body==null)
+				return false;
+			Files.write(Paths.get(filename), response.getBody());
+			return true;
+		}
+		catch (Exception e)
+		{
+			throw new CException(e);
+		}
 	}
 	
 	///////////////////////////////////////////////////////

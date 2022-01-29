@@ -76,28 +76,28 @@ public class RestService
 		return json;
 	}
 	
-	//https://javadeveloperzone.com/spring-boot/spring-boot-resttemplate-download-file-example/
-	public boolean downloadFile(String url, String filename, MessageWriter out)
-	{
-		try
-		{
-			HttpHeaders headers = new HttpHeaders();
-			headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
-			HttpEntity<String> entity = new HttpEntity<>(headers);
-			ResponseEntity<byte[]> response = restTemplate
-					.exchange(url, HttpMethod.GET, entity, byte[].class);
-			byte[] body=response.getBody();
-			System.out.println("respone body: "+body);
-			if (body==null)
-				return false;
-			Files.write(Paths.get(filename), response.getBody());
-			return true;
-		}
-		catch (Exception e)
-		{
-			throw new CException(e);
-		}
-	}
+//	//https://javadeveloperzone.com/spring-boot/spring-boot-resttemplate-download-file-example/
+//	public boolean downloadFile(String url, String filename, MessageWriter out)
+//	{
+//		try
+//		{
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
+//			HttpEntity<String> entity = new HttpEntity<>(headers);
+//			ResponseEntity<byte[]> response = restTemplate
+//					.exchange(url, HttpMethod.GET, entity, byte[].class);
+//			byte[] body=response.getBody();
+//			System.out.println("respone body: "+body);
+//			if (body==null)
+//				return false;
+//			Files.write(Paths.get(filename), response.getBody());
+//			return true;
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CException(e);
+//		}
+//	}
 	
 	public String dump()
 	{
