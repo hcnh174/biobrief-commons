@@ -38,6 +38,7 @@ import com.google.common.collect.Maps;
 public class RestHelper
 {
 	public static final Integer TIMEOUT=10;//seconds
+	public static final Integer DEFAULT_SLEEP=10000;//millis
 	
 	public static String get(RestTemplate restTemplate, String url, MessageWriter out)
 	{
@@ -144,6 +145,7 @@ public class RestHelper
 		String getUrl();
 	}
 	
+	@SuppressWarnings("serial")
 	public static class Headers extends LinkedHashMap<String, String>
 	{
 		public Headers() {}
@@ -174,5 +176,15 @@ public class RestHelper
 	public static String createKey(String url, Object params)
 	{
 		return url+":"+StringHelper.toString(params);
+	}
+	
+	public static void sleep(MessageWriter out)
+	{
+		sleep(DEFAULT_SLEEP, out);
+	}
+	
+	public static void sleep(int millis, MessageWriter out)
+	{
+		ThreadHelper.sleep(millis, out);
 	}
 }
