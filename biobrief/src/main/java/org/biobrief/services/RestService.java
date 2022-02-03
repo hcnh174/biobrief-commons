@@ -1,5 +1,8 @@
 package org.biobrief.services;
 
+import java.util.Date;
+
+import org.biobrief.util.DateHelper;
 import org.biobrief.util.FileHelper;
 import org.biobrief.util.JsonHelper;
 import org.biobrief.util.MessageWriter;
@@ -17,15 +20,15 @@ public class RestService
 {
 	private final RestTemplate restTemplate;
 	private final String cacheDir;
-	private final Integer sleeptime;//millis
-	//private final String expires="1 day";
+	private final Long sleeptime;//millis
+	private Integer maxAge=30;//days private TimeUnit units=TimeUnit.DAYS;
 
 	public RestService(RestTemplate restTemplate, String cacheDir)
 	{
 		this(restTemplate, cacheDir, RestHelper.DEFAULT_SLEEP);
 	}
 	
-	public RestService(RestTemplate restTemplate, String cacheDir, int sleeptime)
+	public RestService(RestTemplate restTemplate, String cacheDir, Long sleeptime)
 	{
 		this.restTemplate=restTemplate;
 		this.cacheDir=cacheDir;
@@ -75,15 +78,21 @@ public class RestService
 	{
 		String jsonfile=getFilename(key);
 		boolean found=FileHelper.exists(jsonfile);
-		if (found)
-			out.println("jsonfile found: "+jsonfile);
-		return found;
+		if (!found)
+			return false;
+		Date expirationDate=getExpirationDate();
+		Date lastModified=FileHelper.getLastModifiedDate(jsonfile);
+		System.out.println("TRACE: jsonfile found: filename="+jsonfile+" date="+lastModified+" expires="+expirationDate);
+		if (DateHelper.isAfter(lastModified, expirationDate))
+			return true;
+		out.println("jsonfile found but out of date: filename="+jsonfile+" date="+lastModified+" expires="+expirationDate);
+		return false;
 	}
 	
 	private String getValue(String key, MessageWriter out)
 	{
 		String jsonfile=getFilename(key);
-		out.println("jsonfile found: "+jsonfile);
+		out.println("reading jsonfile: "+jsonfile);
 		return FileHelper.readFile(jsonfile);
 	}
 	
@@ -99,6 +108,11 @@ public class RestService
 	private String getFilename(String key)
 	{
 		return cacheDir+"/"+key+".json";
+	}
+	
+	private Date getExpirationDate()
+	{
+		return DateHelper.addDays(new Date(), maxAge*-1);
 	}
 	
 	private void sleep(MessageWriter out)

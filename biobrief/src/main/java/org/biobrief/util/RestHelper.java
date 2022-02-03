@@ -38,7 +38,7 @@ import com.google.common.collect.Maps;
 public class RestHelper
 {
 	public static final Integer TIMEOUT=10;//seconds
-	public static final Integer DEFAULT_SLEEP=10000;//millis
+	public static final Long DEFAULT_SLEEP=10000l;//millis
 	
 	public static String get(RestTemplate restTemplate, String url, MessageWriter out)
 	{
@@ -183,7 +183,7 @@ public class RestHelper
 		sleep(DEFAULT_SLEEP, out);
 	}
 	
-	public static void sleep(int millis, MessageWriter out)
+	public static void sleep(long millis, MessageWriter out)
 	{
 		ThreadHelper.sleep(millis, out);
 	}
