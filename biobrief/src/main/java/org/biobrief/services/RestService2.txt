@@ -1,5 +1,9 @@
 package org.biobrief.services;
 
+import java.util.Date;
+
+import org.biobrief.util.DateHelper;
+import org.biobrief.util.FileHelper;
 import org.biobrief.util.JsonHelper;
 import org.biobrief.util.MessageWriter;
 import org.biobrief.util.RestHelper;
@@ -10,87 +14,10 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@Service @Data @EqualsAndHashCode(callSuper=false)
-public class RestService extends AbstractFileCacheService
+@Service @Data
+public class RestService
 {
-	private final RestTemplate restTemplate;
-	
-	public RestService(RestTemplate restTemplate, String cacheDir)
-	{
-		this(restTemplate, cacheDir, RestHelper.DEFAULT_SLEEP);
-	}
-	
-	public RestService(RestTemplate restTemplate, String cacheDir, Long sleeptime)
-	{
-		super(cacheDir, sleeptime, 30, ".json");
-		this.restTemplate=restTemplate;
-	}
-	
-	//////////////////////////////////
-	
-	public String get(String key, String url, MessageWriter out)
-	{
-		if (containsKey(key, out))
-			return getValue(key, out);
-		String json=RestHelper.get(restTemplate, url, out);
-		setValue(key, json, out);
-		sleep(out);
-		return json;
-	}
-	
-	public String get(String key, String url, Headers headers, MessageWriter out)
-	{
-		if (containsKey(key, out))
-			return getValue(key, out);
-		String json=RestHelper.get(restTemplate, url, headers, out);
-		setValue(key, json, out);
-		sleep(out);
-		return json;
-	}
-	
-	public <P> String post(String key, String url, P params, MessageWriter out)
-	{
-		if (containsKey(key, out))
-			return getValue(key, out);
-		String json=RestHelper.post(restTemplate, url, params, out);
-		setValue(key, json, out);
-		sleep(out);
-		return json;
-	}
-	
-	////////////////////////////////////
-	
-	@Override
-	protected String format(String json)
-	{
-		JsonNode node=JsonHelper.parse(json);
-		return node.toPrettyString();
-	}
-
-	
-//	@Override
-//	protected String get(String url, MessageWriter out)
-//	{
-//		return RestHelper.get(restTemplate, url, out);
-//	}
-//	
-//	@Override
-//	protected String get(String url, Headers headers, MessageWriter out)
-//	{
-//		return RestHelper.get(restTemplate, url, headers, out);
-//	}
-//	
-//	@Override
-//	protected <P> String post(String url, P params, MessageWriter out)
-//	{
-//		return RestHelper.post(restTemplate, url, params, out);
-//	}
-//
-
-	
-	/*
 	private final RestTemplate restTemplate;
 	private final String cacheDir;
 	private final Long sleeptime;//millis
@@ -175,6 +102,7 @@ public class RestService extends AbstractFileCacheService
 		String jsonfile=getFilename(key);
 		FileHelper.writeFile(jsonfile, node.toPrettyString());
 		out.println("writing jsonfile: "+jsonfile);
+		FileHelper.writeFile(jsonfile, json);
 	}
 	
 	private String getFilename(String key)
@@ -191,5 +119,4 @@ public class RestService extends AbstractFileCacheService
 	{
 		RestHelper.sleep(sleeptime, out);
 	}
-	*/
 }
