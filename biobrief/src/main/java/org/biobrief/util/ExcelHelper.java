@@ -993,16 +993,29 @@ public class ExcelHelper
 	public CellStyle createBorderedCellStyle(Workbook workbook, BorderStyle borderStyle)
 	{
 		CellStyle style=workbook.createCellStyle();
-		style.setBorderTop(borderStyle);
-		style.setBorderBottom(borderStyle);
-		style.setBorderLeft(borderStyle);
-		style.setBorderRight(borderStyle);
+		setBorderStyle(style, borderStyle);
 		return style;
 	}
 	
 	public CellStyle createBorderedCellStyle(Workbook workbook)
 	{
 		return createBorderedCellStyle(workbook, BorderStyle.MEDIUM);
+	}
+	
+	public void setBorderStyle(CellStyle style, BorderStyle borderStyle)
+	{
+		style.setBorderTop(borderStyle);
+		style.setBorderBottom(borderStyle);
+		style.setBorderLeft(borderStyle);
+		style.setBorderRight(borderStyle);
+	}
+	
+	public void setBorderColor(CellStyle style, short color)
+	{
+		style.setTopBorderColor(color);
+		style.setBottomBorderColor(color);
+		style.setLeftBorderColor(color);
+		style.setRightBorderColor(color);
 	}
 	
 	public void setCellComment(Cell cell, String text)
