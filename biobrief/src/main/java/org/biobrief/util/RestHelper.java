@@ -84,9 +84,9 @@ public class RestHelper
 		MultiValueMap<String, Object> map=createMultiValueMap(params);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(map, headers);
 		String url=server+params.getUrl();//"/"+ // todo breaking change! check for errors
-		System.out.println("RestHelper.post url="+url);
+		out.println("RestHelper.post url="+url);
 		ResponseEntity<T> response = (ResponseEntity<T>)restTemplate.postForEntity(url, request , cls);
-		System.out.println(StringHelper.toString(response));
+		out.println(StringHelper.toString(response));
 		return response.getBody();
 	}
 	
@@ -95,6 +95,15 @@ public class RestHelper
 		HttpEntity<P> request = new HttpEntity<P>(params);
 		ResponseEntity<String> response = (ResponseEntity<String>)restTemplate.postForEntity(url, request , String.class);
 		return response.getBody();
+	}
+	
+	//https://www.baeldung.com/spring-resttemplate-post-json
+	public static String postJson(RestTemplate restTemplate, String url, String json, MessageWriter out)
+	{
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> request = new HttpEntity<String>(json, headers);
+		return restTemplate.postForObject(url, request , String.class);
 	}
 	
 	public static BufferedImage getImage(String server, String url, MessageWriter out)
