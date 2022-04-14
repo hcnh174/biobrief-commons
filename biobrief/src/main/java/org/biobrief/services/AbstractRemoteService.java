@@ -47,9 +47,9 @@ public abstract class AbstractRemoteService implements RemoteService
 	public String execute(String command, MessageWriter out)
 	{
 		//String command=StringHelper.join(commands, " ");
-		System.out.println("command="+command);
+		//System.out.println("command="+command);
 		String output=SshHelper.execute(getCredentials(), command, out);
-		System.out.println("output="+output);
+		//System.out.println("output="+output);
 		return output;
 	}
 	
