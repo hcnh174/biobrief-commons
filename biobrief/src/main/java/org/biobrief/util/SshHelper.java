@@ -162,7 +162,7 @@ public class SshHelper
 	public static String logCommand(String command, MessageWriter out)
 	{
 		String filename=LogUtil.getLogDir()+"/ssh/"+new Date().getTime()+".sh";
-		out.println(command);
+		//out.println(command);
 		FileHelper.writeFile(filename, command);
 		return filename;
 	}
@@ -235,7 +235,7 @@ public class SshHelper
 		PasswordFinder finder=PasswordUtils.createOneOff(credentials.password.toCharArray());
 		if (credentials.keyfile.isPresent())
 		{
-			System.out.println("using private key: "+credentials.keyfile);
+			//System.out.println("using private key: "+credentials.keyfile);
 			File privateKey=new File(credentials.keyfile.get());
 			KeyProvider keys=client.loadKeys(privateKey.getPath(), finder);
 			client.connect(credentials.host, credentials.port);
@@ -243,7 +243,7 @@ public class SshHelper
 		}
 		else
 		{
-			System.out.println("using password");// "+credentials.password);
+			//System.out.println("using password");// "+credentials.password);
 			client.addHostKeyVerifier(new PromiscuousVerifier());
 			client.connect(credentials.host, credentials.port);
 			client.authPassword(credentials.username, credentials.password);
