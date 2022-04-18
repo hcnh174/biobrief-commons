@@ -1,9 +1,5 @@
 package org.biobrief.dictionary;
 
-import org.biobrief.util.DataType;
-import org.biobrief.util.ExportedEnum;
-import org.biobrief.util.StringHelper;
-
 public interface DictionaryConstants
 {
 //	@ExportedEnum public enum IdType

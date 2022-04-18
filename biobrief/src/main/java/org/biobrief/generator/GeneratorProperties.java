@@ -1,11 +1,8 @@
 package org.biobrief.generator;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.biobrief.dictionary.GroupDefinition;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 

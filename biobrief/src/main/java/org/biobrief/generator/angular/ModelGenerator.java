@@ -37,17 +37,15 @@ public final class ModelGenerator
 	
 	private static void updateModelFile(ModelGeneratorParams params, EntityDefinition entityType, Model model, MessageWriter writer)
 	{
-		//String modelfile=Util.ANGULAR_APP_DIRECTORY+"/"+model.getFilename();
 		String modelfile=params.getOutDir()+"/"+model.getFilename();
 		if (!FileHelper.exists(modelfile))
 			throw new CException("cannot find model file: "+modelfile);
-		boolean overwrite=params.getOverwrite();
 		writer.println("model file: "+modelfile);
 		try
 		{
 			String str=FileHelper.readFile(modelfile);
 			str=Util.insertText(Util.DECLARATIONS, str, model.createDeclarations(), true);
-//			String outfile=Util.replaceFile(FileType.ANGULAR_MODEL, modelfile, str, overwrite, entityType.getGroup());
+//			String outfile=Util.replaceFile(FileType.ANGULAR_MODEL, modelfile, str, params.getOverwrite(), entityType.getGroup());
 //			writer.println("wrote file: "+outfile);
 		}
 		catch (GeneratorException e)

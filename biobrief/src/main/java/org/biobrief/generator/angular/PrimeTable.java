@@ -673,7 +673,7 @@ public class PrimeTable extends AbstractAngularGrid
 			buffer.append("BODY");
 		}
 
-		protected void toTypescript(SimpleMap map){}
+		protected void toTypescript(SimpleMap<String> map){}
 	
 		//////////////////////////////////////////////
 		

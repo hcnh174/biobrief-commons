@@ -190,6 +190,7 @@ public class GridFsDao
 	
 	////////////////////////////////////////////////////
 	
+	@SuppressWarnings("deprecation")
 	private GridFsTemplate getGridFsTemplate()
 	{
 		//System.out.println("getGridFsTemplate()");

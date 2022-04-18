@@ -1,7 +1,6 @@
 package org.biobrief.generator.sql;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.biobrief.dictionary.Dictionary;
 import org.biobrief.dictionary.EntityDefinition;
@@ -10,7 +9,6 @@ import org.biobrief.dictionary.GroupDefinition;
 import org.biobrief.generator.AbstractGenerator;
 import org.biobrief.generator.GeneratorParams.EntityGeneratorParams;
 import org.biobrief.generator.Util;
-import org.biobrief.generator.Util.FileType;
 import org.biobrief.util.FileHelper;
 import org.biobrief.util.StringHelper;
 

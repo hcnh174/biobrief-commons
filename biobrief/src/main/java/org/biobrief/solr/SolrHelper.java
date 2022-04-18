@@ -101,7 +101,7 @@ public class SolrHelper
 	{
 		try
 		{
-			final SolrRequest request = new CollectionAdminRequest.ClusterStatus();
+			final SolrRequest<?> request = new CollectionAdminRequest.ClusterStatus();
 			final NamedList<Object> response = client.request(request);
 			final NamedList<Object> cluster = (NamedList<Object>) response.get("cluster");
 			final List<String> liveNodes = (List<String>) cluster.get("live_nodes");
@@ -125,8 +125,8 @@ public class SolrHelper
 		try
 		{
 			List<SchemaRequest.Update> updates=Lists.newArrayList();
-			final SolrRequest request=new MultiUpdate(updates);
-			final NamedList<Object> response = client.request(request);
+			final SolrRequest<?> request=new MultiUpdate(updates);
+			client.request(request);//final NamedList<Object> response = 
 		}
 		catch(SolrServerException e)
 		{
