@@ -96,15 +96,17 @@ public class VirtualFileSystem
 		reloadPath(to);
 	}
 	
-	public void rename(String path, String oldname, String newname)
+	public String rename(String path, String oldname, String newname)
 	{
 		String dir=getRealPath(path);
 		String oldfilename=dir+oldname;
 		String newfilename=dir+newname;
+		if (!FileHelper.exists(oldfilename) && FileHelper.exists(newfilename))// do not throw error if already completed
+			return newfilename;
 		log("renaming file from "+oldfilename+" to "+newfilename);
 		FileHelper.moveFile(oldfilename, newfilename);
-		//load();
 		reloadPath(path);
+		return newfilename;
 	}
 	
 	public List<IFile> details(String dir, List<String> names)

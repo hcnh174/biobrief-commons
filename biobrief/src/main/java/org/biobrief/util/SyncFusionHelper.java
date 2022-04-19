@@ -77,8 +77,16 @@ public class SyncFusionHelper
 		
 		public RenameResponse rename(IRenameRequest request)
 		{
-			vfs.rename(request.getPath(), request.getName(), request.getNewName());
-			return new RenameResponse(request);
+//			try
+//			{
+			String newfilename=vfs.rename(request.getPath(), request.getName(), request.getNewName());
+			return new RenameResponse(request, newfilename);
+//			}
+//			catch (Exception e)
+//			{
+//				log("failed to rename file: "+JsonHelper.toJson(request)+": "+e.getMessage());
+//				return new RenameResponse(request); 
+//			}
 		}
 		
 		public SearchResponse search(ISearchRequest request)
@@ -139,6 +147,13 @@ public class SyncFusionHelper
 		{
 			BufferedImage image=vfs.getImage(request.getPath());
 			return new GetImageResponse(request, image);
+		}
+		
+		///////////////////////////		
+		
+		private static void log(String message)
+		{
+			LogUtil.logMessage("log-filemanager.txt", message);
 		}
 		
 		//////////////////////////////////////////////////////
@@ -348,9 +363,10 @@ public class SyncFusionHelper
 			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
 			private ErrorDetails error;
 			
-			public RenameResponse(IRenameRequest request)
+			public RenameResponse(IRenameRequest request, String newfilename)
 			{
 				super(request);
+				data.add(new FileManagerDirectoryContent(newfilename));
 			}
 		}
 		
