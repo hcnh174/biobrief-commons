@@ -77,16 +77,8 @@ public class SyncFusionHelper
 		
 		public RenameResponse rename(IRenameRequest request)
 		{
-//			try
-//			{
 			String newfilename=vfs.rename(request.getPath(), request.getName(), request.getNewName());
 			return new RenameResponse(request, newfilename);
-//			}
-//			catch (Exception e)
-//			{
-//				log("failed to rename file: "+JsonHelper.toJson(request)+": "+e.getMessage());
-//				return new RenameResponse(request); 
-//			}
 		}
 		
 		public SearchResponse search(ISearchRequest request)
