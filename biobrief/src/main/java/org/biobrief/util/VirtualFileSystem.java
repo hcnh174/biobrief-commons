@@ -416,7 +416,7 @@ public class VirtualFileSystem
 					return folder.findDir(StringHelper.subList(arr, 1));
 				}
 			}
-			throw new CException("cannot find subfolder with name: ["+subdir+"]");
+			throw new CException("cannot find subfolder with name: ["+subdir+"] arr=["+StringHelper.join(arr, ",")+"]");
 		}
 		
 		public void load()
