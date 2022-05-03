@@ -54,11 +54,16 @@ public class LogUtil
 		FileHelper.appendFile(getLogDir()+"/"+filename, str);
 	}
 	
-	public static String getLogDir()
+	public static String getBaseLogDir()
 	{
 		String dflt=FileHelper.getBaseDirectory()+"/.temp/logs";
 		String dir=RuntimeHelper.getEnvironmentVariable("LOG_DIR", dflt);
-		return dir+"/"+TIMESTAMP;
+		return dir;
+	}
+	
+	public static String getLogDir()
+	{
+		return getBaseLogDir()+"/"+TIMESTAMP;
 	}
 	
 	public static void updateTimestamp()

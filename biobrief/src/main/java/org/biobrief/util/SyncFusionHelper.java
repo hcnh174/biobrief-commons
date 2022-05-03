@@ -6,9 +6,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.biobrief.util.VirtualFileSystem.IFile;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.Lists;
 
 import lombok.Data;
@@ -28,32 +32,33 @@ public class SyncFusionHelper
 		
 		///////////////////////////////////
 		
-		public ActionResponse action(ActionRequest request)
+		public ActionResponse action(ActionRequest request, UserDetails user)
 		{
 			if (request.getAction().equals("read"))
-				return read((IReadRequest)request);
+				return read((IReadRequest)request, user);
 			else if (request.getAction().equals("create"))
-				return create((ICreateRequest)request);
+				return create((ICreateRequest)request, user);
 			else if (request.getAction().equals("rename"))
-				return rename((IRenameRequest)request);
+				return rename((IRenameRequest)request, user);
 			else if (request.getAction().equals("delete"))
-				return delete((IDeleteRequest)request);
+				return delete((IDeleteRequest)request, user);
 			else if (request.getAction().equals("details"))
-				return details((IDetailsRequest)request);
+				return details((IDetailsRequest)request, user);
 			else if (request.getAction().equals("search"))
-				return search((ISearchRequest)request);
+				return search((ISearchRequest)request, user);
 			else if (request.getAction().equals("copy"))
-				return copy((ICopyRequest)request);
+				return copy((ICopyRequest)request, user);
 			else if (request.getAction().equals("move"))
-				return move((IMoveRequest)request);
+				return move((IMoveRequest)request, user);
 			else throw new UnhandledCaseException(request.getAction());
 		}
 		
 		/////////////////////////////////
 		
-		public ReadResponse read(IReadRequest request)
+		public ReadResponse read(IReadRequest request, UserDetails user)
 		{
 			//System.out.println("read request="+JsonHelper.toJson(request));
+			log(request, user);
 			VirtualFileSystem.IFolder folder=vfs.read(request.getPath());
 			ReadResponse response=new ReadResponse(request, folder.getPath());
 			for (VirtualFileSystem.INode item : folder.getNodes())
@@ -63,38 +68,44 @@ public class SyncFusionHelper
 			return response;
 		}
 		
-		public CreateResponse create(ICreateRequest request)
+		public CreateResponse create(ICreateRequest request, UserDetails user)
 		{
+			log(request, user);
 			vfs.createDirectory(request.getPath(), request.getName());
 			return new CreateResponse(request);
 		}
 		
-		public DeleteResponse delete(IDeleteRequest request)
+		public DeleteResponse delete(IDeleteRequest request, UserDetails user)
 		{
+			log(request, user);
 			vfs.delete(request.getPathList());
 			return new DeleteResponse(request);
 		}
 		
-		public RenameResponse rename(IRenameRequest request)
+		public RenameResponse rename(IRenameRequest request, UserDetails user)
 		{
+			log(request, user);
 			String newfilename=vfs.rename(request.getPath(), request.getName(), request.getNewName());
 			return new RenameResponse(request, newfilename);
 		}
 		
-		public SearchResponse search(ISearchRequest request)
+		public SearchResponse search(ISearchRequest request, UserDetails user)
 		{
+			log(request, user);
 			List<IFile> files=vfs.search(request.getPath(), request.getSearchString(), request.getCaseSensitive());
 			return new SearchResponse(request, files);
 		}
 		
-		public DetailsResponse details(IDetailsRequest request)
+		public DetailsResponse details(IDetailsRequest request, UserDetails user)
 		{
+			log(request, user);
 			List<IFile> files=vfs.details(request.getPath(), request.getNames());
 			return new DetailsResponse(request, files);
 		}
 		
-		public CopyResponse copy(ICopyRequest request)
+		public CopyResponse copy(ICopyRequest request, UserDetails user)
 		{
+			log(request, user);
 			for (int index=0; index<request.getNames().size(); index++)
 			{
 				String fromname=request.getNames().get(index);
@@ -106,8 +117,9 @@ public class SyncFusionHelper
 			return new CopyResponse(request);
 		}
 		
-		public MoveResponse move(IMoveRequest request)
+		public MoveResponse move(IMoveRequest request, UserDetails user)
 		{
+			log(request, user);
 			for (int index=0; index<request.getNames().size(); index++)
 			{
 				String fromname=request.getNames().get(index);
@@ -120,8 +132,9 @@ public class SyncFusionHelper
 		}
 		
 		//https://github.com/spring-guides/gs-uploading-files/blob/main/complete/src/main/java/com/example/uploadingfiles/storage/FileSystemStorageService.java
-		public void upload(UploadRequest request)
+		public void upload(UploadRequest request, UserDetails user)
 		{
+			log(request, user);
 			for (MultipartFile file : request.getFiles())
 			{
 				vfs.upload(request.getPath(), file);
@@ -129,23 +142,37 @@ public class SyncFusionHelper
 		}
 	
 		//https://stackoverflow.com/questions/35680932/download-a-file-from-spring-boot-rest-service
-		public DownloadResponse download(DownloadRequest request)
+		public DownloadResponse download(DownloadRequest request, UserDetails user)
 		{
+			log(request, user);
 			String filename=vfs.download(request.getPath(), request.getNames());
 			return new DownloadResponse(request, filename);
 		}
 		
-		public GetImageResponse getImage(GetImageRequest request)
+		public GetImageResponse getImage(GetImageRequest request, UserDetails user)
 		{
+			log(request, user);
 			BufferedImage image=vfs.getImage(request.getPath());
 			return new GetImageResponse(request, image);
 		}
 		
 		///////////////////////////		
 		
-		private static void log(String message)
+//		private static void log(String message)
+//		{
+//			LogUtil.logMessage("log-filemanager.txt", message);
+//		}
+
+		
+		private static void log(IRequest request, UserDetails user)
 		{
-			LogUtil.logMessage("log-filemanager.txt", message);
+			String filename=LogUtil.getBaseLogDir()+"/log-filemanager.txt";
+			LogEntry entry=new LogEntry(request, user);
+			String line=DateHelper.format(entry.getDate(), DateHelper.DATETIME_PATTERN);
+			line+="\t"+entry.getUsername();
+			line+="\t"+entry.getType();
+			line+="\t"+entry.getRequest();
+			FileHelper.appendFile(filename, line);
 		}
 		
 		//////////////////////////////////////////////////////
@@ -426,7 +453,7 @@ public class SyncFusionHelper
 		public static class UploadRequest extends AbstractRequest
 		{
 			private String path;
-			private List<MultipartFile> files=Lists.newArrayList();
+			@JsonIgnore private List<MultipartFile> files=Lists.newArrayList();
 			
 			public UploadRequest(String path, MultipartFile[] files)
 			{
@@ -440,6 +467,16 @@ public class SyncFusionHelper
 			public void add(MultipartFile file)
 			{
 				this.files.add(file);
+			}
+			
+			public List<String> getFilenames()
+			{
+				List<String> filenames=Lists.newArrayList();
+				for (MultipartFile file : files)
+				{
+					filenames.add(file.getName());
+				}
+				return filenames;
 			}
 		}
 		
@@ -571,6 +608,41 @@ public class SyncFusionHelper
 			protected Integer size;//	Number	-	File size
 			protected String type;//	String	-	File extension
 			protected List<String> multipleFiles=Lists.newArrayList();
+		}
+		
+		@Data
+		public static class LogEntry
+		{
+			protected Date date;
+			protected String username;
+			protected String type;
+			protected String request;
+			
+			public LogEntry(IRequest request, UserDetails user)
+			{
+				this.date=new Date();
+				this.username=user.getUsername();
+				this.type=request.getClass().getSimpleName();
+				this.request=getRequestJson(request);
+			}
+			
+			private String getRequestJson(IRequest request)
+			{
+				try
+				{
+					ObjectMapper mapper = new ObjectMapper();
+					//mapper.setDateFormat(new SimpleDateFormat(LocalDateHelper.YYYYMMDD_PATTERN));
+					//mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+					mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+					mapper.setSerializationInclusion(Include.NON_NULL);
+					String json = mapper.writeValueAsString(request);
+					return json;
+				}
+				catch(Exception e)
+				{
+					throw new CException(e);
+				}
+			}
 		}
 	}
 }

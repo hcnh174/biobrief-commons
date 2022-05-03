@@ -280,7 +280,7 @@ public class VirtualFileSystem
 	
 	public static void log(String message)
 	{
-		String logfile="filemanager.txt";
+		String logfile="log-virtualfilesystem.txt";
 		String username=LoginHelper.getUsername().orElse("none");
 		String line=username+"\t"+message;
 		System.out.println(line);
