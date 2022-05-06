@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.biobrief.services.NotificationService;
 import org.biobrief.util.VirtualFileSystem.IFile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,10 +25,12 @@ public class SyncFusionHelper
 	public static class FileManager
 	{
 		protected VirtualFileSystem vfs;
+		protected NotificationService notificationService;
 		
-		public FileManager(VirtualFileSystem vfs)
+		public FileManager(VirtualFileSystem vfs, NotificationService notificationService)
 		{
 			this.vfs=vfs;
+			this.notificationService=notificationService;
 		}
 		
 		///////////////////////////////////
@@ -158,26 +161,29 @@ public class SyncFusionHelper
 		
 		///////////////////////////		
 		
-//		private static void log(String message)
-//		{
-//			LogUtil.logMessage("log-filemanager.txt", message);
-//		}
-
-		
-		private static void log(IRequest request, UserDetails user)
+		private void log(IRequest request, UserDetails user)
 		{
 			String filename=LogUtil.getBaseLogDir()+"/log-filemanager.txt";
 			LogEntry entry=new LogEntry(request, user);
 			String line=DateHelper.format(entry.getDate(), DateHelper.DATETIME_PATTERN);
 			line+="\t"+entry.getUsername();
 			line+="\t"+entry.getType();
+			line+="\t"+entry.getAction();
 			line+="\t"+entry.getRequest();
 			FileHelper.appendFile(filename, line);
+			
+			if (entry.getAction().equals("read"))
+				return;
+			String subject="file manager: action="+entry.getAction()+" username="+entry.getUsername();
+			String message=line;
+			notificationService.notify(subject, message, new MessageWriter());
 		}
 		
 		//////////////////////////////////////////////////////
 		
-		public interface IRequest {}
+		public interface IRequest {
+			String getAction();
+		}
 		
 		@Data
 		private static abstract class AbstractRequest implements IRequest
@@ -198,7 +204,7 @@ public class SyncFusionHelper
 		
 		public interface IActionRequest extends IRequest
 		{
-			String getAction();
+			//String getAction();
 			String getPath();
 			List<FileManagerDirectoryContent> getData();
 		}
@@ -351,8 +357,10 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class CreateResponse extends ActionResponse
 		{
+			private String cwd;
 			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
 			private ErrorDetails error;
+			private String details;
 			
 			public CreateResponse(ICreateRequest request)
 			{
@@ -365,8 +373,10 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class DeleteResponse extends ActionResponse
 		{
+			private String cwd;
 			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
 			private ErrorDetails error;
+			private String details;
 			
 			public DeleteResponse(IDeleteRequest request)
 			{
@@ -379,13 +389,15 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class RenameResponse extends ActionResponse
 		{
-			private List<FileManagerDirectoryContent> data=Lists.newArrayList();
+			private String cwd;
+			private List<FileManagerDirectoryContent> files=Lists.newArrayList();
 			private ErrorDetails error;
+			private String details;
 			
 			public RenameResponse(IRenameRequest request, String newfilename)
 			{
 				super(request);
-				data.add(new FileManagerDirectoryContent(newfilename));
+				files.add(new FileManagerDirectoryContent(newfilename));
 			}
 		}
 		
@@ -478,6 +490,9 @@ public class SyncFusionHelper
 				}
 				return filenames;
 			}
+			
+			@Override
+			public String getAction() {return "upload";}
 		}
 		
 		///////////////////////////////////////////////////
@@ -514,6 +529,9 @@ public class SyncFusionHelper
 			{
 				this.path=path;
 			}
+			
+			@Override
+			public String getAction() {return "getimage";}
 		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
@@ -616,6 +634,7 @@ public class SyncFusionHelper
 			protected Date date;
 			protected String username;
 			protected String type;
+			protected String action;
 			protected String request;
 			
 			public LogEntry(IRequest request, UserDetails user)
@@ -623,6 +642,7 @@ public class SyncFusionHelper
 				this.date=new Date();
 				this.username=user.getUsername();
 				this.type=request.getClass().getSimpleName();
+				this.action=request.getAction();
 				this.request=getRequestJson(request);
 			}
 			

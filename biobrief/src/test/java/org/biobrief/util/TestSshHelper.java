@@ -1,8 +1,20 @@
 package org.biobrief.util;
 
-//gradle --stacktrace --info test --tests *TestHlsgSshHelper
+import org.junit.jupiter.api.Test;
+
+//gradle --info test --tests *TestSshHelper
 public class TestSshHelper
 {
+	@Test
+	public void executeTree()
+	{
+		MessageWriter out=new MessageWriter();
+		SshHelper.SshCredentials credentials=getCredentials();
+		String command="cd /mnt/reports; tree -f -h -D --timefmt '%FT%T' -P '*.docx|*.pdf|*.xlsx|*.pptx' -i --noreport | grep -v -e \"#recycle\"";
+		String output=SshHelper.execute(credentials, command, out);
+		System.out.println("tree="+output);
+	}
+	
 	//@Test
 	public void executeLs()
 	{
@@ -37,7 +49,13 @@ public class TestSshHelper
 
 	private SshHelper.SshCredentials getCredentials()
 	{
-		return SshHelper.getCredentials("username", "password", "url", 22);
+		String username=RuntimeHelper.getEnvironmentVariable("ANALYSIS_SERVER_USERNAME", true);
+		String password=RuntimeHelper.getEnvironmentVariable("ANALYSIS_SERVER_PASSWORD", true);
+		String host=RuntimeHelper.getEnvironmentVariable("ANALYSIS_SERVER_HOST", true);
+		System.out.println("username="+username);
+		System.out.println("password="+password);
+		System.out.println("host="+host);
+		return SshHelper.getCredentials(username, password, host, 22);
 	}
 }
 	

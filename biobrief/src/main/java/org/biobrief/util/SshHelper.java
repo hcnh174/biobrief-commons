@@ -3,6 +3,7 @@ package org.biobrief.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -134,6 +135,8 @@ public class SshHelper
 			client=createClient(credentials);
 			session = client.startSession();
 			Command cmd = session.exec(command);
+			//System.out.println("charset="+client.getRemoteCharset());
+			//client.setRemoteCharset(Charset.defaultCharset());
 			
 			String output=IOUtils.readFully(cmd.getInputStream()).toString();
 			String err=IOUtils.readFully(cmd.getErrorStream()).toString();

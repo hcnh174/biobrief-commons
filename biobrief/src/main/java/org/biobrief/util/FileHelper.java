@@ -478,8 +478,24 @@ public final class FileHelper
 		catch(Exception e)
 		{
 			throw new CException("failed to delete file: "+filename, e);
+		}		
+		return result;
+	}
+	
+	public static boolean deleteFileOrDirectorty(String path)
+	{
+		if (!FileHelper.exists(path))
+			throw new CException("file to delete does not exist: "+path);
+		File file=new File(path);
+		boolean result=false;
+		try
+		{
+			result=file.delete();
 		}
-		
+		catch(Exception e)
+		{
+			throw new CException("failed to delete file/dir: "+path, e);
+		}
 		return result;
 	}
 

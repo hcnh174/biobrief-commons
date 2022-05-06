@@ -140,7 +140,7 @@ public class VirtualFileSystem
 	{
 		String filename=getRealPath(path);
 		log("deleting file: "+filename);
-		FileHelper.deleteFile(filename);
+		FileHelper.deleteFileOrDirectorty(filename);
 		//load();
 		reloadPath(path);
 	}

@@ -2,6 +2,7 @@ package org.biobrief.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.biobrief.users.entities.User;
 import org.biobrief.util.SyncFusionHelper.FileManager;
 import org.biobrief.util.SyncFusionHelper.FileManager.ActionRequest;
 import org.biobrief.util.SyncFusionHelper.FileManager.ReadResponse;
@@ -35,8 +36,9 @@ public class TestSyncFusionHelper
 		ActionRequest request=new ActionRequest();
 		request.setPath(path);
 		
-		FileManager manager=new FileManager(vfs);		
-		ReadResponse response=manager.read(request);
+		FileManager manager=new FileManager(vfs);
+		User user=new User("id", "user", "password");
+		ReadResponse response=manager.read(request, user);
 		String json=JsonHelper.toJson(response);
 		//FileHelper.writeFile(Constants.BIOBRIEF_DIR+"/.temp/tmp"+"/files.json", json);
 		System.out.println(json);
