@@ -165,30 +165,37 @@ public class SyncFusionHelper
 		{
 			String filename=LogUtil.getBaseLogDir()+"/log-filemanager.txt";
 			LogEntry entry=new LogEntry(request, user);
-			String line=DateHelper.format(entry.getDate(), DateHelper.DATETIME_PATTERN);
-			line+="\t"+entry.getUsername();
-			line+="\t"+entry.getType();
-			line+="\t"+entry.getAction();
-			line+="\t"+entry.getRequest();
-			FileHelper.appendFile(filename, line);
+			String message=entry.getMessage();
+			FileHelper.appendFile(filename, message);
 			
-			if (entry.getAction().equals("read"))
+			//if (entry.getAction().equals("read"))
+			if (entry.isNotified())
 				return;
-			String subject="file manager: action="+entry.getAction()+" username="+entry.getUsername();
-			String message=line;
+			String subject=entry.getSubject();
 			notificationService.notify(subject, message, new MessageWriter());
 		}
 		
 		//////////////////////////////////////////////////////
 		
-		public interface IRequest {
+		public interface IRequest
+		{
 			String getAction();
+			//String getLogMessage(UserDetails user);
 		}
 		
 		@Data
 		private static abstract class AbstractRequest implements IRequest
 		{
-			
+//			public String getLogMessage(UserDetails user)
+//			{
+//				LogEntry entry=new LogEntry(this, user);
+//				String line=DateHelper.format(entry.getDate(), DateHelper.DATETIME_PATTERN);
+//				line+="\t"+entry.getUsername();
+//				line+="\t"+entry.getType();
+//				line+="\t"+entry.getAction();
+//				line+="\t"+entry.getRequest();
+//				return line;
+//			}
 		}
 		
 		@Data
@@ -636,6 +643,7 @@ public class SyncFusionHelper
 			protected String type;
 			protected String action;
 			protected String request;
+			protected String info;
 			
 			public LogEntry(IRequest request, UserDetails user)
 			{
@@ -644,6 +652,7 @@ public class SyncFusionHelper
 				this.type=request.getClass().getSimpleName();
 				this.action=request.getAction();
 				this.request=getRequestJson(request);
+				this.info=getInfo(request);
 			}
 			
 			private String getRequestJson(IRequest request)
@@ -651,8 +660,6 @@ public class SyncFusionHelper
 				try
 				{
 					ObjectMapper mapper = new ObjectMapper();
-					//mapper.setDateFormat(new SimpleDateFormat(LocalDateHelper.YYYYMMDD_PATTERN));
-					//mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 					mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 					mapper.setSerializationInclusion(Include.NON_NULL);
 					String json = mapper.writeValueAsString(request);
@@ -662,6 +669,42 @@ public class SyncFusionHelper
 				{
 					throw new CException(e);
 				}
+			}
+			
+			public boolean isNotified()
+			{
+				return action.equals("read");
+			}
+			
+			private String getInfo(IRequest request)
+			{
+				if (request.getAction().equals("upload"))
+				{
+					UploadRequest upload=(UploadRequest)request;
+					return " path="+upload.getPath()+" files="+StringHelper.join(upload.getFilenames(), ", ");
+				}
+				
+				if (request.getAction().equals("download"))
+				{
+					DownloadRequest download=(DownloadRequest)request;
+					return " path="+download.getPath()+" files="+StringHelper.join(download.getNames(), ", ");
+				}
+				return "";
+			}
+			
+			public String getMessage()
+			{
+				String line=DateHelper.format(date, DateHelper.DATETIME_PATTERN);
+				line+="\t"+username;
+				line+="\t"+type;
+				line+="\t"+action;
+				line+="\t"+request;
+				return line;
+			}
+			
+			public String getSubject()
+			{
+				return "["+username+"] file manager: action="+action+info;
 			}
 		}
 	}

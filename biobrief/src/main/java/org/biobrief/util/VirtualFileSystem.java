@@ -152,7 +152,7 @@ public class VirtualFileSystem
 			throw new CException("cannot upload to virtual directory: path"+path+"/"+file.getOriginalFilename());
 		String dir=folder.getPath();
 		//dir="c:/temp/upload";// todo hack!
-		log("uploading file: "+path+"/"+file.getOriginalFilename());
+		log("uploading file: "+path+file.getOriginalFilename());
 		WebHelper.writeFile(dir, file);
 		//load();
 		reloadPath(path);
