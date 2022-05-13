@@ -21,6 +21,21 @@ import lombok.EqualsAndHashCode;
 
 public class SyncFusionHelper
 {
+	public enum Action
+	{
+		read,
+		create,
+		rename,
+		delete,
+		details,
+		search,
+		copy,
+		move,
+		download,
+		upload,
+		getimage
+	}
+	
 	@Data
 	public static class FileManager
 	{
@@ -37,21 +52,21 @@ public class SyncFusionHelper
 		
 		public ActionResponse action(ActionRequest request, UserDetails user)
 		{
-			if (request.getAction().equals("read"))
+			if (request.getAction()==Action.read)
 				return read((IReadRequest)request, user);
-			else if (request.getAction().equals("create"))
+			else if (request.getAction()==Action.create)
 				return create((ICreateRequest)request, user);
-			else if (request.getAction().equals("rename"))
+			else if (request.getAction()==Action.rename)
 				return rename((IRenameRequest)request, user);
-			else if (request.getAction().equals("delete"))
+			else if (request.getAction()==Action.delete)
 				return delete((IDeleteRequest)request, user);
-			else if (request.getAction().equals("details"))
+			else if (request.getAction()==Action.details)
 				return details((IDetailsRequest)request, user);
-			else if (request.getAction().equals("search"))
+			else if (request.getAction()==Action.search)
 				return search((ISearchRequest)request, user);
-			else if (request.getAction().equals("copy"))
+			else if (request.getAction()==Action.copy)
 				return copy((ICopyRequest)request, user);
-			else if (request.getAction().equals("move"))
+			else if (request.getAction()==Action.move)
 				return move((IMoveRequest)request, user);
 			else throw new UnhandledCaseException(request.getAction());
 		}
@@ -168,8 +183,7 @@ public class SyncFusionHelper
 			String message=entry.getMessage();
 			FileHelper.appendFile(filename, message);
 			
-			//if (entry.getAction().equals("read"))
-			if (entry.isNotified())
+			if (!entry.isNotified())
 				return;
 			String subject=entry.getSubject();
 			notificationService.notify(subject, message, new MessageWriter());
@@ -179,23 +193,13 @@ public class SyncFusionHelper
 		
 		public interface IRequest
 		{
-			String getAction();
-			//String getLogMessage(UserDetails user);
+			Action getAction();
 		}
 		
 		@Data
 		private static abstract class AbstractRequest implements IRequest
 		{
-//			public String getLogMessage(UserDetails user)
-//			{
-//				LogEntry entry=new LogEntry(this, user);
-//				String line=DateHelper.format(entry.getDate(), DateHelper.DATETIME_PATTERN);
-//				line+="\t"+entry.getUsername();
-//				line+="\t"+entry.getType();
-//				line+="\t"+entry.getAction();
-//				line+="\t"+entry.getRequest();
-//				return line;
-//			}
+			
 		}
 		
 		@Data
@@ -272,7 +276,7 @@ public class SyncFusionHelper
 			IReadRequest, ICreateRequest, IDeleteRequest, IRenameRequest,
 			IDetailsRequest, ISearchRequest, ICopyRequest, IMoveRequest
 		{
-			private String action;
+			private Action action;
 			private String path;
 			private List<String> names=Lists.newArrayList(); //used by: delete
 			private Boolean showHiddenItems;
@@ -493,13 +497,13 @@ public class SyncFusionHelper
 				List<String> filenames=Lists.newArrayList();
 				for (MultipartFile file : files)
 				{
-					filenames.add(file.getName());
+					filenames.add(file.getOriginalFilename());
 				}
 				return filenames;
 			}
 			
 			@Override
-			public String getAction() {return "upload";}
+			public Action getAction() {return Action.upload;}
 		}
 		
 		///////////////////////////////////////////////////
@@ -507,7 +511,7 @@ public class SyncFusionHelper
 		@Data @EqualsAndHashCode(callSuper=true)
 		public static class DownloadRequest extends AbstractRequest
 		{
-			protected String action;
+			protected Action action;
 			protected String path;
 			protected List<String> names;
 			protected List<FileManagerDirectoryContent> data;
@@ -538,7 +542,7 @@ public class SyncFusionHelper
 			}
 			
 			@Override
-			public String getAction() {return "getimage";}
+			public Action getAction() {return Action.getimage;}
 		}
 		
 		@Data @EqualsAndHashCode(callSuper=true)
@@ -641,7 +645,7 @@ public class SyncFusionHelper
 			protected Date date;
 			protected String username;
 			protected String type;
-			protected String action;
+			protected Action action;
 			protected String request;
 			protected String info;
 			
@@ -673,18 +677,18 @@ public class SyncFusionHelper
 			
 			public boolean isNotified()
 			{
-				return action.equals("read");
+				return action!=Action.read;
 			}
 			
 			private String getInfo(IRequest request)
 			{
-				if (request.getAction().equals("upload"))
+				if (request.getAction()==Action.upload)
 				{
 					UploadRequest upload=(UploadRequest)request;
 					return " path="+upload.getPath()+" files="+StringHelper.join(upload.getFilenames(), ", ");
 				}
 				
-				if (request.getAction().equals("download"))
+				if (request.getAction()==Action.download)
 				{
 					DownloadRequest download=(DownloadRequest)request;
 					return " path="+download.getPath()+" files="+StringHelper.join(download.getNames(), ", ");
