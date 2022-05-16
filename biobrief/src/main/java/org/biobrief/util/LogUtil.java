@@ -17,7 +17,8 @@ public class LogUtil
 		
 	public static void log(String message, Exception e)
 	{
-		log(message+": "+e.getMessage()+"\n"+StringHelper.getStackTrace(e));
+		//log(message+": "+e.getMessage()+"\n"+StringHelper.getStackTrace(e));
+		log(appendErrorMessage(message, e));
 	}
 	
 	public static void log(String message)
@@ -33,6 +34,11 @@ public class LogUtil
 		System.err.println(message);
 		String debugfile="debug.txt";
 		appendFile(debugfile, getDate()+message);
+	}
+	
+	public static void logMessage(String logfile, String message, Exception e)
+	{
+		logMessage(logfile, appendErrorMessage(message, e));
 	}
 	
 	public static void logMessage(String logfile, String message)
@@ -79,5 +85,10 @@ public class LogUtil
 	public static String join(Object... args)
 	{
 		return StringHelper.join(Lists.newArrayList(args), TAB);
-	}	
+	}
+	
+	public static String appendErrorMessage(String message, Exception e)
+	{
+		return message+": "+e.getMessage()+"\n"+StringHelper.getStackTrace(e);
+	}
 }
