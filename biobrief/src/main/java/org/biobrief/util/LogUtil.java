@@ -17,8 +17,10 @@ public class LogUtil
 		
 	public static void log(String message, Exception e)
 	{
-		//log(message+": "+e.getMessage()+"\n"+StringHelper.getStackTrace(e));
-		log(appendErrorMessage(message, e));
+		//log(appendErrorMessage(message, e));
+		System.err.println(message);
+		String logfile="errors.txt";
+		appendFile(logfile, formatMessage(message, e));
 	}
 	
 	public static void log(String message)
@@ -26,24 +28,25 @@ public class LogUtil
 		//log.info(message);
 		System.err.println(message);
 		String logfile="log.txt";
-		appendFile(logfile, getDate()+message);
+		appendFile(logfile, formatMessage(message));
 	}
 	
 	public static void debug(String message)
 	{
 		System.err.println(message);
 		String debugfile="debug.txt";
-		appendFile(debugfile, getDate()+message);
+		appendFile(debugfile, formatMessage(message));
 	}
 	
 	public static void logMessage(String logfile, String message, Exception e)
 	{
-		logMessage(logfile, appendErrorMessage(message, e));
+		//logMessage(logfile, appendErrorMessage(message, e));
+		String errorfile=StringHelper.replace(logfile, "log-", "errors-");
+		appendFile(errorfile, formatMessage(message, e));
 	}
 	
 	public static void logMessage(String logfile, String message)
 	{
-		//log.warn(message);
 		appendFile(logfile, getDate()+message);
 	}
 	
@@ -90,5 +93,15 @@ public class LogUtil
 	public static String appendErrorMessage(String message, Exception e)
 	{
 		return message+": "+e.getMessage()+"\n"+StringHelper.getStackTrace(e);
+	}
+	
+	public static String formatMessage(String message, Exception e)
+	{
+		return formatMessage(appendErrorMessage(message, e));
+	}
+	
+	public static String formatMessage(String message)
+	{
+		return getDate()+message;
 	}
 }
