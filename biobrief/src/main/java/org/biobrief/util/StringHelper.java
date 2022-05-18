@@ -2667,6 +2667,14 @@ public final class StringHelper
 		return replaceWord(text, target, "");
 	}
 	
+	//https://kodejava.org/how-do-i-check-if-a-string-starts-with-a-pattern/
+	public static boolean startsWithRegex(String value, String regex)
+	{
+		Pattern pattern=Pattern.compile(regex);
+		Matcher matcher=pattern.matcher(value);
+		return matcher.lookingAt();
+	}
+	
 //	public static void banner(String message)
 //	{
 //		System.out.println("********************************");
