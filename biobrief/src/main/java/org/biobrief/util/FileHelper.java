@@ -1466,6 +1466,27 @@ public final class FileHelper
 		}
 	}
 	
+	/////////////////////////
+	
+	public static String unzip(String filename)
+	{
+		try
+		{
+			System.out.println("zipfile="+filename);
+			String outdir=FileHelper.stripFilename(filename)+FileHelper.stripPath(FileHelper.stripExtension(filename));
+			FileHelper.checkExists(filename);
+			System.out.println("dir="+outdir);
+			new ZipFile(filename).extractAll(outdir);
+			return outdir;
+		}
+		catch (Exception e)
+		{
+			throw new CException(e);
+		}
+	}
+	
+	///////////////////////////
+	
 	public static String unzip(String filename, String password)
 	{
 		String dir=FileHelper.stripFilename(filename)+FileHelper.stripPath(FileHelper.stripExtension(filename));
