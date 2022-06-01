@@ -101,6 +101,7 @@ public class PrimeTable extends AbstractAngularGrid
 	public static class TurboTable extends AbstractHtmlRenderer
 	{
 		protected final Grid grid;
+		protected final String styleClass="p-datatable-gridlines";
 		protected final String path="rows";
 		protected final CaptionTemplate caption;
 //		protected final ColgroupTemplate colgroups;
@@ -183,6 +184,7 @@ public class PrimeTable extends AbstractAngularGrid
 			//attr(buffer, "[virtualScroll]", true);
 			
 			//attrIf(buffer, "[resizableColumns]", "true", grid.getParams().getResizable());
+			attrIf(buffer, "styleClass", styleClass, StringHelper.hasContent(styleClass));
 			attrIf(buffer, "[reorderableColumns]", "true", grid.getParams().getReorderable());
 			attrIf(buffer, "sortMode", "multiple", grid.getParams().getSortable());
 			
