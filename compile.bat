@@ -1,1 +1,1 @@
-gradle build -x test
+gradle build testClasses -x test

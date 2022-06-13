@@ -24,8 +24,10 @@ import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -35,6 +37,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.model.StylesTable;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
+import org.apache.poi.xssf.usermodel.IndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -1026,7 +1030,7 @@ public class ExcelHelper
 		Comment comment = drawing.createCellComment(anchor);
 		RichTextString str = factory.createRichTextString(text);
 		comment.setString(str);
-		comment.setAuthor("Chayama");
+		comment.setAuthor("Nelson");
 		//assign the comment to the cell
 		cell.setCellComment(comment);
 	}
@@ -1058,6 +1062,45 @@ public class ExcelHelper
 		int lastRow = sheet.getLastRowNum();
 		sheet.shiftRows(startRow, lastRow, numRows, true, true);
 		return sheet.createRow(startRow);
+	}
+	
+	////////////////////////////////////////////////////////
+	
+	public static Font copyFont(Workbook workbook, Font oldFont)
+	{
+		Font newFont = workbook.createFont();
+		newFont.setBold(oldFont.getBold());
+		newFont.setColor(oldFont.getColor());
+		newFont.setFontHeight(oldFont.getFontHeight());
+		newFont.setFontName(oldFont.getFontName());
+		newFont.setItalic(oldFont.getItalic());
+		newFont.setStrikeout(oldFont.getStrikeout());
+		newFont.setTypeOffset(oldFont.getTypeOffset());
+		newFont.setUnderline(oldFont.getUnderline());
+		newFont.setCharSet(oldFont.getCharSet());
+		return newFont;
+	}
+	
+	public static XSSFCellStyle setBgColor(CellStyle style, IndexedColors color)
+	{
+		XSSFCellStyle xssfstyle=(XSSFCellStyle)style;
+		xssfstyle.setFillForegroundColor(color.index);
+		xssfstyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		return xssfstyle;
+	}
+	
+	public static XSSFCellStyle setBgColor(CellStyle style, int red, int green, int blue)
+	{
+		return setBgColor(style, new java.awt.Color(red, green, blue));
+	}
+	
+	public static XSSFCellStyle setBgColor(CellStyle style, java.awt.Color color)
+	{
+		XSSFCellStyle xssfstyle=(XSSFCellStyle)style;
+		IndexedColorMap colorMap = new DefaultIndexedColorMap();
+		xssfstyle.setFillForegroundColor(new XSSFColor(color, colorMap));
+		xssfstyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		return xssfstyle;
 	}
 	
 	////////////////////////////////////////////////////////	
