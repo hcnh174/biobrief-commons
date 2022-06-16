@@ -481,81 +481,12 @@ public class TestPowerPointHelper
 			String filename="x:/A208113789912_F1/PP_A208113789912.pptx";
 			String password="A2081";
 			String outdir="c:/temp/pptx-images";
-			convertPptxToImages(filename, password, outdir, false);
-			convertPptxToImages(filename, password, outdir, true);
+			PowerPointHelper.convertPptxToImages(filename, password, outdir);
 		}
 		catch(Exception e)
 		{
 			throw new CException(e);
 		}
-	}
-	
-	public static void convertPptxToImages(String filename, String outdir, boolean withRenderHint)
-	{
-		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename);
-		convertPptxToImages(pptx, outdir, withRenderHint);
-	}
-	
-	public static void convertPptxToImages(String filename, String password, String outdir, boolean withRenderHint)
-	{
-		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename, password);
-		convertPptxToImages(pptx, outdir, withRenderHint);
-	}
-	
-	public static void convertPptxToImages(XMLSlideShow pptx, String outdir, boolean withRenderHint)
-	{
-		String suffix = withRenderHint ? "-with-hint" : "-without-hint";
-		int num = 1;
-		for (XSLFSlide slide : pptx.getSlides())
-		{
-			String outfile=outdir+"/slide-"+num + suffix + ".jpeg";
-			writeImage(slide, outfile, withRenderHint);
-			num++;
-		}
-	}
-	
-	private static void writeImage(XSLFSlide slide, String filename, boolean withRenderHint)
-	{
-		try
-		{
-			BufferedImage img = createBufferedImage(slide);
-			Graphics2D graphics = createGraphics(img, withRenderHint);
-			slide.draw(graphics);
-			
-			final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
-			writer.setOutput(new FileImageOutputStream(new File(filename)));
-			JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);
-			jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-			jpegParams.setCompressionQuality(1f);
-			IIOImage image = new IIOImage(img, null, null);
-			writer.write(null, image, jpegParams);
-			writer.dispose();
-		}
-		catch(Exception e)
-		{
-			throw new CException("failed to write image for slide: "+filename);
-		}
-	}
-	
-	private static BufferedImage createBufferedImage(XSLFSlide slide)
-	{
-		Dimension pgsize=slide.getSlideShow().getPageSize();
-		return new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
-	}
-	
-	private static Graphics2D createGraphics(BufferedImage img, boolean withRenderHint)
-	{
-		Graphics2D graphics = img.createGraphics();
-		if (withRenderHint)
-		{
-			graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			graphics.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-			graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
-		}
-		return graphics;
 	}
 }
 /*

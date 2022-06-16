@@ -2,7 +2,10 @@ package org.biobrief.util;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,6 +13,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.FileImageOutputStream;
 
 import org.apache.poi.hslf.usermodel.HSLFPictureData;
 import org.apache.poi.hslf.usermodel.HSLFPictureShape;
@@ -334,6 +344,74 @@ public class PowerPointHelper
 		{
 			throw new CException(e);
 		}
+	}
+	
+	//////////////////////////////////////
+	
+	public static void convertPptxToImages(String filename, String outdir)
+	{
+		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename);
+		convertPptxToImages(pptx, outdir);
+	}
+	
+	public static void convertPptxToImages(String filename, String password, String outdir)
+	{
+		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename, password);
+		convertPptxToImages(pptx, outdir);
+	}
+	
+	public static void convertPptxToImages(XMLSlideShow pptx, String outdir)
+	{
+		int num = 1;
+		for (XSLFSlide slide : pptx.getSlides())
+		{
+			String outfile=outdir+"/slide-"+num + ".jpeg";
+			writeImage(slide, outfile);
+			num++;
+		}
+	}
+	
+	private static void writeImage(XSLFSlide slide, String filename)
+	{
+		try
+		{
+			BufferedImage img = createBufferedImage(slide);
+			Graphics2D graphics = createGraphics(img, true);
+			slide.draw(graphics);			
+			final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
+			writer.setOutput(new FileImageOutputStream(new File(filename)));
+			JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);
+			jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			jpegParams.setCompressionQuality(1f);
+			IIOImage image = new IIOImage(img, null, null);
+			writer.write(null, image, jpegParams);
+			writer.dispose();
+		}
+		catch(Exception e)
+		{
+			throw new CException("failed to write image for slide: "+filename);
+		}
+	}
+	
+	private static BufferedImage createBufferedImage(XSLFSlide slide)
+	{
+		Dimension pgsize=slide.getSlideShow().getPageSize();
+		return new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
+	}
+	
+	private static Graphics2D createGraphics(BufferedImage img, boolean withRenderHint)
+	{
+		Graphics2D graphics = img.createGraphics();
+		if (withRenderHint)
+		{
+			graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			graphics.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+			graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+		}
+		return graphics;
 	}
 	
 	////////////////////////////////////////////////////////////////
