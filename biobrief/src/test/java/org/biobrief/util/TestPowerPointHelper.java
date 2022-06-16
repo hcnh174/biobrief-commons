@@ -1,7 +1,20 @@
 package org.biobrief.util;
 
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.FileImageOutputStream;
 
 import org.apache.poi.hslf.usermodel.HSLFAutoShape;
 import org.apache.poi.hslf.usermodel.HSLFPictureShape;
@@ -22,7 +35,7 @@ import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.junit.jupiter.api.Test;
 
-//gradle test --stacktrace --info --tests *TestPowerPointHelper
+//gradle test --info --tests *TestPowerPointHelper
 public class TestPowerPointHelper
 {
 	//@Test
@@ -190,106 +203,106 @@ public class TestPowerPointHelper
 		
 		//https://stackoverflow.com/questions/50137576/create-a-table-in-powerpoint-with-apache-poi
 		XMLSlideShow powerpoint = new XMLSlideShow();
-	    XSLFSlide slide = powerpoint.createSlide();
-	    
-	    CTable table=new CTable();
-	    table.addHeader("Gene");
-	    table.addHeader("AA");
-	    table.addHeader("MAF");
-	    table.addHeader("role");
-	    table.addHeader("Position");
-	    table.addHeader("ToMMo");
-	    table.addHeader("Report");
-	    table.addHeader("C-CAT");
-	    table.addHeader("CancerVar");
-	    table.addHeader("ClinVar");
-	    table.addHeader("COSMIC");
-	    table.addHeader("OncoKB");
-	    
-	    CTable.Row row=table.addRow();
-	    row.add("PARP3");
-	    row.add("T454M");
-	    row.add("0.5303");
-	    row.add("TSG");
-	    row.add("3p21.2");
-	    row.add("");
-	    row.add("VUS");
-	    row.add("VUS");
-	    row.add("Benign");
-	    row.add("NotFound");
-	    row.add("NotFound");
-	    row.add("OncoKB");
-	    
-	    row=table.addRow();
-	    row.add("KMT2D");
-	    row.add("V1561G");
-	    row.add("0.5303");
-	    row.add("TSG");
-	    row.add("3p21.2");
-	    row.add("");
-	    row.add("VUS");
-	    row.add("VUS");
-	    row.add("Benign");
-	    row.add("NotFound");
-	    row.add("NotFound");
-	    row.add("OncoKB");
-	    
-	    createTable(slide, table, new java.awt.Rectangle(20, 20, 800, 800));
-	    
-	    createTable(slide, table, new java.awt.Rectangle(20, 200, 800, 800));
-//	    XSLFTable table = slide.createTable();
-//	    table.setAnchor(new java.awt.Rectangle(50, 50, 800, 800));
+		XSLFSlide slide = powerpoint.createSlide();
+		
+		CTable table=new CTable();
+		table.addHeader("Gene");
+		table.addHeader("AA");
+		table.addHeader("MAF");
+		table.addHeader("role");
+		table.addHeader("Position");
+		table.addHeader("ToMMo");
+		table.addHeader("Report");
+		table.addHeader("C-CAT");
+		table.addHeader("CancerVar");
+		table.addHeader("ClinVar");
+		table.addHeader("COSMIC");
+		table.addHeader("OncoKB");
+		
+		CTable.Row row=table.addRow();
+		row.add("PARP3");
+		row.add("T454M");
+		row.add("0.5303");
+		row.add("TSG");
+		row.add("3p21.2");
+		row.add("");
+		row.add("VUS");
+		row.add("VUS");
+		row.add("Benign");
+		row.add("NotFound");
+		row.add("NotFound");
+		row.add("OncoKB");
+		
+		row=table.addRow();
+		row.add("KMT2D");
+		row.add("V1561G");
+		row.add("0.5303");
+		row.add("TSG");
+		row.add("3p21.2");
+		row.add("");
+		row.add("VUS");
+		row.add("VUS");
+		row.add("Benign");
+		row.add("NotFound");
+		row.add("NotFound");
+		row.add("OncoKB");
+		
+		createTable(slide, table, new java.awt.Rectangle(20, 20, 800, 800));
+		
+		createTable(slide, table, new java.awt.Rectangle(20, 200, 800, 800));
+//		XSLFTable table = slide.createTable();
+//		table.setAnchor(new java.awt.Rectangle(50, 50, 800, 800));
 //
-//	    int numColumns = 3;
-//	    int numRows = 5;
-//	    XSLFTableRow headerRow = table.addRow();
-//	    headerRow.setHeight(50);
-//	    // header
-//	    for (int i = 0; i < numColumns; i++) {
-//	        XSLFTableCell th = headerRow.addCell();
-//	        XSLFTextParagraph p = th.addNewTextParagraph();
-//	        p.setTextAlign(TextParagraph.TextAlign.CENTER);
-//	        XSLFTextRun r = p.addNewTextRun();
-//	        r.setText("Header " + (i + 1));
-//	        r.setFontSize(20.0);
-//	        r.setFontColor(java.awt.Color.white);
-//	        th.setFillColor(new java.awt.Color(79, 129, 189));
-//	        table.setColumnWidth(i, 150);
-//	    }
+//		int numColumns = 3;
+//		int numRows = 5;
+//		XSLFTableRow headerRow = table.addRow();
+//		headerRow.setHeight(50);
+//		// header
+//		for (int i = 0; i < numColumns; i++) {
+//			XSLFTableCell th = headerRow.addCell();
+//			XSLFTextParagraph p = th.addNewTextParagraph();
+//			p.setTextAlign(TextParagraph.TextAlign.CENTER);
+//			XSLFTextRun r = p.addNewTextRun();
+//			r.setText("Header " + (i + 1));
+//			r.setFontSize(20.0);
+//			r.setFontColor(java.awt.Color.white);
+//			th.setFillColor(new java.awt.Color(79, 129, 189));
+//			table.setColumnWidth(i, 150);
+//		}
 
-	    // rows
-//	    for (int rownum = 0; rownum < numRows; rownum++) {
-//	        XSLFTableRow tr = table.addRow();
-//	        tr.setHeight(50);
-//	        // header
-//	        for (int i = 0; i < numColumns; i++) {
-//	            XSLFTableCell cell = tr.addCell();
-//	            XSLFTextParagraph p = cell.addNewTextParagraph();
-//	            XSLFTextRun r = p.addNewTextRun();
+		// rows
+//		for (int rownum = 0; rownum < numRows; rownum++) {
+//			XSLFTableRow tr = table.addRow();
+//			tr.setHeight(50);
+//			// header
+//			for (int i = 0; i < numColumns; i++) {
+//				XSLFTableCell cell = tr.addCell();
+//				XSLFTextParagraph p = cell.addNewTextParagraph();
+//				XSLFTextRun r = p.addNewTextRun();
 //
-//	            r.setText("Cell " + (i + 1));
-//	            if (rownum % 2 == 0) {
-//	                cell.setFillColor(new java.awt.Color(208, 216, 232));
-//	            }
-//	            else {
-//	                cell.setFillColor(new java.awt.Color(233, 247, 244));
-//	            }
-//	        }
-//	    }
+//				r.setText("Cell " + (i + 1));
+//				if (rownum % 2 == 0) {
+//					cell.setFillColor(new java.awt.Color(208, 216, 232));
+//				}
+//				else {
+//					cell.setFillColor(new java.awt.Color(233, 247, 244));
+//				}
+//			}
+//		}
 
-	    writePptx(powerpoint, filename);
-//	    try {
-//	        try (FileOutputStream out = new FileOutputStream(filename)) 
-//	         {
-//	            try {
-//	                powerpoint.write(out);
-//	            } catch (IOException e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    }
+		writePptx(powerpoint, filename);
+//		try {
+//			try (FileOutputStream out = new FileOutputStream(filename)) 
+//			 {
+//				try {
+//					powerpoint.write(out);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public static XSLFTable createTable(XSLFSlide slide, int numColumns, int numRows, java.awt.Rectangle anchor)
@@ -318,24 +331,24 @@ public class TestPowerPointHelper
 		
 		for (int rownum = 0; rownum < numRows; rownum++)
 		{
-	        XSLFTableRow tr = table.addRow();
-	        tr.setHeight(20);
-	        // header
-	        for (int i = 0; i < numColumns; i++)
-	        {
-	            XSLFTableCell cell = tr.addCell();
-//	            XSLFTextParagraph p = cell.addNewTextParagraph();
-//	            XSLFTextRun r = p.addNewTextRun();
+			XSLFTableRow tr = table.addRow();
+			tr.setHeight(20);
+			// header
+			for (int i = 0; i < numColumns; i++)
+			{
+				XSLFTableCell cell = tr.addCell();
+//				XSLFTextParagraph p = cell.addNewTextParagraph();
+//				XSLFTextRun r = p.addNewTextRun();
 //
-//	            r.setText("Cell " + (i + 1));
-//	            if (rownum % 2 == 0) {
-//	                cell.setFillColor(new java.awt.Color(208, 216, 232));
-//	            }
-//	            else {
-//	                cell.setFillColor(new java.awt.Color(233, 247, 244));
-//	            }
-	        }
-	    }
+//				r.setText("Cell " + (i + 1));
+//				if (rownum % 2 == 0) {
+//					cell.setFillColor(new java.awt.Color(208, 216, 232));
+//				}
+//				else {
+//					cell.setFillColor(new java.awt.Color(233, 247, 244));
+//				}
+			}
+		}
 		return table;
 	}
 	
@@ -372,25 +385,25 @@ public class TestPowerPointHelper
 		
 		for (int rownum = 0; rownum < table.getNumRows(); rownum++)
 		{
-	        XSLFTableRow tr = xtable.addRow();
-	        tr.setHeight(20);
-	        // header
-	        for (int colnum = 0; colnum < table.getNumColumns(); colnum++)
-	        {
-	            XSLFTableCell cell = tr.addCell();
-	            XSLFTextRun run = setText(cell, table.getRowNum(rownum).getValue(colnum), TextParagraph.TextAlign.CENTER);//table.getRow(rownum).getCell(colnum).getAlign());
-//	            XSLFTextParagraph p = cell.addNewTextParagraph();
-//	            XSLFTextRun r = p.addNewTextRun();
+			XSLFTableRow tr = xtable.addRow();
+			tr.setHeight(20);
+			// header
+			for (int colnum = 0; colnum < table.getNumColumns(); colnum++)
+			{
+				XSLFTableCell cell = tr.addCell();
+				XSLFTextRun run = setText(cell, table.getRowNum(rownum).getValue(colnum), TextParagraph.TextAlign.CENTER);//table.getRow(rownum).getCell(colnum).getAlign());
+//				XSLFTextParagraph p = cell.addNewTextParagraph();
+//				XSLFTextRun r = p.addNewTextRun();
 //
-//	            r.setText("Cell " + (i + 1));
-//	            if (rownum % 2 == 0) {
-//	                cell.setFillColor(new java.awt.Color(208, 216, 232));
-//	            }
-//	            else {
-//	                cell.setFillColor(new java.awt.Color(233, 247, 244));
-//	            }
-	        }
-	    }
+//				r.setText("Cell " + (i + 1));
+//				if (rownum % 2 == 0) {
+//					cell.setFillColor(new java.awt.Color(208, 216, 232));
+//				}
+//				else {
+//					cell.setFillColor(new java.awt.Color(233, 247, 244));
+//				}
+			}
+		}
 		return xtable;
 	}
 	
@@ -415,5 +428,199 @@ public class TestPowerPointHelper
 			throw new CException(e);
 		}
 	}
+	
+	///////////////////////////
+	
+	//https://stackoverflow.com/questions/64645806/apache-poi-converting-powerpoint-slides-to-images-images-are-low-quality
+	public static void convertPptToImages(String filename, boolean withRenderHint) throws Exception
+	{
+		String dir=FileHelper.stripFilename(filename);
+		String suffix = withRenderHint ? "-with-hint" : "-without-hint";
+		try (FileInputStream is = new FileInputStream(new File(filename)); HSLFSlideShow ppt = new HSLFSlideShow(is))
+		{
+			Dimension pgsize = ppt.getPageSize();
+			int idx = 1;
+			for (HSLFSlide slide : ppt.getSlides())
+			{
+				BufferedImage img = new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
+				Graphics2D graphics = img.createGraphics();
+				if (withRenderHint)
+				{
+					graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+					graphics.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+					graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+					graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+					graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+				}
+				// render
+				slide.draw(graphics);
+				final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
+				writer.setOutput(new FileImageOutputStream(new File(dir+"/slide-" + idx + suffix + ".jpeg")));
+				JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);
+				jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+				jpegParams.setCompressionQuality(1f);
+				// writes the file with given compression level
+				// from your JPEGImageWriteParam instance
+				IIOImage image = new IIOImage(img, null, null);
+				writer.write(null, image, jpegParams);
+				writer.dispose();
+				idx++;
+			}
+		}
+	}
+	
+	@Test
+	public void testConvertPptToImages()
+	{
+		try
+		{
+			//String filename="c:/temp/test.pptx";
+			//String outdir="c:/temp/pptx-images";
+			
+			String filename="x:/A208113789912_F1/PP_A208113789912.pptx";
+			String password="A2081";
+			String outdir="c:/temp/pptx-images";
+			convertPptxToImages(filename, password, outdir, false);
+			convertPptxToImages(filename, password, outdir, true);
+		}
+		catch(Exception e)
+		{
+			throw new CException(e);
+		}
+	}
+	
+	public static void convertPptxToImages(String filename, String outdir, boolean withRenderHint)
+	{
+		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename);
+		convertPptxToImages(pptx, outdir, withRenderHint);
+	}
+	
+	public static void convertPptxToImages(String filename, String password, String outdir, boolean withRenderHint)
+	{
+		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename, password);
+		convertPptxToImages(pptx, outdir, withRenderHint);
+	}
+	
+	public static void convertPptxToImages(XMLSlideShow pptx, String outdir, boolean withRenderHint)
+	{
+		String suffix = withRenderHint ? "-with-hint" : "-without-hint";
+		int num = 1;
+		for (XSLFSlide slide : pptx.getSlides())
+		{
+			String outfile=outdir+"/slide-"+num + suffix + ".jpeg";
+			writeImage(slide, outfile, withRenderHint);
+			num++;
+		}
+	}
+	
+	private static void writeImage(XSLFSlide slide, String filename, boolean withRenderHint)
+	{
+		try
+		{
+			BufferedImage img = createBufferedImage(slide);
+			Graphics2D graphics = createGraphics(img, withRenderHint);
+			slide.draw(graphics);
+			
+			final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
+			writer.setOutput(new FileImageOutputStream(new File(filename)));
+			JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);
+			jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			jpegParams.setCompressionQuality(1f);
+			IIOImage image = new IIOImage(img, null, null);
+			writer.write(null, image, jpegParams);
+			writer.dispose();
+		}
+		catch(Exception e)
+		{
+			throw new CException("failed to write image for slide: "+filename);
+		}
+	}
+	
+	private static BufferedImage createBufferedImage(XSLFSlide slide)
+	{
+		Dimension pgsize=slide.getSlideShow().getPageSize();
+		return new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
+	}
+	
+	private static Graphics2D createGraphics(BufferedImage img, boolean withRenderHint)
+	{
+		Graphics2D graphics = img.createGraphics();
+		if (withRenderHint)
+		{
+			graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			graphics.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+			graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+		}
+		return graphics;
+	}
 }
+/*
+ * import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.FileImageOutputStream;
+
+import org.apache.poi.hslf.usermodel.HSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlideShow;
+
+public class ImproveSlideConvertToImageQuality {
+	public static void main(String[] args) throws Exception {
+		convertPptToImages(true);
+		convertPptToImages(false);
+	}
+
+	public static void convertPptToImages(boolean withRenderHint) throws Exception {
+		File file = new File("test.ppt");
+		String suffix = withRenderHint ? "-with-hint" : "-without-hint";
+		try (FileInputStream is = new FileInputStream(file); HSLFSlideShow ppt = new HSLFSlideShow(is)) {
+			Dimension pgsize = ppt.getPageSize();
+			int idx = 1;
+			for (HSLFSlide slide : ppt.getSlides()) {
+				BufferedImage img = new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
+				Graphics2D graphics = img.createGraphics();
+				if (withRenderHint) {
+					graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+							RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+					graphics.setRenderingHint(
+							RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+					graphics.setRenderingHint(
+							RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					graphics.setRenderingHint(
+							RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+					graphics.setRenderingHint(
+							RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+					graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+							RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+				}
+				// render
+				slide.draw(graphics);
+				final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
+				writer.setOutput(new FileImageOutputStream(
+						new File("slide-" + idx + suffix + ".jpeg")));
+				JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);
+				jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+				jpegParams.setCompressionQuality(1f);
+				// writes the file with given compression level
+				// from your JPEGImageWriteParam instance
+				IIOImage image = new IIOImage(img, null, null);
+				writer.write(null, image, jpegParams);
+				writer.dispose();
+				idx++;
+			}
+		}
+	}
+}
+*/
