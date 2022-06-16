@@ -348,27 +348,30 @@ public class PowerPointHelper
 	
 	//////////////////////////////////////
 	
-	public static void convertPptxToImages(String filename, String outdir)
+	public static List<String> convertPptxToImages(String filename, String outdir)
 	{
 		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename);
-		convertPptxToImages(pptx, outdir);
+		return convertPptxToImages(pptx, outdir);
 	}
 	
-	public static void convertPptxToImages(String filename, String password, String outdir)
+	public static List<String> convertPptxToImages(String filename, String password, String outdir)
 	{
 		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename, password);
-		convertPptxToImages(pptx, outdir);
+		return convertPptxToImages(pptx, outdir);
 	}
 	
-	public static void convertPptxToImages(XMLSlideShow pptx, String outdir)
+	public static List<String> convertPptxToImages(XMLSlideShow pptx, String outdir)
 	{
-		int num = 1;
+		List<String> outfiles=Lists.newArrayList();
+		int num=1;
 		for (XSLFSlide slide : pptx.getSlides())
 		{
-			String outfile=outdir+"/slide-"+num + ".jpeg";
-			writeImage(slide, outfile);
+			String outfile="slide-"+num + ".jpeg";
+			writeImage(slide, outdir+"/"+outfile);
+			outfiles.add(outfile);
 			num++;
 		}
+		return outfiles;
 	}
 	
 	private static void writeImage(XSLFSlide slide, String filename)
