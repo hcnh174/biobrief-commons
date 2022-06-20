@@ -39,7 +39,7 @@ public final class ImageHelper
 	public static final Integer DEFAULT_THUMBNAIL_SIZE=100;
 	public static final ScaleDirection DEFAULT_THUMBNAIL_SCALE_DIRECTION=ScaleDirection.HEIGHT;
 	
-	public static final String IMAGE_MAGICK_HOME="C:\\Program Files\\ImageMagick-7.0.10-Q16-HDRI";
+	//public static final String IMAGE_MAGICK_HOME="C:\\Program Files\\ImageMagick-7.0.10-Q16-HDRI";
 	
 	public enum Format
 	{

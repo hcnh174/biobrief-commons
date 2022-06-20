@@ -42,6 +42,7 @@ import org.apache.poi.xslf.usermodel.XSLFTextBox;
 import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.Data;
@@ -254,7 +255,7 @@ public class PowerPointHelper
 		if (StringHelper.hasContent(style.getFontFamily()))
 			run.setFontFamily(style.getFontFamily());
 		if (style.getFontColor()!=null)
-			run.setFontColor(style.getFontColor());
+			run.setFontColor(style.getFontColor().toColor());
 		run.setItalic(style.getItalics());
 		run.setBold(style.getBold());
 		return run;
@@ -420,19 +421,56 @@ public class PowerPointHelper
 	////////////////////////////////////////////////////////////////
 	
 	@Data
+	public static class RgbColor
+	{
+		protected final Integer red;
+		protected final Integer green;
+		protected final Integer blue;
+		protected final Integer alpha;
+		
+		public RgbColor(Integer red, Integer green, Integer blue)
+		{
+			this(red, green, blue, 0);
+		}
+		
+		public RgbColor(Integer red, Integer green, Integer blue, Integer alpha)
+		{
+			this.red=red;
+			this.green=green;
+			this.blue=blue;
+			this.alpha=alpha;
+		}
+		
+		public RgbColor(Color color)
+		{
+			this.red=color.getRed();
+			this.green=color.getGreen();
+			this.blue=color.getBlue();
+			this.alpha=color.getAlpha();
+		}
+		
+		public Color toColor()
+		{
+			return new Color(red, green, blue, alpha);
+		}
+	}
+	
+	@Data
 	public static class Style
 	{
 		protected TextAlign align=TextAlign.LEFT;
-		protected Color fontColor;//Color.black;
-		protected Color fillColor=Color.white;
+		protected RgbColor fontColor;//Color.black;
+		protected RgbColor fillColor=new RgbColor(Color.white);//Color.white;
 		protected String fontFamily=FONT;
 		protected Double fontSize=FONT_SIZE;
 		protected Boolean bold=false;
 		protected Boolean italics=false;
 		
 		public Style setAlign(final TextAlign align){this.align=align; return this;}
-		public Style setFontColor(final Color fontColor){this.fontColor=fontColor; return this;}
-		public Style setFillColor(final Color fillColor){this.fillColor=fillColor; return this;}
+		public Style setFontColor(final Color fontColor){this.fontColor=new RgbColor(fontColor); return this;}
+		public Style setFontColor(final RgbColor fontColor){this.fontColor=fontColor; return this;}
+		public Style setFillColor(final Color fillColor){this.fillColor=new RgbColor(fillColor); return this;}
+		public Style setFillColor(final RgbColor fillColor){this.fillColor=fillColor; return this;}
 		public Style setFontFamily(final String fontFamily){this.fontFamily=fontFamily; return this;}
 		public Style setFontSize(final Double fontSize){this.fontSize=fontSize; return this;}
 		public Style setBold(final Boolean bold){this.bold=bold; return this;}
@@ -627,7 +665,7 @@ public class PowerPointHelper
 		@Data
 		public static class Cell
 		{
-			protected Row row;
+			@JsonIgnore protected Row row;
 			protected Object value;
 			protected Style style=new Style();
 	
@@ -651,14 +689,14 @@ public class PowerPointHelper
 			
 			public String getStringValue()
 			{
-				return this.value.toString();
+				return getStringValue("");
 			}
 			
 			public String getStringValue(String dflt)
 			{
 				if (isEmpty())
 					return dflt;
-				return getStringValue();
+				return this.value.toString();
 			}
 			
 			public Double getTextWidth()
