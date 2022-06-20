@@ -480,7 +480,7 @@ public class PowerPointHelper
 	@Data
 	public static class Table
 	{
-		protected Row header=new Row();
+		protected Row header=new Row("header");
 		protected List<Row> rows=new ArrayList<Row>();
 		protected Style style=new Style();
 		protected String note=null;
@@ -490,14 +490,14 @@ public class PowerPointHelper
 			this.rows.add(row);
 		}
 
-		public Row createRow()
+		public Row createRow(String id)
 		{
-			return new Row();
+			return new Row(id);
 		}
 		
-		public Row addRow()
+		public Row addRow(String id)
 		{
-			Row row=createRow();
+			Row row=createRow(id);
 			add(row);
 			return row;
 		}
@@ -609,9 +609,14 @@ public class PowerPointHelper
 		@Data
 		public class Row
 		{
-			protected Integer id;
+			protected String id;
 			protected List<Cell> cells=new ArrayList<Cell>();
 			protected Style style=new Style();
+			
+			public Row(String id)
+			{
+				this.id=id;
+			}
 			
 			public void add(Cell cell)
 			{
