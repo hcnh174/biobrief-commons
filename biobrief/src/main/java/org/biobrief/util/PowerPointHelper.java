@@ -322,16 +322,18 @@ public class PowerPointHelper
 	
 	public static void merge(List<String> filenames, String outfile, MessageWriter out)
 	{
-		try
+		try(XMLSlideShow ppt = new XMLSlideShow())
 		{
-			XMLSlideShow ppt = new XMLSlideShow();
+			
 			for(String filename : filenames)
 			{
 				FileInputStream inputstream = new FileInputStream(filename);
-				XMLSlideShow src = new XMLSlideShow(inputstream);	
-				for(XSLFSlide srcSlide : src.getSlides())
+				try(XMLSlideShow src = new XMLSlideShow(inputstream))
 				{
-					ppt.createSlide().importContent(srcSlide);
+					for(XSLFSlide srcSlide : src.getSlides())
+					{
+						ppt.createSlide().importContent(srcSlide);
+					}
 				}
 			}
 			//creating the file object
