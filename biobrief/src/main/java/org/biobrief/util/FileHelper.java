@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.io.Writer;
 import java.net.URL;
@@ -27,6 +28,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -1557,6 +1560,56 @@ public final class FileHelper
 	public static String replaceUnsupportedFileNameChars(String fileName, String replacement)
 	{
 	    return fileName.replaceAll("[\\\\/:*?\"<>|]", replacement!=null?replacement:"_");
+	}
+	
+	// selects the file that was created the most recently
+	public static String findMostRecentlyCreatedFile(List<String> filenames)
+	{
+		if (filenames.isEmpty())
+			throw new CException("file list is empty");
+		if (filenames.size()==1)
+			return filenames.get(0);
+		List<String> sorted=sortFilesByCreationDate(filenames);
+		return sorted.get(0);
+	}
+	
+	// sorts files by the creation date (most recent first
+	public static List<String> sortFilesByCreationDate(List<String> filenames)
+	{
+		List<FileCreateDateInfo> files=Lists.newArrayList();
+		for (String filename : filenames)
+		{
+			files.add(new FileCreateDateInfo(filename));
+		}
+		Collections.sort(files, new FileCreateDateInfo.DateComparator());
+		List<String> sorted=Lists.newArrayList();
+		for (FileCreateDateInfo file : files)
+		{
+			sorted.add(file.getFilename());
+		}
+		return sorted;
+	}
+	
+	@Data
+	private static class FileCreateDateInfo
+	{
+		protected Date createdDate;
+		protected String filename;
+		
+		public FileCreateDateInfo(String filename)
+		{
+			this.filename=filename;
+			this.createdDate=FileHelper.getCreatedDate(new File(filename));
+		}
+		
+		@SuppressWarnings("serial")
+		public static class DateComparator implements Comparator<FileCreateDateInfo>, Serializable
+		{
+			public int compare(FileCreateDateInfo fileinfo1, FileCreateDateInfo fileinfo2)
+			{
+				return fileinfo2.getCreatedDate().compareTo(fileinfo1.getCreatedDate());
+			}
+		}
 	}
 	
 	public static void waitForFile(String filename, int milliseconds, int tries)
