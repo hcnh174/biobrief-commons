@@ -336,15 +336,24 @@ public final class FileHelper
 	@Data
 	public static class FileInfo
 	{
+		public enum Type {File, Folder};
+		
 		protected String filename;
 		protected String size;
 		protected Date date;
+		protected Type type;
 		
-		public FileInfo(String filename, String size, Date date)
+		public FileInfo(String filename, String size, Date date, Type type)
 		{
 			this.filename=filename;
 			this.size=size;
 			this.date=date;
+			this.type=type;
+		}
+		
+		public FileInfo(String filename, String size, Date date)
+		{
+			this(filename, size, date, Type.File);
 		}
 	}
 	
