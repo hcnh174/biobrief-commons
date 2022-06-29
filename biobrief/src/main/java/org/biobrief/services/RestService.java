@@ -37,7 +37,8 @@ public class RestService extends AbstractFileCacheService
 		sleep(out);
 		String json=RestHelper.get(restTemplate, url, out);
 		setValue(key, json, out);
-		return json;
+		//return json;
+		return getValue(key, out);
 	}
 	
 	public String get(String key, String url, Headers headers, MessageWriter out)
@@ -47,7 +48,8 @@ public class RestService extends AbstractFileCacheService
 		sleep(out);
 		String json=RestHelper.get(restTemplate, url, headers, out);
 		setValue(key, json, out);
-		return json;
+		//return json;
+		return getValue(key, out);
 	}
 	
 	public <P> String post(String key, String url, P params, MessageWriter out)
@@ -57,7 +59,8 @@ public class RestService extends AbstractFileCacheService
 		sleep(out);
 		String json=RestHelper.post(restTemplate, url, params, out);
 		setValue(key, json, out);
-		return json;
+		//return json;
+		return getValue(key, out);
 	}
 	
 	////////////////////////////////////

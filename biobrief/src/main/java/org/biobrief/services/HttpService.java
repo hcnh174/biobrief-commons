@@ -33,7 +33,8 @@ public class HttpService extends AbstractFileCacheService
 		Document document=JsoupHelper.parseUrl(url);
 		String html=document.html();
 		setValue(key, html, out);
-		return html;
+		//return html;
+		return getValue(key, out);
 	}
 	
 	public String post(String key, String url, List<NameValuePair> params, MessageWriter out)
@@ -44,6 +45,7 @@ public class HttpService extends AbstractFileCacheService
 		Document document=JsoupHelper.post(url, params);
 		String html=document.html();
 		setValue(key, html, out);
-		return html;
+		//return html;
+		return getValue(key, out);
 	}
 }
