@@ -82,6 +82,8 @@ public abstract class AbstractFileCacheService
 		long waittime=nextRequest.getTime()-now.getTime();
 		if (waittime>sleeptime)
 			waittime=sleeptime;
+		if (waittime<0)
+			waittime=0;
 		out.println("lastRequest="+lastRequest+" sleeptime="+sleeptime+" waittime="+waittime);
 		RestHelper.sleep(waittime, out);
 	}

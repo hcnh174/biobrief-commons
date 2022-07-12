@@ -28,6 +28,8 @@ public final class ThreadHelper
 	
 	public static void sleep(long millis, MessageWriter out)
 	{
+		if (millis<=0)
+			return;
 		out.println("sleeping for "+millis+" milliseconds");
 		Stopwatch stopwatch=Stopwatch.createStarted();
 		sleep(millis);
