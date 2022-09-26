@@ -75,6 +75,7 @@ public final class JsonHelper
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.enable(Feature.ALLOW_NON_NUMERIC_NUMBERS);
 //		mapper.enable(JsonReadFeature.ALLOW_NON_NUMERIC_NUMBERS.mappedFeature());
+		//JsonParser.Feature.ALLOW_NON_NUMERIC_NUMBERS
 	}
 	
 	///////////////////////////////////////////////////////
