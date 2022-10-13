@@ -27,12 +27,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.biobrief.util.CException;
 import org.biobrief.util.ContentType;
@@ -55,7 +55,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+//import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
@@ -214,15 +214,15 @@ public final class WebHelper
 	}
 
 	
-	public static String getOriginalFilename(HttpServletRequest request, String name)
-	{		
-		if (!(request instanceof MultipartHttpServletRequest))
-			throw new CException("request is not an instance of MultipartHttpServletRequest");
-	
-		MultipartHttpServletRequest multipart=(MultipartHttpServletRequest)request;
-		CommonsMultipartFile file=(CommonsMultipartFile)multipart.getFileMap().get(name);
-		return file.getOriginalFilename();
-	}
+//	public static String getOriginalFilename(HttpServletRequest request, String name)
+//	{		
+//		if (!(request instanceof MultipartHttpServletRequest))
+//			throw new CException("request is not an instance of MultipartHttpServletRequest");
+//	
+//		MultipartHttpServletRequest multipart=(MultipartHttpServletRequest)request;
+//		CommonsMultipartFile file=(CommonsMultipartFile)multipart.getFileMap().get(name);
+//		return file.getOriginalFilename();
+//	}
 	
 	public static boolean isLinkChecker(HttpServletRequest request)
 	{

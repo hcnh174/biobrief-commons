@@ -1,6 +1,6 @@
 package org.biobrief.jpa;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class AbstractNamedJpaEntity extends AbstractJpaEntity

@@ -190,11 +190,11 @@ public class GridFsDao
 	
 	////////////////////////////////////////////////////
 	
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	private GridFsTemplate getGridFsTemplate()
 	{
 		//System.out.println("getGridFsTemplate()");
-		return new GridFsTemplate(mongoTemplate.getMongoDbFactory(), mongoConverter);
+		return new GridFsTemplate(mongoTemplate.getMongoDatabaseFactory(), mongoConverter);
 		//return new GridFsTemplate(mongoDbFactory, mongoConverter);
 	}
 	
