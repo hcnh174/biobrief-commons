@@ -164,7 +164,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-webmvc/4.0.0-M6/ac2a70c80bb27576d1c8d3012281806929989415/spring-data-rest-webmvc-4.0.0-M6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-webmvc/4.0.0-M6/14bbaae18c2426bcfa96ae4c616d1054da057bc2/spring-data-rest-webmvc-4.0.0-M6.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-webmvc/4.0.0-RC1/2e80e9df93fa3815905fca3dbd20cf40c51245eb/spring-data-rest-webmvc-4.0.0-RC1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-webmvc/4.0.0-RC1/af3d17b06efe04dee8549a5f5eec696c1bf90bd1/spring-data-rest-webmvc-4.0.0-RC1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -174,7 +174,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-core/4.0.0-M6/e18c2de835b80c07e352b9b104314164d1882337/spring-data-rest-core-4.0.0-M6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-core/4.0.0-M6/6f8d54b77eaa2f8e4c506200de6f9883bccf709e/spring-data-rest-core-4.0.0-M6.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-core/4.0.0-RC1/f1548bf4d7e0b00c9577d93e302ed858c2d5fa57/spring-data-rest-core-4.0.0-RC1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-core/4.0.0-RC1/801742323bae69fc72d6e05b5a6a872e14966783/spring-data-rest-core-4.0.0-RC1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -269,7 +269,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-mongodb/4.0.0-M6/97d56928be1126a0d9e66416e9708189c09796ad/spring-data-mongodb-4.0.0-M6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-mongodb/4.0.0-M6/b74033517ecf68cffece6dd9af61403e31dcf3fb/spring-data-mongodb-4.0.0-M6.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-mongodb/4.0.0-RC1/4e354ad423a6305460b755c6f49b4f06f4df9b6b/spring-data-mongodb-4.0.0-RC1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-mongodb/4.0.0-RC1/a5cef77ef5cd7d6104faf9e5902b9e6b898cfa6e/spring-data-mongodb-4.0.0-RC1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -484,7 +484,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/3.0.0-M6/1b4fb73db622411886bfbb8845e254df2768d69f/spring-data-jpa-3.0.0-M6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/3.0.0-M6/28cf7cde9bb4fa9c54c54a52e6082a2157eebf36/spring-data-jpa-3.0.0-M6.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/3.0.0-RC1/372a89c0bbfbb98c504561b8d077a63997f04304/spring-data-jpa-3.0.0-RC1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/3.0.0-RC1/3e97dd2692080a75f834763705c5e09dbb38ba45/spring-data-jpa-3.0.0-RC1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -529,7 +529,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.plugin/spring-plugin-core/3.0.0-M2/e3c49370aacbd6c62525952d5dbc175c90f46f8c/spring-plugin-core-3.0.0-M2-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.plugin/spring-plugin-core/3.0.0-M2/a439223e150172a9a8c0aab716bd00654a2444f0/spring-plugin-core-3.0.0-M2.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.plugin/spring-plugin-core/3.0.0-RC1/fc98b215b20dde4a3902f58731520755b416f064/spring-plugin-core-3.0.0-RC1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.plugin/spring-plugin-core/3.0.0-RC1/d03e58e29e65de6dd79a2f4e793409e381ea4eb8/spring-plugin-core-3.0.0-RC1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -574,7 +574,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/3.0.0-M6/d23c6d0966ec1e54345316e8bab5dbc4ea37e0c7/spring-data-commons-3.0.0-M6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/3.0.0-M6/6edc1ae65062def8ddc87632ba0c637727733c11/spring-data-commons-3.0.0-M6.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/3.0.0-RC1/a9f77e801b17ef4503278c5591b8ef797dcc83a7/spring-data-commons-3.0.0-RC1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/3.0.0-RC1/ac52e82efd333326484518d3280ee585684e8190/spring-data-commons-3.0.0-RC1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
