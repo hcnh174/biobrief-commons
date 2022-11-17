@@ -18,7 +18,7 @@ plugins {
     id 'project-report'
     id 'io.spring.dependency-management' version '1.1.0'//1.0.13.RELEASE, 1.0.12.RELEASE, 1.0.11.RELEASE, 1.0.14.RELEASE
 	//id 'com.ewerk.gradle.plugins.jaxb2' version '1.0.10'
-	id 'com.github.ben-manes.versions' version '0.43.0'//0.39.0, 0.41.0, 0.42.0
+	id 'com.github.ben-manes.versions' version '0.44.0'//0.39.0, 0.41.0, 0.42.0, 0.43.0
 }
 
 repositories {
@@ -177,7 +177,7 @@ dependencies {
 	
 	// web
 	api("org.springframework.boot:spring-boot-starter-freemarker")
-	api('org.springframework.boot:spring-boot-starter-actuator')
+	//api('org.springframework.boot:spring-boot-starter-actuator')
 	api('org.springframework.boot:spring-boot-starter-web')
 	api("org.springframework.boot:spring-boot-starter-websocket")
 
