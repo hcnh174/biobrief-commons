@@ -455,6 +455,8 @@ public final class FileHelper
 	{
 		try
 		{
+			String dir=FileHelper.getDirFromFilename(to);
+			FileHelper.createDirectory(dir);
 			Files.move(new File(from), new File(to));
 		}
 		catch(Exception e)
@@ -467,6 +469,8 @@ public final class FileHelper
 	{
 		try
 		{
+			String dir=FileHelper.getDirFromFilename(to);
+			FileHelper.createDirectory(dir);
 			Files.copy(new File(from), new File(to));
 		}
 		catch(Exception e)
