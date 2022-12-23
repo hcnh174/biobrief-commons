@@ -37,7 +37,7 @@ public class SynologyAuthenticationService implements UserDetailsService
 		String key=username+":"+password;
 		if (logins.contains(key))
 		{
-			System.out.println("SynologyAuthenticationService.authenticate found login in cache username: "+username);
+			//System.out.println("SynologyAuthenticationService.authenticate found login in cache username: "+username);
 			return true;
 		}
 		boolean success=synologyService.login(username, password, out);
@@ -54,11 +54,11 @@ public class SynologyAuthenticationService implements UserDetailsService
 			return createAdminUser();
 		
 		SynouserGetCommand.Result result=synologyService.getUser(username, out);
-		System.out.println("SynologyAuthenticationProvider.loadUserByUsername result: "+JsonHelper.toJson(result));
+		//System.out.println("SynologyAuthenticationProvider.loadUserByUsername result: "+JsonHelper.toJson(result));
 		List<GrantedAuthority> authorities=getAuthorities(result.getGroups());
 		User user=new User(username, username, authorities);
 
-		System.out.println("SynologyAuthenticationProvider.loadUserByUsername user: "+JsonHelper.toJson(user));
+		//System.out.println("SynologyAuthenticationProvider.loadUserByUsername user: "+JsonHelper.toJson(user));
 		return user;
 	}
 
