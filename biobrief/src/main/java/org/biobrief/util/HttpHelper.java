@@ -47,7 +47,7 @@ public class HttpHelper
 		String html="empty";
 		try
 		{
-			String url=appendQueryString(baseurl, model);			
+			String url=appendQueryString(baseurl, model);
 			
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 			HttpGet httpget = new HttpGet(url);
@@ -153,7 +153,7 @@ public class HttpHelper
 		return url+separator+StringHelper.createQueryString(model);
 	}
 	
-	private static List<NameValuePair> createNameValuePairs(Map<String,Object> params)
+	public static List<NameValuePair> createNameValuePairs(Map<String,Object> params)
 	{
 		Form form=Form.form();//.add("username",  "vip").add("password",  "secret").build()
 		for (Entry<String, Object> entry : params.entrySet())
@@ -163,7 +163,7 @@ public class HttpHelper
 		return form.build();
 	}
 	
-	private static List<NameValuePair> createNameValuePairs(Multimap<String, Object> params)
+	public static List<NameValuePair> createNameValuePairs(Multimap<String, Object> params)
 	{
 		Form form=Form.form();//.add("username",  "vip").add("password",  "secret").build()
 		for (String key : params.keySet())
