@@ -10,14 +10,16 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
-@Component
+import lombok.Data;
+
+@Component @Data
 public class NotificationService
 {
 	private final EmailService emailService;
-	private final Boolean notify;
-	private final List<String> ignoreUsers=Lists.newArrayList();
-	private final String fromEmailAddress;
-	private final List<String> toEmailAddresses=Lists.newArrayList();
+	private Boolean notify;
+	private List<String> ignoreUsers=Lists.newArrayList();
+	private String fromEmailAddress;
+	private List<String> toEmailAddresses=Lists.newArrayList();
 	
 	public NotificationService(EmailService emailService, Boolean notify, 
 			String fromEmailAddress, List<String> toEmailAddresses, List<String> ignoreUsers)
@@ -56,4 +58,6 @@ public class NotificationService
 		//System.out.println("isIgnored: username="+username+" ignoreUsers="+StringHelper.toString(ignoreUsers));
 		return ignoreUsers.contains(username);
 	}
+	
+	
 }
