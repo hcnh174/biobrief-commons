@@ -1,0 +1,9 @@
+package org.hlsg.pipelines.commands;
+
+public class CufflinksCommand extends AbstractExpressionCommand
+{
+	public CufflinksCommand()
+	{
+		super("run_cufflinks.sh");
+	}
+}

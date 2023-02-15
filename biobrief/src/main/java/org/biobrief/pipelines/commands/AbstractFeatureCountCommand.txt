@@ -1,0 +1,9 @@
+package org.hlsg.pipelines.commands;
+
+public abstract class AbstractFeatureCountCommand extends AbstractCommand
+{	
+	public AbstractFeatureCountCommand(String script)
+	{
+		super(script);
+	}
+}

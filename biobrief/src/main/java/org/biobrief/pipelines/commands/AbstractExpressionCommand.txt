@@ -1,0 +1,9 @@
+package org.hlsg.pipelines.commands;
+
+public abstract class AbstractExpressionCommand extends AbstractCommand
+{	
+	public AbstractExpressionCommand(String script)
+	{
+		super(script);
+	}
+}

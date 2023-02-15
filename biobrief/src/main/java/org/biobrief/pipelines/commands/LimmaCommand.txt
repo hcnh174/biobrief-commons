@@ -1,0 +1,11 @@
+package org.hlsg.pipelines.commands;
+
+import org.hlsg.pipelines.commands.Output.Dir;
+
+public class LimmaCommand extends AbstractExpressionCommand
+{
+	public LimmaCommand()
+	{
+		super("run_limma.sh");
+	}
+}

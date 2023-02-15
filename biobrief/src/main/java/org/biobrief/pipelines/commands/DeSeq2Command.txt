@@ -1,0 +1,11 @@
+package org.hlsg.pipelines.commands;
+
+import org.hlsg.pipelines.commands.Output.Dir;
+
+public class DeSeq2Command extends AbstractExpressionCommand
+{
+	public DeSeq2Command()
+	{
+		super("run_deseq2.sh");
+	}
+}

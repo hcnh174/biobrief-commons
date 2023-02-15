@@ -1,0 +1,57 @@
+package org.hlsg.pipelines.entities;
+
+import org.hlsg.pipelines.PipelineConstants.TaskType;
+import org.hlsg.pipelines.entities.AcceptsProduces.AcceptsBam;
+import org.hlsg.pipelines.entities.AcceptsProduces.ProducesBam;
+import org.hlsg.ngs.entities.Sample;
+import org.hlsg.slurm.commands.Output.BamFile;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data @EqualsAndHashCode(callSuper=true)
+public abstract class AbstractFeatureCountTask extends Task
+	//implements AcceptsBam
+{
+	public AbstractFeatureCountTask(){}
+
+	public AbstractFeatureCountTask(TaskType type, AbstractFeatureCountTaskParams params)
+	{
+		super(type, params);
+	}
+
+	/*
+	@Override
+	public BamFile getBamFile(Task prnt, Sample sample)
+	{
+		ProducesBam parent=(ProducesBam)prnt;
+		return parent.getBamFile(sample);
+	}
+	*/
+	
+	@Data @EqualsAndHashCode(callSuper=true)
+	public abstract static class AbstractFeatureCountTaskParams extends AbstractTaskParams
+	{
+		protected String gtffile;
+		protected String outfile;
+		
+		public AbstractFeatureCountTaskParams() {}
+		
+		public AbstractFeatureCountTaskParams(String parent)
+		{
+			super(parent);
+		}
+	}
+
+//	@Data @EqualsAndHashCode(callSuper=true)
+//	public abstract static class AbstractFeatureCountResult extends AbstractResult
+//	{	
+//		public AbstractFeatureCountResult(){}
+//		
+//		public AbstractFeatureCountResult(AbstractFeatureCountTask batchjob, Sample sample)
+//		{
+//			super(batchjob, sample);
+//		}
+//	}
+
+}

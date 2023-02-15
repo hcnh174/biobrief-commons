@@ -1,0 +1,28 @@
+package org.hlsg.pipelines.commands;
+
+import org.hlsg.pipelines.commands.Output.BamFile;
+import org.hlsg.pipelines.commands.Output.CountFile;
+import org.hlsg.pipelines.commands.Output.GtfFile;
+
+public class FeatureCountsCommand extends AbstractFeatureCountCommand
+{
+	public FeatureCountsCommand()
+	{
+		super("run_feature_counts.sh --bamfile $bamfile --gtffile $gtffile --outfile $outfile");
+	}
+	
+	public Command bamfile(BamFile bamfile)
+	{
+		return param("bamfile", bamfile);
+	}
+	
+	public Command gtffile(GtfFile gtffile)
+	{
+		return param("gtffile", gtffile);
+	}
+	
+	public Command outfile(CountFile outfile)
+	{
+		return param("outfile", outfile);
+	}
+}

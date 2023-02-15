@@ -1,0 +1,9 @@
+package org.hlsg.pipelines.commands;
+
+public class StringTieCommand extends AbstractExpressionCommand
+{
+	public StringTieCommand()
+	{
+		super("run_stringtie.sh");
+	}
+}

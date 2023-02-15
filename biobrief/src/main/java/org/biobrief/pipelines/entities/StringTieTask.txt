@@ -1,0 +1,39 @@
+package org.hlsg.pipelines.entities;
+
+import org.hlsg.pipelines.PipelineConstants.TaskType;
+import org.hlsg.pipelines.entities.BlastTask.Params;
+import org.hlsg.pipelines.entities.Task.AbstractSampleParams;
+import org.hlsg.batchjobs.commands.StringTieCommand;
+import org.hlsg.ngs.NgsData;
+import org.hlsg.ngs.entities.Sample;
+import org.hlsg.slurm.commands.Command;
+import org.hlsg.slurm.commands.Output.Dir;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Document(collection="tasks") @Data @EqualsAndHashCode(callSuper=true)
+public class StringTieTask extends AbstractFeatureCountTask
+{
+	protected Params params;
+	
+	public StringTieTask(){}
+
+	public StringTieTask(Params params)
+	{
+		super(TaskType.STRINGTIE, params);
+		this.params=params;
+	}
+	
+	@Data @EqualsAndHashCode(callSuper=true)
+	public static class Params extends AbstractFeatureCountTaskParams
+	{		
+		@Override
+		public Command getCommand()
+		{
+			StringTieCommand command=new StringTieCommand(id, new Dir(dir));
+			return command;
+		}
+	}
+}

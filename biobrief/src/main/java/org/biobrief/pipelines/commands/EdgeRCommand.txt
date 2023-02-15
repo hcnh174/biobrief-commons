@@ -1,0 +1,11 @@
+package org.hlsg.pipelines.commands;
+
+import org.hlsg.pipelines.commands.Output.Dir;
+
+public class EdgeRCommand extends AbstractExpressionCommand
+{
+	public EdgeRCommand()
+	{
+		super("run_edger.sh");
+	}
+}
