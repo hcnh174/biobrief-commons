@@ -42,7 +42,8 @@ public class SynologyAuthenticationService implements UserDetailsService
 		}
 		boolean success=synologyService.login(username, password, out);
 		System.out.println("SynologyAuthenticationProvider.login success: "+success);
-		logins.add(key);
+		if (success)
+			logins.add(key);
 		return success;
 	}
 	
