@@ -294,8 +294,8 @@ public class SynologyHelper
 			super.format(buffer);
 			buffer.append(" --add");
 			buffer.append(" "+username);
-			buffer.append(" '"+StringHelper.escapeSingleQuotes(password)+"'");
-			buffer.append(" '"+StringHelper.escapeSingleQuotes(fullname)+"'");
+			buffer.append(" '"+StringHelper.escapeSingleQuotesBash(password)+"'");
+			buffer.append(" '"+StringHelper.escapeSingleQuotesBash(fullname)+"'");
 			buffer.append(" ").append(expired ? "1" : "0");
 			buffer.append(" '"+StringHelper.dflt(email)+"'");
 			buffer.append(" "+getAppPrivilege());
@@ -338,17 +338,16 @@ public class SynologyHelper
 			this.password=password;
 		}
 		
-		//synouser {--add} username passwd full name expired email app privilege
+		//sudo synouser --login username 'passwd'
 		@Override
 		public void format(StringBuilder buffer)
 		{
 			super.format(buffer);
 			buffer.append(" --login");
 			buffer.append(" "+username);
-			buffer.append(" '"+StringHelper.escapeSingleQuotes(password)+"'");
+			buffer.append(" '"+StringHelper.escapeSingleQuotesBash(password)+"'");
 			buffer.append("\n");
 		}
-		
 		
 		@Override
 		public void check()

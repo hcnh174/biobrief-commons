@@ -21,6 +21,7 @@ import java.text.Collator;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -1078,6 +1079,13 @@ public final class StringHelper
 	public static String escapeDoubleQuotes(String value)
 	{
 		value=replace(value,"\"","\\\"");
+		return value;
+	}
+	
+	// https://stackoverflow.com/questions/1250079/how-to-escape-single-quotes-within-single-quoted-strings
+	public static String escapeSingleQuotesBash(String value)
+	{
+		value=replace(value,"'","'\"'\"'");
 		return value;
 	}
 	
@@ -2673,6 +2681,17 @@ public final class StringHelper
 		Pattern pattern=Pattern.compile(regex);
 		Matcher matcher=pattern.matcher(value);
 		return matcher.lookingAt();
+	}
+	
+	//https://www.baeldung.com/java-base64-encode-and-decode
+	public static String encodeBase64(String value)
+	{
+		return Base64.getEncoder().encodeToString(value.getBytes());
+	}
+	
+	public static String decodeBase64(String value)
+	{
+		return new String(Base64.getDecoder().decode(value));
 	}
 	
 //	public static void banner(String message)
