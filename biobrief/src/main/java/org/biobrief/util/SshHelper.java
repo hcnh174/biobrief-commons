@@ -163,7 +163,7 @@ public class SshHelper
 	
 	public static String logCommand(String command, MessageWriter out)
 	{
-		String filename=LogUtil.getLogDir()+"/ssh/"+new Date().getTime()+".sh";
+		String filename=LogUtil.getPrivateLogDir()+"/ssh-"+new Date().getTime()+".sh";//LogUtil.getLogDir()
 		//out.println(command);
 		FileHelper.writeFile(filename, command);
 		return filename;
