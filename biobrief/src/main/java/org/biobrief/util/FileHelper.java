@@ -1530,11 +1530,11 @@ public final class FileHelper
 	// "/mnt/out" "o:/out"
 	public static String convertPath(String filename, String linuxDir, String windowsDir)
 	{
-		System.out.println("convertPath: filename="+filename+", linuxDir="+linuxDir+", windowsDir="+windowsDir);
+		//System.out.println("convertPath: filename="+filename+", linuxDir="+linuxDir+", windowsDir="+windowsDir);
 		if (RuntimeHelper.isWindows())
 		{
 			String newfilename=StringHelper.replace(filename, linuxDir, windowsDir);
-			System.out.println("converted filename: "+newfilename);
+			//System.out.println("converted filename: "+newfilename);
 			return FileHelper.normalize(newfilename);
 		}
 		return FileHelper.normalize(filename);
