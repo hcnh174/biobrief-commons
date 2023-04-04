@@ -1337,6 +1337,7 @@ public final class StringHelper
 
 	// uses Springs StringUtils class, which uses Character.isWhitespace and should remove Japanese spaces as well
 	//strip(), stripTrailing(), stripLeading()
+	@SuppressWarnings("deprecation")
 	public static String trim(String str)
 	{
 		if (str==null)
@@ -1344,6 +1345,7 @@ public final class StringHelper
 		return StringUtils.trimWhitespace(str);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static String trimLeading(String str)
 	{
 		if (str==null)
@@ -1351,6 +1353,7 @@ public final class StringHelper
 		return StringUtils.trimLeadingWhitespace(str);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static String trimTrailing(String str)
 	{
 		if (str==null)
@@ -2622,6 +2625,12 @@ public final class StringHelper
 		value=StringHelper.replace(value, "－", dash);
 		value=StringHelper.replace(value, "―", dash);
 		value=StringHelper.replace(value, "ー", dash);
+		return value;
+	}
+	
+	public static String fixSymbols(String value)
+	{
+		value=StringHelper.replace(value, "＊", "*");
 		return value;
 	}
 	
