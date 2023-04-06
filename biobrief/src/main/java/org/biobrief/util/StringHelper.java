@@ -1342,23 +1342,25 @@ public final class StringHelper
 	{
 		if (str==null)
 			return null;
-		return StringUtils.trimWhitespace(str);
+		//return StringUtils.trimWhitespace(str);
+		return str.strip();
 	}
 	
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	public static String trimLeading(String str)
 	{
 		if (str==null)
 			return null;
-		return StringUtils.trimLeadingWhitespace(str);
+		//return StringUtils.trimLeadingWhitespace(str);
+		return str.stripLeading();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static String trimTrailing(String str)
 	{
 		if (str==null)
 			return null;
-		return StringUtils.trimTrailingWhitespace(str);
+		//return StringUtils.trimTrailingWhitespace(str);
+		return str.stripTrailing();
 	}
 	
 	public static int numOccurrences(String str, String target)
@@ -2621,6 +2623,7 @@ public final class StringHelper
 	
 	public static String fixDashes(String value, String dash)
 	{
+		//value=StringHelper.replace(value, "‐", dash);
 		value=StringHelper.replace(value, "-", dash);
 		value=StringHelper.replace(value, "－", dash);
 		value=StringHelper.replace(value, "―", dash);
@@ -2645,6 +2648,12 @@ public final class StringHelper
 	{
 		value=StringHelper.replace(value, "　", " ");
 		value=StringHelper.replace(value, " ", " ");
+		return value;
+	}
+	
+	public static String fixCommas(String value)
+	{
+		value=StringHelper.replace(value, "、", ",");
 		return value;
 	}
 	
