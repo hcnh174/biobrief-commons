@@ -9,6 +9,13 @@ import org.junit.jupiter.api.Test;
 //gradle  --stacktrace --info test --tests *TestStringHelper
 public class TestStringHelper
 {
+	@Test
+	public void isDash()
+	{
+		String value="‐";
+		assertThat(StringHelper.isDash(value)).isTrue();
+	}
+	
 	//@Test
 	public void testStripXmlComments()
 	{

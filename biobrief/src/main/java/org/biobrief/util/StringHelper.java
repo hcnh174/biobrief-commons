@@ -1337,7 +1337,7 @@ public final class StringHelper
 
 	// uses Springs StringUtils class, which uses Character.isWhitespace and should remove Japanese spaces as well
 	//strip(), stripTrailing(), stripLeading()
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	public static String trim(String str)
 	{
 		if (str==null)
@@ -2623,7 +2623,7 @@ public final class StringHelper
 	
 	public static String fixDashes(String value, String dash)
 	{
-		//value=StringHelper.replace(value, "‐", dash);
+		value=StringHelper.replace(value, "‐", dash);
 		value=StringHelper.replace(value, "-", dash);
 		value=StringHelper.replace(value, "－", dash);
 		value=StringHelper.replace(value, "―", dash);
