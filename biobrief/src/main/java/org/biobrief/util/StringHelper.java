@@ -1,4 +1,4 @@
-fixfpackage org.biobrief.util;
+package org.biobrief.util;
 
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
