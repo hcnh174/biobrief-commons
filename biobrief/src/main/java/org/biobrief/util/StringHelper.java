@@ -1,4 +1,4 @@
-package org.biobrief.util;
+fixfpackage org.biobrief.util;
 
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
@@ -2634,6 +2634,7 @@ public final class StringHelper
 	public static String fixSymbols(String value)
 	{
 		value=StringHelper.replace(value, "＊", "*");
+		value=StringHelper.replace(value, "＃", "#");
 		return value;
 	}
 	
