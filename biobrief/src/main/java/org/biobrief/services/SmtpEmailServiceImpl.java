@@ -33,9 +33,9 @@ public class SmtpEmailServiceImpl extends AbstractEmailService
 		catch(MailException e)
 		{
 			//log.debug(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			logEmailError(message, e, out);
-			throw new CException(e);
+			//throw new CException(e);
 		}
 	}
 }
