@@ -16,6 +16,7 @@ public interface FileService
 	String readFile(String filename);
 	String getFileSize(String filename);
 	String convertPath(String filename);
+	String unconvertPath(String filename);
 	File getFile(String filename);
 	
 	static FileService create(String linuxDir, String windowsDir)

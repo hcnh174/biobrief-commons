@@ -666,6 +666,16 @@ public final class FileHelper
 		return filepath.substring(start);
 	}
 	
+	public static List<String> stripPath(List<String> filenames)
+	{
+		List<String> list=Lists.newArrayList();
+		for (String filename : filenames)
+		{
+			list.add(stripPath(filename));
+		}
+		return list;
+	}
+	
 	public static String stripFilename(String filepath)
 	{
 		filepath=normalize(filepath);
@@ -675,6 +685,16 @@ public final class FileHelper
 			end=filepath.length();
 		end+=1;
 		return filepath.substring(start, end);
+	}
+	
+	public static List<String> stripFilename(List<String> filenames)
+	{
+		List<String> list=Lists.newArrayList();
+		for (String filename : filenames)
+		{
+			list.add(stripFilename(filename));
+		}
+		return list;
 	}
 	
 	public static String stripExtension(String filename)
@@ -1534,6 +1554,19 @@ public final class FileHelper
 		if (RuntimeHelper.isWindows())
 		{
 			String newfilename=StringHelper.replace(filename, linuxDir, windowsDir);
+			//System.out.println("converted filename: "+newfilename);
+			return FileHelper.normalize(newfilename);
+		}
+		return FileHelper.normalize(filename);
+	}
+	
+	// "o:/out" "/mnt/out" 
+	public static String unconvertPath(String filename, String linuxDir, String windowsDir)
+	{
+		//System.out.println("convertPath: filename="+filename+", linuxDir="+linuxDir+", windowsDir="+windowsDir);
+		if (RuntimeHelper.isWindows())
+		{
+			String newfilename=StringHelper.replace(filename, windowsDir, linuxDir);
 			//System.out.println("converted filename: "+newfilename);
 			return FileHelper.normalize(newfilename);
 		}

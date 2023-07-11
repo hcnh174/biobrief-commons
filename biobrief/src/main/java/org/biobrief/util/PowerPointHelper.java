@@ -370,8 +370,9 @@ public class PowerPointHelper
 		for (XSLFSlide slide : pptx.getSlides())
 		{
 			String outfile="slide-"+num + ".jpeg";
-			writeImage(slide, outdir+"/"+outfile);
-			outfiles.add(outfile);
+			String path=outdir+"/"+outfile;
+			writeImage(slide, path);
+			outfiles.add(path);
 			num++;
 		}
 		return outfiles;
@@ -383,7 +384,7 @@ public class PowerPointHelper
 		{
 			BufferedImage img = createBufferedImage(slide);
 			Graphics2D graphics = createGraphics(img, true);
-			slide.draw(graphics);			
+			slide.draw(graphics);
 			final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
 			writer.setOutput(new FileImageOutputStream(new File(filename)));
 			JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);

@@ -24,4 +24,11 @@ public class FileServiceWindowsImpl extends AbstractFileService
 		//System.out.println("FileServiceWindowsImpl.convertPath: filename="+filename);
 		return FileHelper.convertPath(filename, outDir, windowsDir);
 	}
+	
+	@Override
+	public String unconvertPath(String filename)
+	{
+		//System.out.println("FileServiceWindowsImpl.convertPath: filename="+filename);
+		return FileHelper.unconvertPath(filename, outDir, windowsDir);
+	}
 }

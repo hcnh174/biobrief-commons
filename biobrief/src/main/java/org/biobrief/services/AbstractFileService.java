@@ -82,6 +82,13 @@ public class AbstractFileService implements FileService
 	}
 	
 	@Override
+	public String unconvertPath(String filename)
+	{
+		//System.out.println("AbstractSlurmService.convertPath: filename="+filename);
+		return filename;
+	}
+	
+	@Override
 	public String getFileSize(String filename)
 	{
 		return FileHelper.getFileSize(convertPath(filename), FileHelper.FileSizeType.MEGABYTES);
