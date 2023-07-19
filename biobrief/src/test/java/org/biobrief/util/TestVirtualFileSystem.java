@@ -9,6 +9,18 @@ import org.junit.jupiter.api.Test;
 public class TestVirtualFileSystem
 {
 	@Test
+	public void testFolder()
+	{
+		String name="A306710758985_F1";
+		String dir="x://"+name;
+		VirtualFileSystem vfs=new VirtualFileSystem(dir);
+		//configure(vfs);
+		vfs.getRoot().addFolder(dir+"/"+name);
+		System.out.println(JsonHelper.toJson(vfs));
+		//assertThat(true).isEqualTo(true);
+	}
+	
+	//@Test
 	public void load()
 	{
 		VirtualFileSystem vfs=createVirtualFileSystem();

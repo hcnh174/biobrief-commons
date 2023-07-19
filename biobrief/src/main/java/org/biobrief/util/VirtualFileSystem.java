@@ -298,16 +298,12 @@ public class VirtualFileSystem
 		Date getLastModified();
 		boolean isFile();
 		boolean isDirectory();
-		
-//		void setParent(IFolder parent);
-//		IFolder getParent();
 	}
 	
 	public interface IFolder extends INode
 	{
 		void add(INode node);
 		VirtualFolder addVirtualFolder(String path, String name);
-		//Folder addFolder(String path);
 		Optional<Folder> addFolder(String path);
 		IFile add(IFile file);
 		IFolder findDir(List<String> arr);
