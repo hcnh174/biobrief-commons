@@ -19,7 +19,7 @@ plugins
 	id 'io.spring.dependency-management' version '1.1.2' //1.1.2, 1.1.0
 	//id 'com.ewerk.gradle.plugins.jaxb2' version '1.0.10'
 	id 'com.github.ben-manes.versions' version '0.47.0' // 0.46.0, 0.45.0
-	id 'org.owasp.dependencycheck' version '8.2.1' //8.3.1, 8.2.0, 8.1.2, 8.1.0 https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/index.html
+	//id 'org.owasp.dependencycheck' version '8.2.1' //8.3.1, 8.2.0, 8.1.2, 8.1.0 https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/index.html
 }
 
 repositories {

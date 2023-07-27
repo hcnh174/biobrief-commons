@@ -40,7 +40,7 @@ public class SynologyAuthenticationService implements UserDetailsService
 			return true;
 		}
 		boolean success=synologyService.login(username, password, out);
-		System.out.println("SynologyAuthenticationProvider.login success: "+success);
+		//System.out.println("SynologyAuthenticationProvider.login success: "+success);
 		if (success)
 			logins.add(key);
 		return success;
@@ -49,7 +49,7 @@ public class SynologyAuthenticationService implements UserDetailsService
 	@Override
 	public UserDetails loadUserByUsername(String username)
 	{
-		System.out.println("SynologyAuthenticationProvider.loadUserByUsername username: "+username);
+		//System.out.println("SynologyAuthenticationProvider.loadUserByUsername username: "+username);
 		if (username.equals(admin_username))
 			return createAdminUser();
 		
