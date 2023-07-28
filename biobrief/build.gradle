@@ -207,7 +207,7 @@ group = 'org.biobrief'
 sourceCompatibility = 1.17
 targetCompatibility = 1.17
 
-apply plugin: 'org.owasp.dependencycheck'
+//apply plugin: 'org.owasp.dependencycheck'
 
 tasks.withType(JavaCompile)
 {

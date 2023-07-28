@@ -75,4 +75,13 @@ public class TestFileHelper
 		Multimap<String, FileInfo> map=FileHelper.getDirectoryMap(dir);
 		System.out.println("map="+StringHelper.toString(map));	
 	}
+	
+	@Test
+	public void globSeach()
+	{
+		String dir="X:\\B301006627782_NCC";
+		String pattern="PP_*.pptx";
+		List<String> actual = FileHelper.findFilesByWildcard(dir, pattern);
+		System.out.println("files: ["+StringHelper.join(actual, "|")+"]");		
+	}
 }
