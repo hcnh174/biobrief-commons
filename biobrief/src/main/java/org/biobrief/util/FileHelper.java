@@ -1705,6 +1705,24 @@ public final class FileHelper
 		}
 	}
 	
+	public static List<String> findFilesRecursivelyByWildcard(String dir, String pattern)
+	{
+		List<String> filenames=Lists.newArrayList();
+		findFilesRecursivelyByWildcard(dir, pattern, filenames);
+		return filenames;
+	}
+	
+	private static void findFilesRecursivelyByWildcard(String dir, String pattern, List<String> filenames)
+	{
+		System.out.println("checking dir for pattern: "+dir);
+		List<String> list=FileHelper.findFilesByWildcard(dir, pattern);
+		filenames.addAll(list);
+		for (String subdir : FileHelper.listDirectories(dir, true))
+		{
+			findFilesRecursivelyByWildcard(subdir, pattern, filenames);
+		}
+	}
+	
 	//https://www.baeldung.com/java-files-match-wildcard-strings
 	private static class SearchFileByWildcard
 	{
@@ -1722,7 +1740,7 @@ public final class FileHelper
 					PathMatcher matcher = fs.getPathMatcher(pattern);
 					Path name = file.getFileName();
 					if (matcher.matches(name))
-						matchesList.add(name.toString());
+						matchesList.add(rootDir.toString()+File.separator+name.toString());//name.toString());
 					return FileVisitResult.CONTINUE;
 				}
 			};
