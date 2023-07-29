@@ -1705,6 +1705,7 @@ public final class FileHelper
 		}
 	}
 	
+	/*
 	public static List<String> findFilesRecursivelyByWildcard(String dir, String pattern)
 	{
 		List<String> filenames=Lists.newArrayList();
@@ -1722,6 +1723,7 @@ public final class FileHelper
 			findFilesRecursivelyByWildcard(subdir, pattern, filenames);
 		}
 	}
+	*/
 	
 	//https://www.baeldung.com/java-files-match-wildcard-strings
 	private static class SearchFileByWildcard
@@ -1740,7 +1742,7 @@ public final class FileHelper
 					PathMatcher matcher = fs.getPathMatcher(pattern);
 					Path name = file.getFileName();
 					if (matcher.matches(name))
-						matchesList.add(rootDir.toString()+File.separator+name.toString());//name.toString());
+						matchesList.add(file.toFile().getPath());//name.toString());
 					return FileVisitResult.CONTINUE;
 				}
 			};

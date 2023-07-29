@@ -80,20 +80,23 @@ public class TestFileHelper
 	public void findFilesByWildcard()
 	{
 		String dir="X:\\B301006627782_NCC";
-		String pattern="PP_*.pptx";
+		//String pattern="PP_*.pptx";
+		String pattern="RG_Report_*.xml";
 		List<String> actual = FileHelper.findFilesByWildcard(dir, pattern);
 		System.out.println("files: ["+StringHelper.join(actual, "|")+"]");		
 	}
 	
-	@Test
+	/*
+	//@Test
 	public void findFilesRecursivelyByWildcard()
 	{
 		String dir="X:\\B301006627782_NCC";
-		String pattern="*.xlsx";
+		String pattern="RG_Report_*.xml";
 		List<String> actual = FileHelper.findFilesRecursivelyByWildcard(dir, pattern);
 		System.out.println("files: ["+StringHelper.join(actual, "\n")+"]");
 		//assertEquals(new HashSet<>(Arrays.asList("six.txt", "three.txt", "two.docx", "one.txt")), 
 		//  new HashSet<>(actual));
 		
 	}
+	*/
 }
