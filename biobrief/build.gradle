@@ -39,8 +39,8 @@ dependencyManagement
 
 dependencies {
 
-	implementation 'org.checkerframework:checker-qual:3.36.0'
-	implementation 'com.google.errorprone:error_prone_annotations:2.20.0'
+	implementation("org.checkerframework:checker-qual:${property('checker-qual.version')}")//3.36.0
+	implementation("com.google.errorprone:error_prone_annotations:${property('error_prone_annotations.version')}")//2.20.0
 
 	api('org.springframework.boot:spring-boot-starter')
 	api("com.google.guava:guava:${property('guava.version')}")
