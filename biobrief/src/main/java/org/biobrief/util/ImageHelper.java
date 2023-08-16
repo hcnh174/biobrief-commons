@@ -149,12 +149,18 @@ public final class ImageHelper
 		return cropImage(image, x, y, width, height);
 	}
 	
+//	public static BufferedImage cropImage(BufferedImage image, int x, int y, int width, int height)
+//	{
+//		ImageFilter filter = new CropImageFilter(x, y, width, height);
+//		ImageProducer producer = new FilteredImageSource(image.getSource(), filter);
+//		Image cropped=Toolkit.getDefaultToolkit().createImage(producer);
+//		return ImageHelper.toBufferedImage(cropped);
+//	}
+	
+	//https://www.geeksforgeeks.org/java-program-to-crop-image-using-bufferedimage-class/
 	public static BufferedImage cropImage(BufferedImage image, int x, int y, int width, int height)
 	{
-		ImageFilter filter = new CropImageFilter(x, y, width,height);
-		ImageProducer producer = new FilteredImageSource(image.getSource(), filter);
-		Image cropped=Toolkit.getDefaultToolkit().createImage(producer);
-		return ImageHelper.toBufferedImage(cropped);
+		return image.getSubimage(x, y, width, height);
 	}
 	
 	////////////////////////////////////////////////////////	
@@ -332,7 +338,7 @@ public final class ImageHelper
 		}
 		catch(Exception e)
 		{
-			System.err.println("Error setting native LAF: " + e);
+			throw new CException(e);//System.err.println("Error setting native LAF: " + e);
 		}
 	}
 	
