@@ -125,4 +125,20 @@ public class TestStringHelper
 		String value="TP53,TMB-High,FGF3";
 		assertThat(StringHelper.removeWord(value, "TMB-High")).isEqualTo( "TP53,,FGF3");
 	}
+	
+	@Test
+	public void format()
+	{
+		Float value=18.0699996948242f;
+		int numdec=2;
+		assertThat(StringHelper.format(value, numdec)).isEqualTo("18.07");
+	}
+	
+	@Test
+	public void format2()
+	{
+		Float value=0.600000023841857f;
+		int numdec=2;
+		assertThat(StringHelper.format(value, numdec)).isEqualTo("0.6");
+	}
 }
