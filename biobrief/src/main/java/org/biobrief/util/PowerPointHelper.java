@@ -108,8 +108,9 @@ public class PowerPointHelper
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
-		}		
+			String message="failed to open ppt file: "+filename+" with password="+password;
+			throw new CException(message, e);
+		}
 	}
 	
 	public static XMLSlideShow loadPptxFile(String filename)
@@ -122,7 +123,8 @@ public class PowerPointHelper
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
+			String message="failed to open pptx file: "+filename;
+			throw new CException(message, e);
 		}		
 	}
 	
@@ -148,7 +150,8 @@ public class PowerPointHelper
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
+			String message="failed to open pptx file: "+filename+" with password="+password;
+			throw new CException(message, e);
 		}		
 	}
 	
