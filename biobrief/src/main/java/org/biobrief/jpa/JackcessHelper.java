@@ -117,8 +117,10 @@ public final class JackcessHelper
 		case BINARY:
 		case OLE:
 			return row.getBytes(colname);
+		case COMPLEX_TYPE:
+			return row.getForeignKey(colname);
 		default:
-			throw new CException("no handler for Jackcess type: "+col.getType());
+			throw new CException("no handler for Jackcess type: "+col.getType()+" colname="+colname);
 		}
 	}
 	
