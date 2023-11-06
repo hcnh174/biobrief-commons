@@ -1335,6 +1335,11 @@ public final class StringHelper
 		}
 	}
 
+	public static String trimInvisibleSpace(String str)
+	{
+		return str.replaceAll("[\\p{Cf}]", "");
+	}
+	
 	// uses Springs StringUtils class, which uses Character.isWhitespace and should remove Japanese spaces as well
 	//strip(), stripTrailing(), stripLeading()
 	//@SuppressWarnings("deprecation")
@@ -1343,6 +1348,7 @@ public final class StringHelper
 		if (str==null)
 			return null;
 		//return StringUtils.trimWhitespace(str);
+		str=trimInvisibleSpace(str);
 		return str.strip();
 	}
 	
@@ -2624,6 +2630,7 @@ public final class StringHelper
 	public static String fixDashes(String value, String dash)
 	{
 		value=StringHelper.replace(value, "‐", dash);
+		value=StringHelper.replace(value, "−", dash);
 		value=StringHelper.replace(value, "-", dash);
 		value=StringHelper.replace(value, "－", dash);
 		value=StringHelper.replace(value, "―", dash);
