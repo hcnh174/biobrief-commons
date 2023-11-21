@@ -53,7 +53,7 @@ public final class YamlHelper
 		mapper.setSerializationInclusion(Include.NON_NULL);
 
 		mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-		//mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		//mapper.disable(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS);
 	}
 
