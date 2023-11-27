@@ -3,13 +3,13 @@ package org.biobrief.util;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 //https://www.baeldung.com/jackson-yaml
 //https://eloquent-hodgkin-f52b42.netlify.com/
@@ -54,7 +54,7 @@ public final class YamlHelper
 
 		mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		//mapper.disable(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS);
+		mapper.disable(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS);
 	}
 
 	@SuppressWarnings("rawtypes")
