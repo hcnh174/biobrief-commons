@@ -2662,6 +2662,8 @@ public final class StringHelper
 	public static String fixCommas(String value)
 	{
 		value=StringHelper.replace(value, "、", ",");
+		value=StringHelper.replace(value, "､", ",");
+		value=StringHelper.replace(value, "，", ",");
 		return value;
 	}
 	
