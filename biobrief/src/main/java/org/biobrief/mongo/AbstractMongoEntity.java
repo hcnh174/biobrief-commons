@@ -30,10 +30,10 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 	//@Version
 	//private Long version;
 	
-	@CreatedBy @JsonIgnore
+	@CreatedBy //@JsonIgnore
 	protected String createdBy;
 	
-	@CreatedDate @JsonIgnore
+	@CreatedDate //@JsonIgnore
 	protected Date createdDate;
 	
 	@LastModifiedBy @JsonIgnore
@@ -47,6 +47,7 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 	public AbstractMongoEntity(String id)
 	{
 		this.id=id;
+		this.createdDate=new Date();
 	}
 	
 	@Override public String getId(){return this.id;}
