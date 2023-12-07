@@ -28,7 +28,7 @@ public abstract class AbstractFileCacheService
 
 	///////////////////////////////////////
 
-	protected boolean containsKey(String key, MessageWriter out)
+	public boolean containsKey(String key, MessageWriter out)
 	{
 		String filename=getFilename(key);
 		boolean found=FileHelper.exists(filename);
@@ -56,6 +56,12 @@ public abstract class AbstractFileCacheService
 		out.println("writing filename: "+filename);
 		FileHelper.writeFile(filename, format(value));
 		this.lastRequest=new Date();
+	}
+	
+	public Date getLastModifiedDate(String key)
+	{
+		String filename=getFilename(key);
+		return FileHelper.getLastModifiedDate(filename);
 	}
 	
 	protected String format(String value)

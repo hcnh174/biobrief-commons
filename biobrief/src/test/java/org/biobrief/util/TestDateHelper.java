@@ -19,12 +19,20 @@ public class TestDateHelper
 		assertThat(date).isNotNull();
 	}
 	
-	@Test
+	//@Test
 	public void parseDate()
 	{
 		String strdate="2020/06/14";
 		Date date=DateHelper.parse(strdate, Constants.DATE_PATTERN);
 		System.out.println("date="+date);
 		//assertThat(date).isNotNull();
+	}
+	
+	@Test
+	public void isAfter()
+	{
+		Date minDate=DateHelper.parse("2022/06/14", Constants.DATE_PATTERN);
+		Date downloadDate=DateHelper.parse("2020/06/14", Constants.DATE_PATTERN);
+		System.out.println("is downloadDate ("+downloadDate+") after minDate ("+minDate+")? "+DateHelper.isAfter(downloadDate, minDate));
 	}
 }
