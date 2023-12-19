@@ -92,8 +92,8 @@ dependencies {
 		
 	api("commons-io:commons-io:${property('commons.io.version')}")
 	api("com.google.guava:guava:${property('guava.version')}")
-	//api("org.hibernate.validator:hibernate-validator")
-	api("org.hibernate.validator:hibernate-validator:8.0.0.Final")
+	api("org.hibernate.validator:hibernate-validator")
+	//api("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 	
 	// zip files
 	api("net.lingala.zip4j:zip4j:${property('zip4j.version')}")
