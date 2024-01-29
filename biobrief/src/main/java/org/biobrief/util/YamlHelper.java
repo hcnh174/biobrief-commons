@@ -81,18 +81,31 @@ public final class YamlHelper
 	public static String toYaml(Object obj)
 	{
 		try
-		{			
+		{
 			ObjectMapper mapper=createObjectMapper();
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			SequenceWriter writer=mapper.writerWithDefaultPrettyPrinter().writeValues(out);
-			writer.write(obj);
-			return new String(out.toByteArray());
+			return mapper.writeValueAsString(obj);
 		}
 		catch (Exception e)
 		{
 			throw new CException(e);
 		}
 	}
+	
+//	public static String toYaml(Object obj)
+//	{
+//		try
+//		{			
+//			ObjectMapper mapper=createObjectMapper();
+//			ByteArrayOutputStream out = new ByteArrayOutputStream();
+//			SequenceWriter writer=mapper.writerWithDefaultPrettyPrinter().writeValues(out);
+//			writer.write(obj);
+//			return new String(out.toByteArray());
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CException(e);
+//		}
+//	}
 	
 	public static void writeFile(Object obj, String filename)
 	{

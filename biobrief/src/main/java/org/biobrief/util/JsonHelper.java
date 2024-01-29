@@ -124,7 +124,7 @@ public final class JsonHelper
 	
 	/////////////////////////////////////////////////////////
 	
-	@SuppressWarnings("rawtypes")
+	//@SuppressWarnings("rawtypes")
 	public static JsonNode parseFile(String filename)
 	{
 		String json=FileHelper.readFile(filename);
