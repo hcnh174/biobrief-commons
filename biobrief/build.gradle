@@ -91,7 +91,6 @@ dependencies {
 	api("org.zeroturnaround:zt-process-killer:${property('ztprocesskiller.version')}")
 		
 	api("commons-io:commons-io:${property('commons.io.version')}")
-	api("com.google.guava:guava:${property('guava.version')}")
 	api("org.hibernate.validator:hibernate-validator")
 	//api("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 	
@@ -190,13 +189,9 @@ dependencies {
 	api("org.passay:passay:${property('passay.version')}")
 
 	// google
-	api("com.google.api-client:google-api-client:${property('google-api-client.version')}")
-	api("com.google.oauth-client:google-oauth-client-jetty:${property('google-oauth-client-jetty.version')}")
-	api("com.google.apis:google-api-services-sheets:${property('google-api-services-sheets.version')}")
-	
-//	api('com.google.api-client:google-api-client:1.30.4')
-//	api('com.google.oauth-client:google-oauth-client-jetty:1.30.6')
-//	api('com.google.apis:google-api-services-sheets:v4-rev581-1.25.0')
+	//api("com.google.api-client:google-api-client:${property('google-api-client.version')}")
+	//api("com.google.oauth-client:google-oauth-client-jetty:${property('google-oauth-client-jetty.version')}")
+	//api("com.google.apis:google-api-services-sheets:${property('google-api-services-sheets.version')}")
 
 	//api('org.owasp:dependency-check-gradle:8.1.0')
 }

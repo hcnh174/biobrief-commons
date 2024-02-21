@@ -16,8 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import com.google.api.client.util.Sets;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 // https://www.baeldung.com/spring-security-authentication-provider
 @Service
