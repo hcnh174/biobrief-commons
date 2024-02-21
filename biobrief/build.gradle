@@ -146,9 +146,9 @@ dependencies {
 	
 	// xml parser
 	api("org.dom4j:dom4j:${property('org-dom4j.version')}")
-	api("jaxen:jaxen:${property('jaxen.version')}"){
-		exclude(module: "xmlParserAPIs")
-	}
+	//api("jaxen:jaxen:${property('jaxen.version')}"){
+	//	exclude(module: "xmlParserAPIs")
+	//}
 	
 	// html parsers
 	api("org.jsoup:jsoup:${property('jsoup.version')}")
