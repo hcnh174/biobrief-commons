@@ -60,25 +60,25 @@ public class HttpHelper
 			CloseableHttpResponse response = httpclient.execute(httpget);
 			try
 			{
-			    HttpEntity entity = response.getEntity();
-			    if (entity != null)
-			    {
-			        InputStream instream = entity.getContent();
-			        try
-			        {
-			        	html = new BufferedReader(new InputStreamReader(instream, StandardCharsets.UTF_8))
-			        		.lines().collect(Collectors.joining("\n"));
-			        	return html;
-			        }
-			        finally
-			        {
-			            instream.close();
-			        }
-			    }
+				HttpEntity entity = response.getEntity();
+				if (entity != null)
+				{
+					InputStream instream = entity.getContent();
+					try
+					{
+						html = new BufferedReader(new InputStreamReader(instream, StandardCharsets.UTF_8))
+							.lines().collect(Collectors.joining("\n"));
+						return html;
+					}
+					finally
+					{
+						instream.close();
+					}
+				}
 			}
 			finally
 			{
-			    response.close();
+				response.close();
 			}
 
 		}
@@ -89,17 +89,17 @@ public class HttpHelper
 		return html;
 	}
 	
-	public static String getRequest(String url, Map<String,Object> model)
+	public static String getRequest(String baseurl, Map<String,Object> model)
 	{
+		String url=appendQueryString(baseurl, model);
+		//System.out.println("url="+url);
 		try
-		{
-			url=appendQueryString(url, model);
-			System.out.println("url="+url);
+		{	
 			return Request.Get(url).execute().returnContent().asString();
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
+			throw new CException("error handling GET request: "+url, e);
 		}
 	}
 	
@@ -175,131 +175,10 @@ public class HttpHelper
 		}
 		return form.build();
 	}
-	
-//	private static List<NameValuePair> createNameValuePairs(MultiValueMap<String, Object> params)
-//	{
-//		Form form=Form.form();//.add("username",  "vip").add("password",  "secret").build()
-//		for (Entry<String, List<Object>> entry : params.entrySet())
-//		{
-//			for (Object value : entry.getValue())
-//			{
-//				form.add(entry.getKey(), value.toString());
-//			}
-//		}
-//		return form.build();
-//	}
-	
-	/*
-	public static String getRequest(String url, Map<String,Object> model)
-	{
-		CHttpRequest request=new CHttpRequest();
-		return request.getRequest(url, model);
-	}
-	
-	public static String getRequest(String url, Object... args)
-	{
-		Map<String,Object> params=StringHelper.createMap(args);
-		return getRequest(url, params);
-	}
-	
-	public static String postRequest(String url, Map<String,Object> params)
-	{
-		CPostHttpRequest request=new CPostHttpRequest();
-		return request.getRequest(url,params);
-	}
-	
-	public static String postRequest(String url, Object... args)
-	{
-		Map<String,Object> params=StringHelper.createMap(args);
-		CPostHttpRequest request=new CPostHttpRequest();
-		return request.getRequest(url,params);
-	}
-	*/
-	
-//	public static BufferedImage postToImageGenerator(String url, Map<String,Object> model)
-//	{
-//		CPostHttpRequest request=new CPostHttpRequest();
-//		return request.postToImageGenerator(url,model);
-//	}	
-//	
-//	public static String postRedirectRequest(String url, Map<String,Object> model)
-//	{
-//		CPostHttpRequest request=new CPostHttpRequest();
-//		return request.getRequest(url,model);
-//	}
-	
-//	public static String postMultipartRequest(String url, Map<String,Object> model)
-//	{
-//		Map<String,Object> files=Collections.emptyMap();//new HashMap<String,Object>();
-//		return postMultipartRequest(url,model,files);
-//	}
-//	
-//	public static String postMultipartRequest(String url, Map<String,Object> model, Map<String,Object> files)
-//	{
-//		PostMethod method=null;
-//		try
-//		{
-//			HttpClient client = new HttpClient();
-//			method = new PostMethod(url);        
-//			Part[] parts=new Part[model.size()+files.size()];
-//			int index=0;
-//			for (String name : model.keySet())
-//			{
-//				String value=(String)model.get(name);
-//				parts[index]=new StringPart(name,value);
-//				index++;
-//			}
-//			for (String name : files.keySet())
-//			{
-//				String filename=(String)files.get(name);
-//				File file=new File(filename);
-//				parts[index]=new FilePart(name,file);
-//				index++;
-//			}
-//
-//			method.setRequestEntity(new MultipartRequestEntity(parts,method.getParams()));
-//			method.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
-//
-//			// Execute the method.
-//			int statusCode = client.executeMethod(method);
-//			if (statusCode == HttpStatus.SC_OK)
-//			{
-//				return CHttpRequest.getResponseBody(method);
-//			}
-//			else if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY)
-//			{
-//				Header header=method.getResponseHeader("Location");
-//				return header.getValue();
-//			}
-//			else
-//			{
-//				System.err.println("Method failed: " + method.getStatusLine());
-//				return method.getStatusLine().toString();
-//			}
-//		}
-//		catch (HttpException e)
-//		{
-//			System.err.println("Fatal protocol violation: " + e.getMessage());
-//			e.printStackTrace();
-//			throw new CException(e);
-//		}
-//		catch (IOException e)
-//		{
-//			System.err.println("Fatal transport error: " + e.getMessage());
-//			e.printStackTrace();
-//			throw new CException(e);
-//		}
-//		finally
-//		{
-//			// Release the connection.
-//			method.releaseConnection();
-//		}
-//	}
 		
 	public static class CHttpRequest
 	{
 		protected Integer statusCode;
-		//protected String redirect;
 		
 		public String getRequest(String url)
 		{
@@ -342,142 +221,10 @@ public class HttpHelper
 			return "response";
 		}
 		
-//		public String getRequest(String url, Map<String,Object> model)
-//		{
-//			HttpClient client = new HttpClient();
-//			HttpMethod method = createMethod(url,model);
-//	        method.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
-//			try
-//			{
-//				// Execute the method.
-//				statusCode = client.executeMethod(method);
-//				if (this.statusCode==HttpStatus.SC_OK)
-//					return onOk(method);
-//				else if (this.statusCode==HttpStatus.SC_MOVED_TEMPORARILY)
-//					return onRedirect(method);
-//				else return onOther(method);
-//			}
-//			catch (HttpException e)
-//			{
-//				throw new CException(e);
-//			}
-//			catch (IOException e)
-//			{
-//				throw new CException(e);
-//			}
-//			finally
-//			{
-//				method.releaseConnection();
-//			}
-//		}
-		
 		public Integer getStatusCode(){return this.statusCode;}
 		public void setStatusCode(Integer statusCode){this.statusCode=statusCode;}
-
-//		protected HttpMethod createMethod(String url, Map<String,Object> model)
-//		{
-//			// if there's already a query string, just add an &
-//			char separator=(url.indexOf('?')==-1) ? '?' : '&';
-//			url=url+separator+CWebHelper.createQueryString(model);
-//			return new GetMethod(url);
-//		}
-
-//		protected String onOk(HttpMethod method)
-//		{
-//			return getResponseBody(method);
-//		}
-//		
-//		protected String onRedirect(HttpMethod method)
-//		{
-//			System.err.println("OnRedirect: " + method.getStatusLine());
-//			Header header=method.getResponseHeader("location");
-//			if (header==null)
-//				throw new CException("the response is invalid and did not provide the new location for the resource");
-//			return header.getValue();
-//		}
-//		
-//		protected String onOther(HttpMethod method)
-//		{
-//			String response=getResponseBody(method);
-//			System.err.println("Method failed: " + method.getStatusLine()+", "+this.statusCode+", response="+response);
-//			return response;
-//		}
-//		
-//		protected static String getResponseBody(HttpMethod method)
-//		{
-//			try
-//			{
-//				InputStream input = method.getResponseBodyAsStream();
-//				return IOUtils.toString(input, "UTF-8");
-//			}
-//			catch(IOException e)
-//			{
-//				throw new CException(e);
-//			}
-//		}
 	}
-	
-//	public static class CPostHttpRequest extends CHttpRequest
-//	{
-//		@Override
-//		protected HttpMethod createMethod(String url, Map<String,Object> model)
-//		{
-//			PostMethod method=new PostMethod(url);
-//			NameValuePair[] data = getNameValuePairs(model);
-//			method.setRequestBody(data);
-//			return method;
-//		}
-//		
-//		private static NameValuePair[] getNameValuePairs(Map<String,Object> model)
-//		{
-//			if (model==null)
-//				return new NameValuePair[0];
-//			NameValuePair[] data = new NameValuePair[model.size()];
-//			int index=0;
-//			for (String name : model.keySet())
-//			{
-//				//String value=(String)model.get(name);
-//				Object value=model.get(name);
-//				data[index]=new BasicNameValuePair(name,value.toString());
-//				index++;
-//			}
-//			return data;
-//		}
-//		
-////		public BufferedImage postToImageGenerator(String url, Map<String,Object> model)
-////		{
-////			//Image img = Toolkit.getDefaultToolkit().createImage(resp.getData());			
-////			HttpClient client = new HttpClient();
-////			HttpMethod method = createMethod(url,model);
-////	        //method.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
-////			try
-////			{
-////				// Execute the method.
-////				statusCode = client.executeMethod(method);
-////				//String response=getResponseBody(method);
-////				if (statusCode==HttpStatus.SC_OK)
-////				{
-////					//byte[] data=method.getResponseBody();
-////					InputStream stream=method.getResponseBodyAsStream();
-////					return ImageIO.read(stream);
-////				}
-////				else throw new CException("returned statusCode: "+this.statusCode);
-////			}
-////			catch (HttpException e)
-////			{
-////				throw new CException(e);
-////			}
-////			catch (IOException e)
-////			{
-////				throw new CException(e);
-////			}
-////			finally
-////			{
-////				method.releaseConnection();
-////			}
-////		}
-//	}
-//	
+
 	/////////////////////////////////////////////////////////////////////////////
 	
 	public static String simplePostRequest(String url)
@@ -576,22 +323,4 @@ public class HttpHelper
 			catch (Exception e){}
 		}
 	}
-	
-	/////////////////////////////////////////////////////////////////
-	
-//	public static String getOriginalFilename(HttpServletRequest request, String name)
-//	{		
-//		if (!(request instanceof MultipartHttpServletRequest))
-//			throw new CException("request is not an instance of MultipartHttpServletRequest");
-//	
-//		MultipartHttpServletRequest multipart=(MultipartHttpServletRequest)request;
-//		CommonsMultipartFile file=(CommonsMultipartFile)multipart.getFileMap().get(name);
-//		return file.getOriginalFilename();
-//	}
-//	
-//	public static String stripFiletype(String filename)
-//	{
-//		int index=filename.lastIndexOf('.');
-//		return filename.substring(0,index);
-//	}
 }
