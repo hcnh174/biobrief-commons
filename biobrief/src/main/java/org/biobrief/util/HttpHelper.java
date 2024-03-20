@@ -44,11 +44,10 @@ public class HttpHelper
 	//https://www.baeldung.com/convert-input-stream-to-string
 	public static String getRequest(String baseurl, Map<String,Object> model, Map<String, String> headers)
 	{
+		String url=appendQueryString(baseurl, model);
 		String html="empty";
 		try
-		{
-			String url=appendQueryString(baseurl, model);
-			
+		{			
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 			HttpGet httpget = new HttpGet(url);
 			for (String name : headers.keySet())
@@ -80,11 +79,10 @@ public class HttpHelper
 			{
 				response.close();
 			}
-
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
+			throw new CException("error handling GET request: "+url, e);
 		}
 		return html;
 	}
@@ -134,7 +132,7 @@ public class HttpHelper
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
+			throw new CException("error handling POST request: "+url+" model="+JsonHelper.toJson(pairs), e);
 		}
 	}
 	
@@ -195,8 +193,8 @@ public class HttpHelper
 				try
 				{
 					System.out.println(response.getStatusLine());
-					HttpEntity entity1 = response.getEntity();
-					EntityUtils.consume(entity1);
+					HttpEntity entity = response.getEntity();
+					EntityUtils.consume(entity);
 				}
 				finally
 				{
@@ -205,7 +203,7 @@ public class HttpHelper
 			}
 			catch (Exception e)
 			{
-				throw new CException(e);
+				throw new CException("error handling GET request: "+url+" model="+StringHelper.toString(model), e);
 			}
 			finally
 			{
@@ -274,11 +272,11 @@ public class HttpHelper
 		}
 		catch(MalformedURLException e)
 		{
-			throw new CException(e);
+			throw new CException("error handling POST request: "+path+" model="+StringHelper.toString(model), e);
 		}
 		catch(IOException e)
 		{
-			throw new CException(e);
+			throw new CException("error handling POST request: "+path+" model="+StringHelper.toString(model), e);
 		}
 	}
 	
@@ -311,7 +309,7 @@ public class HttpHelper
 		}
 		catch(Exception e)
 		{
-			throw new CException(e);
+			throw new CException("error getting FTP file: "+url, e);
 		}
 		finally
 		{
