@@ -554,15 +554,11 @@ public class ExcelHelper
 		{
 			if (workbook!=null)
 				workbook.close();
-//			if (this.stream!=null)
-//			{
-//				this.stream.close();
-//				this.stream=null;
-//			}
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
+			LogUtil.log("failed to close workbook: "+e.getMessage());
+			//throw new CException(e);
 		}
 	}
 	
