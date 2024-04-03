@@ -161,11 +161,12 @@ public class SshHelper
 		}
 	}
 	
+	// only write file if on Linux
 	public static String logCommand(String command, MessageWriter out)
 	{
-		String filename=LogUtil.getPrivateLogDir()+"/ssh-"+new Date().getTime()+".sh";//LogUtil.getLogDir()
-		//out.println(command);
-		FileHelper.writeFile(filename, command);
+		String filename=LogUtil.getPrivateLogDir()+"/ssh-"+new Date().getTime()+".sh";
+		if (PlatformType.find().isUnix())
+			FileHelper.writeFile(filename, command);
 		return filename;
 	}
 	
