@@ -30,6 +30,7 @@ import org.apache.poi.poifs.crypt.Decryptor;
 import org.apache.poi.poifs.crypt.EncryptionInfo;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.sl.usermodel.PictureData;
+import org.apache.poi.sl.usermodel.TextParagraph;
 import org.apache.poi.sl.usermodel.TextParagraph.TextAlign;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFPictureData;
@@ -38,6 +39,7 @@ import org.apache.poi.xslf.usermodel.XSLFSimpleShape;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFTable;
 import org.apache.poi.xslf.usermodel.XSLFTableCell;
+import org.apache.poi.xslf.usermodel.XSLFTableRow;
 import org.apache.poi.xslf.usermodel.XSLFTextBox;
 import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
@@ -249,6 +251,11 @@ public class PowerPointHelper
 	{
 		return new Rectangle2D.Double(anchor.getX(), anchor.getMaxY()+gap, anchor.getWidth(), 0);//anchor.getHeight()
 	}
+	
+	public static Rectangle2D copyAnchor(Rectangle2D anchor)
+	{
+		return new Rectangle2D.Double(anchor.getX(), anchor.getY(), anchor.getWidth(), anchor.getHeight());
+	}
 
 	///////////////////////////////////////////////
 	
@@ -353,6 +360,25 @@ public class PowerPointHelper
 	}
 	
 	//////////////////////////////////////
+	
+	public static Rectangle2D addTextBox(XSLFSlide slide, String text, Rectangle2D anchor, Style style)
+	{
+		XSLFTable xtable = slide.createTable();
+		xtable.setAnchor(anchor);
+		XSLFTableRow row = xtable.addRow();
+		//row.setHeight(2);
+		XSLFTableCell td = row.addCell();
+		XSLFTextParagraph p = td.addNewTextParagraph();
+		p.setTextAlign(TextParagraph.TextAlign.LEFT);
+		XSLFTextRun run = p.addNewTextRun();
+		run.setText(text);
+		run.setFontSize(12.);
+		xtable.setColumnWidth(0, anchor.getWidth());
+		Rectangle2D newAnchor = new Rectangle2D.Double(anchor.getX(), anchor.getY()+anchor.getHeight(), anchor.getWidth(), anchor.getHeight());
+		return newAnchor;
+	}
+	
+	/////////////////////////////////////////////////////
 	
 	public static List<String> convertPptxToImages(String filename, String outdir)
 	{

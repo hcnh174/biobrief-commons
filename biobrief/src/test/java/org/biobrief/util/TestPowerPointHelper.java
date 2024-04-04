@@ -31,6 +31,7 @@ import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFTable;
 import org.apache.poi.xslf.usermodel.XSLFTableCell;
 import org.apache.poi.xslf.usermodel.XSLFTableRow;
+import org.apache.poi.xslf.usermodel.XSLFTextBox;
 import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.junit.jupiter.api.Test;
@@ -196,7 +197,7 @@ public class TestPowerPointHelper
 		}
 	}
 	
-	//@Test
+	@Test
 	public void createPowerPoint()
 	{
 		String filename=Constants.BIOBRIEF_DIR+"/.temp/tmp/presentation.pptx";
@@ -252,6 +253,12 @@ public class TestPowerPointHelper
 		createTable(slide, table, new java.awt.Rectangle(20, 200, 800, 800));
 //		XSLFTable table = slide.createTable();
 //		table.setAnchor(new java.awt.Rectangle(50, 50, 800, 800));
+		
+		String comments="頭頸部扁平上皮癌に特徴的な変異が検出されている。TERTのC228Aは活性化変異であることが示唆されている(PMID: 24018021)。";
+		XSLFTextBox shape = slide.createTextBox();
+		XSLFTextParagraph p = shape.addNewTextParagraph();
+		XSLFTextRun r = p.addNewTextRun();
+		r.setText(comments);
 //
 //		int numColumns = 3;
 //		int numRows = 5;
@@ -470,7 +477,7 @@ public class TestPowerPointHelper
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testConvertPptToImages()
 	{
 		try
