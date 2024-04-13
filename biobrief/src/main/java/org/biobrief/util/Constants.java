@@ -1,22 +1,9 @@
 package org.biobrief.util;
 
 public interface Constants
-{
-//	public static final String BASE_DIR=FileHelper.getBaseDirectory();
-//	public static final String TEMP_DIR=BASE_DIR+"/.temp";
-//	public static final String TMP_DIR=TEMP_DIR+"/tmp";
-//	public static final String LOG_DIR=TEMP_DIR+"/logs";
-	
+{	
 	public static final String BIOBRIEF_DIR=FileHelper.getWorkspaceDirectory()+"/biobrief-commons";
 	public static final String SCRIPTS_DIR=BIOBRIEF_DIR+"/scripts";
-	
-//	public static final String BASE_DIR=FileHelper.getBaseDirectory("biobrief-commons");
-//	public static final String DATA_DIR=BASE_DIR+"/data";
-//	public static final String CONFIG_DIR=DATA_DIR+"/config";
-//	public static final String TEMP_DIR=BASE_DIR+"/.temp";
-//	public static final String TMP_DIR=TEMP_DIR+"/tmp";
-//	public static final String LOG_DIR=TEMP_DIR+"/logs";
-//	public static final String SCRIPTS_DIR=BASE_DIR+"/biobrief-scripts";
 	
 	public static final String TIMESTAMP=DateHelper.getTimestamp();
 	public static final String DATE_PATTERN=DateHelper.YYYYMMDD_PATTERN;
@@ -369,6 +356,83 @@ public interface Constants
 		public String getCountry(){return this.country;}
 		public String getThreeletter(){return this.threeletter;}
 		public Integer getCode(){return this.code;}
+	}
+	
+	public enum Region
+	{
+		北海道東北,
+		関東,
+		甲信越北陸,
+		東海,
+		関西,
+		中国,
+		四国,
+		九州沖縄
+	}
+	
+	public enum Prefecture
+	{
+		北海道(Region.北海道東北),
+		青森県(Region.北海道東北),
+		岩手県(Region.北海道東北),
+		宮城県(Region.北海道東北),
+		秋田県(Region.北海道東北),
+		山形県(Region.北海道東北),
+		福島県(Region.北海道東北),
+		
+		茨城県 (Region.関東),
+		栃木県(Region.関東),
+		群馬県(Region.関東),
+		埼玉県(Region.関東),
+		千葉県(Region.関東),
+		東京都(Region.関東),
+		神奈川県(Region.関東),
+		
+		新潟県(Region.甲信越北陸),
+		富山県(Region.甲信越北陸),
+		石川県(Region.甲信越北陸),
+		福井県(Region.甲信越北陸),
+		山梨県(Region.甲信越北陸),
+		長野県(Region.甲信越北陸),
+
+		岐阜県(Region.東海),
+		静岡県(Region.東海),
+		愛知県(Region.東海),
+		三重県(Region.東海),
+		滋賀県(Region.関西),
+		京都府(Region.関西),
+		大阪府(Region.関西),
+		兵庫県(Region.関西),
+		奈良県(Region.関西),
+		和歌山県(Region.関西),
+
+		鳥取県(Region.中国),
+		島根県(Region.中国),
+		岡山県(Region.中国),
+		広島県(Region.中国),
+		山口県(Region.中国),
+		徳島県(Region.四国),
+		香川県(Region.四国),
+		愛媛県(Region.四国),
+		高知県(Region.四国),
+
+		福岡県(Region.九州沖縄),
+		佐賀県(Region.九州沖縄),
+		長崎県(Region.九州沖縄),
+		熊本県(Region.九州沖縄),
+		大分県(Region.九州沖縄),
+		宮崎県(Region.九州沖縄),
+		鹿児島県(Region.九州沖縄),
+		沖縄県(Region.九州沖縄);
+
+		private Region region;
+		
+		Prefecture(Region region)
+		{
+			this.region=region;
+		}
+		
+		public Region getRegion() {return region;}
 	}
 	
 	//https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping-types.html
