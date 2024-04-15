@@ -7,9 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.collect.Lists;
 
 import net.schmizz.sshj.SSHClient;
@@ -28,7 +25,7 @@ import net.schmizz.sshj.xfer.FileSystemFile;
 //https://github.com/hierynomus/sshj/issues/159
 public class SshHelper
 {
-	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(SshHelper.class);
+	//@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(SshHelper.class);
 	private static final boolean enabled=true;
 	
 	public static SshCredentials getCredentials(String username, String password, String host, Integer port)
@@ -164,16 +161,22 @@ public class SshHelper
 	// only write file if on Linux
 	public static String logCommand(String command, MessageWriter out)
 	{
-		String filename=LogUtil.getPrivateLogDir()+"/ssh-"+new Date().getTime()+".sh";
-		if (PlatformType.find().isUnix())
-			FileHelper.writeFile(filename, command);
-		return filename;
+		String logfile=LogUtil.getPrivateLogDir()+"/ssh-"+new Date().getTime()+".sh";
+		if (isLogged(logfile))
+			FileHelper.writeFile(logfile, command);
+		return logfile;
 	}
 	
 	private static void log(String logfile, String message, MessageWriter out)
 	{
 		//out.println(message);
-		FileHelper.appendFile(logfile, message);
+		if (isLogged(logfile))
+			FileHelper.appendFile(logfile, message);
+	}
+	
+	private static boolean isLogged(String logfile)
+	{
+		return PlatformType.find().isUnix();
 	}
 	
 	//https://github.com/hierynomus/sshj/blob/master/examples/src/main/java/net/schmizz/sshj/examples/SCPUpload.java
