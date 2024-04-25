@@ -56,7 +56,7 @@ public class BufferedMessageWriter extends MessageWriter
 	
 	private void append(String str)
 	{
-		System.out.println("appending message: "+str);
+//		System.out.println("appending message: "+str);
 		this.messages.add(str);
 	}
 }

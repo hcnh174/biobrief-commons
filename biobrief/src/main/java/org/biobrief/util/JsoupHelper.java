@@ -34,7 +34,8 @@ public class JsoupHelper
 			//return Jsoup.connect(url).get();
 			Connection conn=Jsoup.connect(url)
 					.userAgent("Mozilla/5.0")
-					.timeout(10 * 1000)
+					//.timeout(10 * 1000)
+					.timeout(0)
 					.followRedirects(true);
 			return conn.get();
 		}
