@@ -36,7 +36,7 @@ public abstract class AbstractFileCacheService
 			return false;
 		Date expirationDate=getExpirationDate();
 		Date lastModified=FileHelper.getLastModifiedDate(filename);
-		System.out.println("TRACE: filename found: filename="+filename+" date="+lastModified+" expires="+expirationDate);
+		//System.out.println("TRACE: filename found: filename="+filename+" date="+lastModified+" expires="+expirationDate);
 		if (DateHelper.isAfter(lastModified, expirationDate))
 			return true;
 		out.println("filename found but out of date: filename="+filename+" date="+lastModified+" expires="+expirationDate);
@@ -46,14 +46,14 @@ public abstract class AbstractFileCacheService
 	protected String getValue(String key, MessageWriter out)
 	{
 		String filename=getFilename(key);
-		out.println("reading filename: "+filename);
+		//out.println("reading filename: "+filename);
 		return FileHelper.readFile(filename);
 	}
 	
 	protected void setValue(String key, String value, MessageWriter out)
 	{
 		String filename=getFilename(key);
-		out.println("writing filename: "+filename);
+		//out.println("writing filename: "+filename);
 		FileHelper.writeFile(filename, format(value));
 		this.lastRequest=new Date();
 	}
