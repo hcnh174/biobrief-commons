@@ -46,6 +46,7 @@ dependencies {
 	api("com.google.guava:guava:${property('guava.version')}")
 	api("org.springframework.boot:spring-boot")
 	api("org.springframework.data:spring-data-rest-webmvc")
+	api("org.springframework.retry:spring-retry:${property('retry.version')}")
 	//api("javax.validation:validation-api")
 	//api("jakarta.validation:validation-api")
 	
@@ -74,6 +75,10 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation("org.junit.jupiter:junit-jupiter-api:${property('junit-jupiter.version')}")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property('junit-jupiter.version')}")
+	
+	//testRuntimeOnly("org.junit.vintage:junit-vintage-engine"){
+	//	exclude(module: "org.hamcrest")
+	//}
 	
 	///////////////////////////////
 	// spring
