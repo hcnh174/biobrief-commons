@@ -1705,6 +1705,16 @@ public final class FileHelper
 		}
 	}
 	
+	public static List<String> findFilesByWildcard(String dir, List<String> patterns)
+	{
+		List<String> filenames=Lists.newArrayList();
+		for (String pattern : patterns)
+		{
+			filenames.addAll(findFilesByWildcard(dir, pattern));
+		}
+		return filenames;
+	}
+	
 	/*
 	public static List<String> findFilesRecursivelyByWildcard(String dir, String pattern)
 	{

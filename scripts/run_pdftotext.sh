@@ -2,6 +2,7 @@
 
 source /home/nelson/workspace/biobrief-commons/scripts/functions.sh
 
+# docker pull hcnh174/pdftotextjp:v1
 # run_pdftotext.sh --pdffile filename.pdf --password secret --textfile filename.txt
 # run_pdftotext.sh --pdffile /mnt/expertpanel/A005490048398/HRU20-008.2.2/HRU20-008.2.2/HRU20-008.2.2_report.pdf --password A0054 --textfile /mnt/out/temp/HRU20-008.2.2_report_jp.txt
 
@@ -48,6 +49,3 @@ checkFileExists $textfile || exit 1
 echo "finished pdftotext"
 
 ######################################
-
-
-

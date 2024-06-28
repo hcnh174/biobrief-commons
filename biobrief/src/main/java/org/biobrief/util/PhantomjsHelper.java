@@ -1,6 +1,7 @@
 package org.biobrief.util;
 
-//run_phantomjs.sh -htmlfile /mnt/out/phantomjs/test.html --pdffile /mnt/out/phantomjs/test.pdf
+//run_phantomjs.sh --htmlfile /mnt/out/phantomjs/test.html --pdffile /mnt/out/phantomjs/test.pdf
+//run_phantomjs.sh --htmlfile /mnt/out/temp/J400604915052_F1/J400604915052_F1_trial_report.html --pdffile /mnt/out/temp/J400604915052_F1/J400604915052_F1_trial_report.pdf
 public class PhantomjsHelper
 {
 	public static int convertHtmlToPdf(String htmlfile, String pdffile)
