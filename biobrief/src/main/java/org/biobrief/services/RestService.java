@@ -17,14 +17,14 @@ public class RestService extends AbstractFileCacheService
 {
 	private final RestTemplate restTemplate;
 	
-	public RestService(RestTemplate restTemplate, String cacheDir)
-	{
-		this(restTemplate, cacheDir, RestHelper.DEFAULT_SLEEP);
-	}
+//	public RestService(RestTemplate restTemplate, String cacheDir)
+//	{
+//		this(restTemplate, cacheDir, RestHelper.DEFAULT_SLEEP);
+//	}
 	
-	public RestService(RestTemplate restTemplate, String cacheDir, Long sleeptime)
+	public RestService(RestTemplate restTemplate, String cacheDir, Long sleeptime, Integer maxAge)
 	{
-		super(cacheDir, sleeptime, 30, ".json");
+		super(cacheDir, sleeptime, maxAge, ".json");
 		this.restTemplate=restTemplate;
 	}
 	
