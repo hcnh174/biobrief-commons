@@ -5,7 +5,6 @@ import java.util.List;
 import org.biobrief.util.JsoupHelper;
 import org.biobrief.util.JsoupHelper.NameValuePair;
 import org.biobrief.util.MessageWriter;
-import org.biobrief.util.RestHelper;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +14,19 @@ import lombok.EqualsAndHashCode;
 @Service @Data @EqualsAndHashCode(callSuper=false)
 public class HttpService extends AbstractFileCacheService
 {	
-	public HttpService(String cacheDir)
-	{
-		this(cacheDir, RestHelper.DEFAULT_SLEEP);
-	}
+//	public HttpService(String cacheDir)
+//	{
+//		this(cacheDir, RestHelper.DEFAULT_SLEEP);
+//	}
+//	
+//	public HttpService(String cacheDir, Long sleeptime)
+//	{
+//		super(cacheDir, sleeptime, 30, ".html");
+//	}
 	
-	public HttpService(String cacheDir, Long sleeptime)
+	public HttpService(String cacheDir, Long sleeptime, Integer maxAge)
 	{
-		super(cacheDir, sleeptime, 30, ".html");
+		super(cacheDir, sleeptime, maxAge, ".html");
 	}
 	
 	public String get(String key, String url, MessageWriter out)

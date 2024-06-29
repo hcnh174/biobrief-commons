@@ -9,7 +9,7 @@ public class TestHttpService
 	@Test 
 	public void get()
 	{
-		HttpService httpService=new HttpService("c:/temp/test", 10000L);
+		HttpService httpService=new HttpService("c:/temp/test", 10000L, 30);
 		MessageWriter out=new MessageWriter();
 		String name1="jRCT2051210086";
 		String name2="jRCTs041210103";
