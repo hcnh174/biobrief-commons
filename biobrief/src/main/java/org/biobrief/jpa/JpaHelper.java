@@ -17,6 +17,7 @@ import org.biobrief.util.CException;
 import org.biobrief.util.DataFrame.IntegerDataFrame;
 import org.biobrief.util.DataType;
 import org.biobrief.util.FileHelper;
+import org.biobrief.util.JsonHelper;
 import org.biobrief.util.LocalDateHelper;
 import org.biobrief.util.MessageWriter;
 import org.biobrief.util.StringHelper;
@@ -509,7 +510,7 @@ public final class JpaHelper
 		}
 		catch (SQLException e)
 		{
-			throw new CException("column="+column+", type="+type,e);
+			throw new CException("column="+column+", type="+type, e);
 		}
 	}
 	
@@ -755,6 +756,14 @@ public final class JpaHelper
 		protected String getStringValue(ResultSet rs, String column)
 		{
 			return (String)getValue(rs, column);
+		}
+		
+		protected String getTrimmedStringValue(ResultSet rs, String column)
+		{
+			String value=getStringValue(rs, "description");
+			if (value==null)
+				throw new CException(getClass().getName()+": value of ["+column+"] column is null. rs="+JsonHelper.toJson(getAsMap(rs)));
+			return value.trim();
 		}
 		
 		protected Integer getIntValue(ResultSet rs, String column)
