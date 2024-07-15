@@ -116,7 +116,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 		System.out.println("total="+total);
 		query.with(paging);
 		List<T> list=mongoTemplate.find(query, cls);
-		System.out.println("list="+StringHelper.toString(list));
+		//System.out.println("list="+StringHelper.toString(list));
 		return new PageImpl<T>(list, paging, total);
 	}
 	
