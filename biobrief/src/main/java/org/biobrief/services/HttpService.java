@@ -14,16 +14,6 @@ import lombok.EqualsAndHashCode;
 @Service @Data @EqualsAndHashCode(callSuper=false)
 public class HttpService extends AbstractFileCacheService
 {	
-//	public HttpService(String cacheDir)
-//	{
-//		this(cacheDir, RestHelper.DEFAULT_SLEEP);
-//	}
-//	
-//	public HttpService(String cacheDir, Long sleeptime)
-//	{
-//		super(cacheDir, sleeptime, 30, ".html");
-//	}
-	
 	public HttpService(String cacheDir, Long sleeptime, Integer maxAge)
 	{
 		super(cacheDir, sleeptime, maxAge, ".html");
@@ -33,23 +23,39 @@ public class HttpService extends AbstractFileCacheService
 	{
 		if (containsKey(key, out))
 			return getValue(key, out);
+		return forceGet(key, url, out);
+	}
+
+	public String forceGet(String key, String url, MessageWriter out)
+	{
 		sleep(out);
 		Document document=JsoupHelper.parseUrl(url);
 		String html=document.html();
 		setValue(key, html, out);
-		//return html;
 		return getValue(key, out);
 	}
+	
+	//////////////////////////////////////////////////
+	
+//	public String post(String key, String url, List<NameValuePair> params, MessageWriter out)
+//	{
+//		Date expirationDate=getExpirationDate();
+//		return post(key, url, params, expirationDate, out);
+//	}
 	
 	public String post(String key, String url, List<NameValuePair> params, MessageWriter out)
 	{
 		if (containsKey(key, out))
 			return getValue(key, out);
+		return forcePost(key, url, params, out);
+	}
+	
+	public String forcePost(String key, String url, List<NameValuePair> params, MessageWriter out)
+	{
 		sleep(out);
 		Document document=JsoupHelper.post(url, params);
 		String html=document.html();
 		setValue(key, html, out);
-		//return html;
 		return getValue(key, out);
 	}
 }
