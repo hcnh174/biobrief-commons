@@ -84,7 +84,8 @@ public final class JsonHelper
 	{
 		try
 		{
-			ObjectMapper mapper=new ObjectMapper();
+			//ObjectMapper mapper=new ObjectMapper();
+			ObjectMapper mapper=createObjectMapper();
 			return mapper.readTree(json);
 		}
 		catch (Exception e)

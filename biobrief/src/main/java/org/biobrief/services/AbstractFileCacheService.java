@@ -27,12 +27,6 @@ public abstract class AbstractFileCacheService
 	}
 
 	///////////////////////////////////////
-	
-//	public boolean containsKey(String key, MessageWriter out)
-//	{
-//		Date expirationDate=getExpirationDate();
-//		return containsKey(key, expirationDate, out);
-//	}
 
 	public boolean containsKey(String key, MessageWriter out)
 	{

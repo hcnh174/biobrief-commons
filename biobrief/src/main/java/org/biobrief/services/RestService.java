@@ -16,12 +16,7 @@ import lombok.EqualsAndHashCode;
 public class RestService extends AbstractFileCacheService
 {
 	private final RestTemplate restTemplate;
-	
-//	public RestService(RestTemplate restTemplate, String cacheDir)
-//	{
-//		this(restTemplate, cacheDir, RestHelper.DEFAULT_SLEEP);
-//	}
-	
+
 	public RestService(RestTemplate restTemplate, String cacheDir, Long sleeptime, Integer maxAge)
 	{
 		super(cacheDir, sleeptime, maxAge, ".json");

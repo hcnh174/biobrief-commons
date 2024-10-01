@@ -23,7 +23,6 @@ public class WebConfiguration
 	public FreeMarkerConfigurer freemarkerConfigurer()
 	{
 		FreeMarkerConfigurer configurer=new FreeMarkerConfigurer();
-		//String freemarkerPath="file:biobrief-app/src/main/resources/templates/";
 		String freemarkerPath=properties.getFreemarkerPath();
 		configurer.setTemplateLoaderPath(freemarkerPath);
 		configurer.setDefaultEncoding(StringHelper.UTF8);
