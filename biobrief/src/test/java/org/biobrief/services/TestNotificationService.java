@@ -18,6 +18,6 @@ public class TestNotificationService
 		
 		NotificationService2.NotificationConfig config=notificationService.getConfig();
 		System.out.println("config="+JsonHelper.toJson(config));
-		notificationService.notify("report_load_started", StringHelper.createMap("name", "ABC012345_F1"), out);
+		notificationService.notify("report_load_started", StringHelper.createMap("report", "ABC012345_F1"), out);
 	}
 }

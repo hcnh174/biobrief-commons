@@ -3,6 +3,7 @@ package org.biobrief.services;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.biobrief.util.CException;
 import org.biobrief.util.FileHelper;
@@ -13,6 +14,7 @@ import org.biobrief.util.YamlHelper;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.Data;
 
@@ -66,18 +68,7 @@ public class NotificationService2
 //		return ignoreUsers.contains(username);
 //	}
 	
-	public void notify(String event_name, Map<String, Object> map, MessageWriter out)
-	{
-		NotificationConfig config=this.getConfig();
-		if (!config.getEnabled())
-			return;
-		NotificationConfig.Event event=config.getEvent(event_name);
-		if (!event.getEnabled())
-			return;
-		String subject=event.formatSubject(map);
-		String body=event.formatBody(map);
-		out.println("notify: event="+event_name+" subject="+subject+" body="+body);
-	}
+	
 	
 	///////////////////////////////////////////
 	
@@ -109,6 +100,22 @@ public class NotificationService2
 		return config;
 	}
 	
+	public void notify(String event_name, Map<String, Object> map, MessageWriter out)
+	{
+		NotificationConfig config=this.getConfig();
+		if (!config.getEnabled())
+			return;
+		NotificationConfig.Event event=config.getEvent(event_name);
+		if (!event.getEnabled())
+			return;
+		String subject=event.formatSubject(map);
+		String body=event.formatBody(map);
+	
+		List<String> addresses=config.getEmailAddresses(event.getGroups());
+		
+		out.println("notify: event="+event_name+" subject="+subject+" body="+body+" addresses="+StringHelper.join(addresses));
+	}
+	
 	/////////////////////////////////////////////////////////
 
 	@Data
@@ -121,6 +128,20 @@ public class NotificationService2
 		protected List<Event> events=Lists.newArrayList();
 		protected Date lastUpdated;
 		
+		public List<String> getEmailAddresses(List<String> groupnames)
+		{
+			Set<String> addresses=Sets.newLinkedHashSet();
+			for (User user : users)
+			{
+				for (String groupname : groupnames)
+				{
+					if (user.hasGroup(groupname))
+						addresses.add(user.getEmail());
+				}
+			}
+			return Lists.newArrayList(addresses);
+		}
+		
 		public Event getEvent(String name)
 		{
 			for (Event event : this.events)
@@ -129,6 +150,50 @@ public class NotificationService2
 					return event;
 			}
 			throw new CException("cannot find event: "+name);
+		}
+		
+		///////////////////////////////////////////
+		
+		public Group getGroup(String name)
+		{
+			for (Group group : this.groups)
+			{
+				if (group.matches(name))
+					return group;
+			}
+			throw new CException("cannot find group: "+name);
+		}
+		
+		public List<Group> getGroups(List<String> names)
+		{
+			List<Group> list=Lists.newArrayList();
+			for (String name : names)
+			{
+				list.add(getGroup(name));
+			}
+			return list;
+		}
+		
+		////////////////////////////////////////		
+		
+		public User getUser(String username)
+		{
+			for (User user : this.users)
+			{
+				if (user.matches(username))
+					return user;
+			}
+			throw new CException("cannot find user: "+username);
+		}
+		
+		public List<User> getUsers(List<String> names)
+		{
+			List<User> list=Lists.newArrayList();
+			for (String name : names)
+			{
+				list.add(getUser(name));
+			}
+			return list;
 		}
 		
 		@Data
@@ -154,6 +219,11 @@ public class NotificationService2
 			public boolean matches(String username)
 			{
 				return this.username.equals(username);
+			}
+			
+			public boolean hasGroup(String group)
+			{
+				return this.groups.contains(group);
 			}
 		}
 		
