@@ -111,9 +111,18 @@ public class NotificationService2
 		String subject=event.formatSubject(map);
 		String body=event.formatBody(map);
 	
-		List<String> addresses=config.getEmailAddresses(event.getGroups());
+		String fromEmailAddress=config.getFromEmailAddress(event);
+		List<String> toEmailAddresses=config.getToEmailAddresses(event);
 		
-		out.println("notify: event="+event_name+" subject="+subject+" body="+body+" addresses="+StringHelper.join(addresses));
+		try
+		{
+			out.println("notify: event="+event_name+" subject="+subject+" body="+body+" addresses="+StringHelper.join(toEmailAddresses));
+			emailService.sendEmail(fromEmailAddress, toEmailAddresses, subject, body, out);
+		}
+		catch(Exception e)
+		{
+			throw new CException("failed to send email: subject="+subject+" message="+body, e);
+		}
 	}
 	
 	/////////////////////////////////////////////////////////
@@ -128,12 +137,19 @@ public class NotificationService2
 		protected List<Event> events=Lists.newArrayList();
 		protected Date lastUpdated;
 		
-		public List<String> getEmailAddresses(List<String> groupnames)
+		public String getFromEmailAddress(Event event)
+		{
+			if (StringHelper.hasContent(event.getFrom()))
+				return event.getFrom();
+			else return this.from;
+		}
+		
+		public List<String> getToEmailAddresses(Event event)
 		{
 			Set<String> addresses=Sets.newLinkedHashSet();
 			for (User user : users)
 			{
-				for (String groupname : groupnames)
+				for (String groupname : event.getGroups())
 				{
 					if (user.hasGroup(groupname))
 						addresses.add(user.getEmail());
@@ -231,6 +247,7 @@ public class NotificationService2
 		public static class Event
 		{
 			protected String name;
+			protected String from;
 			protected String subject="subject";
 			protected String body="body";
 			protected Boolean enabled=true;
