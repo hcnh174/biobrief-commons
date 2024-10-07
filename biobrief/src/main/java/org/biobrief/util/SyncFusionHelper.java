@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.biobrief.services.NotificationService;
+import org.biobrief.services.NotificationService2;
 import org.biobrief.util.VirtualFileSystem.IFile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,11 +42,18 @@ public class SyncFusionHelper
 	{
 		protected VirtualFileSystem vfs;
 		protected NotificationService notificationService;
+		protected NotificationService2 notificationService2;
 		
 		public FileManager(VirtualFileSystem vfs, NotificationService notificationService)
 		{
 			this.vfs=vfs;
 			this.notificationService=notificationService;
+		}
+		
+		public FileManager(VirtualFileSystem vfs, NotificationService2 notificationService2)
+		{
+			this.vfs=vfs;
+			this.notificationService2=notificationService2;
 		}
 		
 		///////////////////////////////////
@@ -186,7 +194,16 @@ public class SyncFusionHelper
 			if (!entry.isNotified())
 				return;
 			String subject=entry.getSubject();
-			notificationService.notify(subject, message, new MessageWriter());
+			notify(subject, message);
+			//notificationService.notify(subject, message);//, new MessageWriter());
+		}
+		
+		private void notify(String subject, String message)
+		{
+			if (notificationService!=null)
+				notificationService.notify(subject, message, new MessageWriter());
+			if (notificationService2!=null)
+				notificationService2.notify(NotificationService2.FILEMANAGER_TOPIC, subject, message, new Context());
 		}
 		
 		//////////////////////////////////////////////////////

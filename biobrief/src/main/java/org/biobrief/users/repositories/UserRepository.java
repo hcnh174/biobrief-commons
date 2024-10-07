@@ -11,5 +11,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface UserRepository extends MongoRepository<User, String> 
 {
 	Optional<User> findByUsername(@Param("username") String username);
-	Optional<User> findByHirodaiId(@Param("hirodaiId") String hirodaiId);
 }

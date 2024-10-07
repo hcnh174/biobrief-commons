@@ -1,14 +1,16 @@
 package org.biobrief.services;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
+import org.biobrief.users.entities.Login;
+import org.biobrief.users.entities.Route;
 import org.biobrief.util.CException;
+import org.biobrief.util.Context;
 import org.biobrief.util.FileHelper;
 import org.biobrief.util.LogUtil;
-import org.biobrief.util.MessageWriter;
 import org.biobrief.util.StringHelper;
 import org.biobrief.util.YamlHelper;
 import org.springframework.stereotype.Component;
@@ -17,62 +19,97 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Component @Data
 public class NotificationService2
 {
+	public static final String LOGIN_TOPIC="login";
+	public static final String ROUTE_TOPIC="route";
+	public static final String FILEMANAGER_TOPIC="filemanager";
+	
 	private final EmailService emailService;
 	private final String configfile;
 	private NotificationConfig config=null;
-//	private Boolean notify;
-//	private List<String> ignoreUsers=Lists.newArrayList();
-//	private String fromEmailAddress;
-//	private List<String> toEmailAddresses=Lists.newArrayList();
-	
-	public NotificationService2(EmailService emailService, String configfile)
+	private Boolean enabled;
+
+	public NotificationService2(EmailService emailService, String configfile, Boolean enabled)
 	{
 		this.emailService=emailService;
 		this.configfile=configfile;
-//		if (!StringHelper.hasContent(fromEmailAddress))
-//			throw new CException("notification from: email address has not been set");
-//		if (toEmailAddresses.isEmpty())
-//			throw new CException("notification to: email address has not been set");
-//		this.emailService=emailService;
-//		this.notify=notify;
-//		this.fromEmailAddress=fromEmailAddress;
-//		this.toEmailAddresses.addAll(toEmailAddresses);
-//		this.ignoreUsers.addAll(ignoreUsers);
+		this.enabled=enabled;
 	}
 	
-//	public void notify(String subject, String message, MessageWriter out)
-//	{
-//		notify(this.toEmailAddresses, subject, message, out);
-//	}
-//	
-//	public void notify(List<String> toEmailAddresses, String subject, String message, MessageWriter out)
-//	{
-//		try
-//		{
-//			if (notify)
-//				emailService.sendEmail(fromEmailAddress, toEmailAddresses, subject, message, out);
-//		}
-//		catch(Exception e)
-//		{
-//			LogUtil.log("failed to send email: subject="+subject+" message="+message, e);
-//		}
-//	}
-//	
-//	public boolean isIgnored(String username)
-//	{
-//		//System.out.println("isIgnored: username="+username+" ignoreUsers="+StringHelper.toString(ignoreUsers));
-//		return ignoreUsers.contains(username);
-//	}
-	
-	
+	public NotificationConfig getConfig()
+	{
+		if (config==null)
+			return load();
+		Date date=FileHelper.getLastModifiedDate(this.configfile);
+		if (date.after(config.getLastUpdated()))
+			return load();
+		return config;
+	}
 	
 	///////////////////////////////////////////
 	
-	public NotificationConfig load()
+	public void notify(String topic_name, Model model, Context context)
+	{
+		if (!getEnabled())
+			return;
+		NotificationConfig config=this.getConfig();
+		if (!config.getEnabled())
+			return;
+		NotificationConfig.Topic topic=config.getTopic(topic_name);
+		if (!topic.getEnabled())
+			return;
+		if (topic.isIgnored(context.getUsername()))
+			return;
+		
+		Notification notification=new Notification(topic_name);
+		notification.setSubject(topic.formatSubject(model));
+		notification.setBody(topic.formatBody(model));
+		notification.setFromAddress(config.getFromEmailAddress(topic));
+		notification.setToAddresses(config.getToEmailAddresses(topic));
+		
+		notify(notification, context);
+	}
+	
+	public void notify(String topic_name, String subject, String body, Context context)
+	{
+		Model model=new Model();
+		model.setSubject(subject);
+		model.setBody(body);
+		notify(topic_name, model, context);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////	
+	
+	public void notifyLogin(Login login, Context context)
+	{
+		notify(LOGIN_TOPIC, login.getSubject(), login.getMessage(), context);
+	}
+	
+	public void notifyRoute(Route route, Context context)
+	{
+		notify(ROUTE_TOPIC, Route.getSubject(route), Route.getMessage(route), context);
+	}
+	
+	/////////////////////////////////////////////////////////
+	
+	private void notify(Notification notification, Context context)
+	{
+		try
+		{
+			context.println(notification.toString());
+			emailService.sendEmail(notification.getFromAddress(), notification.getToAddresses(), notification.getSubject(), notification.getBody(), context.getOut());
+		}
+		catch(Exception e)
+		{
+			throw new CException("failed to send email: "+notification.toString(), e);
+		}
+	}
+	
+	private NotificationConfig load()
 	{
 		try
 		{
@@ -90,43 +127,57 @@ public class NotificationService2
 		}
 	}
 	
-	public NotificationConfig getConfig()
-	{
-		if (config==null)
-			return load();
-		Date date=FileHelper.getLastModifiedDate(this.configfile);
-		if (date.after(config.getLastUpdated()))
-			return load();
-		return config;
-	}
-	
-	public void notify(String event_name, Map<String, Object> map, MessageWriter out)
-	{
-		NotificationConfig config=this.getConfig();
-		if (!config.getEnabled())
-			return;
-		NotificationConfig.Event event=config.getEvent(event_name);
-		if (!event.getEnabled())
-			return;
-		String subject=event.formatSubject(map);
-		String body=event.formatBody(map);
-	
-		String fromEmailAddress=config.getFromEmailAddress(event);
-		List<String> toEmailAddresses=config.getToEmailAddresses(event);
-		
-		try
-		{
-			out.println("notify: event="+event_name+" subject="+subject+" body="+body+" addresses="+StringHelper.join(toEmailAddresses));
-			emailService.sendEmail(fromEmailAddress, toEmailAddresses, subject, body, out);
-		}
-		catch(Exception e)
-		{
-			throw new CException("failed to send email: subject="+subject+" message="+body, e);
-		}
-	}
-	
-	/////////////////////////////////////////////////////////
 
+	
+	//////////////////////////////////////////
+	
+	@Data
+	public static class Notification
+	{
+		protected final String topicname;
+		protected String fromAddress;
+		protected List<String> toAddresses=Lists.newArrayList();
+		protected String subject="subject";
+		protected String body="body";
+		
+		public Notification(String topicname)
+		{
+			this.topicname=topicname;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return "notification: topic="+topicname+" subject="+subject+" body="+body+" from="+fromAddress+" to="+StringHelper.join(toAddresses);
+		}
+	}
+	
+	@Data @EqualsAndHashCode(callSuper=true)
+	public static class Model extends LinkedHashMap<String, Object>
+	{
+		private static final long serialVersionUID = 1L;
+	
+		public void setSubject(String value)
+		{
+			put("subject", value);
+		}
+		
+		public void setBody(String value)
+		{
+			put("body", value);
+		}
+		
+		public String format(String template)
+		{
+			String formatted=template;
+			for (String key : keySet())
+			{
+				formatted=StringHelper.replace(template, "{{"+key+"}}", get(key).toString());
+			}
+			return formatted;
+		}
+	}
+	
 	@Data
 	public static class NotificationConfig
 	{
@@ -134,22 +185,22 @@ public class NotificationService2
 		protected String from;
 		protected List<Group> groups=Lists.newArrayList();
 		protected List<User> users=Lists.newArrayList();
-		protected List<Event> events=Lists.newArrayList();
+		protected List<Topic> topics=Lists.newArrayList();
 		protected Date lastUpdated;
 		
-		public String getFromEmailAddress(Event event)
+		public String getFromEmailAddress(Topic topic)
 		{
-			if (StringHelper.hasContent(event.getFrom()))
-				return event.getFrom();
+			if (StringHelper.hasContent(topic.getFrom()))
+				return topic.getFrom();
 			else return this.from;
 		}
 		
-		public List<String> getToEmailAddresses(Event event)
+		public List<String> getToEmailAddresses(Topic topic)
 		{
 			Set<String> addresses=Sets.newLinkedHashSet();
 			for (User user : users)
 			{
-				for (String groupname : event.getGroups())
+				for (String groupname : topic.getGroups())
 				{
 					if (user.hasGroup(groupname))
 						addresses.add(user.getEmail());
@@ -158,14 +209,14 @@ public class NotificationService2
 			return Lists.newArrayList(addresses);
 		}
 		
-		public Event getEvent(String name)
+		public Topic getTopic(String name)
 		{
-			for (Event event : this.events)
+			for (Topic topic : this.topics)
 			{
-				if (event.matches(name))
-					return event;
+				if (topic.matches(name))
+					return topic;
 			}
-			throw new CException("cannot find event: "+name);
+			throw new CException("cannot find topic: "+name);
 		}
 		
 		///////////////////////////////////////////
@@ -244,39 +295,45 @@ public class NotificationService2
 		}
 		
 		@Data
-		public static class Event
+		public static class Topic
 		{
 			protected String name;
 			protected String from;
-			protected String subject="subject";
-			protected String body="body";
+			protected String subject="{{subject}}";
+			protected String body="{{body}}";
 			protected Boolean enabled=true;
 			protected List<String> groups=Lists.newArrayList();
+			protected List<String> ignoreUsers=Lists.newArrayList();
 			
 			public boolean matches(String name)
 			{
 				return this.name.equals(name);
 			}
 			
-			public String formatSubject(Map<String, Object> map)
+			public boolean isIgnored(String username)
 			{
-				return format(this.subject, map);
+				return ignoreUsers.contains(username);
 			}
 			
-			public String formatBody(Map<String, Object> map)
+			public String formatSubject(Model model)
 			{
-				return format(this.body, map);
+				return model.format(this.subject);
 			}
 			
-			private String format(String template, Map<String, Object> map)
+			public String formatBody(Model model)
 			{
-				String formatted=template;
-				for (String key : map.keySet())
-				{
-					formatted=StringHelper.replace(template, "{{"+key+"}}", map.get(key).toString());
-				}
-				return formatted;
+				return model.format(this.body);
 			}
+//			
+//			private String format(String template, Model model)
+//			{
+//				String formatted=template;
+//				for (String key : map.keySet())
+//				{
+//					formatted=StringHelper.replace(template, "{{"+key+"}}", map.get(key).toString());
+//				}
+//				return formatted;
+//			}
 		}
 	}
 }

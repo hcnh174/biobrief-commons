@@ -3,20 +3,21 @@ package org.biobrief.users.entities;
 import java.util.Date;
 
 import org.biobrief.mongo.AbstractMongoEntity;
-//import org.mongodb.morphia.annotations.Entity;
+import org.biobrief.web.WebHelper;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
 import org.springframework.security.core.Authentication;
 
-@Document(collection="logins") //@Entity
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Document(collection="logins") @Data @EqualsAndHashCode(callSuper=true)
 public class Login extends AbstractMongoEntity
 {
-	// DECLARATIONS_START
-	protected Date date; //date
-	protected boolean succeeded; //succeeded
-	protected String username; //username
-	protected String message; //message
-	// DECLARATIONS_END
+	protected Date date;
+	protected boolean succeeded;
+	protected String username;
+	protected String message;
 
 	public Login(){}
 	
@@ -34,20 +35,27 @@ public class Login extends AbstractMongoEntity
 		this.date=new Date();
 		this.succeeded=auth.isAuthenticated();
 		this.username=auth.getName();
-		this.message="Login attempt with username: " + auth.getName() + "\t\tSuccess: " + auth.isAuthenticated()+"\tevent="+event.getClass().getName();
+		this.message=getMessage(event);
 	}
 	
-	// ACCESSORS_START
-	public Date getDate(){return date;}
-	public void setDate(final Date date){this.date=date;}
+	public static String getMessage(AbstractAuthenticationEvent event)
+	{
+		Authentication auth=event.getAuthentication();
+		return getMessage(auth.getName(), event.getClass().getName(), auth.isAuthenticated());
+	}
 	
-	public boolean getSucceeded(){return succeeded;}
-	public void setSucceeded(final boolean succeeded){this.succeeded=succeeded;}
+	public static String getMessage(String username, String event, boolean success)
+	{
+		String server=WebHelper.getServerName();
+		String message="Login attempt with username: " + username + "\n";
+		message+="Success: " + success+"\n";
+		message+="Event="+event+"\n";
+		message+="Server="+server+"\n";
+		return message;
+	}
 	
-	public String getUsername(){return username;}
-	public void setUsername(final String username){this.username=username;}
-	
-	public String getMessage(){return message;}
-	public void setMessage(final String message){this.message=message;}
-	// ACCESSORS_END
+	public String getSubject()
+	{
+		return username+" login: "+(succeeded ? "success" : "FAILED");
+	}
 }

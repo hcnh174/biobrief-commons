@@ -27,10 +27,10 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 		return repository.findByUsername(username);
 	}
 	
-	public Optional<User> findByHirodaiId(String hirodaiId)
-	{
-		return repository.findByHirodaiId(hirodaiId);
-	}
+//	public Optional<User> findByHirodaiId(String hirodaiId)
+//	{
+//		return repository.findByHirodaiId(hirodaiId);
+//	}
 	
 	////////////////////////////////////////////////////
 	
@@ -41,11 +41,11 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 		return user.orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 	
-	public User getByHirodaiId(String hirodaiId)
-	{
-		Optional<User> user=findByHirodaiId(hirodaiId);
-		return user.orElseThrow(() -> new UserNotFoundException(hirodaiId));
-	}
+//	public User getByHirodaiId(String hirodaiId)
+//	{
+//		Optional<User> user=findByHirodaiId(hirodaiId);
+//		return user.orElseThrow(() -> new UserNotFoundException(hirodaiId));
+//	}
 	
 	///////////////////////////////////////////////
 	
@@ -85,8 +85,8 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 					doNothing();
 				else if (property.equals("password"))
 					setPassword(user, value.toString());
-				else if (User.isRoleProperty(property))
-					setBooleanProperty(user, property, value, false);
+//				else if (User.isRoleProperty(property))
+//					setBooleanProperty(user, property, value, false);
 				else setProperty(user, property, value);
 			}
 			save(user);
@@ -137,17 +137,17 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 	
 	///////////////////////////////////////
 	
-	public User findOrCreateAdminUser(String id, String username, String password)
-	{	
-		//System.out.println("findOrCreateAdminUser id="+id+" username="+username+" password="+password);
-		Optional<User> opt=findByUsername(username);
-		if (opt.isPresent())
-			return opt.get();
-		StringHelper.announce("Creating default user");
-		User user=new User(id, username, encodePassword(password));
-		user.setName(username);
-		user.setAdministrators(true);
-		save(user);
-		return user;
-	}	
+//	public User findOrCreateAdminUser(String id, String username, String password)
+//	{	
+//		//System.out.println("findOrCreateAdminUser id="+id+" username="+username+" password="+password);
+//		Optional<User> opt=findByUsername(username);
+//		if (opt.isPresent())
+//			return opt.get();
+//		StringHelper.announce("Creating default user");
+//		User user=new User(id, username, encodePassword(password));
+//		user.setName(username);
+//		user.setAdministrators(true);
+//		save(user);
+//		return user;
+//	}	
 }

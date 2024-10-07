@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.biobrief.mongo.AbstractMongoEntity;
-import org.biobrief.users.UserConstants.Role;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,16 +35,16 @@ public abstract class AbstractUser extends AbstractMongoEntity implements UserDe
 	public boolean isAccountNonLocked(){return true;}
 	public boolean isCredentialsNonExpired(){return true;}
 
-	public abstract List<Role> getRoles();
+	//public abstract List<Role> getRoles();
 	
 	@JsonIgnore
 	public Collection<GrantedAuthority> getAuthorities()
 	{
 		Collection<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
-		for (Role role : getRoles())
-		{
-			authorities.add(new SimpleGrantedAuthority(role.name()));
-		}
+//		for (Role role : getRoles())
+//		{
+//			authorities.add(new SimpleGrantedAuthority(role.name()));
+//		}
 		return authorities;
 	}
 	

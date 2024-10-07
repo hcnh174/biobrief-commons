@@ -12,8 +12,8 @@ import lombok.Data;
 @ConfigurationProperties("users") @Data
 public class UsersProperties
 {
-	@Valid @NotNull private String filename;
-	@Valid @NotNull private String adminId;
-	@Valid @NotNull private String adminUsername;
-	@Valid @NotNull private String adminPassword;
+//	@Valid @NotNull private String filename;
+//	@Valid @NotNull private String adminId;
+//	@Valid @NotNull private String adminUsername;
+//	@Valid @NotNull private String adminPassword;
 }
