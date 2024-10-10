@@ -17,11 +17,6 @@ public interface UserService
 	void updateUser(UserForm form);
 	List<User> updateUsers(List<User> users);
 	List<User> getUsers();
-//	List<User> getUsers(Role role);
 	Page<User> getUsers(Pageable paging);
 	boolean changePassword(String username, String oldpassword, String newpassword);
-//	boolean loadUsers(MessageWriter writer);
-//	boolean loadUsers(String filename, MessageWriter writer);
-	//User findOrCreateAdminUser();
-	//void logUrl(Route route);
 }
