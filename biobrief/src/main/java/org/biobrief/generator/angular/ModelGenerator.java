@@ -45,8 +45,6 @@ public final class ModelGenerator
 		{
 			String str=FileHelper.readFile(modelfile);
 			str=Util.insertText(Util.DECLARATIONS, str, model.createDeclarations(), true);
-//			String outfile=Util.replaceFile(FileType.ANGULAR_MODEL, modelfile, str, params.getOverwrite(), entityType.getGroup());
-//			writer.println("wrote file: "+outfile);
 		}
 		catch (GeneratorException e)
 		{

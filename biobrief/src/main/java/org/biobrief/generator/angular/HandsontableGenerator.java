@@ -18,12 +18,6 @@ public class HandsontableGenerator extends AbstractLayoutGenerator
 {
 	private final Map<String, Handsontable> handsontables=Maps.newLinkedHashMap();
 	
-//	public static void generate(HandsontableGeneratorParams params, MessageWriter writer)
-//	{
-//		HandsontableGenerator generator=new HandsontableGenerator(params, writer);
-//		generator.generate();
-//	}
-	
 	public static void generate(HandsontableGeneratorParams params, MessageWriter writer)
 	{
 		HandsontableGenerator generator=new HandsontableGenerator(params, writer);

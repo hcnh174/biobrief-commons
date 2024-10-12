@@ -8,9 +8,10 @@ public class TestFormGenerator
 	@Test
 	public void creatFieldset()
 	{
-		String xlsxfile="C:/workspace/gangenome/data/templates/forms/ekipane-forms.xlsx";
+		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms.xlsx";
+		String srcDir="C:/temp/generator/forms";
 		String outDir="C:/temp/generator/forms";
-		String[] argv={xlsxfile, outDir};
+		String[] argv={xlsxfile, srcDir, outDir};
 		FormGenerator.main(argv);
 	}
 }

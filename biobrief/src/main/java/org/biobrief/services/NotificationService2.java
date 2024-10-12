@@ -66,8 +66,8 @@ public class NotificationService2
 			return;
 		
 		Notification notification=new Notification(topic_name);
-		notification.setSubject(topic.formatSubject(model));
-		notification.setBody(topic.formatBody(model));
+		notification.setSubject(model.getSubject());//topic.formatSubject(model)
+		notification.setBody(model.getBody());//topic.formatBody(model)
 		notification.setFromAddress(config.getFromEmailAddress(topic));
 		notification.setToAddresses(config.getToEmailAddresses(topic));
 		
@@ -127,8 +127,6 @@ public class NotificationService2
 		}
 	}
 	
-
-	
 	//////////////////////////////////////////
 	
 	@Data
@@ -156,16 +154,18 @@ public class NotificationService2
 	public static class Model extends LinkedHashMap<String, Object>
 	{
 		private static final long serialVersionUID = 1L;
-	
-		public void setSubject(String value)
-		{
-			put("subject", value);
-		}
+		private String subject;
+		private String body;
 		
-		public void setBody(String value)
-		{
-			put("body", value);
-		}
+//		public void setSubject(String value)
+//		{
+//			put("subject", value);
+//		}
+//		
+//		public void setBody(String value)
+//		{
+//			put("body", value);
+//		}
 		
 		public String format(String template)
 		{
@@ -299,8 +299,8 @@ public class NotificationService2
 		{
 			protected String name;
 			protected String from;
-			protected String subject="{{subject}}";
-			protected String body="{{body}}";
+			protected String subject="subject";
+			protected String body="body";
 			protected Boolean enabled=true;
 			protected List<String> groups=Lists.newArrayList();
 			protected List<String> ignoreUsers=Lists.newArrayList();
