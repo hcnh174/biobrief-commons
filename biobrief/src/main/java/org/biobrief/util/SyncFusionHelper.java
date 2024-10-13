@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.biobrief.services.NotificationService;
 import org.biobrief.services.NotificationService2;
+import org.biobrief.users.dao.ActivityDao;
+import org.biobrief.users.entities.Activity;
 import org.biobrief.util.VirtualFileSystem.IFile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +45,7 @@ public class SyncFusionHelper
 		protected VirtualFileSystem vfs;
 		protected NotificationService notificationService;
 		protected NotificationService2 notificationService2;
+		protected ActivityDao activityDao;
 		
 		public FileManager(VirtualFileSystem vfs, NotificationService notificationService)
 		{
@@ -50,9 +53,10 @@ public class SyncFusionHelper
 			this.notificationService=notificationService;
 		}
 		
-		public FileManager(VirtualFileSystem vfs, NotificationService2 notificationService2)
+		public FileManager(VirtualFileSystem vfs, ActivityDao activityDao, NotificationService2 notificationService2)
 		{
 			this.vfs=vfs;
+			this.activityDao=activityDao;
 			this.notificationService2=notificationService2;
 		}
 		
@@ -194,17 +198,29 @@ public class SyncFusionHelper
 			if (!entry.isNotified())
 				return;
 			String subject=entry.getSubject();
-			notify(subject, message);
+			notify(subject, message, user);
 			//notificationService.notify(subject, message);//, new MessageWriter());
 		}
 		
-		private void notify(String subject, String message)
+		private void notify(String subject, String message, UserDetails user)
 		{
 			if (notificationService!=null)
 				notificationService.notify(subject, message, new MessageWriter());
 			if (notificationService2!=null)
 				notificationService2.notify(NotificationService2.FILEMANAGER_TOPIC, subject, message, new Context());
+			if (activityDao!=null)
+				activityDao.add(new Activity(user.getUsername(), NotificationService2.FILEMANAGER_TOPIC, subject, message));
 		}
+		
+//		private void notify(String subject, String message)
+//		{
+//			if (notificationService!=null)
+//				notificationService.notify(subject, message, new MessageWriter());
+//			if (notificationService2!=null)
+//				notificationService2.notify(NotificationService2.FILEMANAGER_TOPIC, subject, message, new Context());
+//			if (activityDao!=null)
+//				activityDao.add(new Activity(contextNotificationService2.FILEMANAGER_TOPIC, subject, message, new Context());
+//		}
 		
 		//////////////////////////////////////////////////////
 		

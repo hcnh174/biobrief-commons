@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages={"edu.hiro.users"})
+//@ComponentScan(basePackages={"edu.hiro.users"})
 @EnableConfigurationProperties(UsersProperties.class)
 @EntityScan(basePackages={"org.biobrief.users"})
 @EnableMongoRepositories(basePackages={"org.biobrief.users"})
@@ -25,38 +24,38 @@ public class UsersConfiguration
 	{System.out.println("UsersConfiguration");}
 	
 	@Bean
-	public UserService userService()
+	UserService userService()
 	{
 		return new UserServiceImpl();
 	}
-	
+
 	@Bean
-	public PasswordEncoder passwordEncoder()
+	PasswordEncoder passwordEncoder()
 	{
 		//return new PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		return new BCryptPasswordEncoder(16);
 	}
 	
 	@Bean
-	public ActivityDao activityDao()
+	ActivityDao activityDao()
 	{
 		return new ActivityDao();
 	}
 	
 	@Bean
-	public LoginDao loginDao()
+	LoginDao loginDao()
 	{
 		return new LoginDao();
 	}
 	
 	@Bean
-	public RouteDao routeDao()
+	RouteDao routeDao()
 	{
 		return new RouteDao();
 	}
 	
 	@Bean
-	public UserDao userDao()
+	UserDao userDao()
 	{
 		return new UserDao();
 	}

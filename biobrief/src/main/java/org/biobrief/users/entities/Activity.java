@@ -2,38 +2,29 @@ package org.biobrief.users.entities;
 
 import java.util.Date;
 
-//import org.mongodb.morphia.annotations.Entity;
-import org.springframework.data.annotation.Id;
+import org.biobrief.mongo.AbstractMongoEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.biobrief.util.AbstractEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Document(collection="activity") //@Entity
-public class Activity extends AbstractEntity<String>
+@Document(collection="activity") @Data @EqualsAndHashCode(callSuper=true)
+public class Activity extends AbstractMongoEntity
 {
-	@Id
-	private String id;
 	private Date date;
 	private String username;
+	private String topic;
 	private String activity;
+	private String details;
 
 	public Activity(){}
 	
-	public Activity(String username, String activity)
+	public Activity(String username, String topic, String activity, String details)
 	{
 		this.date=new Date();
 		this.username=username;
+		this.topic=topic;
 		this.activity=activity;
+		this.details=details;
 	}
-
-	public String getId(){return id;}
-	
-	public Date getDate(){return this.date;}
-	public void setDate(final Date date){this.date=date;}
-
-	public String getUsername(){return this.username;}
-	public void setUsername(final String username){this.username=username;}
-	
-	public String getActivity(){return this.activity;}
-	public void setActivity(final String activity){this.activity=activity;}
 }
