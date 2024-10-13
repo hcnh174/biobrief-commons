@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 public class Activity extends AbstractMongoEntity
 {
 	private Date date;
+	private String server;
 	private String username;
 	private String topic;
 	private String activity;
@@ -19,9 +20,10 @@ public class Activity extends AbstractMongoEntity
 
 	public Activity(){}
 	
-	public Activity(String username, String topic, String activity, String details)
+	public Activity(String server, String username, String topic, String activity, String details)
 	{
 		this.date=new Date();
+		this.server=server;
 		this.username=username;
 		this.topic=topic;
 		this.activity=activity;

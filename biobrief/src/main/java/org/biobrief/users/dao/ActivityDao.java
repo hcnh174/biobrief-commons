@@ -8,6 +8,7 @@ import org.biobrief.users.repositories.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -28,5 +29,10 @@ public class ActivityDao extends AbstractMongoDao<Activity, ActivityRepository>
 	public Page<Activity> findAll(Pageable paging)
 	{
 		return repository.findAll(paging);
+	}
+	
+	public Page<Activity> findAll(Query query, Pageable paging)
+	{
+		return findAll(query, Activity.class, paging);
 	}
 }

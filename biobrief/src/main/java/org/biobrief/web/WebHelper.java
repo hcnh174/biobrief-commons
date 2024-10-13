@@ -27,13 +27,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import org.biobrief.util.CException;
 import org.biobrief.util.ContentType;
 import org.biobrief.util.FileHelper;
@@ -54,11 +47,16 @@ import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-//import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public final class WebHelper
 {	
@@ -114,21 +112,6 @@ public final class WebHelper
 	{
 		return StringHelper.joinParams(params, escape);
 	}
-	
-//	public static String joinParams(Map<String,Object> params, boolean escape)
-//	{
-//		StringBuilder buffer=new StringBuilder();
-//		String separator="";
-//		for (String name : params.keySet())
-//		{
-//			buffer.append(separator);
-//			buffer.append(name+"="+params.get(name).toString());
-//			if (escape)
-//				separator="&amp;";
-//			else separator="&";
-//		}
-//		return buffer.toString();
-//	}
 	
 	public static String getUrl(HttpServletRequest request)
 	{
@@ -880,18 +863,6 @@ public final class WebHelper
 		return StringHelper.hasContent(request.getParameter(name));
 	}
 	
-//	private static Sort getSort(HttpServletRequest request)
-//	{
-//		List<Sort.Order> sorters=Lists.newArrayList();
-//		List<String> parts=StringHelper.split(request.getParameter("sort"), ",");
-//		String field=parts.get(0);
-//		Sort.Direction dir=parts.get(1).equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-//		sorters.add(new Sort.Order(dir, field));
-//		Sort sort=Sort.by(sorters);
-//		//logger.debug("sorts: "+sort.toString());
-//		return sort;
-//	}
-	
 	/////////////////////////////////////////////////
 	
 	public static String getHostName()
@@ -918,30 +889,6 @@ public final class WebHelper
 			throw new CException(e);
 		}
 	}
-	
-	////////////////////////////////////////////////////
-	
-//	public static String writeFile(String dir, MultipartFile file)
-//	{
-//		if (file.isEmpty())
-//			throw new CException("Uploaded multipart file was empty");
-//		BufferedOutputStream stream=null;
-//		try
-//		{
-//			String filename=dir+"/"+file.getOriginalFilename();
-//			stream=new BufferedOutputStream(new FileOutputStream(new File(filename)));
-//			FileCopyUtils.copy(file.getInputStream(), stream);
-//			return filename;
-//		}
-//		catch (Exception e)
-//		{
-//			throw new CException("You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage());
-//		}
-//		finally
-//		{
-//			FileHelper.closeStream(stream);
-//		}
-//	}
 	
 	//https://github.com/spring-guides/gs-uploading-files/blob/main/complete/src/main/java/com/example/uploadingfiles/storage/FileSystemStorageService.java
 	public static String writeFile(String dir, MultipartFile file)

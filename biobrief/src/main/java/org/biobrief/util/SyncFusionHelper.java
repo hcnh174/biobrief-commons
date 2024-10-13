@@ -10,6 +10,7 @@ import org.biobrief.services.NotificationService2;
 import org.biobrief.users.dao.ActivityDao;
 import org.biobrief.users.entities.Activity;
 import org.biobrief.util.VirtualFileSystem.IFile;
+import org.biobrief.web.WebHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -209,7 +210,7 @@ public class SyncFusionHelper
 			if (notificationService2!=null)
 				notificationService2.notify(NotificationService2.FILEMANAGER_TOPIC, subject, message, new Context());
 			if (activityDao!=null)
-				activityDao.add(new Activity(user.getUsername(), NotificationService2.FILEMANAGER_TOPIC, subject, message));
+				activityDao.add(new Activity(WebHelper.getServerName(), user.getUsername(), NotificationService2.FILEMANAGER_TOPIC, subject, message));
 		}
 		
 //		private void notify(String subject, String message)
