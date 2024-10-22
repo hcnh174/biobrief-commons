@@ -110,10 +110,10 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	
 	public Page<T> findAll(Query query, Class<T> cls, Pageable paging)
 	{
-		LogUtil.log("query="+query.getQueryObject().toString());
-		System.out.println("query="+query.getQueryObject().toString());
+		//LogUtil.log("query="+query.getQueryObject().toString());
+		//System.out.println("query="+query.getQueryObject().toString());
 		long total=mongoTemplate.count(query, cls);
-		System.out.println("total="+total);
+		//System.out.println("total="+total);
 		query.with(paging);
 		List<T> list=mongoTemplate.find(query, cls);
 		//System.out.println("list="+StringHelper.toString(list));
