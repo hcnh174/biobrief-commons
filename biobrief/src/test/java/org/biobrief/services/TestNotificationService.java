@@ -14,7 +14,7 @@ public class TestNotificationService
 	public void get()
 	{
 		EmailService emailService=null;
-		String configfile="q:/config/notifications.yaml";
+		String configfile="q:/config/notifications2.yaml";
 		NotificationService2 notificationService=new NotificationService2(emailService, configfile, true);
 		Context context=new Context("hcnh174", new MessageWriter());
 		
@@ -22,6 +22,6 @@ public class TestNotificationService
 		System.out.println("config="+JsonHelper.toJson(config));
 		Model model=new Model();
 		model.put("report", "ABC012345_F1");
-		notificationService.notify("report_load_started", model, context);
+		notificationService.notify("report_load", model, context); 
 	}
 }

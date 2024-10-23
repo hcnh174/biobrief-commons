@@ -3,6 +3,7 @@ package org.biobrief.services;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.biobrief.users.entities.Login;
@@ -13,6 +14,7 @@ import org.biobrief.util.FileHelper;
 import org.biobrief.util.LogUtil;
 import org.biobrief.util.StringHelper;
 import org.biobrief.util.YamlHelper;
+import org.biobrief.web.WebHelper;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
@@ -59,6 +61,11 @@ public class NotificationService2
 		NotificationConfig config=this.getConfig();
 		if (!config.getEnabled())
 			return;
+		if (!config.findServer().getNotify())
+		{
+			//context.println("notify disabled because server is set to notify=false");
+			return;
+		}
 		NotificationConfig.Topic topic=config.getTopic(topic_name);
 		if (!topic.getEnabled())
 			return;
@@ -157,16 +164,6 @@ public class NotificationService2
 		private String subject;
 		private String body;
 		
-//		public void setSubject(String value)
-//		{
-//			put("subject", value);
-//		}
-//		
-//		public void setBody(String value)
-//		{
-//			put("body", value);
-//		}
-		
 		public String format(String template)
 		{
 			String formatted=template;
@@ -183,10 +180,25 @@ public class NotificationService2
 	{
 		protected Boolean enabled=true;
 		protected String from;
+		protected List<Server> servers=Lists.newArrayList();
 		protected List<Group> groups=Lists.newArrayList();
 		protected List<User> users=Lists.newArrayList();
 		protected List<Topic> topics=Lists.newArrayList();
 		protected Date lastUpdated;
+		
+		// if hostname is not found, one is created dynamically
+		public Server findServer()
+		{
+			String hostname=WebHelper.getServerName();
+			System.out.println("findServer hostname="+hostname);
+			for (Server server : this.servers)
+			{
+				if (server.getHostname().equals(hostname))
+					return server;
+			}
+			System.out.println("no config for hostname=["+hostname+"]. creating entry");
+			return new Server(hostname);
+		}
 		
 		public String getFromEmailAddress(Topic topic)
 		{
@@ -261,6 +273,30 @@ public class NotificationService2
 				list.add(getUser(name));
 			}
 			return list;
+		}
+		
+		@Data
+		public static class Server
+		{
+			protected String name;
+			protected String hostname;
+			protected Boolean notify=false;
+			
+			public Server() {}
+			
+			public Server(String hostname)
+			{
+				this.hostname=hostname;
+				String name=hostname;
+				if (name.contains("."))
+					name=name.substring(0, name.indexOf("."));
+				this.name=name;
+			}
+			
+			public boolean matches(String name)
+			{
+				return this.name.equals(name);
+			}
 		}
 		
 		@Data
