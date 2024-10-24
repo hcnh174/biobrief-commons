@@ -3,7 +3,6 @@ package org.biobrief.services;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.biobrief.users.entities.Login;
@@ -14,7 +13,6 @@ import org.biobrief.util.FileHelper;
 import org.biobrief.util.LogUtil;
 import org.biobrief.util.StringHelper;
 import org.biobrief.util.YamlHelper;
-import org.biobrief.web.WebHelper;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
@@ -24,7 +22,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Component @Data
-public class NotificationService2
+public class NotificationService
 {
 	public static final String LOGIN_TOPIC="login";
 	public static final String ROUTE_TOPIC="route";
@@ -35,7 +33,7 @@ public class NotificationService2
 	private NotificationConfig config=null;
 	private Boolean enabled;
 
-	public NotificationService2(EmailService emailService, String configfile, Boolean enabled)
+	public NotificationService(EmailService emailService, String configfile, Boolean enabled)
 	{
 		this.emailService=emailService;
 		this.configfile=configfile;

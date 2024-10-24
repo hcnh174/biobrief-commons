@@ -1,6 +1,6 @@
 package org.biobrief.services;
 
-import org.biobrief.services.NotificationService2.Model;
+import org.biobrief.services.NotificationService.Model;
 import org.biobrief.util.Context;
 import org.biobrief.util.JsonHelper;
 import org.biobrief.util.MessageWriter;
@@ -15,10 +15,10 @@ public class TestNotificationService
 	{
 		EmailService emailService=null;
 		String configfile="q:/config/notifications2.yaml";
-		NotificationService2 notificationService=new NotificationService2(emailService, configfile, true);
+		NotificationService notificationService=new NotificationService(emailService, configfile, true);
 		Context context=new Context("hcnh174", new MessageWriter());
 		
-		NotificationService2.NotificationConfig config=notificationService.getConfig();
+		NotificationService.NotificationConfig config=notificationService.getConfig();
 		System.out.println("config="+JsonHelper.toJson(config));
 		Model model=new Model();
 		model.put("report", "ABC012345_F1");

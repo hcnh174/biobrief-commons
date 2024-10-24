@@ -3,7 +3,7 @@ package org.biobrief.util;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.biobrief.services.EmailService;
-import org.biobrief.services.NotificationService2;
+import org.biobrief.services.NotificationService;
 import org.biobrief.services.SmtpEmailServiceImpl;
 import org.biobrief.users.entities.User;
 import org.biobrief.util.SyncFusionHelper.FileManager;
