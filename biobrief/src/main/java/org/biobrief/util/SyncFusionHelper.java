@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import org.biobrief.services.NotificationService;
 import org.biobrief.services.NotificationService2;
 import org.biobrief.users.dao.ActivityDao;
 import org.biobrief.users.entities.Activity;
@@ -44,15 +43,8 @@ public class SyncFusionHelper
 	public static class FileManager
 	{
 		protected VirtualFileSystem vfs;
-		protected NotificationService notificationService;
 		protected NotificationService2 notificationService2;
 		protected ActivityDao activityDao;
-		
-		public FileManager(VirtualFileSystem vfs, NotificationService notificationService)
-		{
-			this.vfs=vfs;
-			this.notificationService=notificationService;
-		}
 		
 		public FileManager(VirtualFileSystem vfs, ActivityDao activityDao, NotificationService2 notificationService2)
 		{
@@ -205,8 +197,6 @@ public class SyncFusionHelper
 		
 		private void notify(String subject, String message, UserDetails user)
 		{
-			if (notificationService!=null)
-				notificationService.notify(subject, message, new MessageWriter());
 			if (notificationService2!=null)
 				notificationService2.notify(NotificationService2.FILEMANAGER_TOPIC, subject, message, new Context());
 			if (activityDao!=null)

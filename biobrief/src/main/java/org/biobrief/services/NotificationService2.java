@@ -61,7 +61,7 @@ public class NotificationService2
 		NotificationConfig config=this.getConfig();
 		if (!config.getEnabled())
 			return;
-		if (!config.findServer().getNotify())
+		if (!config.findServer(context.getServer()).getNotify())
 		{
 			//context.println("notify disabled because server is set to notify=false");
 			return;
@@ -187,9 +187,8 @@ public class NotificationService2
 		protected Date lastUpdated;
 		
 		// if hostname is not found, one is created dynamically
-		public Server findServer()
+		public Server findServer(String hostname)
 		{
-			String hostname=WebHelper.getServerName();
 			System.out.println("findServer hostname="+hostname);
 			for (Server server : this.servers)
 			{

@@ -2,10 +2,10 @@ package org.biobrief.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.biobrief.users.entities.User;
-import org.biobrief.services.NotificationService;
 import org.biobrief.services.EmailService;
+import org.biobrief.services.NotificationService2;
 import org.biobrief.services.SmtpEmailServiceImpl;
+import org.biobrief.users.entities.User;
 import org.biobrief.util.SyncFusionHelper.FileManager;
 import org.biobrief.util.SyncFusionHelper.FileManager.ActionRequest;
 import org.biobrief.util.SyncFusionHelper.FileManager.ReadResponse;
@@ -37,14 +37,14 @@ public class TestSyncFusionHelper
 	private void read(String path)
 	{
 		VirtualFileSystem vfs=TestVirtualFileSystem.createVirtualFileSystem();
-		EmailService emailService=new SmtpEmailServiceImpl();
-		NotificationService notificationService=new NotificationService(emailService, false,
-			"nobody@nowhere.com", Lists.newArrayList("nobody@nowhere.com"), Lists.newArrayList());
+		//EmailService emailService=new SmtpEmailServiceImpl();
+//		NotificationService2 notificationService=new NotificationService2(emailService, false,
+//			"nobody@nowhere.com", Lists.newArrayList("nobody@nowhere.com"), Lists.newArrayList());
 
 		ActionRequest request=new ActionRequest();
 		request.setPath(path);
 		
-		FileManager manager=new FileManager(vfs, notificationService);
+		FileManager manager=new FileManager(vfs, null, null);//, notificationService);
 		User user=new User("id", "user", "password");
 		ReadResponse response=manager.read(request, user);
 		String json=JsonHelper.toJson(response);
