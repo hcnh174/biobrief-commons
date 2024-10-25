@@ -1,6 +1,5 @@
 package org.biobrief.services;
 
-import org.biobrief.services.NotificationService.Model;
 import org.biobrief.util.Context;
 import org.biobrief.util.JsonHelper;
 import org.biobrief.util.MessageWriter;
@@ -11,17 +10,17 @@ import org.junit.jupiter.api.Test;
 public class TestNotificationService
 {
 	@Test 
-	public void get()
+	public void testNotify()
 	{
-		EmailService emailService=null;
+		EmailService emailService=new MockEmailServiceImpl();
 		String configfile="q:/config/notifications2.yaml";
 		NotificationService notificationService=new NotificationService(emailService, configfile, true);
 		Context context=new Context("hcnh174", new MessageWriter());
 		
 		NotificationService.NotificationConfig config=notificationService.getConfig();
 		System.out.println("config="+JsonHelper.toJson(config));
-		Model model=new Model();
-		model.put("report", "ABC012345_F1");
-		notificationService.notify("report_load", model, context); 
+		notificationService.notify("report_load", "report loaded", "ABC012345_F1", context);
+		
+		notificationService.notify("app", "app started", "app started", context); 
 	}
 }

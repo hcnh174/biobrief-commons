@@ -1,7 +1,6 @@
 package org.biobrief.services;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +9,7 @@ import org.biobrief.users.entities.Route;
 import org.biobrief.util.CException;
 import org.biobrief.util.Context;
 import org.biobrief.util.FileHelper;
+import org.biobrief.util.JsonHelper;
 import org.biobrief.util.LogUtil;
 import org.biobrief.util.StringHelper;
 import org.biobrief.util.YamlHelper;
@@ -19,11 +19,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Component @Data
 public class NotificationService
 {
+	public enum ServerMode {production, development}
+	
 	public static final String LOGIN_TOPIC="login";
 	public static final String ROUTE_TOPIC="route";
 	public static final String FILEMANAGER_TOPIC="filemanager";
@@ -32,6 +33,7 @@ public class NotificationService
 	private final String configfile;
 	private NotificationConfig config=null;
 	private Boolean enabled;
+	private Boolean trace=true;
 
 	public NotificationService(EmailService emailService, String configfile, Boolean enabled)
 	{
@@ -52,40 +54,39 @@ public class NotificationService
 	
 	///////////////////////////////////////////
 	
-	public void notify(String topic_name, Model model, Context context)
+	public boolean notify(String topic_name, String subject, String body, Context context)
 	{
 		if (!getEnabled())
-			return;
+			return done("Notification cancelled because NotificationService.enabled is false", context);
 		NotificationConfig config=this.getConfig();
 		if (!config.getEnabled())
-			return;
-		if (!config.findServer(context.getServer()).getNotify())
-		{
-			//context.println("notify disabled because server is set to notify=false");
-			return;
-		}
+			return done("Notification cancelled because NotificationConfig.enabled is false", context);
 		NotificationConfig.Topic topic=config.getTopic(topic_name);
 		if (!topic.getEnabled())
-			return;
-		if (topic.isIgnored(context.getUsername()))
-			return;
+			return done("Notification cancelled because topic ["+topic_name+"] enabled is false", context);
+		NotificationConfig.Server server=config.findServer(context.getServer());
+		if (!server.getNotify())
+			return done("Notification cancelled because server "+server.getName()+" notify is false", context);
+		if (server.isIgnored(topic))
+			return done("Notification cancelled because server mode does not match topic modes:\nserver:\n"+JsonHelper.toJson(server)+"\ntopic:\n"+JsonHelper.toJson(topic), context);
 		
 		Notification notification=new Notification(topic_name);
-		notification.setSubject(model.getSubject());//topic.formatSubject(model)
-		notification.setBody(model.getBody());//topic.formatBody(model)
+		notification.setSubject(subject);//topic.formatSubject(model)
+		notification.setBody(body);//topic.formatBody(model)
 		notification.setFromAddress(config.getFromEmailAddress(topic));
 		notification.setToAddresses(config.getToEmailAddresses(topic));
 		
 		notify(notification, context);
+		return done("Notification sent: "+JsonHelper.toJson(notification), context);
 	}
 	
-	public void notify(String topic_name, String subject, String body, Context context)
-	{
-		Model model=new Model();
-		model.setSubject(subject);
-		model.setBody(body);
-		notify(topic_name, model, context);
-	}
+//	public void notify(String topic_name, String subject, String body, Context context)
+//	{
+//		Model model=new Model();
+//		model.setSubject(subject);
+//		model.setBody(body);
+//		notify(topic_name, model, context);
+//	}
 	
 	///////////////////////////////////////////////////////////////////////////	
 	
@@ -132,6 +133,14 @@ public class NotificationService
 		}
 	}
 	
+	private boolean done(String message, Context context)
+	{
+		if (!this.trace)
+			return true;
+		context.println(message);
+		return false;
+	}
+	
 	//////////////////////////////////////////
 	
 	@Data
@@ -155,23 +164,30 @@ public class NotificationService
 		}
 	}
 	
-	@Data @EqualsAndHashCode(callSuper=true)
-	public static class Model extends LinkedHashMap<String, Object>
-	{
-		private static final long serialVersionUID = 1L;
-		private String subject;
-		private String body;
-		
-		public String format(String template)
-		{
-			String formatted=template;
-			for (String key : keySet())
-			{
-				formatted=StringHelper.replace(template, "{{"+key+"}}", get(key).toString());
-			}
-			return formatted;
-		}
-	}
+//	@Data //@EqualsAndHashCode(callSuper=true)
+//	public static class Model //extends LinkedHashMap<String, Object>
+//	{
+//		//private static final long serialVersionUID = 1L;
+//		private String subject;
+//		private String body;
+//		
+//		public Model() {}
+//		
+//		public Model(String subject, String body)
+//		{
+//			this(subject, 
+//		}
+//		
+////		public String format(String template)
+////		{
+////			String formatted=template;
+////			for (String key : keySet())
+////			{
+////				formatted=StringHelper.replace(template, "{{"+key+"}}", get(key).toString());
+////			}
+////			return formatted;
+////		}
+//	}
 	
 	@Data
 	public static class NotificationConfig
@@ -277,6 +293,8 @@ public class NotificationService
 		{
 			protected String name;
 			protected String hostname;
+			protected String description="";
+			protected ServerMode mode=ServerMode.development;
 			protected Boolean notify=false;
 			
 			public Server() {}
@@ -293,6 +311,13 @@ public class NotificationService
 			public boolean matches(String name)
 			{
 				return this.name.equals(name);
+			}
+
+			public boolean isIgnored(Topic topic)
+			{
+				if (!notify)
+					return true;
+				return !topic.matchesMode(this.mode);
 			}
 		}
 		
@@ -332,41 +357,33 @@ public class NotificationService
 		{
 			protected String name;
 			protected String from;
-			protected String subject="subject";
-			protected String body="body";
+//			protected String subject="subject";
+//			protected String body="body";
 			protected Boolean enabled=true;
 			protected List<String> groups=Lists.newArrayList();
-			protected List<String> ignoreUsers=Lists.newArrayList();
+			protected List<ServerMode> modes=Lists.newArrayList();
 			
 			public boolean matches(String name)
 			{
 				return this.name.equals(name);
 			}
 			
-			public boolean isIgnored(String username)
-			{
-				return ignoreUsers.contains(username);
-			}
-			
-			public String formatSubject(Model model)
-			{
-				return model.format(this.subject);
-			}
-			
-			public String formatBody(Model model)
-			{
-				return model.format(this.body);
-			}
-//			
-//			private String format(String template, Model model)
+//			public String formatSubject(Model model)
 //			{
-//				String formatted=template;
-//				for (String key : map.keySet())
-//				{
-//					formatted=StringHelper.replace(template, "{{"+key+"}}", map.get(key).toString());
-//				}
-//				return formatted;
+//				return model.format(this.subject);
 //			}
+//			
+//			public String formatBody(Model model)
+//			{
+//				return model.format(this.body);
+//			}
+			
+			public boolean matchesMode(ServerMode mode)
+			{
+				if (modes.isEmpty())
+					return true;
+				return modes.contains(mode);
+			}
 		}
 	}
 }
