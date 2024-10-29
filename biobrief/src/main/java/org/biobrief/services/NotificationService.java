@@ -79,15 +79,7 @@ public class NotificationService
 		notify(notification, context);
 		return done("Notification sent: "+JsonHelper.toJson(notification), context);
 	}
-	
-//	public void notify(String topic_name, String subject, String body, Context context)
-//	{
-//		Model model=new Model();
-//		model.setSubject(subject);
-//		model.setBody(body);
-//		notify(topic_name, model, context);
-//	}
-	
+
 	///////////////////////////////////////////////////////////////////////////	
 	
 	public void notifyLogin(Login login, Context context)
@@ -137,7 +129,7 @@ public class NotificationService
 	{
 		if (!this.trace)
 			return true;
-		context.println(message);
+		//context.println(message);
 		return false;
 	}
 	

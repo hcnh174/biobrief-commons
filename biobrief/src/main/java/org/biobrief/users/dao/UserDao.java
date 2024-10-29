@@ -6,12 +6,10 @@ import java.util.Optional;
 import org.biobrief.mongo.AbstractMongoDao;
 import org.biobrief.mongo.MongoHelper;
 import org.biobrief.users.UserForm;
-import org.biobrief.users.UserNotFoundException;
 import org.biobrief.users.entities.User;
 import org.biobrief.users.repositories.UserRepository;
 import org.biobrief.util.DataFrame;
 import org.biobrief.util.MessageWriter;
-import org.biobrief.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,12 +24,6 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 	{
 		return repository.findByUsername(username);
 	}
-	
-//	public Optional<User> findByHirodaiId(String hirodaiId)
-//	{
-//		return repository.findByHirodaiId(hirodaiId);
-//	}
-	
 	////////////////////////////////////////////////////
 	
 	//http://www.programcreek.com/java-api-examples/index.php?class=java.util.Optional&method=orElseThrow
@@ -40,18 +32,17 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 		Optional<User> user=findByUsername(username);
 		return user.orElseThrow(() -> new UsernameNotFoundException(username));
 	}
-	
-//	public User getByHirodaiId(String hirodaiId)
-//	{
-//		Optional<User> user=findByHirodaiId(hirodaiId);
-//		return user.orElseThrow(() -> new UserNotFoundException(hirodaiId));
-//	}
-	
+
 	///////////////////////////////////////////////
 	
 	public User create(String id, String name)
 	{
 		return new User(id, name, encodePassword(name));
+	}
+	
+	public User create(String id, String name, String password)
+	{
+		return new User(id, name, encodePassword(password));
 	}
 	
 	public User findOrCreate(String id, String name)
@@ -66,6 +57,16 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 	{
 		User user=getOne(form.getId());
 		copyProperties(user, form);
+		save(user);
+		return user;
+	}
+	
+	public User findOrCreateUser(String username, String password)
+	{
+		Optional<User> opt=findByUsername(username);
+		if (opt.isPresent())
+			return opt.get();
+		User user=create(MongoHelper.newId(), username, password);
 		save(user);
 		return user;
 	}
@@ -134,20 +135,18 @@ public class UserDao extends AbstractMongoDao<User, UserRepository>
 		}
 		return users;
 	}
-	
-	///////////////////////////////////////
-	
-//	public User findOrCreateAdminUser(String id, String username, String password)
-//	{	
-//		//System.out.println("findOrCreateAdminUser id="+id+" username="+username+" password="+password);
-//		Optional<User> opt=findByUsername(username);
-//		if (opt.isPresent())
-//			return opt.get();
-//		StringHelper.announce("Creating default user");
-//		User user=new User(id, username, encodePassword(password));
-//		user.setName(username);
-//		user.setAdministrators(true);
-//		save(user);
-//		return user;
-//	}	
 }
+
+//public User findOrCreateAdminUser(String id, String username, String password)
+//{	
+//	//System.out.println("findOrCreateAdminUser id="+id+" username="+username+" password="+password);
+//	Optional<User> opt=findByUsername(username);
+//	if (opt.isPresent())
+//		return opt.get();
+//	StringHelper.announce("Creating default user");
+//	User user=new User(id, username, encodePassword(password));
+//	user.setName(username);
+//	user.setAdministrators(true);
+//	save(user);
+//	return user;
+//}	

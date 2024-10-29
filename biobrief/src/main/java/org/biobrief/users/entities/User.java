@@ -29,6 +29,7 @@ public class User extends AbstractUser implements UserDetails
 	public User(String id, String username, String password)
 	{
 		super(id, username, password);
+		this.name=username;
 	}
 
 	@Override
