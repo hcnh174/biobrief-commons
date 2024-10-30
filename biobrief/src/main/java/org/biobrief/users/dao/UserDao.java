@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 public class UserDao extends AbstractMongoDao<User, UserRepository>
 {
 	@Autowired private PasswordEncoder passwordEncoder;
-	
+
 	public Optional<User> findByUsername(String username)
 	{
 		return repository.findByUsername(username);

@@ -1,79 +1,55 @@
 package org.biobrief.users.entities;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.biobrief.mongo.AbstractMongoEntity;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Document(collection="users") @Data @EqualsAndHashCode(callSuper=true)
-public class User extends AbstractUser implements UserDetails
+public class User extends AbstractMongoEntity implements UserDetails 
 {
-	//public final static List<String> ROLE_PROPERTIES=Arrays.asList("expertpanel", "administrators");
-	
-	// DECLARATIONS_START
+	@Indexed(unique=true) protected String username;
+	@JsonIgnore protected String password;
 	protected String name;
-	protected String kana;
-	protected String romaji;
-//	protected String hirodaiId;
-//	protected String affiliation;
 	protected String email;
-	// DECLARATIONS_END
-//	protected Boolean expertpanel;
-//	protected Boolean administrators;
 	
 	public User(){}
 	
 	public User(String id, String username, String password)
 	{
-		super(id, username, password);
+		this.id=id;
+		this.username=username;
+		this.password=password;
 		this.name=username;
-	}
-
-	@Override
-	public void init()
-	{
-		super.init();
-		// INIT_START
-		this.name="";
-		this.kana="";
-		this.romaji="";
-//		this.hirodaiId="";
-//		this.affiliation="";
 		this.email="";
-		// INIT_END
-//		this.expertpanel=false;
-//		this.administrators=false;
+		init();
 	}
-//	
-//	@JsonIgnore
-//	public List<Role> getRoles()
-//	{
-//		List<Role> roles=Lists.newArrayList();
-//		return roles;
-//	}
 	
-//	@JsonIgnore
-//	public List<Role> getRoles()
-//	{
-//		List<Role> roles=Lists.newArrayList();
-//		if (expertpanel!=null && expertpanel)
-//			roles.add(Role.ROLE_EXPERT_PANEL);
-//		if (administrators!=null && administrators)
-//			roles.add(Role.ROLE_ADMIN);
-//		if (roles.isEmpty())
-//			roles.add(Role.ROLE_NONE);
-//		return roles;
-//	}
-//
-//	public boolean hasRole(Role role)
-//	{
-//		return getRoles().contains(role);
-//	}
-//	
-//	public static boolean isRoleProperty(String property)
-//	{
-//		return ROLE_PROPERTIES.contains(property);
-//	}
+	public void init(){}
+	
+	public boolean isEnabled(){return true;}
+	public boolean isAccountNonExpired(){return true;}
+	public boolean isAccountNonLocked(){return true;}
+	public boolean isCredentialsNonExpired(){return true;}
+	
+	@JsonIgnore
+	public Collection<GrantedAuthority> getAuthorities()
+	{
+		Collection<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
+//		for (Role role : getRoles())
+//		{
+//			authorities.add(new SimpleGrantedAuthority(role.name()));
+//		}
+		return authorities;
+	}
 }
