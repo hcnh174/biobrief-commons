@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Document(collection="users") @Data @EqualsAndHashCode(callSuper=true)
-
 public class User extends AbstractUser implements UserDetails
 {
 	//public final static List<String> ROLE_PROPERTIES=Arrays.asList("expertpanel", "administrators");
