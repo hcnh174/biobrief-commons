@@ -42,6 +42,12 @@ public class NotificationService
 		this.enabled=enabled;
 	}
 	
+	public NotificationConfig reload()
+	{
+		this.config=null;
+		return load();
+	}
+	
 	public NotificationConfig getConfig()
 	{
 		if (config==null)
@@ -71,8 +77,8 @@ public class NotificationService
 			return done("Notification cancelled because server mode does not match topic modes:\nserver:\n"+JsonHelper.toJson(server)+"\ntopic:\n"+JsonHelper.toJson(topic), context);
 		
 		Notification notification=new Notification(topic_name);
-		notification.setSubject(subject);//topic.formatSubject(model)
-		notification.setBody(body);//topic.formatBody(model)
+		notification.setSubject(subject);
+		notification.setBody(body);
 		notification.setFromAddress(config.getFromEmailAddress(topic));
 		notification.setToAddresses(config.getToEmailAddresses(topic));
 		
@@ -98,6 +104,8 @@ public class NotificationService
 	{
 		try
 		{
+			if (notification.getToAddresses().isEmpty())
+				return;
 			context.println(notification.toString());
 			emailService.sendEmail(notification.getFromAddress(), notification.getToAddresses(), notification.getSubject(), notification.getBody(), context.getOut());
 		}
