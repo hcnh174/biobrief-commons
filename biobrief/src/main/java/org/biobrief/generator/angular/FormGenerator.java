@@ -35,13 +35,15 @@ public class FormGenerator extends AbstractLayoutGenerator
 	public static void main(String[] argv)
 	{
 		String template=argv[0];
-		String srcDir=argv[1];
-		String outDir=argv[2];
+		String dictDir=argv[1];
+		String srcDir=argv[2];
+		String outDir=argv[3];
 		System.out.println("template="+template);
+		System.out.println("dictDir="+dictDir);
 		System.out.println("srcDir="+srcDir);
 		System.out.println("outDir="+outDir);
 		
-		FormGeneratorParams params=new FormGeneratorParams(template, srcDir, outDir);
+		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, srcDir, outDir);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}
@@ -233,18 +235,16 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected void writeAngular(PrimeForm form)
 		{
-			//String filename=Util.ANGULAR_APP_DIRECTORY+"/"+form.getFilename();
-			//String filename=params.getDir()+"/"+form.getFilename();
-			String filename=form.getFilename();
+			String filename=this.generator.params.getOutDir()+"/"+form.getFilename();
 			String html=render(form);
 			if (!FileHelper.exists(filename))
 				throw new CException("cannot find form template file: "+filename);
 			writer.println("form template file: "+filename);
 			String str=FileHelper.readFile(filename);
 			str=Util.insertHtml(str, html, true);
-//			if (overwrite)
-//				overwriteFile(filename, str);
-//			else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+form.getFilename(), str);
+			//if (overwrite)
+				overwriteFile(filename, str);
+			//else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+form.getFilename(), str);
 		}
 		
 		protected void writeFreemarker(PrimeForm form)

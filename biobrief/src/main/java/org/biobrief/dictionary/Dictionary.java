@@ -6,7 +6,6 @@ import java.util.Map;
 import org.biobrief.util.CException;
 import org.biobrief.util.DataFrame;
 import org.biobrief.util.DataFrame.StringDataFrame;
-import org.biobrief.util.FileHelper;
 
 import com.google.common.collect.Maps;
 
@@ -14,18 +13,12 @@ public class Dictionary
 {
 	private final Map<String, GroupDefinition> groups=Maps.newLinkedHashMap();
 	private final String baseDir;
-	private final MergeSources sources;
-	
-	public Dictionary()
-	{
-		this.baseDir=FileHelper.getBaseDirectory();
-		sources=new MergeSources();
-	}
+	//private final MergeSources sources;
 	
 	public Dictionary(String dir)
 	{
 		this.baseDir=dir;
-		this.sources=new MergeSources(baseDir+"/sources.txt");
+		//this.sources=new MergeSources(baseDir+"/sources.txt");
 		createEntityGroups();
 		for (GroupDefinition group : groups.values())
 		{
@@ -149,7 +142,7 @@ public class Dictionary
 //		return getGroup(group.name());
 //	}
 	
-	public MergeSources getSources() {return sources;}
+	//public MergeSources getSources() {return sources;}
 	
 	public String getBaseDir() {return baseDir;}
 }

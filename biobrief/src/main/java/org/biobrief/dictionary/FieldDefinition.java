@@ -26,11 +26,11 @@ public abstract class FieldDefinition implements Cloneable
 	protected final Boolean download;
 	protected final Boolean analyzed;
 	protected final String converter;
-	protected final MergeSourceMap mergemap;
-	protected final Map<String,Object> elasticConfig;
+	//protected final MergeSourceMap mergemap;
+	//protected final Map<String,Object> elasticConfig;
 	protected final Map<String,Object> formConfig;
 	protected final Map<String,Object> columnConfig;
-	protected final Map<String,Object> mongoConfig;
+	//protected final Map<String,Object> mongoConfig;
 	protected final BeanHelper beanhelper=new BeanHelper();
 	protected boolean inherited=false;
 	
@@ -48,12 +48,12 @@ public abstract class FieldDefinition implements Cloneable
 		this.indexed=DictUtil.asBoolean(map.get("indexed"), false);
 		this.download=DictUtil.asBoolean(map.get("download"), false);
 		this.analyzed=DictUtil.asBoolean(map.get("analyzed"), false);
-		this.elasticConfig=DictUtil.parseParams(map.get("elasticconfig"));
+		//this.elasticConfig=DictUtil.parseParams(map.get("elasticconfig"));
 		this.formConfig=DictUtil.parseParams(map.get("formconfig"));
 		this.columnConfig=DictUtil.parseParams(map.get("columnconfig"));
-		this.mongoConfig=DictUtil.parseParams(map.get("mongoconfig"));
+		//this.mongoConfig=DictUtil.parseParams(map.get("mongoconfig"));
 		this.converter=DictUtil.dfltIfEmpty(map.get("converter"), "AUTO");
-		this.mergemap=new MergeSourceMap(entityType.getGroup().getDictionary().getSources(), map);
+		//this.mergemap=new MergeSourceMap(entityType.getGroup().getDictionary().getSources(), map);
 	}
 	
 	private String parseName(String name)
@@ -74,11 +74,11 @@ public abstract class FieldDefinition implements Cloneable
 	public final Boolean getIndexed(){return this.indexed;}
 	public final Boolean getDownload(){return this.download;}
 	public final Boolean getAnalyzed(){return this.analyzed;}
-	public final Map<String,Object> getElasticConfig(){return elasticConfig;}
+	//public final Map<String,Object> getElasticConfig(){return elasticConfig;}
 	public final Map<String,Object> getFormConfig(){return formConfig;}
 	public final Map<String,Object> getColumnConfig(){return columnConfig;}
-	public final Map<String,Object> getMongoConfig(){return mongoConfig;}
-	public final MergeSourceMap getMergeMap(){return this.mergemap;}
+	//public final Map<String,Object> getMongoConfig(){return mongoConfig;}
+	//public final MergeSourceMap getMergeMap(){return this.mergemap;}
 	
 	public void setInherited(boolean inherited)
 	{
@@ -205,17 +205,17 @@ public abstract class FieldDefinition implements Cloneable
 	private final String getPropertyAnnotations()
 	{
 		List<String> annotations=Lists.newArrayList();
-		if (isMongoIndex())
-			annotations.add("@Indexed");
+		//if (isMongoIndex())
+		//	annotations.add("@Indexed");
 		if (annotations.isEmpty())
 			return "";
 		else return StringHelper.join(annotations," ")+" ";//+"\n";
 	}
 
-	protected final boolean isMongoIndex()
-	{
-		return DictUtil.asBoolean(mongoConfig.get("indexed"), false);
-	}
+//	protected final boolean isMongoIndex()
+//	{
+//		return DictUtil.asBoolean(mongoConfig.get("indexed"), false);
+//	}
 	
 	protected String getComment()
 	{
