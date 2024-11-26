@@ -478,6 +478,10 @@ public class Controls
 		//<p-dropdown [options]="enums.enums('Sex')" 
 		//[(ngModel)]="patient.sex" name="sex" [style]="{'width':'64px'}">
 		//</p-dropdown>
+		//<p-dropdown [options]="enums.CtdbRecruitmentStatus"
+		//	[(ngModel)]="model.ctdb.recruitmentStatus" name="recruitmentStatus"
+		//	optionLabel="label" optionValue="value"
+		//	[style]="{width: '205px'}"></p-dropdown>
 		@Override
 		protected void renderAngular(StringBuilder buffer)
 		{			
@@ -495,10 +499,10 @@ public class Controls
 		
 		private String getOptions()
 		{
-			if (fieldType==FieldType.MASTER)
-				return "enums.masters('"+type+"')";
-			else if (fieldType==FieldType.ENUM)
-				return "enums.enums('"+type+"')";
+			if (fieldType==FieldType.ENUM)
+				return "enums."+type;//return "enums.enums('"+type+"')";
+			//else if (fieldType==FieldType.MASTER)
+			//	return "enums.masters('"+type+"')";
 			else throw new CException("unhandled dropdown field type: "+fieldType);
 		}
 	}
@@ -544,7 +548,7 @@ public class Controls
 			attr(buffer, "[monthNavigator]", "true");
 			attr(buffer, "[yearNavigator]", "true");
 			attr(buffer, "[selectOtherMonths]", "true");
-			attr(buffer, "[locale]", "i18n.locale");
+			//attr(buffer, "[locale]", "i18n.locale");
 			attr(buffer, "yearRange", "1900:2100");
 			attr(buffer, "dateFormat", "yy/mm/dd");
 			//attr(buffer, "dataType", "string");
