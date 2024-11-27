@@ -95,6 +95,16 @@ public interface GeneratorConstants
 		
 		public String getFilter(){return filter;}
 	}
+	
+	public enum ControlType
+	{
+		dflt,
+		text,
+		textarea,
+		select,
+		checkbox,
+		date
+	}
 
 	// ENUMS_START
 	// ENUMS_END

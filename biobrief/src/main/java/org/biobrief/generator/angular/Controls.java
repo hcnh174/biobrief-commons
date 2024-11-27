@@ -1,6 +1,7 @@
 package org.biobrief.generator.angular;
 
 import org.biobrief.dictionary.FieldType;
+import org.biobrief.generator.GeneratorConstants.ControlType;
 import org.biobrief.generator.GeneratorConstants.KeyFilter;
 import org.biobrief.generator.Util;
 import org.biobrief.generator.templates.Form;
@@ -12,9 +13,9 @@ public class Controls
 {	
 	public static Control createTextControl(Form.Control cell)
 	{
-		if (cell.getParams().getEditable() && cell.getFieldType()==FieldType.INTEGER)
+		if (cell.getParams().isEditable() && cell.getFieldType()==FieldType.INTEGER)
 			return new KeyFilterControl(cell, KeyFilter.Integer);
-		if (cell.getParams().getEditable() && cell.getFieldType()==FieldType.FLOAT)
+		if (cell.getParams().isEditable() && cell.getFieldType()==FieldType.FLOAT)
 			return new KeyFilterControl(cell, KeyFilter.Number);
 		return new TextControl(cell);
 	}
@@ -26,28 +27,31 @@ public class Controls
 	
 	public static Control createCheckboxControl(Form.Control cell)
 	{
-		if (!cell.getParams().getEditable())
+		if (!cell.getParams().isEditable())
 			return new ReadonlyCheckboxControl(cell);
 		else return new PrimeCheckboxControl(cell);
 	}
 	
 	public static Control createSelectControl(Form.Control cell)
 	{
-		if (!cell.getParams().getEditable())
+		System.out.println("createSelectControl: controlType "+cell.getParams().getControl());
+		if (!cell.getParams().isEditable())
 			return new ReadonlySelectControl(cell);
+		else if (cell.getParams().getControl()==ControlType.checkbox)
+			return new PrimeCheckboxSelectControl(cell);
 		else return new PrimeSelectControl(cell);
 	}
 	
 	public static Control createMasterControl(Form.Control cell)
 	{
-		if (!cell.getParams().getEditable())
+		if (!cell.getParams().isEditable())
 			return new ReadonlySelectControl(cell);
 		return new PrimeSelectControl(cell);
 	}
 	
 	public static Control createDateControl(Form.Control cell)
 	{
-		if (!cell.getParams().getEditable())
+		if (!cell.getParams().isEditable())
 			return new DisplayControl(cell);
 		else return new PrimeDateControl(cell);
 	}
@@ -238,6 +242,7 @@ public class Controls
 		{
 			buffer.append("<input");
 			attr(buffer, "type", "text");
+			attr(buffer, "pInputText");
 			attr(buffer, "pKeyFilter", filter.getFilter());
 			attr(buffer, "style", "width:"+width);
 			attr(buffer, "name", name);
@@ -300,6 +305,7 @@ public class Controls
 		{
 			buffer.append("<textarea");
 			buffer.append(" pInputTextarea");
+			attr(buffer, "variant", "filled");
 			attr(buffer, "autoResize", "autoResize");
 			attr(buffer, "style", "width:"+width);
 			if (control.getParams().getRows()>1)
@@ -377,11 +383,43 @@ public class Controls
 			attr(buffer, "label", label);
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
-			attr(buffer, "binary", "true");
+			attr(buffer, "[binary]", "true");
+			attr(buffer, "variant", "filled");
 			buffer.append(">");
 			buffer.append("</p-checkbox>");
 		}
 	}	
+	
+	
+	/////////////////////////
+	
+//	public static class PrimeDynamicCheckboxControl extends Control
+//	{
+//		public PrimeDynamicCheckboxControl(Form.Control control)
+//		{
+//			super(control);
+//		}
+//		
+//		@Override
+//		protected void renderAngular(StringBuilder buffer)
+//		{
+//			<div *ngFor="let category of categories" class="field-checkbox">
+//		    <p-checkbox 
+//		        [(ngModel)]="selectedCategories"
+//		        [label]="category.name" 
+//		        name="group" 
+//		        [value]="category" />
+//		</div>
+//			
+////			buffer.append("<i class=\"fa\" [class.fa-check-square-o]=\""+this.path+"\" [class.fa-square-o]=\"!"+this.path+"\"></i>");
+////			buffer.append("&nbsp;");
+////			buffer.append("<span>");
+////			buffer.append(label);
+////			buffer.append("</span>");
+//		}
+//	}
+	
+	////////////////////////
 	
 	public static class ReadonlyCheckboxControl extends CheckboxControl
 	{
@@ -399,8 +437,8 @@ public class Controls
 			buffer.append(label);
 			buffer.append("</span>");
 		}
-	}	
-	
+	}
+
 	////////////////////////////////////////////////////////////
 	
 	public static class SelectControl extends Control
@@ -430,39 +468,21 @@ public class Controls
 			buffer.append("<option");
 			if (fieldType==FieldType.MASTER)
 				attr(buffer, "*ngFor", "let item of enums.masters('"+type+"')");
-			else attr(buffer, "*ngFor", "let item of enums.enums('"+type+"')");
+			else attr(buffer, "*ngFor", "let item of "+getOptions());//enums.enums('"+type+"')
 			attr(buffer, "[value]", "item.value");
 			buffer.append(">");
 			buffer.append("{{item.label}}");
 			buffer.append("</option>\n");
 			buffer.append("</select>");
 		}
-	}
-	
-	public static class ReadonlySelectControl extends SelectControl
-	{
-		public ReadonlySelectControl(Form.Control control)
-		{
-			super(control);
-		}
 		
-		@Override
-		protected void renderAngular(StringBuilder buffer)
-		{			
-			buffer.append("<input");
-			attr(buffer, "type", "text");
-			attr(buffer, "pInputText");
-			attr(buffer, "style", "width:"+width+"");
-			attr(buffer, "[value]", getValue());
-			attr(buffer, "readonly");
-			buffer.append(">");
-		}
-		
-		private String getValue()
+		protected String getOptions()
 		{
-			if (fieldType==FieldType.MASTER)
-				return "enums.getMaster('"+type+"', "+path+")";
-			else return "enums.getEnum('"+type+"', "+path+")";
+			if (fieldType==FieldType.ENUM)
+				return "enums."+type;//return "enums.enums('"+type+"')";
+			//else if (fieldType==FieldType.MASTER)
+			//	return "enums.masters('"+type+"')";
+			else throw new CException("unhandled dropdown field type: "+fieldType);
 		}
 	}
 	
@@ -496,14 +516,69 @@ public class Controls
 			buffer.append(">");
 			buffer.append("</p-dropdown>");
 		}
-		
-		private String getOptions()
+	}
+	
+	// Note: does not seem to work using {label: '', value: ''} objects, so only use with string array class
+	public static class PrimeCheckboxSelectControl extends SelectControl
+	{
+		public PrimeCheckboxSelectControl(Form.Control control)
 		{
-			if (fieldType==FieldType.ENUM)
-				return "enums."+type;//return "enums.enums('"+type+"')";
-			//else if (fieldType==FieldType.MASTER)
-			//	return "enums.masters('"+type+"')";
-			else throw new CException("unhandled dropdown field type: "+fieldType);
+			super(control);
+		}
+		
+//		<div *ngFor="let category of categories" class="field-checkbox">
+//		    <p-checkbox 
+//		        [(ngModel)]="selectedCategories"
+//		        [label]="category.name" 
+//		        name="group" 
+//		        [value]="category" />
+//		</div>
+		@Override
+		protected void renderAngular(StringBuilder buffer)
+		{
+			buffer.append("<div");
+			attr(buffer, "*ngFor", "let item of "+getOptions());
+			attr(buffer, "class", "field-checkbox");
+			buffer.append(">");
+
+				buffer.append("<p-checkbox");
+				attr(buffer, "name", name);
+				attr(buffer, "[(ngModel)]", path);
+				attr(buffer, "[label]", "item");
+				attr(buffer, "[value]", "item");
+				buffer.append(">");
+				buffer.append("</p-checkbox>");
+			
+			buffer.append("</div>");
+		}
+	}
+	
+	//////////////////////////////////////////////////////
+	
+	public static class ReadonlySelectControl extends SelectControl
+	{
+		public ReadonlySelectControl(Form.Control control)
+		{
+			super(control);
+		}
+		
+		@Override
+		protected void renderAngular(StringBuilder buffer)
+		{			
+			buffer.append("<input");
+			attr(buffer, "type", "text");
+			attr(buffer, "pInputText");
+			attr(buffer, "style", "width:"+width+"");
+			attr(buffer, "[value]", getValue());
+			attr(buffer, "readonly");
+			buffer.append(">");
+		}
+		
+		private String getValue()
+		{
+			if (fieldType==FieldType.MASTER)
+				return "enums.getMaster('"+type+"', "+path+")";
+			else return "enums.getEnum('"+type+"', "+path+")";
 		}
 	}
 
