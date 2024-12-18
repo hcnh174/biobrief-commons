@@ -73,8 +73,8 @@ dependencies {
 	api("javax.xml.bind:jaxb-api:${property('javax-xml-bind.version')}")
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	testImplementation("org.junit.jupiter:junit-jupiter-api:${property('junit-jupiter.version')}")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property('junit-jupiter.version')}")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:${property('junitJupiterVersion')}")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property('junitJupiterVersion')}")
 	
 	//testRuntimeOnly("org.junit.vintage:junit-vintage-engine"){
 	//	exclude(module: "org.hamcrest")

@@ -157,9 +157,14 @@ public class PowerPointHelper
 		}		
 	}
 	
+	public static String writePicture(HSLFPictureShape shape, String dir, String prefix)
+	{
+		return writePicture(shape, dir, prefix, true);
+	}
+	
 	//https://jar-download.com/artifacts/org.apache.poi/poi-scratchpad/3.17-beta1/source-code/org/apache/poi/hslf/usermodel/HSLFPictureShape.java
 	//http://www.java2s.com/Code/Java/2D-Graphics-GUI/Imagecrop.htm
-	public static String writePicture(HSLFPictureShape shape, String dir, String prefix)
+	public static String writePicture(HSLFPictureShape shape, String dir, String prefix, boolean overwrite)
 	{
 		try
 		{
@@ -168,13 +173,15 @@ public class PowerPointHelper
 			PictureData.PictureType type = pict.getType();
 			String ext = type.extension;
 			String filename=dir+"/"+prefix+ext;
+			if (FileHelper.exists(filename) && !overwrite)
+				throw new CException("file already exists: "+filename);
 			FileOutputStream out = new FileOutputStream(filename);
 			out.write(data);
 			out.close();
 			//writeInfo(shape, dir, prefix);
 			return filename;
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			throw new CException(e);
 		}
@@ -196,6 +203,11 @@ public class PowerPointHelper
 	
 	public static String writePicture(XSLFPictureShape shape, String dir, String prefix)
 	{
+		return writePicture(shape, dir, prefix, true);
+	}
+	
+	public static String writePicture(XSLFPictureShape shape, String dir, String prefix, boolean overwrite)
+	{
 		try
 		{
 			XSLFPictureData pict=shape.getPictureData();
@@ -203,12 +215,14 @@ public class PowerPointHelper
 			PictureData.PictureType type = pict.getType();
 			String ext = type.extension;
 			String filename=dir+"/"+prefix+ext;
+			if (FileHelper.exists(filename) && !overwrite)
+				throw new CException("file already exists: "+filename);
 			FileOutputStream out = new FileOutputStream(filename);
 			out.write(data);
 			out.close();
 			return filename;
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			throw new CException(e);
 		}
