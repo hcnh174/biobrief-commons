@@ -391,31 +391,37 @@ public final class FileHelper
 	}
 	
 	// returns true if the file was created
-	public static boolean writeFileIfNotExists(String filename, String text)
+	public static boolean writeFileIfNotExists(String filename, String text, boolean parents)
 	{
 		if (exists(filename))
 			return false;
-		writeFile(filename, text);
+		writeFile(filename, text, parents);
 		return true;
 	}
 
 	// creates an empty text file, useful for appending to
-	public static String writeFile(String filename)
+	public static String writeFile(String filename, boolean parents)
 	{
-		return writeFile(filename, "");
+		return writeFile(filename, "", parents);
 	}
 	
 	public static String writeFile(String filename, String text)
 	{
-		return writeFile(filename, text, ENCODING);
+		return writeFile(filename, text, false, ENCODING);
 	}
 	
-	public static String writeFile(String filename, String text, Charset charset)
+	public static String writeFile(String filename, String text, boolean parents)
+	{
+		return writeFile(filename, text, parents, ENCODING);
+	}
+	
+	public static String writeFile(String filename, String text, boolean parents, Charset charset)
 	{
 		try
 		{
 			checkPath(filename);
-			Files.createParentDirs(new File(filename));
+			if (parents)
+				Files.createParentDirs(new File(filename));
 			Files.asCharSink(new File(filename), charset).write(text);
 			//Files.write(text, new File(filename), charset);
 			return filename;
@@ -658,7 +664,7 @@ public final class FileHelper
 	public static String createTempFile(String prefix, String suffix, String text)
 	{
 		String filename=createTempFile(prefix, suffix);
-		writeFile(filename, text);
+		writeFile(filename, text, true);
 		return filename;
 	}
 	
@@ -748,7 +754,7 @@ public final class FileHelper
 	public static int countLinesRecursively(String folder, String suffix, String outfile)
 	{
 		if (outfile!=null)
-			writeFile(outfile);
+			writeFile(outfile, true);
 		int total_files=0;
 		int total_lines=0;
 		List<String> filenames=listFilesRecursively(folder, suffix);

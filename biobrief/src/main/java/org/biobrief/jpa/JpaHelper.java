@@ -66,7 +66,7 @@ public final class JpaHelper
 		//logger.debug("creating database setup file: "+setupfile);
 		List<String> filenames=getSqlFilenames(folder);
 		String str=concatenateScripts(filenames);
-		FileHelper.writeFile(setupfile,str);
+		FileHelper.writeFile(setupfile,str, true);
 	}
 	
 	public static List<String> getSqlFilenames(String folder)

@@ -28,7 +28,7 @@ public class FileCacheService<T> extends AbstractFileCacheService
 	public void write(String key, T value, MessageWriter out)
 	{
 		String filename=getFilename(key);
-		FileHelper.writeFile(filename, format(value));
+		FileHelper.writeFile(filename, format(value), true);
 	}
 
 	///////////////////////////////////

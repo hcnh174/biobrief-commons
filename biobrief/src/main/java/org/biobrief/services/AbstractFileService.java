@@ -38,7 +38,7 @@ public class AbstractFileService implements FileService
 	{
 		String path=convertPath(filename);
 		//System.out.println("writing file: "+path);
-		return FileHelper.writeFile(path, value);
+		return FileHelper.writeFile(path, value, true);
 	}
 	
 	@Override

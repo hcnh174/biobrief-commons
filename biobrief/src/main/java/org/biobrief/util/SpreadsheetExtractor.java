@@ -58,7 +58,7 @@ public class SpreadsheetExtractor
 		Workbook workbook=excelhelper.createWorkbook(filename);
 		excelhelper.createWorksheet(workbook, dataframe, "patients");
 		excelhelper.writeWorkbook(workbook, filename);
-		FileHelper.writeFile(filename+".txt",dataframe.toString());
+		FileHelper.writeFile(filename+".txt",dataframe.toString(), false);
 	}
 	
 	public DataFrame<String> loadFolder(String dir)

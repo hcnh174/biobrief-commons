@@ -198,7 +198,7 @@ public class PowerPointHelper
 		info+="offset: "+pict.getOffset()+"\n";
 		info+="type: "+pict.getType()+"\n";
 		info+="shape: "+StringHelper.toString(shape)+"\n";
-		FileHelper.writeFile(infofilename, info);
+		FileHelper.writeFile(infofilename, info, false);
 	}
 	
 	public static String writePicture(XSLFPictureShape shape, String dir, String prefix)

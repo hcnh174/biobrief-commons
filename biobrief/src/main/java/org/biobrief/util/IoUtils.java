@@ -2,8 +2,6 @@ package org.biobrief.util;
 
 import java.nio.charset.Charset;
 
-import org.biobrief.util.FileHelper;
-import org.biobrief.util.StringHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +25,7 @@ public class IoUtils
 			str=StringHelper.replace(str, "\r","");
 			str=replaceNewlinesInQuotes(str,"|");
 		}		
-		FileHelper.writeFile(newfilename,str, out);
+		FileHelper.writeFile(newfilename, str, false, out);
 		return newfilename;
 	}
 

@@ -259,8 +259,8 @@ public class FormGenerator extends AbstractLayoutGenerator
 			ftl+="</#list>\n";
 			ftl+="</@patientdb.print>\n";
 			if (generator.params.overwrite)
-				FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
-			else FileHelper.writeFile(".temp/generated/print/"+name+".ftl", ftl);
+				FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl, true);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
+			else FileHelper.writeFile(".temp/generated/print/"+name+".ftl", ftl, true);
 		}
 		
 		protected String render(PrimeForm form)

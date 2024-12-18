@@ -109,6 +109,6 @@ public final class YamlHelper
 	
 	public static void writeFile(Object obj, String filename)
 	{
-		FileHelper.writeFile(filename, toYaml(obj));
+		FileHelper.writeFile(filename, toYaml(obj), false);
 	}
 }

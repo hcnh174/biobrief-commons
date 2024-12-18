@@ -41,7 +41,7 @@ public class PipelineService
 		String formatted=script.format();
 		out.println(formatted);
 		//String snakefile=pipeline.getWinDir()+"/"+pipeline.getName()+".smk";
-		FileHelper.writeFile(snakefile, formatted);
+		FileHelper.writeFile(snakefile, formatted, true);
 		return pipeline;
 	}
 	
@@ -50,7 +50,7 @@ public class PipelineService
 		Pipeline pipeline=loadPipeline(shellfile);		
 		String script=ShellScriptPipelineBuilder.build(pipeline);
 		out.println(script);
-		FileHelper.writeFile(fileService.convertPath(shellfile), script);
+		FileHelper.writeFile(fileService.convertPath(shellfile), script, true);
 		return pipeline;
 	}
 	
@@ -74,7 +74,7 @@ public class PipelineService
 		PipelineTree tree=pipeline.createTree();
 		System.out.println("tree="+JsonHelper.toJson(tree));
 		String htmlfile=fileService.convertPath(tree.getHtmlFile());
-		FileHelper.writeFile(htmlfile, tree.getHtml());
+		FileHelper.writeFile(htmlfile, tree.getHtml(), true);
 		return tree;
 	}
 }

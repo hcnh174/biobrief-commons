@@ -256,7 +256,7 @@ public class HandsontableHelper
 	private static void logBorderMap(Multimap<String, CellData> multimap)
 	{
 		String filename=".temp/handsontable-borders.txt";
-		FileHelper.writeFile(filename);
+		FileHelper.writeFile(filename, true);
 		System.out.println("border multimap");
 		for (String key : multimap.keySet())
 		{

@@ -57,6 +57,6 @@ public abstract class AbstractLayoutGenerator
 	protected void writeFile(String filename, String html)
 	{
 		writer.println("writing file:"+filename);
-		FileHelper.writeFile(filename, html);
+		FileHelper.writeFile(filename, html, true);
 	}
 }

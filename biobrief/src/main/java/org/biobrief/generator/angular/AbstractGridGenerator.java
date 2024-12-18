@@ -55,7 +55,7 @@ public abstract class AbstractGridGenerator extends AbstractLayoutGenerator
 //		if (overwrite)
 //			overwriteFile(filename, str);
 		String outfile=nggrid.getHtmlFilename(params.getOutDir());
-		FileHelper.writeFile(outfile, str);
+		FileHelper.writeFile(outfile, str, true);
 	}
 	
 //	private void updateHtmlFile(AbstractAngularGrid nggrid)
@@ -86,7 +86,7 @@ public abstract class AbstractGridGenerator extends AbstractLayoutGenerator
 //		if (overwrite)
 //			overwriteFile(filename, str);
 		String outfile=nggrid.getTypescriptFilename(params.getOutDir());
-		FileHelper.writeFile(outfile, str);
+		FileHelper.writeFile(outfile, str, true);
 	}
 	
 //	private void updateTypescriptFile(AbstractAngularGrid nggrid)
