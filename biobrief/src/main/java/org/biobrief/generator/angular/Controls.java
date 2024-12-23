@@ -526,32 +526,70 @@ public class Controls
 			super(control);
 		}
 		
-//		<div *ngFor="let category of categories" class="field-checkbox">
-//		    <p-checkbox 
-//		        [(ngModel)]="selectedCategories"
-//		        [label]="category.name" 
-//		        name="group" 
-//		        [value]="category" />
-//		</div>
+//        <div *ngFor="let item of enums.CtdbCancerType" class="flex items-center">
+//	        <p-checkbox name="cancerType" [(ngModel)]="model.cancerType" [inputId]="item" [value]="item"/>
+//	        <label [for]="item" class="ml-2"> {{item}} </label>
+//	    </div>
 		@Override
 		protected void renderAngular(StringBuilder buffer)
 		{
 			buffer.append("<div");
 			attr(buffer, "*ngFor", "let item of "+getOptions());
-			attr(buffer, "class", "field-checkbox");
+			attr(buffer, "class", "flex items-center");
 			buffer.append(">");
 
 				buffer.append("<p-checkbox");
 				attr(buffer, "name", name);
 				attr(buffer, "[(ngModel)]", path);
-				attr(buffer, "[label]", "item");
+				attr(buffer, "[inputId]", "item");
 				attr(buffer, "[value]", "item");
+				buffer.append("/>");
+				
+				buffer.append("<label");
+				attr(buffer, "[for]", "item");
+				attr(buffer, "class", "ml-2");
 				buffer.append(">");
-				buffer.append("</p-checkbox>");
+				buffer.append(" {{item}} ");
+				buffer.append("</label>");
 			
 			buffer.append("</div>");
 		}
 	}
+	
+//	// Note: does not seem to work using {label: '', value: ''} objects, so only use with string array class
+//	public static class PrimeCheckboxSelectControl extends SelectControl
+//	{
+//		public PrimeCheckboxSelectControl(Form.Control control)
+//		{
+//			super(control);
+//		}
+//		
+////		<div *ngFor="let category of categories" class="field-checkbox">
+////		    <p-checkbox 
+////		        [(ngModel)]="selectedCategories"
+////		        [label]="category.name" 
+////		        name="group" 
+////		        [value]="category" />
+////		</div>
+//		@Override
+//		protected void renderAngular(StringBuilder buffer)
+//		{
+//			buffer.append("<div");
+//			attr(buffer, "*ngFor", "let item of "+getOptions());
+//			attr(buffer, "class", "field-checkbox");
+//			buffer.append(">");
+//
+//				buffer.append("<p-checkbox");
+//				attr(buffer, "name", name);
+//				attr(buffer, "[(ngModel)]", path);
+//				attr(buffer, "[label]", "item");
+//				attr(buffer, "[value]", "item");
+//				buffer.append(">");
+//				buffer.append("</p-checkbox>");
+//			
+//			buffer.append("</div>");
+//		}
+//	}
 	
 	//////////////////////////////////////////////////////
 	
