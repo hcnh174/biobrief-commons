@@ -386,7 +386,7 @@ public class Controls
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			attr(buffer, "[binary]", "true");
-			attr(buffer, "variant", "filled");
+			//attr(buffer, "variant", "filled");
 			buffer.append(">");
 			buffer.append("</p-checkbox>");
 		}
