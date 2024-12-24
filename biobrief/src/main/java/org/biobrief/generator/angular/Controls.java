@@ -129,7 +129,8 @@ public class Controls
 			buffer.append("<input");
 			attr(buffer, "type", "text");
 			attr(buffer, "pInputText");
-			attr(buffer, "style", "width:"+width);
+			//attr(buffer, "style", "width:"+width);
+			attr(buffer, "[fluid]", "true");
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			if (readonly) attr(buffer, "readonly");
@@ -304,10 +305,11 @@ public class Controls
 		protected void renderAngular(StringBuilder buffer)
 		{
 			buffer.append("<textarea");
-			buffer.append(" pInputTextarea");
-			attr(buffer, "variant", "filled");
+			buffer.append(" pTextarea");
+			//attr(buffer, "variant", "filled");
 			attr(buffer, "autoResize", "autoResize");
-			attr(buffer, "style", "width:"+width);
+			//attr(buffer, "style", "width:"+width);
+			attr(buffer, "[fluid]", "true");
 			if (control.getParams().getRows()>1)
 				attr(buffer, "rows", control.getParams().getRows());
 			attr(buffer, "name", name);
@@ -505,18 +507,48 @@ public class Controls
 		@Override
 		protected void renderAngular(StringBuilder buffer)
 		{			
-			buffer.append("<p-dropdown");
+			buffer.append("<p-select");
 			attr(buffer, "[options]", getOptions());
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			attr(buffer, "[filter]", "true");
 			attr(buffer, "[style]", "{'width':'"+width+"'}");
-			attr(buffer, "appendTo", "body");
+			//attr(buffer, "appendTo", "body");
 			if (readonly) attr(buffer, "readonly");
 			buffer.append(">");
-			buffer.append("</p-dropdown>");
+			buffer.append("</p-select>");
 		}
 	}
+	
+//	public static class PrimeSelectControl extends SelectControl
+//	{
+//		public PrimeSelectControl(Form.Control control)
+//		{
+//			super(control);
+//		}
+//		
+//		//<p-dropdown [options]="enums.enums('Sex')" 
+//		//[(ngModel)]="patient.sex" name="sex" [style]="{'width':'64px'}">
+//		//</p-dropdown>
+//		//<p-dropdown [options]="enums.CtdbRecruitmentStatus"
+//		//	[(ngModel)]="model.ctdb.recruitmentStatus" name="recruitmentStatus"
+//		//	optionLabel="label" optionValue="value"
+//		//	[style]="{width: '205px'}"></p-dropdown>
+//		@Override
+//		protected void renderAngular(StringBuilder buffer)
+//		{			
+//			buffer.append("<p-dropdown");
+//			attr(buffer, "[options]", getOptions());
+//			attr(buffer, "name", name);
+//			attr(buffer, "[(ngModel)]", path);
+//			attr(buffer, "[filter]", "true");
+//			attr(buffer, "[style]", "{'width':'"+width+"'}");
+//			attr(buffer, "appendTo", "body");
+//			if (readonly) attr(buffer, "readonly");
+//			buffer.append(">");
+//			buffer.append("</p-dropdown>");
+//		}
+//	}
 	
 	// Note: does not seem to work using {label: '', value: ''} objects, so only use with string array class
 	public static class PrimeCheckboxSelectControl extends SelectControl
@@ -654,7 +686,7 @@ public class Controls
 		@Override
 		protected void renderAngular(StringBuilder buffer)
 		{
-			buffer.append("<p-calendar");
+			buffer.append("<p-datepicker");
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			attr(buffer, "[showIcon]", "true");
@@ -665,14 +697,44 @@ public class Controls
 			attr(buffer, "yearRange", "1900:2100");
 			attr(buffer, "dateFormat", "yy/mm/dd");
 			//attr(buffer, "dataType", "string");
-			attr(buffer, "appendTo", "body");
-			attr(buffer, "[style]", "{'width':'100%', 'padding-right':'30px'}");
+			//attr(buffer, "appendTo", "body");
+			attr(buffer, "[style]", "{'width':'100%'}");//, 'padding-right':'30px'
 			//if (readonly)
 			attr(buffer, "[readonlyInput]", "true");
 			buffer.append(">");
-			buffer.append("</p-calendar>");
+			buffer.append("</p-datepicker>");
 		}
 	}
+	
+//	public static class PrimeDateControl extends DateControl
+//	{
+//		public PrimeDateControl(Form.Control control)
+//		{
+//			super(control);
+//		}
+//		
+//		@Override
+//		protected void renderAngular(StringBuilder buffer)
+//		{
+//			buffer.append("<p-calendar");
+//			attr(buffer, "name", name);
+//			attr(buffer, "[(ngModel)]", path);
+//			attr(buffer, "[showIcon]", "true");
+//			attr(buffer, "[monthNavigator]", "true");
+//			attr(buffer, "[yearNavigator]", "true");
+//			attr(buffer, "[selectOtherMonths]", "true");
+//			//attr(buffer, "[locale]", "i18n.locale");
+//			attr(buffer, "yearRange", "1900:2100");
+//			attr(buffer, "dateFormat", "yy/mm/dd");
+//			//attr(buffer, "dataType", "string");
+//			attr(buffer, "appendTo", "body");
+//			attr(buffer, "[style]", "{'width':'100%', 'padding-right':'30px'}");
+//			//if (readonly)
+//			attr(buffer, "[readonlyInput]", "true");
+//			buffer.append(">");
+//			buffer.append("</p-calendar>");
+//		}
+//	}
 	
 	//<calendar-control name="birthdate" [(ngModel)]="patient.birthdate" width="95"></calendar-control>
 	public static class CustomDateControl extends DateControl
