@@ -74,7 +74,7 @@ public interface GeneratorConstants
 			return find(value, null);
 		}
 	}
-	
+
 	@ExportedEnum public enum KeyFilter
 	{
 		PositiveInteger("pint"),

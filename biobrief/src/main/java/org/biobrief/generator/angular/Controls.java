@@ -14,9 +14,11 @@ public class Controls
 	public static Control createTextControl(Form.Control cell)
 	{
 		if (cell.getParams().isEditable() && cell.getFieldType()==FieldType.INTEGER)
-			return new KeyFilterControl(cell, KeyFilter.Integer);
+			//return new KeyFilterControl(cell, KeyFilter.Integer);
+			return new InputNumberControl(cell, KeyFilter.Integer);
 		if (cell.getParams().isEditable() && cell.getFieldType()==FieldType.FLOAT)
-			return new KeyFilterControl(cell, KeyFilter.Number);
+			return new InputNumberControl(cell, KeyFilter.Number);
+			//return new KeyFilterControl(cell, KeyFilter.Number);
 		return new TextControl(cell);
 	}
 	
@@ -226,7 +228,33 @@ public class Controls
 		}
 	}
 	
-
+	public static class InputNumberControl extends TextControl
+	{
+		private KeyFilter filter;
+		
+		public InputNumberControl(Form.Control control, KeyFilter filter)
+		{
+			super(control);
+			this.filter=filter;
+		}
+		
+		// <p-inputnumber name="ageMin" [(ngModel)]="model.ageMin"[maxFractionDigits]="0" [showButtons]="true"/>
+		@Override
+		protected void renderAngular(StringBuilder buffer)
+		{
+			buffer.append("<p-inputnumber");
+			attr(buffer, "name", name);
+			attr(buffer, "[(ngModel)]", path);
+			if (filter==KeyFilter.Integer)
+			{
+				attr(buffer, "[maxFractionDigits]", "0");
+				attr(buffer, "[showButtons]", "true");
+			}
+			if (readonly) attr(buffer, "readonly");
+			buffer.append("/>");
+		}
+	}
+	
 	public static class KeyFilterControl extends TextControl
 	{
 		private KeyFilter filter;
