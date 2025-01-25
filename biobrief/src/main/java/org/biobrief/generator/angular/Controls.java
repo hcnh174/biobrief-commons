@@ -249,6 +249,7 @@ public class Controls
 			{
 				attr(buffer, "[maxFractionDigits]", "0");
 				attr(buffer, "[showButtons]", "true");
+				attr(buffer, "[inputStyle]", "{'width': '100px'}");
 			}
 			if (readonly) attr(buffer, "readonly");
 			buffer.append("/>");

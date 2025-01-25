@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 public class TestFormGenerator
 {
 	@Test
-	public void creatFieldset()
+	public void createCtdbEditTrialForm()
 	{
-		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms.xlsx";
+		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms2.xlsx";
 		String dictDir="c:/workspace/hucgc/data/dictionary";
 		String srcDir="C:/workspace/hucgc/.temp/generator";
 		String outDir=srcDir;
@@ -16,4 +16,16 @@ public class TestFormGenerator
 		
 		FormGenerator.main(argv);
 	}
+	
+//	@Test
+//	public void createReportCtdbEditTrialForm()
+//	{
+//		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms.xlsx";
+//		String dictDir="c:/workspace/hucgc/data/dictionary";
+//		String srcDir="C:/workspace/hucgc/.temp/generator";
+//		String outDir=srcDir;
+//		String[] argv={xlsxfile, dictDir, srcDir, outDir};
+//		
+//		FormGenerator.main(argv);
+//	}
 }
