@@ -38,12 +38,15 @@ public class FormGenerator extends AbstractLayoutGenerator
 		String dictDir=argv[1];
 		String srcDir=argv[2];
 		String outDir=argv[3];
+		RenderMode mode=RenderMode.valueOf(argv[4]);
+		
 		System.out.println("template="+template);
 		System.out.println("dictDir="+dictDir);
 		System.out.println("srcDir="+srcDir);
 		System.out.println("outDir="+outDir);
+		System.out.println("mode="+mode);
 		
-		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, srcDir, outDir);
+		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, srcDir, outDir, mode);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}
@@ -249,7 +252,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected void writeFreemarker(PrimeForm form)
 		{
-			String name=StringHelper.replace(form.getName(), "-form", "");
+			String name=StringHelper.remove(form.getName(), "-form");
 			String ftl="<#import \"_print.ftl\" as patientdb>\n";
 			ftl+="<@patientdb.print>\n";
 			ftl+="<#list patients as patient>\n";
@@ -258,9 +261,12 @@ public class FormGenerator extends AbstractLayoutGenerator
 			ftl+="</div>\n";
 			ftl+="</#list>\n";
 			ftl+="</@patientdb.print>\n";
-			if (generator.params.overwrite)
-				FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl, true);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
-			else FileHelper.writeFile(".temp/generated/print/"+name+".ftl", ftl, true);
+			
+			String filename=this.generator.params.getOutDir()+"/"+form.getFilename()+".ftl";
+			FileHelper.writeFile(filename, ftl, false);//.temp/generated/print/"+name+".ftl
+			//if (generator.params.overwrite)
+			//	FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl, true);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
+			//else FileHelper.writeFile(".temp/generated/print/"+name+".ftl", ftl, true);
 		}
 		
 		protected String render(PrimeForm form)

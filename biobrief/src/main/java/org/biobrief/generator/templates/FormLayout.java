@@ -228,6 +228,11 @@ public class FormLayout extends TableLayout
 			return field.isReadonly() || params.isReadonly();
 		}
 		
+		public boolean isDisabled()
+		{
+			return field.isDisabled() || params.isDisabled();
+		}
+		
 		@Override
 		public String toString()
 		{
@@ -248,6 +253,7 @@ public class FormLayout extends TableLayout
 		private String entity;
 		private boolean panel=true;
 		private boolean readonly=false;
+		private boolean disabled=false;
 		private String path;
 		private String root="model";
 		private String title;
@@ -290,30 +296,6 @@ public class FormLayout extends TableLayout
 			ControlParams params=new ControlParams(this);
 			return params;
 		}
-		
-//		public String getId(){return this.id;}
-//		public void setId(final String id){this.id=id;}
-//		
-//		public String getGroup(){return this.group;}
-//		public void setGroup(final String group){this.group=group;}
-//		
-//		public String getEntity(){return this.entity;}
-//		public void setEntity(final String entity){this.entity=entity;}
-//
-//		public boolean getPanel(){return this.panel;}
-//		public void setPanel(final boolean panel){this.panel=panel;}
-//		
-//		public boolean getReadonly(){return this.readonly;}
-//		public void setReadonly(final boolean readonly){this.readonly=readonly;}
-//		
-//		public void setRoot(final String root){this.root=root;}
-//		public String getRoot(){return this.root;}
-//		
-//		public String getPath(){return this.path;}
-//		public void setPath(final String path){this.path=path;}
-//		
-//		public String getTitle(){return this.title;}
-//		public void setTitle(final String title){this.title=title;}
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
@@ -325,6 +307,7 @@ public class FormLayout extends TableLayout
 		private String cellheight;
 		private String width="100%";
 		private boolean readonly=false;
+		private boolean disabled=false;
 		private Integer fieldwidth;
 		private String suffix;
 		private String xtype;
@@ -348,38 +331,5 @@ public class FormLayout extends TableLayout
 		}
 		
 		public FormParams getFormParams(){return formParams;}
-		
-//		public Integer getRows(){return this.rows;}
-//		public void setRows(final Integer rows){this.rows=rows;}
-//
-//		public String getCellwidth(){return this.cellwidth;}
-//		public void setCellwidth(final String cellwidth){this.cellwidth=cellwidth;}
-//
-//		public String getCellheight(){return this.cellheight;}
-//		public void setCellheight(final String cellheight){this.cellheight=cellheight;}
-//
-//		public String getWidth(){return this.width;}
-//		public void setWidth(final String width){this.width=width;}
-//
-//		public boolean getReadonly(){return this.readonly;}
-//		public void setReadonly(final boolean readonly){this.readonly=readonly;}
-//
-//		public Integer getFieldwidth(){return this.fieldwidth;}
-//		public void setFieldwidth(final Integer fieldwidth){this.fieldwidth=fieldwidth;}
-//
-//		public String getSuffix(){return this.suffix;}
-//		public void setSuffix(final String suffix){this.suffix=suffix;}
-//
-//		public String getXtype(){return this.xtype;}
-//		public void setXtype(final String xtype){this.xtype=xtype;}
-//
-//		public boolean getRequired(){return this.required;}
-//		public void setRequired(final boolean required){this.required=required;}
-//
-//		public Integer getLabelwidth(){return this.labelwidth;}
-//		public void setLabelwidth(final Integer labelwidth){this.labelwidth=labelwidth;}
-//		
-//		public boolean getEditable(){return this.editable;}
-//		public void setEditable(final boolean editable){this.editable=editable;}
 	}
 }

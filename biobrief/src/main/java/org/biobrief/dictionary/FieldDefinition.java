@@ -21,6 +21,7 @@ public abstract class FieldDefinition implements Cloneable
 	protected final String label;
 	protected final Boolean notnull;
 	protected final Boolean readonly;
+	protected final Boolean disabled;
 	protected final Boolean calculated;
 	protected final Boolean indexed;
 	protected final Boolean download;
@@ -43,6 +44,7 @@ public abstract class FieldDefinition implements Cloneable
 		this.label=map.get("label");
 		this.notnull=DictUtil.asBoolean(map.get("notnull"), entityType.isClassEntity() ? false : fieldType.isNotNull());
 		this.readonly=DictUtil.asBoolean(map.get("readonly"), false);
+		this.disabled=DictUtil.asBoolean(map.get("disabled"), false);
 		this.calculated=DictUtil.asBoolean(map.get("calculated"), false);
 		this.inherited=DictUtil.asBoolean(map.get("inherited"), false);
 		this.indexed=DictUtil.asBoolean(map.get("indexed"), false);
@@ -69,6 +71,7 @@ public abstract class FieldDefinition implements Cloneable
 	public final String getType(){return this.type;}
 	public final String getLabel(){return this.label;}
 	public final Boolean getReadonly(){return this.readonly;}
+	public final Boolean getDisabled(){return this.disabled;}
 	public final Boolean getCalculated(){return this.calculated;}
 	public final Boolean getInherited(){return this.inherited;}
 	public final Boolean getIndexed(){return this.indexed;}
@@ -115,6 +118,11 @@ public abstract class FieldDefinition implements Cloneable
 	public final boolean isReadonly()
 	{
 		return readonly;
+	}
+	
+	public final boolean isDisabled()
+	{
+		return disabled;
 	}
 	
 	public final boolean isCalculated()

@@ -77,6 +77,7 @@ public class Controls
 		protected final String name;
 		protected String width;
 		protected final Boolean readonly;
+		protected final Boolean disabled;
 		
 		public Control(Form.Control control)
 		{
@@ -85,6 +86,7 @@ public class Controls
 			this.name=control.getName();
 			this.width=control.getParams().getWidth();//control.getWidth();
 			this.readonly=control.isReadonly();
+			this.disabled=control.isDisabled();
 		}
 		
 		@Override
@@ -136,6 +138,7 @@ public class Controls
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 		}
 	}
@@ -186,6 +189,7 @@ public class Controls
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("</p-inputMask>");
 		}
@@ -222,7 +226,8 @@ public class Controls
 			attr(buffer, "[formatInput]", false);
 			attr(buffer, "thousandSeparator", "");
 			//attr(buffer, "[style]", "{'width':'"+width+"'}");
-			//if (readonly) attr(buffer, "readonly");
+			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("</p-spinner>");
 		}
@@ -252,6 +257,7 @@ public class Controls
 				attr(buffer, "[inputStyle]", "{'width': '100px'}");
 			}
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append("/>");
 		}
 	}
@@ -278,6 +284,7 @@ public class Controls
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 		}
 	}
@@ -344,6 +351,7 @@ public class Controls
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("</textarea>");
 		}
@@ -375,6 +383,7 @@ public class Controls
 			attr(buffer, "value", "true");
 			attr(buffer, "[(ngModel)]", path);
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("&nbsp;");
 			buffer.append("<span>");
@@ -415,6 +424,8 @@ public class Controls
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			attr(buffer, "[binary]", "true");
+			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			//attr(buffer, "variant", "filled");
 			buffer.append(">");
 			buffer.append("</p-checkbox>");
@@ -494,6 +505,7 @@ public class Controls
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">\n");
 			
 			buffer.append("<option");
@@ -544,6 +556,7 @@ public class Controls
 			attr(buffer, "[style]", "{'width':'"+width+"'}");
 			//attr(buffer, "appendTo", "body");
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("</p-select>");
 		}
@@ -604,6 +617,8 @@ public class Controls
 				attr(buffer, "[(ngModel)]", path);
 				attr(buffer, "[inputId]", "item");
 				attr(buffer, "[value]", "item");
+				if (readonly) attr(buffer, "readonly");
+				if (disabled) attr(buffer, "[disabled]", true);
 				buffer.append("/>");
 				
 				buffer.append("<label");
@@ -699,6 +714,7 @@ public class Controls
 			attr(buffer, "[(ngModel)]", path);
 			attr(buffer, "style", "width:"+width+"");
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 		}
 	}
@@ -730,6 +746,8 @@ public class Controls
 			attr(buffer, "[style]", "{'width':'100%'}");//, 'padding-right':'30px'
 			//if (readonly)
 			attr(buffer, "[readonlyInput]", "true");
+			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("</p-datepicker>");
 		}
@@ -781,6 +799,7 @@ public class Controls
 			attr(buffer, "[(ngModel)]", path);
 			attr(buffer, "width", width);//yy/mm/dd
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("</calendar-control>");
 		}
@@ -800,6 +819,7 @@ public class Controls
 			buffer.append("<vaadin-date-picker");
 			attr(buffer, "[(value)]", path);
 			if (readonly) attr(buffer, "readonly");
+			if (disabled) attr(buffer, "[disabled]", true);
 			buffer.append(">");
 			buffer.append("</vaadin-date-picker>");
 		}

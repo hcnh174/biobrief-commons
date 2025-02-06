@@ -1,5 +1,6 @@
 package org.biobrief.generator.angular;
 
+import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.generator.angular.AngularGeneratorParams.GridGeneratorParams;
 import org.biobrief.generator.templates.Grid;
 import org.biobrief.util.MessageWriter;
@@ -13,12 +14,15 @@ public class GridGenerator extends AbstractGridGenerator
 		String dictDir=argv[1];
 		String srcDir=argv[2];
 		String outDir=argv[3];
+		RenderMode mode=RenderMode.valueOf(argv[4]);
+		
 		System.out.println("template="+template);
 		System.out.println("dictDir="+dictDir);
 		System.out.println("srcDir="+srcDir);
 		System.out.println("outDir="+outDir);
+		System.out.println("mode="+mode);
 		
-		GridGeneratorParams params=new GridGeneratorParams(template, dictDir, srcDir, outDir);
+		GridGeneratorParams params=new GridGeneratorParams(template, dictDir, srcDir, outDir, mode);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}

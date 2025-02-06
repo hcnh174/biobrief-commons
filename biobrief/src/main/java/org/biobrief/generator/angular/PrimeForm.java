@@ -7,6 +7,7 @@ import org.biobrief.generator.templates.Form;
 public class PrimeForm extends AbstractPrimeForm
 {	
 	private final static GeneratorConstants.Icon icon=GeneratorConstants.Icon.FORM;
+	private Boolean renderFormTag=false;
 	
 	public PrimeForm(Form form)
 	{
@@ -40,9 +41,9 @@ public class PrimeForm extends AbstractPrimeForm
 	protected String renderAngularForm(RenderParams params)
 	{
 		StringBuilder buffer=new StringBuilder();
-		buffer.append("<form #form=\"ngForm\">\n");
+		if (renderFormTag) buffer.append("<form #form=\"ngForm\">\n");
 		super.render(params, buffer);
-		buffer.append("</form>\n");
+		if (renderFormTag) buffer.append("</form>\n");
 		return buffer.toString();
 	}
 	
