@@ -342,11 +342,10 @@ public class Controls
 		{
 			buffer.append("<textarea");
 			buffer.append(" pTextarea");
-			//attr(buffer, "variant", "filled");
-			attr(buffer, "autoResize", "autoResize");
-			//attr(buffer, "style", "width:"+width);
-			attr(buffer, "[fluid]", "true");
-			if (control.getParams().getRows()>1)
+			attr(buffer, "class", "noresize-textarea");
+//			attr(buffer, "autoResize", "autoResize");
+//			attr(buffer, "[fluid]", "true");
+//			if (control.getParams().getRows()>1)
 				attr(buffer, "rows", control.getParams().getRows());
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
@@ -355,6 +354,25 @@ public class Controls
 			buffer.append(">");
 			buffer.append("</textarea>");
 		}
+		
+//		@Override
+//		protected void renderAngular(StringBuilder buffer)
+//		{
+//			buffer.append("<textarea");
+//			buffer.append(" pTextarea");
+//			//attr(buffer, "variant", "filled");
+//			attr(buffer, "autoResize", "autoResize");
+//			//attr(buffer, "style", "width:"+width);
+//			attr(buffer, "[fluid]", "true");
+//			if (control.getParams().getRows()>1)
+//				attr(buffer, "rows", control.getParams().getRows());
+//			attr(buffer, "name", name);
+//			attr(buffer, "[(ngModel)]", path);
+//			if (readonly) attr(buffer, "readonly");
+//			if (disabled) attr(buffer, "[disabled]", true);
+//			buffer.append(">");
+//			buffer.append("</textarea>");
+//		}
 	}
 	
 	//////////////////////////////////////////////////////////////
