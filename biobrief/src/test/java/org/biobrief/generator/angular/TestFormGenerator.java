@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 //gradle --rerun-tasks --stacktrace --info test --tests *TestFormGenerator
 public class TestFormGenerator
 {
-	@Test
+	//@Test
 	public void createAngularCtdbEditTrialForm()
 	{
-		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms2.xlsx";
+		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms3.xlsx";
 		String dictDir="c:/workspace/hucgc/data/dictionary";
 		String srcDir="C:/workspace/hucgc/.temp/generator";
 		String outDir=srcDir;
@@ -20,10 +20,10 @@ public class TestFormGenerator
 		FormGenerator.main(argv);
 	}
 	
-	//@Test
+	@Test
 	public void createFreemarkerCtdbEditTrialForm()
 	{
-		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms2.xlsx";
+		String xlsxfile="C:/workspace/hucgc/data/templates/forms/hucgc-forms3.xlsx";
 		String dictDir="c:/workspace/hucgc/data/dictionary";
 		String srcDir="C:/workspace/hucgc/.temp/generator";
 		String outDir=srcDir;

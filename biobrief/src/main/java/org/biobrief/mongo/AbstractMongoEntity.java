@@ -15,7 +15,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 //https://stackoverflow.com/questions/35584271/spring-data-mongodb-annotation-createddate-isnt-working-when-id-is-assigned-m
@@ -36,10 +35,10 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 	@CreatedDate //@JsonIgnore
 	protected Date createdDate;
 	
-	@LastModifiedBy @JsonIgnore
+	@LastModifiedBy //@JsonIgnore
 	protected String lastModifiedBy;
 	
-	@LastModifiedDate @JsonIgnore
+	@LastModifiedDate //@JsonIgnore
 	protected Date lastModifiedDate;
 	
 	public AbstractMongoEntity() {}

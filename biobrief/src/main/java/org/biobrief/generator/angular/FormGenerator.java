@@ -263,6 +263,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 			ftl+="</@patientdb.print>\n";
 			
 			String filename=this.generator.params.getOutDir()+"/"+form.getFilename()+".ftl";
+			writer.println("writng freemarker file: "+filename);
 			FileHelper.writeFile(filename, ftl, false);//.temp/generated/print/"+name+".ftl
 			//if (generator.params.overwrite)
 			//	FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl, true);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
