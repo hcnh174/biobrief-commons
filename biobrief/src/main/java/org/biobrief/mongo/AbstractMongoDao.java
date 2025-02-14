@@ -2,6 +2,7 @@ package org.biobrief.mongo;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,8 +11,9 @@ import java.util.Optional;
 
 import org.biobrief.util.BeanHelper;
 import org.biobrief.util.CException;
-import org.biobrief.util.LogUtil;
+import org.biobrief.util.Context;
 import org.biobrief.util.StringHelper;
+import org.biobrief.web.LoginHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -154,6 +156,17 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 		T entity=getOne(item.getId());
 		//log.debug("updating: "+item.toString());
 		copyProperties(entity,item);
+		entity.setLastModifiedDate(new Date());
+		//entity.setLastModifiedBy(LoginHelper.getUsername());
+		return (T)repository.save(entity);
+	}
+	
+	public T update(T item, Context context)
+	{
+		T entity=getOne(item.getId());
+		copyProperties(entity,item);
+		entity.setLastModifiedDate(new Date());
+		entity.setLastModifiedBy(context.getUsername());
 		return (T)repository.save(entity);
 	}
 	

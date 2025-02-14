@@ -29,16 +29,16 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 	//@Version
 	//private Long version;
 	
-	@CreatedBy //@JsonIgnore
+	//@CreatedBy //@JsonIgnore
 	protected String createdBy;
 	
-	@CreatedDate //@JsonIgnore
+	//@CreatedDate //@JsonIgnore
 	protected Date createdDate;
 	
-	@LastModifiedBy //@JsonIgnore
+	//@LastModifiedBy //@JsonIgnore
 	protected String lastModifiedBy;
 	
-	@LastModifiedDate //@JsonIgnore
+	//@LastModifiedDate //@JsonIgnore
 	protected Date lastModifiedDate;
 	
 	public AbstractMongoEntity() {}
@@ -47,13 +47,22 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 	{
 		this.id=id;
 		this.createdDate=new Date();
+		this.lastModifiedDate=new Date();
 	}
 	
 	@Override public String getId(){return this.id;}
+	
 	public String getCreatedBy(){return this.createdBy;}
+	public void setCreatedBy(final String createdBy){this.createdBy=createdBy;}
+
 	public Date getCreatedDate(){return this.createdDate;}
+	public void setCreatedDate(final Date createdDate){this.createdDate=createdDate;}
+
 	public String getLastModifiedBy(){return this.lastModifiedBy;}
+	public void setLastModifiedBy(final String lastModifiedBy){this.lastModifiedBy=lastModifiedBy;}
+
 	public Date getLastModifiedDate(){return this.lastModifiedDate;}
+	public void setLastModifiedDate(final Date lastModifiedDate){this.lastModifiedDate=lastModifiedDate;}
 	
 //	@Override
 //	public boolean isNew()
