@@ -20,12 +20,11 @@ echo "pdffile: $pdffile"
 
 #########################################################
 
-echo "starting puppeteer" 
-
 checkFileExists $htmlfile || exit 1
-checkFileExists $pdffile || exit 1
 
 [[ -f "$pdffile" ]] && { rm $pdffile; }
+
+echo "starting puppeteer" 
 
 node /home/nelson/tools/puppeteer/convert_html_to_pdf.js $htmlfile $pdffile
 checkReturnCode "puppeteer $htmlfile" || exit 1
