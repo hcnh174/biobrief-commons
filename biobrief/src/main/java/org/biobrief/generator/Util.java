@@ -412,7 +412,10 @@ public final class Util
 		case FLOAT:
 			return "<#if "+path+"??>${"+path+"?string[\"0.##\"]}</#if>";//?string["0.##"]
 		case STRING:
+			if (field.isMulti())
+				return "${"+path+"?join(', ')}";
 			return "${"+path+"!}";
+			//return "${"+path+"!}";
 		default:
 			throw new CException("no handler for field type: "+field.getFieldType());
 		}

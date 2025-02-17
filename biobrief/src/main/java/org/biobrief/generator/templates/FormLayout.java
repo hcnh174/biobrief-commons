@@ -107,18 +107,18 @@ public class FormLayout extends TableLayout
 		int index=0;
 		while (true)
 		{
-			int start=value.indexOf("${", index);
+			int start=value.indexOf(TemplateUtils.CONTROL_START, index);//"${"
 			if (start==-1)
 				break;
 			String text=value.substring(index, start);
 			addText(items, text);
-			start+=2;
-			int end=value.indexOf("}", start);
+			start+=TemplateUtils.CONTROL_START.length();
+			int end=value.indexOf(TemplateUtils.CONTROL_END, start);//"}"
 			if (end==-1)
 				throw new CException("cannot find end brace for control: "+value);
 			String name=value.substring(start, end);
 			items.add(createControl(name, cell));
-			index=end+1;
+			index=end+TemplateUtils.CONTROL_END.length();
 		}
 		String text=value.substring(index);
 		addText(items, text);

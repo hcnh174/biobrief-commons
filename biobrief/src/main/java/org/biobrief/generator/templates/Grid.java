@@ -110,7 +110,7 @@ public class Grid extends AbstractTemplate
 	private static String getDetail(ExcelTemplate template)
 	{
 		CellData detailcell=template.findCell(3, 0);
-		return (detailcell!=null) ? detailcell.getStringValue() : "";//"${enums.diagnostic(item)}";//"${id}";
+		return (detailcell!=null) ? detailcell.getStringValue() : "";
 	}
 	
 //	public String getGroup()

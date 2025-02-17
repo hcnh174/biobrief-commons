@@ -23,6 +23,9 @@ public final class TemplateUtils
 {	
 	public static final String DEFAULTS_SHEET="defaults";
 	public static final String HIDDEN_COLUMN_COLOR="rgba(216,216,216,1.0)";//second down on the left
+	public static final String CONTROL_MARKER="$";
+	public static final String CONTROL_START=CONTROL_MARKER+"[[";
+	public static final String CONTROL_END="]]";
 	
 	public static String getTitle(ExcelTemplate template)
 	{
@@ -53,7 +56,7 @@ public final class TemplateUtils
 
 	public static boolean isControl(String value)
 	{
-		return StringHelper.hasContent(value) && value.contains("$");
+		return StringHelper.hasContent(value) && value.contains(CONTROL_MARKER);//"$"
 	}
 	
 	public static String getValue(CellData cell)
@@ -64,10 +67,10 @@ public final class TemplateUtils
 	public static String getControlName(String value)
 	{
 		checkControl(value);
-		if (value.contains("${"))
+		if (value.contains(CONTROL_START))//"${"
 		{
-			int start=value.indexOf("${")+2;
-			int end=value.indexOf("}", start);
+			int start=value.indexOf(CONTROL_START)+CONTROL_START.length();//"${"
+			int end=value.indexOf(CONTROL_END, start);//"}"
 			return value.substring(start, end);
 		}
 		else return findControlName(value);
@@ -86,7 +89,7 @@ public final class TemplateUtils
 	public static void checkControl(String body)
 	{
 		if (!isControl(body))
-			throw new CException("control field name does not match ${name} format: "+body);
+			throw new CException("control field name does not match "+CONTROL_START+"name"+CONTROL_END+" format: "+body);
 	}
 		
 	public static String getRoot(EntityDefinition entityType)
@@ -264,20 +267,37 @@ public final class TemplateUtils
 		
 		protected String formatFields(String value)
 		{
-			if (value.contains("$") && !value.contains("${"))
-				return StringHelper.replace(value, "$", ROWDATA+".");
-			if (!value.contains("${"))
+			if (value.contains(CONTROL_MARKER) && !value.contains(CONTROL_START))
+				return StringHelper.replace(value, CONTROL_MARKER, ROWDATA+".");
+			if (!value.contains(CONTROL_START))
 				return value;
-			int start=value.indexOf("${")+2;
-			int end=value.indexOf("}", start);
+			int start=value.indexOf(CONTROL_START)+CONTROL_START.length();
+			int end=value.indexOf(CONTROL_END, start);
 			String name=value.substring(start, end);
-			String target="${"+name+"}";
+			String target=CONTROL_START+name+CONTROL_END;
 			String replace=ROWDATA+"."+name;
 			if (wrapbraces)
 				replace="{{"+replace+"}}";
 			String formatted=StringHelper.replace(value, target, replace);
 			return formatFields(formatted);
 		}
+		
+//		protected String formatFields(String value)
+//		{
+//			if (value.contains("$") && !value.contains("${"))
+//				return StringHelper.replace(value, "$", ROWDATA+".");
+//			if (!value.contains("${"))
+//				return value;
+//			int start=value.indexOf("${")+2;
+//			int end=value.indexOf("}", start);
+//			String name=value.substring(start, end);
+//			String target="${"+name+"}";
+//			String replace=ROWDATA+"."+name;
+//			if (wrapbraces)
+//				replace="{{"+replace+"}}";
+//			String formatted=StringHelper.replace(value, target, replace);
+//			return formatFields(formatted);
+//		}
 		
 		@Override
 		public String toString()
