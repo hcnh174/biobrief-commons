@@ -166,9 +166,10 @@ public class EntityDefinition
 	}
 	
 	// mcus[0].diabetesTreatment
-	private FieldDefinition getNestedFieldDefinition(String name)
+	private FieldDefinition getNestedFieldDefinition(String origname)
 	{
-		name=name.replaceAll("\\[[0-9]+\\]", "");
+		System.out.println("origname="+origname);
+		String name=origname.replaceAll("\\[[0-9]+\\]", "");
 		//System.out.println("nested name="+name);
 		int index=name.indexOf(".");
 		//assert(index!=-1);
