@@ -13,7 +13,8 @@ public class TestNotificationService
 	public void testNotify()
 	{
 		EmailService emailService=new MockEmailServiceImpl();
-		String configfile="q:/config/notifications2.yaml";
+		String configfile="q:/config/notifications.yaml";
+		//String configfile="q:/config/notifications-test.yaml";
 		NotificationService notificationService=new NotificationService(emailService, configfile, true);
 		Context context=new Context("hcnh174", new MessageWriter());
 		

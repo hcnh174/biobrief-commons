@@ -120,8 +120,8 @@ public class NotificationService
 		try
 		{
 			NotificationConfig config=(NotificationConfig)YamlHelper.readFile(this.configfile, NotificationConfig.class);
-			Date date=FileHelper.getLastModifiedDate(this.configfile);
-			config.setLastUpdated(date);
+			config.setLastUpdated(FileHelper.getLastModifiedDate(this.configfile));
+			config.check(config);
 			return config;
 		}
 		catch (Exception e)
@@ -288,6 +288,40 @@ public class NotificationService
 			return list;
 		}
 		
+		public void check(NotificationConfig config)
+		{
+			if (!StringHelper.hasContent(this.from))
+				throw new NotificationConfigException("from address is not set: ["+from+"]", config);
+			if (this.servers.isEmpty())
+				throw new NotificationConfigException("no servers are configured", config);
+			if (this.groups.isEmpty())
+				throw new NotificationConfigException("no groups are configured", config);
+			if (this.users.isEmpty())
+				throw new NotificationConfigException("no users are configured", config);
+			if (this.topics.isEmpty())
+				throw new NotificationConfigException("no topics are configured", config);
+			
+			for (Server server : this.servers)
+			{
+				server.check(config);
+			}
+			
+			for (Group group : this.groups)
+			{
+				group.check(config);
+			}
+			
+			for (User user : this.users)
+			{
+				user.check(config);
+			}
+			
+			for (Topic topic : this.topics)
+			{
+				topic.check(config);
+			}
+		}
+		
 		@Data
 		public static class Server
 		{
@@ -319,6 +353,14 @@ public class NotificationService
 					return true;
 				return !topic.matchesMode(this.mode);
 			}
+			
+			public void check(NotificationConfig config)
+			{
+				if (!StringHelper.hasContent(this.name))
+					throw new NotificationConfigException("server name is not set: ["+name+"]", config);
+				if (!StringHelper.hasContent(this.hostname))
+					throw new NotificationConfigException("server hostname is not set: ["+hostname+"]", config);
+			}
 		}
 		
 		@Data
@@ -330,6 +372,12 @@ public class NotificationService
 			public boolean matches(String name)
 			{
 				return this.name.equals(name);
+			}
+			
+			public void check(NotificationConfig config)
+			{
+				if (!StringHelper.hasContent(this.name))
+					throw new NotificationConfigException("group name is not set: ["+name+"]", config);
 			}
 		}
 		
@@ -350,6 +398,20 @@ public class NotificationService
 			{
 				return this.groups.contains(group);
 			}
+			
+			public void check(NotificationConfig config)
+			{
+				if (!StringHelper.hasContent(this.username))
+					throw new NotificationConfigException("user username is not set: ["+username+"]", config);
+				if (!StringHelper.hasContent(this.email))
+					throw new NotificationConfigException("user email is not set: ["+email+"]", config);
+				
+				// make sure each group exists
+				for (String group : this.groups)
+				{
+					config.getGroup(group);
+				}
+			}
 		}
 		
 		@Data
@@ -357,8 +419,6 @@ public class NotificationService
 		{
 			protected String name;
 			protected String from;
-//			protected String subject="subject";
-//			protected String body="body";
 			protected Boolean enabled=true;
 			protected List<String> groups=Lists.newArrayList();
 			protected List<ServerMode> modes=Lists.newArrayList();
@@ -367,23 +427,42 @@ public class NotificationService
 			{
 				return this.name.equals(name);
 			}
-			
-//			public String formatSubject(Model model)
-//			{
-//				return model.format(this.subject);
-//			}
-//			
-//			public String formatBody(Model model)
-//			{
-//				return model.format(this.body);
-//			}
-			
+
 			public boolean matchesMode(ServerMode mode)
 			{
 				if (modes.isEmpty())
 					return true;
 				return modes.contains(mode);
 			}
+			
+			public void check(NotificationConfig config)
+			{
+				if (!StringHelper.hasContent(this.name))
+					throw new NotificationConfigException("topic name is not set: ["+name+"]", config);
+				if (this.groups.isEmpty())
+					throw new NotificationConfigException("no groups are configured for topic", config);
+				
+				// make sure each group exists
+				for (String group : this.groups)
+				{
+					config.getGroup(group);
+				}
+			}
 		}
+		
+		@SuppressWarnings("serial")
+		public static class NotificationConfigException extends CException
+		{
+			public NotificationConfigException(String message, NotificationConfig config)
+			{
+				super(NotificationConfigException.formatMessage(message, config));
+			}
+			
+			private static String formatMessage(String message, NotificationConfig config)
+			{
+				return "NotificationConfigException: "+message+"\n"+YamlHelper.toYaml(config);
+			}
+		}
+		
 	}
 }
