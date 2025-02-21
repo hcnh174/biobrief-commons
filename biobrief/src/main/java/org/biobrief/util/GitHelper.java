@@ -80,7 +80,7 @@ public final class GitHelper
 		
 		public Commit add(String name)
 		{
-			System.out.println("name="+name);
+			//System.out.println("name="+name);
 			Commit commit=new Commit(name);
 			this.commits.add(commit);
 			return commit;
