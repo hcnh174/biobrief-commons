@@ -9,18 +9,21 @@ import lombok.Data;
 
 public final class GitHelper
 {
+	public static final String DATE_PATTERN="yyyy-MM-dd' 'HH:mm:ss Z"; // 2025-02-20 13:54:55 +0900
+	
 	private GitHelper(){}
 
 	// outfile="/mnt/out/logs/gitlog.txt"
-	public static String getGitLogCommand(String dir, String outfile)
+	public static String getGitLogCommand(String dir, Integer num, String outfile)
 	{
 		//String command="cd "+dir+";";
-		String command="git log --format=medium --max-count=100 --abbrev-commit --date=unix > "+outfile;
+		String command="git log --format=medium --max-count="+num+" --abbrev-commit --date=iso > "+outfile;
 		return command;
 	}
 
 	public static GitLog parseGitLog(String logfile)
 	{
+		FileHelper.checkExists(logfile);
 		GitLog log=new GitLog();
 		GitLog.Commit commit=new GitLog.Commit("");
 		for (String line : FileHelper.readLines(logfile))
@@ -62,7 +65,12 @@ public final class GitHelper
 	private static Date parseDateLine(String line)
 	{
 		String value=StringHelper.remove(line, "Date:").trim();
-		return new Date(Long.parseLong(value));
+		return parseDate(value);
+	}
+	
+	private static Date parseDate(String value)
+	{
+		return DateHelper.parse(value, DATE_PATTERN);
 	}
 	
 	@Data
