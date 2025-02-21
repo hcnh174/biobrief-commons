@@ -85,6 +85,13 @@ public final class GitHelper
 			this.commits.add(commit);
 			return commit;
 		}
+		
+		public Commit findHead()
+		{
+			if (this.commits.isEmpty())
+				throw new CException("no commits found");
+			return this.commits.get(0);
+		}
 
 		@Data
 		public static class Commit
