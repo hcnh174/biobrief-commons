@@ -1214,6 +1214,11 @@ public final class StringHelper
 		return str==null || EMPTY_STRING.equals(str);
 	}
 	
+	public static boolean isEmpty(Collection<?> coll)
+	{
+		return (coll==null || coll.isEmpty());
+	}
+	
 	//public static List<String> prefix(Iterable<?> iter, String token)
 	public static List<String> prefix(String token, Iterable<?> iter)
 	{
