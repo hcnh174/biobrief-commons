@@ -13,7 +13,6 @@ import org.biobrief.util.BeanHelper;
 import org.biobrief.util.CException;
 import org.biobrief.util.Context;
 import org.biobrief.util.StringHelper;
-import org.biobrief.web.LoginHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -37,7 +36,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	@Autowired protected MongoMappingContext mongoMappingContext;
 	@Autowired protected R repository;
 	protected Class<T> entityClass;
-	protected List<String> ignore=Lists.newArrayList("id","createdBy","createdDate","lastModifiedBy","lastModifiedDate","patient_id");
+	protected List<String> ignore=Lists.newArrayList("id","createdBy","createdDate");//,"lastModifiedBy","lastModifiedDate","patient_id");
 	protected BeanHelper beanhelper=new BeanHelper();
 
 	protected final R getRepository() {return repository;}
@@ -155,7 +154,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	{
 		T entity=getOne(item.getId());
 		//log.debug("updating: "+item.toString());
-		copyProperties(entity,item);
+		copyProperties(entity, item);
 		entity.setLastModifiedDate(new Date());
 		//entity.setLastModifiedBy(LoginHelper.getUsername());
 		return (T)repository.save(entity);
@@ -164,7 +163,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	public T update(T item, Context context)
 	{
 		T entity=getOne(item.getId());
-		copyProperties(entity,item);
+		copyProperties(entity, item);
 		entity.setLastModifiedDate(new Date());
 		entity.setLastModifiedBy(context.getUsername());
 		return (T)repository.save(entity);
@@ -227,7 +226,7 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 	
 	protected boolean copyProperties(T dest, Object src)
 	{
-		return beanhelper.copyProperties(dest,src,ignore);
+		return beanhelper.copyProperties(dest, src, ignore);
 	}
 	
 	protected List<T> asList(Iterable<T> items)

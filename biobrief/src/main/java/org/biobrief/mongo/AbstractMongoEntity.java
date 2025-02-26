@@ -1,19 +1,9 @@
 package org.biobrief.mongo;
 
 import java.util.Date;
-import java.util.List;
 
 import org.biobrief.util.AbstractEntity;
-import org.biobrief.util.BeanHelper;
-import org.biobrief.util.CException;
-import org.biobrief.util.Constants.FirstLast;
-import org.biobrief.util.StringHelper;
-//import org.javers.core.metamodel.annotation.DiffIgnore;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -25,20 +15,9 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 {	
 	@Id
 	protected String id;
-	
-	//@Version
-	//private Long version;
-	
-	//@CreatedBy //@JsonIgnore
 	protected String createdBy;
-	
-	//@CreatedDate //@JsonIgnore
 	protected Date createdDate;
-	
-	//@LastModifiedBy //@JsonIgnore
 	protected String lastModifiedBy;
-	
-	//@LastModifiedDate //@JsonIgnore
 	protected Date lastModifiedDate;
 	
 	public AbstractMongoEntity() {}
@@ -64,14 +43,9 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 	public Date getLastModifiedDate(){return this.lastModifiedDate;}
 	public void setLastModifiedDate(final Date lastModifiedDate){this.lastModifiedDate=lastModifiedDate;}
 	
-//	@Override
-//	public boolean isNew()
-//	{
-//		return id==null;
-//	}
-	
 	///////////////////////////////////////////////////////////////
 	
+	/*
 	public NestedMongoDocument getNested(Class<?> cls)
 	{
 		throw new CException("no handler for nested type: "+cls);
@@ -181,4 +155,5 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 		collection.add(item);
 		return item;
 	}
+	*/
 }
