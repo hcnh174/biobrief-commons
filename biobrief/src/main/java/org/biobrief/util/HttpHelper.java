@@ -42,6 +42,7 @@ public class HttpHelper
 	
 	//https://hc.apache.org/httpcomponents-client-ga/tutorial/html/fundamentals.html#d5e80
 	//https://www.baeldung.com/convert-input-stream-to-string
+	@SuppressWarnings("resource")
 	public static String getRequest(String baseurl, Map<String,Object> model, Map<String, String> headers)
 	{
 		String url=appendQueryString(baseurl, model);

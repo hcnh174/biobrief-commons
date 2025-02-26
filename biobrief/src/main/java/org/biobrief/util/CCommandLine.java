@@ -158,6 +158,20 @@ public class CCommandLine
 	public PlatformType.Platform getPlatform(){return this.platform;}
 	public void setPlatform(final PlatformType.Platform platform){this.platform=platform;}
 	
+//	public DefaultExecutor createExecutor()
+//	{
+//		DefaultExecutor.builder();
+//		if (this.workingDir!=null)
+//			DefaultExecutor.builder().setWorkingDirectory(this.workingDir);
+//		if (this.exitValue!=null)
+//			DefaultExecutor.builder().setExitValue(this.exitValue);
+//		if (this.watchdog!=null)
+//			DefaultExecutor.builder().setWatchdog()
+//			builder.setWatchdog(new ExecuteWatchdog(this.watchdog));
+//		return builder.get();
+//	} 
+	
+	@SuppressWarnings("deprecation")
 	public DefaultExecutor createExecutor()
 	{
 		DefaultExecutor executor = new DefaultExecutor();

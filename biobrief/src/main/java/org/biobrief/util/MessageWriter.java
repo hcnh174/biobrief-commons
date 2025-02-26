@@ -1,7 +1,6 @@
 package org.biobrief.util;
 
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.List;
 
 import org.slf4j.Logger;

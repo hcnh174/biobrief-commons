@@ -50,7 +50,6 @@ import org.slf4j.LoggerFactory;
 //import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.InputSource;
 
-import com.google.common.base.Charsets;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -69,7 +68,7 @@ public final class FileHelper
 	public static final char SEP='/';
 	public static final String SEPARATOR="/";
 	public static final String NEWLINE="\n";
-	public static final Charset ENCODING=Charsets.UTF_8;
+	public static final Charset ENCODING=StandardCharsets.UTF_8;
 	public static final String TXT=".txt";
 	public static final String PDF=".pdf";
 	public static final String CSV=".csv";
@@ -99,7 +98,7 @@ public final class FileHelper
 	
 	public static String readFile(String filename)
 	{
-		return readFile(filename, Charsets.UTF_8);
+		return readFile(filename, StandardCharsets.UTF_8);
 	}
 	
 	public static String readFile(String filename, Charset charset)
@@ -1224,9 +1223,9 @@ public final class FileHelper
 	
 	public enum Encoding
 	{		
-		UTF8("UTF-8", Charsets.UTF_8), 
+		UTF8("UTF-8", StandardCharsets.UTF_8), 
 		SHIFT_JIS("Shift_JIS"), 
-		US_ASCII("US_ASCII", Charsets.US_ASCII);
+		US_ASCII("US_ASCII", StandardCharsets.US_ASCII);
 		
 		Encoding(String encoding, Charset charset)
 		{
@@ -1516,6 +1515,7 @@ public final class FileHelper
 	
 	/////////////////////////
 	
+	@SuppressWarnings("resource")
 	public static String unzip(String filename)
 	{
 		try
@@ -1542,6 +1542,7 @@ public final class FileHelper
 	}
 	
 	//https://github.com/srikanth-lingala/zip4j
+	@SuppressWarnings("resource")
 	public static String unzip(String filename, String outdir, String password)
 	{
 		try

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -15,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.Collections2;
@@ -828,7 +828,7 @@ public class DataFrame<T extends Object>
 		
 		public int ROW_STATUS_INTERVAL=100000;
 		public IdType idType=IdType.LIST;
-		public Charset encoding=Charsets.UTF_8;
+		public Charset encoding=StandardCharsets.UTF_8;
 		public List<Integer> idcols;
 		public List<String> idnames;
 		public String keyDelimiter="_";

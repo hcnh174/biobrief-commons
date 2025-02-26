@@ -62,6 +62,7 @@ public final class JsonHelper
 		return mapper;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void configureMapper(ObjectMapper mapper)
 	{
 		mapper.registerModule(new Jdk8Module());

@@ -3,7 +3,6 @@ package org.biobrief.util;
 import java.io.File;
 import java.io.InputStream;
 
-import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.crypt.Decryptor;
 import org.apache.poi.poifs.crypt.EncryptionInfo;
@@ -50,6 +49,7 @@ public class WordHelper
 			XWPFDocument doc = new XWPFDocument(opc);
 			XWPFWordExtractor ex = new XWPFWordExtractor(doc);
 			String text = ex.getText();
+			ex.close();
 			return text;
 			
 //			Biff8EncryptionKey.setCurrentUserPassword(password);

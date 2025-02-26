@@ -49,7 +49,6 @@ import org.springframework.util.StringUtils;
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.google.common.base.CaseFormat;
-import com.google.common.base.Charsets;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
 import com.google.common.collect.HashBasedTable;
@@ -681,7 +680,7 @@ public final class StringHelper
 		
 	public static String urlEncode(String str)
 	{	
-		return urlEncode(str,Charsets.US_ASCII);
+		return urlEncode(str, StandardCharsets.US_ASCII);
 	}
 	
 	public static String urlEncode(String str, Charset encoding)
@@ -698,7 +697,7 @@ public final class StringHelper
 	
 	public static String urlDecode(String str)
 	{	
-		return urlDecode(str,Charsets.US_ASCII);
+		return urlDecode(str,StandardCharsets.US_ASCII);
 	}
 	
 	public static String urlDecode(String str, Charset encoding)
@@ -1304,7 +1303,7 @@ public final class StringHelper
 		return "【"+str+"】";
 	}
 	
-	private static Charset use_encoding=Charsets.ISO_8859_1;
+	private static Charset use_encoding=StandardCharsets.ISO_8859_1;
 	
 	// same as logger.debug, but uses Unicode
 		//http://www.velocityreviews.com/forums/t137667-changing-system-out-encoding.html
