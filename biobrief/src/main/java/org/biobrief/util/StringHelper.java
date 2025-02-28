@@ -662,8 +662,6 @@ public final class StringHelper
 		return values;
 	}
 	
-	
-	
 	public static String[] toArray(Collection<String> values)
 	{
 		String[] arr=new String[values.size()];
@@ -2725,6 +2723,55 @@ public final class StringHelper
 	{
 		return new String(Base64.getDecoder().decode(value));
 	}
+	
+	//////////////////////////////////////////
+	
+	private final static Set<Character.UnicodeBlock> japaneseBlocks = Sets.newHashSet();
+	
+	static
+	{
+		japaneseBlocks.add(Character.UnicodeBlock.KATAKANA);
+		japaneseBlocks.add(Character.UnicodeBlock.HIRAGANA);
+		japaneseBlocks.add(Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS);
+		japaneseBlocks.add(Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A);
+	}
+
+	//	https://coderanch.com/t/371317/java/Identifying-Japanese-Character
+	public static boolean containsJapanese(String value)
+	{
+		for (int i = 0, max = value.length(); i < max; i++)
+		{
+			char c = value.charAt(i);
+			Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
+			if (japaneseBlocks.contains(block))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns if a character is one of Chinese-Japanese-Korean characters.
+	 * https://stackoverflow.com/questions/1499804/how-can-i-detect-japanese-text-in-a-java-string
+	 * 
+	 * @param c
+	 *            the character to be tested
+	 * @return true if CJK, false otherwise
+	 */
+	public boolean isCharCJK(final char c)
+	{
+	    if ((Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS)
+	            || (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A)
+	            || (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B)
+	            || (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CJK_COMPATIBILITY_FORMS)
+	            || (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS)
+	            || (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CJK_RADICALS_SUPPLEMENT)
+	            || (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION)
+	            || (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.ENCLOSED_CJK_LETTERS_AND_MONTHS)) {
+	        return true;
+	    }
+	    return false;
+	}
+	
 	
 //	public static void banner(String message)
 //	{

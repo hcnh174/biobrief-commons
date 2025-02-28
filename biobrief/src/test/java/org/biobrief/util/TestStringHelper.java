@@ -141,4 +141,13 @@ public class TestStringHelper
 		int numdec=2;
 		assertThat(StringHelper.format(value, numdec)).isEqualTo("0.6");
 	}
+	
+	@Test
+	public void containsJapanese()
+	{
+		assertThat(StringHelper.containsJapanese("地方独立行政法人神奈川県立病院機構神奈川県立がんセンター")).isTrue();
+		assertThat(StringHelper.containsJapanese("岡山大学病院")).isTrue();
+		assertThat(StringHelper.containsJapanese("広島大学病院")).isTrue();
+		assertThat(StringHelper.containsJapanese("Firstname Lastname")).isFalse();
+	}
 }
