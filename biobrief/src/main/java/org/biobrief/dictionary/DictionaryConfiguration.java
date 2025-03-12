@@ -11,7 +11,7 @@ public class DictionaryConfiguration
 	{System.out.println("DictionaryConfiguration");}
 	
 	@Bean
-	public DictionaryService dictionaryService(DictionaryProperties properties)
+	DictionaryService dictionaryService(DictionaryProperties properties)
 	{
 		return new DictionaryService(properties);
 	}

@@ -1109,7 +1109,6 @@ public final class FileHelper
 		}
 	}
 	
-	@SuppressWarnings("resource")
 	public static Scanner createScanner(Reader in, String delimiter)
 	{
 		try

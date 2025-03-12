@@ -17,7 +17,7 @@ public class MongoConfiguration
 	{System.out.println("MongoConfiguration");}
 	
 	@Bean
-	public GridFsDao gridFsDao()
+	GridFsDao gridFsDao()
 	{
 		return new GridFsDao();
 	}

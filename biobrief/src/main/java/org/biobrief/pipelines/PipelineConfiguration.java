@@ -12,13 +12,13 @@ public class PipelineConfiguration
 	{System.out.println("PipelineConfiguration");}
 
 	@Primary @Bean
-	public PipelineProperties pipelineProperties()
+	PipelineProperties pipelineProperties()
 	{
 		return new PipelineProperties();
 	}
 	
 	@Bean
-	public PipelineService pipelineService()
+	PipelineService pipelineService()
 	{
 		return new PipelineService();
 	}

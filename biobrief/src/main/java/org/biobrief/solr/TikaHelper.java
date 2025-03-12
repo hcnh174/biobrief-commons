@@ -105,7 +105,7 @@ public class TikaHelper
 		InputStream stream=null;
 		try
 		{
-			System.out.println("extractPdfContent: "+filename);
+			//System.out.println("extractPdfContent: "+filename);
 			PDFParser parser=createPdfParser();
 			BodyContentHandler handler=new BodyContentHandler(-1);
 			Metadata metadata=new Metadata();

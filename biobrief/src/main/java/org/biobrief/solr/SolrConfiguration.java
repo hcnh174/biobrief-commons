@@ -14,13 +14,13 @@ public class SolrConfiguration
 	{System.out.println("SolrConfiguration");}
 	
 	@Bean
-	public SolrService solrService(SolrProperties properties)
+	SolrService solrService(SolrProperties properties)
 	{
 		return new SolrService(properties);
 	}
 	
 	@Bean
-	public SolrClient solrClient()
+	SolrClient solrClient()
 	{
 		return SolrHelper.getSolrClient();
 		//return new HttpSolrClient.Builder("http://1703-030.b.hiroshima-u.ac.jp:8983/solr").build();

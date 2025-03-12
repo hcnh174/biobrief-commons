@@ -20,7 +20,7 @@ public class WebConfiguration
 	@Autowired WebProperties properties;
 	
 	@Bean
-	public FreeMarkerConfigurer freemarkerConfigurer()
+	FreeMarkerConfigurer freemarkerConfigurer()
 	{
 		FreeMarkerConfigurer configurer=new FreeMarkerConfigurer();
 		String freemarkerPath=properties.getFreemarkerPath();
@@ -34,7 +34,7 @@ public class WebConfiguration
 	}
 	
 	@Bean
-	public FreemarkerService freemarkerService()
+	FreemarkerService freemarkerService()
 	{
 		FreeMarkerConfigurer configurer=freemarkerConfigurer();
 		return new FreemarkerService(configurer.getConfiguration());
