@@ -30,7 +30,7 @@ public class ExcelTemplateParser
 	
 	private ExcelTemplateParser(Sheet sheet)
 	{
-		System.out.println("loading template "+sheet.getSheetName());
+		//System.out.println("loading template "+sheet.getSheetName());
 		this.sheet=sheet;
 		lastcolumn=excel.getLastColNum(sheet);
 		lastrow=sheet.getLastRowNum();
