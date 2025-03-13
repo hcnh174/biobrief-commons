@@ -10,17 +10,20 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 import org.biobrief.util.CException;
 import org.biobrief.util.ExcelHelper;
 import org.biobrief.util.StringHelper;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+import lombok.Data;
+
+@Data
 public class ExcelTemplate
 {
-	private ExcelHelper excel=new ExcelHelper();
+	@JsonIgnore private ExcelHelper excel=new ExcelHelper();
 	protected final String name;
 	protected final Integer numcolumns;
 	protected final Integer numrows;
@@ -116,6 +119,7 @@ public class ExcelTemplate
 		return StringHelper.toString(this);
 	}
 	
+	@Data
 	public class CellData
 	{		
 		protected Integer row;
