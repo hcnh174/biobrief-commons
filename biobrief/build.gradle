@@ -45,7 +45,7 @@ dependencies {
 	api('org.springframework.boot:spring-boot-starter')
 	api("com.google.guava:guava:${property('guava.version')}")
 	api("org.springframework.boot:spring-boot")
-	api("org.springframework.data:spring-data-rest-webmvc")
+	api("org.springframework.data:spring-data-rest-webmvc:${property('spring-data-rest-webmvc.version')}")
 	api("org.springframework.retry:spring-retry:${property('retry.version')}")
 	//api("javax.validation:validation-api")
 	//api("jakarta.validation:validation-api")
@@ -73,8 +73,8 @@ dependencies {
 	api("javax.xml.bind:jaxb-api:${property('javax-xml-bind.version')}")
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	testImplementation("org.junit.jupiter:junit-jupiter-api:${property('junitJupiterVersion')}")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property('junitJupiterVersion')}")
+	//testImplementation("org.junit.jupiter:junit-jupiter-api:${property('junitJupiterVersion')}")
+	//testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property('junitJupiterVersion')}")
 	
 	//testRuntimeOnly("org.junit.vintage:junit-vintage-engine"){
 	//	exclude(module: "org.hamcrest")
@@ -221,6 +221,7 @@ tasks.named('jar') {
                    'Implementation-Version': project.version)
     }
 }
+
 
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
