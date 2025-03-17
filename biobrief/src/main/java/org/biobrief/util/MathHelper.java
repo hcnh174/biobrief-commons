@@ -153,6 +153,38 @@ public final class MathHelper
 		return parseDouble(str)!=null;
 	}
 	
+	////////////////////////////////////////
+	
+	public static boolean isGreaterThan(Integer value1, Integer value2)
+	{
+		if (value1==null || value2==null)
+			return false;
+		return value1.intValue() > value2.intValue();
+	}
+	
+	public static boolean isGreaterThanEqual(Integer value1, Integer value2)
+	{
+		if (value1==null || value2==null)
+			return false;
+		return value1.intValue() >= value2.intValue();
+	}
+	
+	public static boolean isLessThan(Integer value1, Integer value2)
+	{
+		if (value1==null || value2==null)
+			return false;
+		return value1.intValue() < value2.intValue();
+	}
+	
+	public static boolean isLessThanEqual(Integer value1, Integer value2)
+	{
+		if (value1==null || value2==null)
+			return false;
+		return value1.intValue() <= value2.intValue();
+	}
+	
+	////////////////////////////////////////
+	
 	public static Integer parseInteger(String str)
 	{
 		if (!StringHelper.hasContent(str))
