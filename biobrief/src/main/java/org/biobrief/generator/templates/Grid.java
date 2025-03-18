@@ -105,11 +105,6 @@ public class Grid extends AbstractTemplate
 		return (detailcell!=null) ? detailcell.getStringValue() : "";
 	}
 	
-//	public String getGroup()
-//	{
-//		return TemplateUtils.getGroup(getEntity());
-//	}
-	
 	public EntityDefinition getEntity(){return entity;}
 	public List<Column> getColumns(){return columns;}
 	
@@ -179,7 +174,6 @@ public class Grid extends AbstractTemplate
 		private boolean toolbar=true;
 		private boolean stateful=false;
 		private boolean dynamic=false;
-		
 		
 		public GridParams(){}
 

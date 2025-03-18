@@ -48,7 +48,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		//System.out.println("outDir="+outDir);
 		////System.out.println("mode="+mode);
 		
-		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, tempDir);//, srcDir, outDir);
+		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, tempDir);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}
@@ -90,7 +90,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 	
 	public class FormBuilder
 	{
-		private final FormGenerator generator;
+		//private final FormGenerator generator;
 		private final Dictionary dictionary;
 		private final Map<String, Object> params;
 		private final Map<String, PrimeForm> forms=Maps.newLinkedHashMap();
@@ -103,7 +103,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected FormBuilder(FormGenerator generator, Workbook workbook)
 		{
-			this.generator=generator;
+			//this.generator=generator;
 			this.dictionary=generator.params.getDictionary();
 			this.params=loadDefaultParams(workbook);
 			for (ExcelTemplate template : getTemplates(workbook))
