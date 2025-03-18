@@ -1,34 +1,16 @@
 package org.biobrief.generator;
 
-import org.biobrief.util.ExportedEnum;
 import org.biobrief.util.StringHelper;
 
 public interface GeneratorConstants
 {
 	public static final String WORKBOOK_LOCAL_TEMPLATE_PREFIX="-";
 		
-	@ExportedEnum public enum ContainerType {panel, fieldset, none};
-	@ExportedEnum public enum RenderMode{ANGULAR, FREEMARKER}
+	public enum ContainerType {panel, fieldset, none};
+	public enum RenderMode{angular, freemarker}
 	
-	@ExportedEnum public enum Icon
+	public enum Icon
 	{
-//		BLUE("icon-bullet-blue"),
-//		GREEN("icon-bullet-green"),
-//		GREY("icon-bullet-grey"),
-//		RED("icon-bullet-red"),
-//		BASIC_INFO("icon-basicinfo"),
-//		PATIENT_DATA("icon-patientdata"),
-//		HOSPITAL("icon-hospital"),
-//		FILEMAKER("icon-filemaker"),
-//		VIRUS("icon-virus"),
-//		MICROSCOPE("icon-microscope"),
-//		TESTTUBE("icon-testtubes"),
-//		SYRINGE("icon-syringe"),
-//		PILLS("icon-pills"),
-//		FIRSTAID("icon-firstaid"),
-		
-		//fa-first-order
-		
 		FORM("fa fa-wpforms"),
 		GRID("fa fa-list"),
 		FILE("fa fa-file-o"),
@@ -75,7 +57,7 @@ public interface GeneratorConstants
 		}
 	}
 
-	@ExportedEnum public enum KeyFilter
+	public enum KeyFilter
 	{
 		PositiveInteger("pint"),
 		Integer("int"),
@@ -105,7 +87,4 @@ public interface GeneratorConstants
 		checkbox,
 		date
 	}
-
-	// ENUMS_START
-	// ENUMS_END
 }

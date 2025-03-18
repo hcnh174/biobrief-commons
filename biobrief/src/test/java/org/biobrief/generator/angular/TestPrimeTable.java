@@ -19,7 +19,7 @@ public class TestPrimeTable
 		Grid grid=buildGrid();
 		PrimeTable table=new PrimeTable(grid);
 		assertThat(table).isNotNull();
-		FileHelper.writeFile(".temp/table.html", table.render(new RenderParams(RenderMode.ANGULAR)));
+		FileHelper.writeFile(".temp/table.html", table.render(new RenderParams(RenderMode.angular)));
 		FileHelper.writeFile(".temp/table.ts", table.toTypescript());
 	}
 	

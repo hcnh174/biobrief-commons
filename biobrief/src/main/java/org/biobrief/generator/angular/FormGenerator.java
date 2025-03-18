@@ -36,17 +36,19 @@ public class FormGenerator extends AbstractLayoutGenerator
 	{
 		String template=argv[0];
 		String dictDir=argv[1];
-		String srcDir=argv[2];
-		String outDir=argv[3];
-		RenderMode mode=RenderMode.valueOf(argv[4]);
+		String tempDir=argv[1];
+		//String srcDir=argv[2];
+		//String outDir=argv[3];
+		//RenderMode mode=RenderMode.valueOf(argv[4]);
 		
 		System.out.println("template="+template);
 		System.out.println("dictDir="+dictDir);
-		System.out.println("srcDir="+srcDir);
-		System.out.println("outDir="+outDir);
-		System.out.println("mode="+mode);
+		System.out.println("tempDir="+tempDir);
+		//System.out.println("srcDir="+srcDir);
+		//System.out.println("outDir="+outDir);
+		////System.out.println("mode="+mode);
 		
-		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, srcDir, outDir, mode);
+		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, tempDir);//, srcDir, outDir);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}
@@ -81,7 +83,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 				throw new CException("found duplicate form: "+name);
 			this.forms.add(name);
 		}
-		builder.write(params.getMode());
+		builder.write();//params.getMode());
 	}
 	
 	//////////////////////////////////////////////////////
@@ -219,7 +221,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		////////////////////////////////////////////////////////
 		
-		protected void write(RenderMode mode)
+		protected void write()//RenderMode mode)
 		{
 			for (PrimeForm form : forms.values())
 			{
@@ -227,18 +229,29 @@ public class FormGenerator extends AbstractLayoutGenerator
 			}
 		}
 		
+//		protected void write(PrimeForm form)
+//		{
+//			if (generator.params.mode==RenderMode.ANGULAR)
+//				writeAngular(form);
+//			else if (generator.params.mode==RenderMode.FREEMARKER)
+//				writeFreemarker(form);
+//			else throw new UnhandledCaseException("no handler for render mode: "+generator.params.mode);
+//		}
+		
 		protected void write(PrimeForm form)
 		{
-			if (generator.params.mode==RenderMode.ANGULAR)
+			RenderMode mode=form.getRenderMode();
+			if (mode==RenderMode.angular)
 				writeAngular(form);
-			else if (generator.params.mode==RenderMode.FREEMARKER)
+			else if (mode==RenderMode.freemarker)
 				writeFreemarker(form);
-			else throw new UnhandledCaseException("no handler for render mode: "+generator.params.mode);
+			else throw new UnhandledCaseException("no handler for render mode: "+mode);
 		}
 		
 		protected void writeAngular(PrimeForm form)
 		{
-			String filename=this.generator.params.getOutDir()+"/"+form.getFilename();
+			//String filename=this.generator.params.getOutDir()+"/"+form.getFilename();
+			String filename=form.getOutfile();
 			String html=render(form);
 			if (!FileHelper.exists(filename))
 				throw new CException("cannot find form template file: "+filename);
@@ -262,7 +275,8 @@ public class FormGenerator extends AbstractLayoutGenerator
 			ftl+="</#list>\n";
 			ftl+="</@patientdb.print>\n";
 			
-			String filename=this.generator.params.getOutDir()+"/"+form.getFilename()+".ftl";
+			//String filename=this.generator.params.getOutDir()+"/"+form.getFilename()+".ftl";
+			String filename=form.getOutfile();
 			writer.println("writng freemarker file: "+filename);
 			FileHelper.writeFile(filename, ftl, false);//.temp/generated/print/"+name+".ftl
 			//if (generator.params.overwrite)
@@ -329,7 +343,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		{
 			//System.out.println("******************************************");
 			//System.out.println("rendering layout: "+layout.getName());
-			return new RenderParams(generator.params.mode);//, false);//layout.isLight());
+			return new RenderParams(layout.getRenderMode());//generator.params.mode);//, false);//layout.isLight());
 		}
 	}
 }

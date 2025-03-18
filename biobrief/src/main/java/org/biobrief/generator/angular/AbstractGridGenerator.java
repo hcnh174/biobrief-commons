@@ -44,17 +44,17 @@ public abstract class AbstractGridGenerator extends AbstractLayoutGenerator
 	
 	private void updateHtmlFile(AbstractAngularGrid nggrid)
 	{
-		String srcFile=nggrid.getHtmlFilename(params.getSrcDir());
+		String srcFile=nggrid.getHtmlFilename();//nggrid.getHtmlFilename(params.getSrcDir());
 		if (!FileHelper.exists(srcFile))
 			throw new CException("cannot find grid src html file: "+srcFile);
 		writer.println("grid src html file: "+srcFile);
-		String html=nggrid.render(new RenderParams(params.mode))+"\n";
+		String html=nggrid.render(new RenderParams(nggrid.getRenderMode()))+"\n";//params..mode
 		//System.out.println("html="+html);
 		String str=FileHelper.readFile(srcFile);
 		str=Util.insertHtml(str, html, true);
 //		if (overwrite)
 //			overwriteFile(filename, str);
-		String outfile=nggrid.getHtmlFilename(params.getOutDir());
+		String outfile=nggrid.getHtmlFilename();//nggrid.getHtmlFilename(params.getOutDir());
 		FileHelper.writeFile(outfile, str, true);
 	}
 	
@@ -76,7 +76,7 @@ public abstract class AbstractGridGenerator extends AbstractLayoutGenerator
 	
 	private void updateTypescriptFile(AbstractAngularGrid nggrid)
 	{
-		String srcFile=nggrid.getTypescriptFilename(params.getSrcDir());
+		String srcFile=nggrid.getTypescriptFilename();//nggrid.getTypescriptFilename(params.getSrcDir());
 		if (!FileHelper.exists(srcFile))
 			throw new CException("cannot find grid typescript file: "+srcFile);
 		writer.println("grid src typescript file: "+srcFile);
@@ -85,7 +85,7 @@ public abstract class AbstractGridGenerator extends AbstractLayoutGenerator
 		str=Util.insertText(Util.INIT, str, ts, true);
 //		if (overwrite)
 //			overwriteFile(filename, str);
-		String outfile=nggrid.getTypescriptFilename(params.getOutDir());
+		String outfile=nggrid.getTypescriptFilename();//nggrid.getTypescriptFilename(params.getOutDir());
 		FileHelper.writeFile(outfile, str, true);
 	}
 	

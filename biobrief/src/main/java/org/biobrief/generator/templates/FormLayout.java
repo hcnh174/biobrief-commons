@@ -8,6 +8,7 @@ import org.biobrief.dictionary.EntityDefinition;
 import org.biobrief.dictionary.FieldDefinition;
 import org.biobrief.dictionary.FieldType;
 import org.biobrief.generator.GeneratorConstants.ControlType;
+import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.generator.templates.ExcelTemplate.CellData;
 import org.biobrief.util.CException;
 import org.biobrief.util.StringHelper;
@@ -257,6 +258,9 @@ public class FormLayout extends TableLayout
 		private String path;
 		private String root="model";
 		private String title;
+		private RenderMode renderMode;
+		private String srcfile;
+		private String outfile;
 		
 		public FormParams(Map<String, Object> values)
 		{

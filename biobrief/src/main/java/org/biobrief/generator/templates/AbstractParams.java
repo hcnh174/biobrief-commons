@@ -2,6 +2,7 @@ package org.biobrief.generator.templates;
 
 import java.util.Map;
 
+import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.util.BeanHelper;
 import org.biobrief.util.CException;
 import org.biobrief.util.StringHelper;
@@ -15,6 +16,9 @@ public abstract class AbstractParams
 	
 	private BeanHelper beanhelper=new BeanHelper();
 	protected Mode mode=Mode.none;
+	protected RenderMode renderMode;
+	protected String htmlFilename;
+	protected String typescriptFilename;
 
 	public void setParam(String name, String value)
 	{
@@ -106,6 +110,15 @@ public abstract class AbstractParams
 	{
 		
 	}
+	
+	public RenderMode getRenderMode(){return this.renderMode;}
+	public void setRenderMode(final RenderMode renderMode){this.renderMode=renderMode;}
+
+	public String getHtmlFilename(){return this.htmlFilename;}
+	public void setHtmlFilename(final String htmlFilename){this.htmlFilename=htmlFilename;}
+
+	public String getTypescriptFilename(){return this.typescriptFilename;}
+	public void setTypescriptFilename(final String typescriptFilename){this.typescriptFilename=typescriptFilename;}
 	
 	@Override
 	public String toString()

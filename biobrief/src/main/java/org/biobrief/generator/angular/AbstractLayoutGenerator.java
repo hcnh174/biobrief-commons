@@ -26,7 +26,7 @@ public abstract class AbstractLayoutGenerator
 
 	protected void generate(String filename)
 	{
-		String copy=ExcelHelper.createCopy(filename, params.getOutDir(), writer);
+		String copy=ExcelHelper.createCopy(filename, params.getTempDir(), writer);//params.getOutDir()
 		Workbook workbook=excel.openWorkbook(copy);
 		generate(workbook);
 		excel.closeWorkbook(workbook);

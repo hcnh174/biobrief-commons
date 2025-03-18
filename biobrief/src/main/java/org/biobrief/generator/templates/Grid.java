@@ -44,14 +44,6 @@ public class Grid extends AbstractTemplate
 		return group.getEntity(params.getEntity());
 	}
 	
-//	private EntityDefinition getEntity(Dictionary dictionary, String name)
-//	{
-//		GroupDefinition group=dictionary.getGroup(params.getGroup());
-//		if (params.getDynamic())
-//			return group.createDynamicEntity(name);
-//		return group.getEntity(params.getEntity());
-//	}
-	
 	public Grid(ExcelTemplate template, GridParams defaultParams, Dictionary dictionary )
 	{
 		this(template.getName(), parseGridParams(defaultParams, template), dictionary);
@@ -158,7 +150,7 @@ public class Grid extends AbstractTemplate
 		private String title;
 		private String path="rows";
 		private String icon="true";
-		private String detail;		
+		private String detail;
 		private boolean lazy=false;
 		private boolean addbutton=true;
 		private boolean refreshbutton=true;
@@ -187,6 +179,7 @@ public class Grid extends AbstractTemplate
 		private boolean toolbar=true;
 		private boolean stateful=false;
 		private boolean dynamic=false;
+		
 		
 		public GridParams(){}
 

@@ -193,10 +193,12 @@ public final class TemplateUtils
 			line=StringHelper.trim(line);
 			if (!line.contains(":"))
 				throw new CException("parameter does not contain a colon: line=["+line+"] str=["+str+"]");
-			List<String> pair=StringHelper.split(line,":");
-			String name=StringHelper.trim(pair.get(0));
-			String value=StringHelper.trim(pair.get(1));
-			params.put(name,value);
+//			List<String> pair=StringHelper.split(line,":");
+//			String name=StringHelper.trim(pair.get(0));
+//			String value=StringHelper.trim(pair.get(1));
+			String name=StringHelper.trim(line.substring(0, line.indexOf(":")));
+			String value=StringHelper.trim(line.substring(line.indexOf(":")+1));
+			params.put(name, value);
 		}
 		//log.debug("comments="+StringHelper.toString(params));
 		return params;

@@ -1,10 +1,12 @@
 package org.biobrief.generator.angular;
 
+import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.generator.angular.Controls.Control;
 import org.biobrief.generator.templates.Form;
 import org.biobrief.generator.templates.FormLayout;
 import org.biobrief.generator.templates.TableLayout;
 import org.biobrief.util.CException;
+import org.biobrief.util.StringHelper;
 
 public abstract class AbstractPrimeForm extends CssGrid implements AngularLayout
 {
@@ -17,7 +19,6 @@ public abstract class AbstractPrimeForm extends CssGrid implements AngularLayout
 		addClass("mode-"+form.getParams().getMode().name());
 	}
 	
-	//@Override
 	public String getName()
 	{
 		return form.getName();
@@ -31,6 +32,27 @@ public abstract class AbstractPrimeForm extends CssGrid implements AngularLayout
 	public String getTitle()
 	{
 		return this.form.getTitle();
+	}
+	
+	public RenderMode getRenderMode()
+	{
+		return check(this.form.getParams().getRenderMode());
+	}
+	
+	public String getSrcfile()
+	{
+		return check(this.form.getParams().getSrcfile());
+	}
+	
+	public String getOutfile()
+	{
+		return check(this.form.getParams().getOutfile());
+	}
+	
+	private static <T> T check(T value)
+	{
+		StringHelper.checkHasContent(value);
+		return value;
 	}
 	
 	//@Override

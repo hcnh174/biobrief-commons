@@ -5,27 +5,27 @@ import org.biobrief.util.CException;
 
 public class RenderParams
 {
-	private final RenderMode mode;
+	private final RenderMode renderMode;
 	
-	public RenderParams(RenderMode mode)
+	public RenderParams(RenderMode renderMode)
 	{
-		this.mode=mode;
+		this.renderMode=renderMode;
 	}
 	
-	public RenderMode getMode(){return mode;}
+	public RenderMode getMode(){return renderMode;}
 	
 	public boolean isAngular()
 	{
-		return mode==RenderMode.ANGULAR;
+		return renderMode==RenderMode.angular;
 	}
 	
 	public boolean isFreemarker()
 	{
-		return mode==RenderMode.FREEMARKER;
+		return renderMode==RenderMode.freemarker;
 	}
 	
 	public String noHandler()
 	{
-		throw new CException("no handler for render mode: "+mode);
+		throw new CException("no handler for render mode: "+renderMode);
 	}
 }

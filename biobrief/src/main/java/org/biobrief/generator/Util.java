@@ -343,9 +343,9 @@ public final class Util
 	
 	public static String renderText(RenderParams params, String value)
 	{
-		if (params.getMode()==RenderMode.ANGULAR)
+		if (params.getMode()==RenderMode.angular)
 			return renderAngularText(value);
-		else if (params.getMode()==RenderMode.FREEMARKER)
+		else if (params.getMode()==RenderMode.freemarker)
 			return renderFreemarkerText(value);
 		else return params.noHandler();
 	}

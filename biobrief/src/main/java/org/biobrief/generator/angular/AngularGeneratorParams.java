@@ -1,7 +1,6 @@
 package org.biobrief.generator.angular;
 
 import org.biobrief.dictionary.Dictionary;
-import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.generator.GeneratorParams.EntityGeneratorParams;
 
 import lombok.Data;
@@ -10,25 +9,27 @@ import lombok.EqualsAndHashCode;
 @Data @EqualsAndHashCode(callSuper=true)
 public class AngularGeneratorParams extends EntityGeneratorParams
 {
-	protected String srcDir;
-	protected String outDir;
-	protected RenderMode mode;//=RenderMode.ANGULAR;
+	//protected String srcDir;
+	//protected String outDir;
+	//protected RenderMode mode;//=RenderMode.ANGULAR;
+	protected String tempDir;
 	protected Boolean overwrite=true;
 	
-	public AngularGeneratorParams(String dictDir, String srcDir, String outDir, RenderMode mode)
+	public AngularGeneratorParams(String dictDir, String tempDir)//, String srcDir, String outDir)//, RenderMode mode)
 	{
 		super(new Dictionary(dictDir));
-		this.srcDir=srcDir;
-		this.outDir=outDir;
-		this.mode=mode;
+		this.tempDir=tempDir;
+		//this.srcDir=srcDir;
+		//this.outDir=outDir;
+		//this.mode=mode;
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
 	public static class ModelGeneratorParams extends AngularGeneratorParams
 	{
-		public ModelGeneratorParams(String dictDir, String srcDir, String outDir, RenderMode mode)
+		public ModelGeneratorParams(String dictDir, String tempDir)//, String srcDir, String outDir)//, RenderMode mode)
 		{
-			super(dictDir, srcDir, outDir, mode);
+			super(dictDir, tempDir);//, srcDir, outDir);//, mode);
 		}
 	}
 	
@@ -37,9 +38,9 @@ public class AngularGeneratorParams extends EntityGeneratorParams
 	{
 		protected String template;
 		
-		public AbstractTemplateGeneratorParams(String template, String dictDir, String srcDir, String outDir, RenderMode mode)
+		public AbstractTemplateGeneratorParams(String template, String dictDir, String tempDir)//, String srcDir, String outDir)//, RenderMode mode)
 		{
-			super(dictDir, srcDir, outDir, mode);
+			super(dictDir, tempDir);//, srcDir, outDir);//, mode);
 			this.template=template;
 		}
 	}
@@ -47,27 +48,27 @@ public class AngularGeneratorParams extends EntityGeneratorParams
 	@Data @EqualsAndHashCode(callSuper=true)
 	public static class FormGeneratorParams extends AbstractTemplateGeneratorParams
 	{
-		public FormGeneratorParams(String template, String dictDir, String srcDir, String outDir, RenderMode mode)
+		public FormGeneratorParams(String template, String dictDir, String tempDir)//, String srcDir, String outDir)//, RenderMode mode)
 		{
-			super(template, dictDir, srcDir, outDir, mode);
+			super(template, dictDir, tempDir);//, srcDir, outDir);//, mode);
 		}
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
 	public static class GridGeneratorParams extends AbstractTemplateGeneratorParams
 	{
-		public GridGeneratorParams(String template, String dictDir, String srcDir, String outDir, RenderMode mode)
+		public GridGeneratorParams(String template, String dictDir, String tempDir)//, String srcDir, String outDir)//, RenderMode mode)
 		{
-			super(template, dictDir, srcDir, outDir, mode);
+			super(template, dictDir, tempDir);//, srcDir, outDir);//, mode);
 		}
 	}
 	
 	@Data @EqualsAndHashCode(callSuper=true)
 	public static class HandsontableGeneratorParams extends AbstractTemplateGeneratorParams
 	{
-		public HandsontableGeneratorParams(String template, String dictDir, String srcDir, String outDir, RenderMode mode)
+		public HandsontableGeneratorParams(String template, String dictDir, String tempDir)//, RenderMode mode)
 		{
-			super(template, dictDir, srcDir, outDir, mode);
+			super(template, dictDir, tempDir);//, srcDir, outDir);//, mode);
 		}
 	}
 }

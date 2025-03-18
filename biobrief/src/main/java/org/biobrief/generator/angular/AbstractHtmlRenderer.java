@@ -21,7 +21,7 @@ public abstract class AbstractHtmlRenderer implements HtmlRenderer
 
 	public String render()
 	{
-		return render(new RenderParams(RenderMode.ANGULAR));
+		return render(new RenderParams(RenderMode.angular));
 	}
 	
 	protected abstract void render(RenderParams params, StringBuilder buffer);

@@ -5,7 +5,6 @@ import org.biobrief.generator.AbstractGeneratorService;
 import org.biobrief.generator.angular.AngularGeneratorParams.FormGeneratorParams;
 import org.biobrief.generator.angular.AngularGeneratorParams.GridGeneratorParams;
 import org.biobrief.generator.angular.AngularGeneratorParams.HandsontableGeneratorParams;
-import org.biobrief.generator.angular.AngularGeneratorParams.ModelGeneratorParams;
 import org.biobrief.util.MessageWriter;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +24,10 @@ public class AngularGeneratorService extends AbstractGeneratorService
 //		this.handsontableDir=angularDir+"/handsontable";
 //	}
 	
-	public void generateModels(ModelGeneratorParams params, MessageWriter writer)
-	{
-		ModelGenerator.generate(params, writer);
-	}
+//	public void generateModels(ModelGeneratorParams params, MessageWriter writer)
+//	{
+//		ModelGenerator.generate(params, writer);
+//	}
 	
 	////////////////////////////////////////////////////
 	
