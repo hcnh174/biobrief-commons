@@ -265,7 +265,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected void writeFreemarker(PrimeForm form)
 		{
-			String name=StringHelper.remove(form.getName(), "-form");
+			//String name=StringHelper.remove(form.getName(), "-form");
 			String ftl="<#import \"_print.ftl\" as patientdb>\n";
 			ftl+="<@patientdb.print>\n";
 			ftl+="<#list patients as patient>\n";
@@ -330,7 +330,6 @@ public class FormGenerator extends AbstractLayoutGenerator
 			return html;
 		}
 
-		
 		protected String replaceTag(String html, AngularLayout layout)
 		{
 			String tag="[["+layout.getName()+"]]";
