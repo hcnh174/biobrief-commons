@@ -265,29 +265,13 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected void writeFreemarker(PrimeForm form)
 		{
-//			String ftl="<#import \"_print.ftl\" as patientdb>\n";
-//			ftl+="<@patientdb.print>\n";
-//			ftl+="<#list patients as patient>\n";
-//			ftl+="<div class=\"break\" id=\"page${patient_index}\">\n";
-//			ftl+=render(form);
-//			ftl+="</div>\n";
-//			ftl+="</#list>\n";
-//			ftl+="</@patientdb.print>\n";
-			
-			//String filename=this.generator.params.getOutDir()+"/"+form.getFilename()+".ftl";
 			String filename=form.getOutfile();
 			writer.println("using form template file: "+filename);
 			String str=FileHelper.readFile(filename);
-	
 			String ftl=render(form);
-			System.put.prontl()
 			str=Util.insertFtl(str, ftl, true);
 			writer.println("writing freemarker file: "+filename);
 			overwriteFile(filename, str);
-			//FileHelper.writeFile(filename, ftl, false);//.temp/generated/print/"+name+".ftl
-			//if (generator.params.overwrite)
-			//	FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl, true);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
-			//else FileHelper.writeFile(".temp/generated/print/"+name+".ftl", ftl, true);
 		}
 		
 //		protected void writeFreemarker(PrimeForm form)
