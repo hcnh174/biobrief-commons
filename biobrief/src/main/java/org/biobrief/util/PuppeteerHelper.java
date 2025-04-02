@@ -3,6 +3,11 @@ package org.biobrief.util;
 // run_puppeteer_html_to_pdf.sh --htmlfile /mnt/out/temp/Z401614157127_F1/Z401614157127_F1_trial_report.html --pdffile /mnt/out/temp/Z401614157127_F1/Z401614157127_F1_trial_report.pdf
 public class PuppeteerHelper
 {
+//	public static String createConverttHtmlToPdfCommand(String htmlfile, String pdffile)
+//	{
+//		return Constants.SCRIPTS_DIR+"/run_puppeteer_html_to_pdf.sh --htmlfile "+htmlfile+" --pdffile "+pdffile;
+//	}
+	
 	public static int convertHtmlToPdf(String htmlfile, String pdffile)
 	{
 		System.out.println("htmlfile="+htmlfile);

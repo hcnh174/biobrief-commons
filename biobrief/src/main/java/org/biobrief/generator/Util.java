@@ -160,6 +160,11 @@ public final class Util
 		return insertText("HTML", str, replacetext, "<!--", "-->", required);
 	}
 	
+	public static String insertFtl(String str, String replacetext, boolean required)
+	{
+		return insertText("FTL", str, replacetext, "<!--", "-->", required);
+	}
+	
 	public static String insertText(EntityDefinition entityType, String label, String str, String replacetext, boolean required)
 	{
 		label=entityType.getName().toUpperCase()+"_"+label;

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //https://medium.com/@manika09singh/enable-auditing-using-spring-data-jpa-2f62587ccb23
 @JsonIgnoreProperties(ignoreUnknown=true)
 public abstract class AbstractMongoEntity extends AbstractEntity<String>
-	implements MongoDocument//, Persistable<String>
+	implements MongoDocument
 {	
 	@Id
 	protected String id;
@@ -42,118 +42,115 @@ public abstract class AbstractMongoEntity extends AbstractEntity<String>
 
 	public Date getLastModifiedDate(){return this.lastModifiedDate;}
 	public void setLastModifiedDate(final Date lastModifiedDate){this.lastModifiedDate=lastModifiedDate;}
-	
-	///////////////////////////////////////////////////////////////
-	
-	/*
-	public NestedMongoDocument getNested(Class<?> cls)
-	{
-		throw new CException("no handler for nested type: "+cls);
-	}
-	
-	public List<? extends MongoItem> getCollection(Class<?> cls)
-	{
-		throw new CException("no handler for collection type: "+cls);
-	}
-	
-	////////////////////////////////////
-	
-	public MongoItem getFirstLast(Class<?> cls, FirstLast firstlast)//EntityDefinition entityType
-	{
-		return StringHelper.getFirstLast(getCollection(cls), firstlast);
-	}
-	
-	public MongoItem getFirstLast(List<? extends MongoItem> collection, FirstLast firstlast)
-	{
-		return StringHelper.getFirstLast(collection, firstlast);
-	}
-	
-	public MongoItem getFirst(List<? extends MongoItem> collection)
-	{
-		return StringHelper.getFirst(collection);
-	}
-	
-	public MongoItem getLast(List<? extends MongoItem> collection)
-	{
-		return StringHelper.getLast(collection);
-	}
-	
-	//////////////////////////////////////////////////
-	
-	public MongoItem getFirst(Class<?> cls)
-	{
-		return getFirst(getCollection(cls));
-	}
-	
-	public MongoItem getLast(Class<?> cls)
-	{
-		return getLast(getCollection(cls));
-	}
-	
-	//////////////////////////////////////////////////////////////////////
-	
-	public MongoItem findItem(Class<?> cls, String id, boolean strict)
-	{
-		List<? extends MongoItem> collection=getCollection(cls);
-		return findItem(collection, id, strict);
-	}
+}
+/*
+public NestedMongoDocument getNested(Class<?> cls)
+{
+	throw new CException("no handler for nested type: "+cls);
+}
 
-	protected MongoItem findItem(List<? extends MongoItem> collection, String id, boolean strict)
+public List<? extends MongoItem> getCollection(Class<?> cls)
+{
+	throw new CException("no handler for collection type: "+cls);
+}
+
+////////////////////////////////////
+
+public MongoItem getFirstLast(Class<?> cls, FirstLast firstlast)//EntityDefinition entityType
+{
+	return StringHelper.getFirstLast(getCollection(cls), firstlast);
+}
+
+public MongoItem getFirstLast(List<? extends MongoItem> collection, FirstLast firstlast)
+{
+	return StringHelper.getFirstLast(collection, firstlast);
+}
+
+public MongoItem getFirst(List<? extends MongoItem> collection)
+{
+	return StringHelper.getFirst(collection);
+}
+
+public MongoItem getLast(List<? extends MongoItem> collection)
+{
+	return StringHelper.getLast(collection);
+}
+
+//////////////////////////////////////////////////
+
+public MongoItem getFirst(Class<?> cls)
+{
+	return getFirst(getCollection(cls));
+}
+
+public MongoItem getLast(Class<?> cls)
+{
+	return getLast(getCollection(cls));
+}
+
+//////////////////////////////////////////////////////////////////////
+
+public MongoItem findItem(Class<?> cls, String id, boolean strict)
+{
+	List<? extends MongoItem> collection=getCollection(cls);
+	return findItem(collection, id, strict);
+}
+
+protected MongoItem findItem(List<? extends MongoItem> collection, String id, boolean strict)
+{
+	//System.out.println("findItem: id="+id);
+	if (!StringHelper.hasContent(id))
 	{
-		//System.out.println("findItem: id="+id);
-		if (!StringHelper.hasContent(id))
-		{
-			if (strict)
-				throw new CException("id for item is null");
-			return null;
-		}
-		
-		for (MongoItem item : collection)
-		{
-			//System.out.println("item: "+StringHelper.toString(item));
-			if (item.getId().equals(id))
-				return item;
-		}
 		if (strict)
-			throw new CException("cannot find embedded item with id: "+id);
+			throw new CException("id for item is null");
 		return null;
 	}
 	
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public void addItem(Class<?> cls, MongoItem item)
+	for (MongoItem item : collection)
 	{
-		List collection=getCollection(cls);
-		collection.add(item);
-	}
-	
-	public void removeItem(Class<?> cls, String id)
-	{
-		if (!StringHelper.hasContent(id))
-			return;
-		List<? extends MongoItem> collection=getCollection(cls);
-		MongoItem item=findItem(collection, id, false);
-		collection.remove(item);
-	}
-	
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public MongoItem findOrCreateItem(Class<?> cls, String id)
-	{
-		List collection=getCollection(cls);
-		MongoItem item=findItem(collection, id, false);
-		if (item!=null)
+		//System.out.println("item: "+StringHelper.toString(item));
+		if (item.getId().equals(id))
 			return item;
-		return createItem(cls, id);
 	}
-	
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public MongoItem createItem(Class<?> cls, String id)
-	{
-		List collection=getCollection(cls);
-		//MongoItem item=(MongoItem)BeanHelper.newInstance(cls);
-		MongoItem item=(MongoItem)BeanHelper.instantiateClass(cls);
-		item.init();
-		collection.add(item);
-		return item;
-	}
-	*/
+	if (strict)
+		throw new CException("cannot find embedded item with id: "+id);
+	return null;
 }
+
+@SuppressWarnings({"unchecked", "rawtypes"})
+public void addItem(Class<?> cls, MongoItem item)
+{
+	List collection=getCollection(cls);
+	collection.add(item);
+}
+
+public void removeItem(Class<?> cls, String id)
+{
+	if (!StringHelper.hasContent(id))
+		return;
+	List<? extends MongoItem> collection=getCollection(cls);
+	MongoItem item=findItem(collection, id, false);
+	collection.remove(item);
+}
+
+@SuppressWarnings({"unchecked", "rawtypes"})
+public MongoItem findOrCreateItem(Class<?> cls, String id)
+{
+	List collection=getCollection(cls);
+	MongoItem item=findItem(collection, id, false);
+	if (item!=null)
+		return item;
+	return createItem(cls, id);
+}
+
+@SuppressWarnings({"unchecked", "rawtypes"})
+public MongoItem createItem(Class<?> cls, String id)
+{
+	List collection=getCollection(cls);
+	//MongoItem item=(MongoItem)BeanHelper.newInstance(cls);
+	MongoItem item=(MongoItem)BeanHelper.instantiateClass(cls);
+	item.init();
+	collection.add(item);
+	return item;
+}
+*/
