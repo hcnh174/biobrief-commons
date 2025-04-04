@@ -74,9 +74,9 @@ public class PrimeForm extends AbstractPrimeForm
 		buffer.append("</p-footer>\n");
 		return buffer.toString();
 	}
-	
-	public String getFilename()
-	{
-		return form.getGroup()+"/view/forms/"+form.getName()+".component.html";
-	}
+//	
+//	public String getFilename()
+//	{
+//		return form.getGroup()+"/view/forms/"+form.getName()+".component.html";
+//	}
 }

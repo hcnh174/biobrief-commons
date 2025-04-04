@@ -258,13 +258,19 @@ public class FormLayout extends TableLayout
 		private String path;
 		private String root="model";
 		private String title;
-		private RenderMode renderMode;
-		private String srcfile;
-		private String outfile;
+		private String file;
+//		private RenderMode renderMode;
+//		private String srcfile;
+//		private String outfile;
 		
 		public FormParams(Map<String, Object> values)
 		{
 			setParams(values);
+		}
+		
+		public RenderMode getRenderMode()
+		{
+			return RenderMode.findByFilename(this.file);
 		}
 		
 		@Override

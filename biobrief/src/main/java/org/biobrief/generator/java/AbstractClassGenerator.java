@@ -148,9 +148,9 @@ public abstract class AbstractClassGenerator extends AbstractGenerator
 	{
 		protected String classfile;
 		
-		public ClassGeneratorParams(Dictionary dictionary, String classfile)
+		public ClassGeneratorParams(String baseDir, Dictionary dictionary, String classfile)
 		{
-			super(dictionary);
+			super(baseDir, dictionary);
 			this.classfile=classfile;
 		}
 	}

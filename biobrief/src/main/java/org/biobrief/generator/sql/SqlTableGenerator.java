@@ -80,9 +80,9 @@ public final class SqlTableGenerator extends AbstractGenerator
 	{
 		protected String sqlfile;
 		
-		public SqlGeneratorParams(Dictionary dictionary, String sqlfile)
+		public SqlGeneratorParams(String baseDir, Dictionary dictionary, String sqlfile)
 		{
-			super(dictionary);
+			super(baseDir, dictionary);
 			this.sqlfile=sqlfile;
 		}
 	}

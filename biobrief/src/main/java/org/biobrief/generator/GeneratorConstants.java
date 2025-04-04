@@ -1,5 +1,6 @@
 package org.biobrief.generator;
 
+import org.biobrief.util.CException;
 import org.biobrief.util.StringHelper;
 
 public interface GeneratorConstants
@@ -7,7 +8,21 @@ public interface GeneratorConstants
 	public static final String WORKBOOK_LOCAL_TEMPLATE_PREFIX="-";
 		
 	public enum ContainerType {panel, fieldset, none};
-	public enum RenderMode{angular, freemarker}
+	
+	public enum RenderMode
+	{
+		angular,
+		freemarker;
+		
+		public static RenderMode findByFilename(String filename)
+		{
+			if (filename.endsWith(".html"))
+				return RenderMode.angular;
+			else if (filename.endsWith(".ftl"))
+				return RenderMode.freemarker;
+			else throw new CException("cannot determine render mode from filename: "+filename);
+		}
+	}
 	
 	public enum Icon
 	{

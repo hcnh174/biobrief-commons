@@ -36,18 +36,24 @@ public abstract class AbstractPrimeForm extends CssGrid implements AngularLayout
 	
 	public RenderMode getRenderMode()
 	{
+		//return RenderMode.findByFilename(getFile());
 		return check(this.form.getParams().getRenderMode());
 	}
 	
-	public String getSrcfile()
+	public String getFile()
 	{
-		return check(this.form.getParams().getSrcfile());
+		return check(this.form.getParams().getFile());
 	}
 	
-	public String getOutfile()
-	{
-		return check(this.form.getParams().getOutfile());
-	}
+//	public String getSrcfile()
+//	{
+//		return check(this.form.getParams().getSrcfile());
+//	}
+//	
+//	public String getOutfile()
+//	{
+//		return check(this.form.getParams().getOutfile());
+//	}
 	
 	private static <T> T check(T value)
 	{

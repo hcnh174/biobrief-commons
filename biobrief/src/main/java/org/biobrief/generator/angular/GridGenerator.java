@@ -9,17 +9,19 @@ public class GridGenerator extends AbstractGridGenerator
 {
 	public static void main(String[] argv)
 	{
-		String template=argv[0];
-		String dictDir=argv[1];
-		String tempDir=argv[2];
+		String baseDir=argv[0];
+		String template=argv[1];
+		String dictDir=argv[2];
+		String tempDir=argv[3];
 		//RenderMode mode=RenderMode.valueOf(argv[4]);
 		
+		System.out.println("baseDir="+baseDir);
 		System.out.println("template="+template);
 		System.out.println("dictDir="+dictDir);
 		System.out.println("tempDir="+tempDir);
 		//System.out.println("mode="+mode);
 		
-		GridGeneratorParams params=new GridGeneratorParams(template, dictDir, tempDir);//, mode);
+		GridGeneratorParams params=new GridGeneratorParams(baseDir, template, dictDir, tempDir);//, mode);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}

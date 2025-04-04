@@ -34,21 +34,17 @@ public class FormGenerator extends AbstractLayoutGenerator
 
 	public static void main(String[] argv)
 	{
+		String baseDir=argv[0];
 		String template=argv[0];
-		String dictDir=argv[1];
-		String tempDir=argv[1];
-		//String srcDir=argv[2];
-		//String outDir=argv[3];
-		//RenderMode mode=RenderMode.valueOf(argv[4]);
+		String dictDir=argv[2];
+		String tempDir=argv[3];
 		
+		System.out.println("baseDir="+template);
 		System.out.println("template="+template);
 		System.out.println("dictDir="+dictDir);
 		System.out.println("tempDir="+tempDir);
-		//System.out.println("srcDir="+srcDir);
-		//System.out.println("outDir="+outDir);
-		////System.out.println("mode="+mode);
 		
-		FormGeneratorParams params=new FormGeneratorParams(template, dictDir, tempDir);
+		FormGeneratorParams params=new FormGeneratorParams(baseDir, template, dictDir, tempDir);
 		MessageWriter out=new MessageWriter();
 		generate(params, out);
 	}
@@ -90,7 +86,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 	
 	public class FormBuilder
 	{
-		//private final FormGenerator generator;
+		private final FormGenerator generator;
 		private final Dictionary dictionary;
 		private final Map<String, Object> params;
 		private final Map<String, PrimeForm> forms=Maps.newLinkedHashMap();
@@ -103,7 +99,7 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected FormBuilder(FormGenerator generator, Workbook workbook)
 		{
-			//this.generator=generator;
+			this.generator=generator;
 			this.dictionary=generator.params.getDictionary();
 			this.params=loadDefaultParams(workbook);
 			for (ExcelTemplate template : getTemplates(workbook))
@@ -229,15 +225,6 @@ public class FormGenerator extends AbstractLayoutGenerator
 			}
 		}
 		
-//		protected void write(PrimeForm form)
-//		{
-//			if (generator.params.mode==RenderMode.ANGULAR)
-//				writeAngular(form);
-//			else if (generator.params.mode==RenderMode.FREEMARKER)
-//				writeFreemarker(form);
-//			else throw new UnhandledCaseException("no handler for render mode: "+generator.params.mode);
-//		}
-		
 		protected void write(PrimeForm form)
 		{
 			RenderMode mode=form.getRenderMode();
@@ -250,22 +237,19 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected void writeAngular(PrimeForm form)
 		{
-			//String filename=this.generator.params.getOutDir()+"/"+form.getFilename();
-			String filename=form.getOutfile();
+			String filename=getAngularDir()+"/"+form.getFile();
 			String html=render(form);
 			if (!FileHelper.exists(filename))
 				throw new CException("cannot find form template file: "+filename);
 			writer.println("form template file: "+filename);
 			String str=FileHelper.readFile(filename);
 			str=Util.insertHtml(str, html, true);
-			//if (overwrite)
-				overwriteFile(filename, str);
-			//else writeFile(Util.GENERATED_ANGULAR_DIRECTORY+"/"+form.getFilename(), str);
+			overwriteFile(filename, str);
 		}
 		
 		protected void writeFreemarker(PrimeForm form)
 		{
-			String filename=form.getOutfile();
+			String filename=getFreemarkerDir()+"/"+form.getFile();
 			writer.println("using form template file: "+filename);
 			String str=FileHelper.readFile(filename);
 			String ftl=render(form);
@@ -273,27 +257,6 @@ public class FormGenerator extends AbstractLayoutGenerator
 			writer.println("writing freemarker file: "+filename);
 			overwriteFile(filename, str);
 		}
-		
-//		protected void writeFreemarker(PrimeForm form)
-//		{
-//			//String name=StringHelper.remove(form.getName(), "-form");
-//			String ftl="<#import \"_print.ftl\" as patientdb>\n";
-//			ftl+="<@patientdb.print>\n";
-//			ftl+="<#list patients as patient>\n";
-//			ftl+="<div class=\"break\" id=\"page${patient_index}\">\n";
-//			ftl+=render(form);
-//			ftl+="</div>\n";
-//			ftl+="</#list>\n";
-//			ftl+="</@patientdb.print>\n";
-//			
-//			//String filename=this.generator.params.getOutDir()+"/"+form.getFilename()+".ftl";
-//			String filename=form.getOutfile();
-//			writer.println("writng freemarker file: "+filename);
-//			FileHelper.writeFile(filename, ftl, false);//.temp/generated/print/"+name+".ftl
-//			//if (generator.params.overwrite)
-//			//	FileHelper.writeFile("src/main/resources/templates/print/"+name+".ftl", ftl, true);//FileHelper.writeFile("src/main/resources/templates/print.ftl", ftl);
-//			//else FileHelper.writeFile(".temp/generated/print/"+name+".ftl", ftl, true);
-//		}
 		
 		protected String render(PrimeForm form)
 		{
@@ -354,6 +317,30 @@ public class FormGenerator extends AbstractLayoutGenerator
 			//System.out.println("******************************************");
 			//System.out.println("rendering layout: "+layout.getName());
 			return new RenderParams(layout.getRenderMode());//generator.params.mode);//, false);//layout.isLight());
+		}
+		
+		protected String getAngularDir()
+		{
+			return this.getBaseDir()+"/"+this.getDefaultParam("angularDir");
+		}
+		
+		protected String getFreemarkerDir()
+		{
+			return this.getBaseDir()+"/"+this.getDefaultParam("freemarkerDir");
+		}
+		
+		
+		protected String getBaseDir()
+		{
+			return this.generator.params.getBaseDir();
+		}
+		
+		@SuppressWarnings("unchecked")
+		protected <T> T getDefaultParam(String name)
+		{
+			if (!this.params.containsKey(name))
+				throw new CException("default parameter not found: "+name);
+			return (T)this.params.get(name);
 		}
 	}
 }
