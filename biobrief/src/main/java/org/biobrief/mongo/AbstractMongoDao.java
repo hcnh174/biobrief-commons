@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.index.IndexOperations;
 import org.springframework.data.mongodb.core.index.IndexResolver;
 import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
@@ -51,12 +52,13 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 		this.entityClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		//System.out.println("AbstractMongoDao() entityClass="+entityClass.getCanonicalName());
 	}
-	
+	//https://docs.spring.io/spring-data/mongodb/reference/mongodb/template-collection-management.html#mongo-template.index-and-collections.index	
 	@EventListener(ApplicationReadyEvent.class)
 	public void initIndicesAfterStartup()
 	{
 		//System.out.println("AbstractMongoDao.initIndicesAfterStartup: "+entityClass.getCanonicalName());
 		IndexOperations indexOps = mongoTemplate.indexOps(entityClass);
+		//indexOps.ensureIndex(new Index().on(null, null))
 		IndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
 		resolver.resolveIndexFor(entityClass).forEach(indexOps::ensureIndex);
 	}
