@@ -83,9 +83,9 @@ dependencies {
 	///////////////////////////////
 	// spring
 	api("org.springframework.boot:spring-boot-starter-mail")
-	testImplementation("org.springframework.boot:spring-boot-starter-test"){
-		exclude(module: "commons-logging")
-	}
+	//testImplementation("org.springframework.boot:spring-boot-starter-test"){
+	//	exclude(module: "commons-logging")
+	//}
 	api("org.springframework.boot:spring-boot-configuration-processor")
 	api("org.springframework.boot:spring-boot-starter-cache")
 
@@ -222,8 +222,12 @@ tasks.named('jar') {
     }
 }
 
-
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+testing {
+	suites {
+		// Configure the built-in test suite
+		test {
+			// Use JUnit Jupiter test framework
+			useJUnitJupiter()
+		}
+	}
 }

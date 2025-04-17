@@ -18,6 +18,7 @@ import org.biobrief.generator.templates.Grid;
 import org.biobrief.generator.templates.Grid.GridParams;
 import org.biobrief.util.CException;
 import org.biobrief.util.FileHelper;
+import org.biobrief.util.JsonHelper;
 import org.biobrief.util.MessageWriter;
 import org.biobrief.util.StringHelper;
 import org.biobrief.util.UnhandledCaseException;
@@ -32,22 +33,22 @@ public class FormGenerator extends AbstractLayoutGenerator
 	
 	private Set<String> forms=Sets.newLinkedHashSet();// keep track of the form names
 
-	public static void main(String[] argv)
-	{
-		String baseDir=argv[0];
-		String template=argv[0];
-		String dictDir=argv[2];
-		String tempDir=argv[3];
-		
-		System.out.println("baseDir="+template);
-		System.out.println("template="+template);
-		System.out.println("dictDir="+dictDir);
-		System.out.println("tempDir="+tempDir);
-		
-		FormGeneratorParams params=new FormGeneratorParams(baseDir, template, dictDir, tempDir);
-		MessageWriter out=new MessageWriter();
-		generate(params, out);
-	}
+//	public static void main(String[] argv)
+//	{
+//		String baseDir=argv[0];
+//		String template=argv[0];
+//		String dictDir=argv[2];
+//		String tempDir=argv[3];
+//		
+//		System.out.println("baseDir="+template);
+//		System.out.println("template="+template);
+//		System.out.println("dictDir="+dictDir);
+//		System.out.println("tempDir="+tempDir);
+//		
+//		FormGeneratorParams params=new FormGeneratorParams(baseDir, template, dictDir, tempDir);
+//		MessageWriter out=new MessageWriter();
+//		generate(params, out);
+//	}
 	
 	public static void generate(FormGeneratorParams params, MessageWriter writer)
 	{
@@ -106,6 +107,12 @@ public class FormGenerator extends AbstractLayoutGenerator
 			{
 				load(template, params);
 			}
+			System.out.println("forms="+JsonHelper.toJson(forms.keySet()));
+			System.out.println("fieldsets="+JsonHelper.toJson(fieldsets.keySet()));
+			System.out.println("fragments="+JsonHelper.toJson(fragments.keySet()));
+			System.out.println("tabsets="+JsonHelper.toJson(tabsets.keySet()));
+			System.out.println("tables="+JsonHelper.toJson(tables.keySet()));
+
 		}
 		
 		protected boolean load(ExcelTemplate template, Map<String, Object> params)
@@ -260,55 +267,58 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected String render(PrimeForm form)
 		{
-			String html=form.render(getParams(form));
-			html=replaceFieldsets(html);
-			html=replaceFragments(html);
-			html=replaceTabsets(html);
-			html=replaceTables(html);
+			RenderParams params=getParams(form);
+			String html=form.render(params);
+			System.out.println("html="+html);
+			html=replaceFieldsets(html, params);
+			html=replaceFragments(html, params);
+			html=replaceTabsets(html, params);
+			html=replaceTables(html, params);
 			return html;
 		}
 			
-		protected String replaceFieldsets(String html)
+		protected String replaceFieldsets(String html, RenderParams params)
 		{
 			for (PrimeFieldset fieldset : fieldsets.values())
 			{
-				html=replaceTag(html, fieldset);
+				html=replaceTag(html, fieldset, params);
 			}
 			return html;
 		}
 		
-		protected String replaceFragments(String html)
+		protected String replaceFragments(String html, RenderParams params)
 		{
 			for (PrimeFragment fragment : fragments.values())
 			{
-				html=replaceTag(html, fragment);
+				html=replaceTag(html, fragment, params);
 			}
 			return html;
 		}
 		
-		protected String replaceTabsets(String html)
+		protected String replaceTabsets(String html, RenderParams params)
 		{
 			for (PrimeTabset tabset : tabsets.values())
 			{
-				html=replaceTag(html, tabset);
+				html=replaceTag(html, tabset, params);
 			}
 			return html;
 		}
 		
-		protected String replaceTables(String html)
+		protected String replaceTables(String html, RenderParams params)
 		{
 			for (PrimeTable table : tables.values())
 			{
-				html=replaceTag(html, table);
+				html=replaceTag(html, table, params);
 			}
 			return html;
 		}
 
-		protected String replaceTag(String html, AngularLayout layout)
+		protected String replaceTag(String html, AngularLayout layout, RenderParams params)
 		{
-			String tag="[["+layout.getName()+"]]";
+			//String tag="[["+layout.getName()+"]]";
+			String tag="<["+layout.getName()+"]>";
 			if (html.contains(tag))
-				html=StringHelper.replace(html, tag, "\n"+layout.render(getParams(layout)));
+				html=StringHelper.replace(html, tag, "\n"+layout.render(params));//getParams(layout)
 			return html;
 		}
 		
