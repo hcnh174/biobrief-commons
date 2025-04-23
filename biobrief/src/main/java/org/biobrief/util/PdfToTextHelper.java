@@ -26,7 +26,7 @@ public class PdfToTextHelper
 		System.out.println("command: "+command);
 		int exitcode=CCommandLine.execute(command);
 		if (exitcode!=0)
-			throw new CException("pdftotext draw exited with non-zero exit code: "+exitcode);
+			throw new CException("pdftotext exited with non-zero exit code: "+exitcode);
 		FileHelper.checkExists(outfile);
 		return exitcode;
 	}

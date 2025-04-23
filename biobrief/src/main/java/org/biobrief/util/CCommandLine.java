@@ -5,28 +5,30 @@ import java.util.List;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.environment.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import lombok.Data;
 
 //http://commons.apache.org/proper/commons-exec/tutorial.html
 //https://stackoverflow.com/questions/36319241/java-parse-output-of-execute-command
 //https://wrapper.tanukisoftware.com/doc/english/child-exec.html
 //http://www.speakingcs.com/2014/06/executing-external-programs-from-java.html
 //https://www.baeldung.com/apache-commons-chain
+@Data
 public class CCommandLine
 {
 	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(CCommandLine.class);
 	
 	protected CommandLine commandLine=null;
-	protected File workingDir=null;
-	protected Integer watchdog=null;
-	protected Integer exitValue=null;
+//	protected File workingDir=null;
+//	protected Integer watchdog=null;
+//	protected Integer exitValue=null;
 	protected boolean throwExceptionIfOutputStream=false;
 	protected boolean throwExceptionIfErrorStream=false;
-	protected boolean cygwin=false;
-	protected boolean debug=false;
+//	protected boolean cygwin=false;
+	protected boolean debug=true;
 	protected PlatformType.Platform platform=PlatformType.find().getPlatform();
 
 	////////////////////////////////////////////////
@@ -50,12 +52,12 @@ public class CCommandLine
 		addArgs(commands);
 	}
 
-	public CommandLine getCommandLine()
-	{
-		if (this.cygwin && this.platform==PlatformType.Platform.WINDOWS)
-			return getCygwinCommandLine(this.commandLine);
-		return this.commandLine;
-	}
+//	public CommandLine getCommandLine()
+//	{
+//		if (this.cygwin && this.platform==PlatformType.Platform.WINDOWS)
+//			return getCygwinCommandLine(this.commandLine);
+//		return this.commandLine;
+//	}
 	
 	public static CommandLine getCygwinCommandLine(CommandLine commandLine)
 	{
@@ -115,10 +117,10 @@ public class CCommandLine
 		addArg(value);
 	}
 	
-	public void setWorkingDir(String dir)
-	{
-		setWorkingDir(new File(dir));
-	}
+//	public void setWorkingDir(String dir)
+//	{
+//		setWorkingDir(new File(dir));
+//	}
 	
 	public int execute()
 	{
@@ -137,26 +139,43 @@ public class CCommandLine
 		}
 	} 
 	
-	public File getWorkingDir(){return this.workingDir;}
-	public void setWorkingDir(final File workingDir){this.workingDir=workingDir;}
+//	public File getWorkingDir(){return this.workingDir;}
+//	public void setWorkingDir(final File workingDir){this.workingDir=workingDir;}
+//	
+//	public Integer getWatchdog(){return this.watchdog;}
+//	public void setWatchdog(int watchdog){this.watchdog=watchdog;}
+//	
+//	public Integer getExitValue(){return this.exitValue;}
+//	public void setExitValue(int exitValue){this.exitValue=exitValue;}
+//	
+//	public boolean getThrowExceptionIfOutputStream(){return this.throwExceptionIfOutputStream;}
+//	public void setThrowExceptionIfOutputStream(final boolean throwExceptionIfOutputStream){this.throwExceptionIfOutputStream=throwExceptionIfOutputStream;}
+//	
+//	public boolean getThrowExceptionIfErrorStream(){return this.throwExceptionIfErrorStream;}
+//	public void setThrowExceptionIfErrorStream(final boolean throwExceptionIfErrorStream){this.throwExceptionIfErrorStream=throwExceptionIfErrorStream;}
+//	
+//	public boolean getCygwin(){return this.cygwin;}
+//	public void setCygwin(final boolean cygwin){this.cygwin=cygwin;}
+//	
+//	public PlatformType.Platform getPlatform(){return this.platform;}
+//	public void setPlatform(final PlatformType.Platform platform){this.platform=platform;}
 	
-	public Integer getWatchdog(){return this.watchdog;}
-	public void setWatchdog(int watchdog){this.watchdog=watchdog;}
+	public DefaultExecutor createExecutor()
+	{
+		//Executor exec = DefaultExecutor.builder().get();
+		DefaultExecutor.Builder<?> builder=DefaultExecutor.builder();
+		//if (this.workingDir!=null)
+	//		builder.setWorkingDirectory(this.workingDir);
+//		if (this.exitValue!=null)
+//			builder.setExitValue(this.exitValue);
+//		if (this.watchdog!=null)
+//			builder.setWatchdog();
+		DefaultExecutor exec=builder.get();
+		//exec.setWatchdog(new ExecuteWatchdog(this.watchdog));
+		return exec;
+	}
 	
-	public Integer getExitValue(){return this.exitValue;}
-	public void setExitValue(int exitValue){this.exitValue=exitValue;}
 	
-	public boolean getThrowExceptionIfOutputStream(){return this.throwExceptionIfOutputStream;}
-	public void setThrowExceptionIfOutputStream(final boolean throwExceptionIfOutputStream){this.throwExceptionIfOutputStream=throwExceptionIfOutputStream;}
-	
-	public boolean getThrowExceptionIfErrorStream(){return this.throwExceptionIfErrorStream;}
-	public void setThrowExceptionIfErrorStream(final boolean throwExceptionIfErrorStream){this.throwExceptionIfErrorStream=throwExceptionIfErrorStream;}
-	
-	public boolean getCygwin(){return this.cygwin;}
-	public void setCygwin(final boolean cygwin){this.cygwin=cygwin;}
-	
-	public PlatformType.Platform getPlatform(){return this.platform;}
-	public void setPlatform(final PlatformType.Platform platform){this.platform=platform;}
 	
 //	public DefaultExecutor createExecutor()
 //	{
@@ -171,18 +190,18 @@ public class CCommandLine
 //		return builder.get();
 //	} 
 	
-	@SuppressWarnings("deprecation")
-	public DefaultExecutor createExecutor()
-	{
-		DefaultExecutor executor = new DefaultExecutor();
-		if (this.workingDir!=null)
-			executor.setWorkingDirectory(this.workingDir);
-		if (this.exitValue!=null)
-			executor.setExitValue(this.exitValue);
-		if (this.watchdog!=null)
-			executor.setWatchdog(new ExecuteWatchdog(this.watchdog));
-		return executor;
-	} 
+//	@SuppressWarnings("deprecation")
+//	public DefaultExecutor createExecutor()
+//	{
+//		DefaultExecutor executor = new DefaultExecutor();
+//		if (this.workingDir!=null)
+//			executor.setWorkingDirectory(this.workingDir);
+//		if (this.exitValue!=null)
+//			executor.setExitValue(this.exitValue);
+//		if (this.watchdog!=null)
+//			executor.setWatchdog(new ExecuteWatchdog(this.watchdog));
+//		return executor;
+//	} 
 	
 	@Override
 	public String toString()
