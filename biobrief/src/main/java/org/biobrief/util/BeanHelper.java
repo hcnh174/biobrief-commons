@@ -1,6 +1,11 @@
 package org.biobrief.util;
 
 import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -154,6 +159,48 @@ public class BeanHelper
 			return false;
 		}	
 	}
+	
+	public void copyAnnotatedProperties(Object target, Object source)
+	{
+		copyAnnotatedProperties(target, source, CopyIncluded.class);
+	}
+	
+	public void copyAnnotatedProperties(Object target, Object source, Class<? extends Annotation> cls)
+	{
+		BeanWrapper srcWrapper = PropertyAccessorFactory.forBeanPropertyAccess(source);
+		BeanWrapper trgWrapper = PropertyAccessorFactory.forBeanPropertyAccess(target);
+
+		Field[] fields = source.getClass().getDeclaredFields();
+
+		for (Field field : fields)
+		{
+			if (field.isAnnotationPresent(cls))
+			{
+				try
+				{
+					String propName = field.getName();
+					Object value = srcWrapper.getPropertyValue(propName);
+					trgWrapper.setPropertyValue(propName, value);
+				}
+				catch(Exception e)
+				{
+					System.err.println(e.getMessage());
+					System.err.println("target="+target.getClass().getCanonicalName()+", source="+source.getClass().getCanonicalName());
+				}	
+			}
+		}
+	}
+	
+	////////////////////////////////////////////////////////
+	
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.FIELD)
+	public @interface CopyIncluded
+	{
+		boolean value() default true;
+	}
+	
+	/////////////////////////////////////////////////////////////
 	
 	public static Object getProperty(Object target, String property)
 	{
