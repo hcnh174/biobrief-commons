@@ -570,7 +570,7 @@ public class Controls
 			attr(buffer, "[options]", getOptions());
 			attr(buffer, "name", name);
 			attr(buffer, "[(ngModel)]", path);
-			attr(buffer, "[filter]", "true");
+			//attr(buffer, "[filter]", "true");
 			attr(buffer, "[style]", "{'width':'"+width+"'}");
 			//attr(buffer, "appendTo", "body");
 			if (readonly) attr(buffer, "readonly");
@@ -641,7 +641,7 @@ public class Controls
 				
 				buffer.append("<label");
 				attr(buffer, "[for]", "item");
-				attr(buffer, "class", "ml-2");
+				attr(buffer, "class", "ml-2 nowrap");
 				buffer.append(">");
 				buffer.append(" {{item}} ");
 				buffer.append("</label>");
