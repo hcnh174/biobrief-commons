@@ -343,7 +343,7 @@ public class Controls
 			buffer.append("<textarea");
 			buffer.append(" pTextarea");
 			attr(buffer, "class", "noresize-textarea");
-//			attr(buffer, "autoResize", "autoResize");
+			attr(buffer, "autoResize", "autoResize");
 //			attr(buffer, "[fluid]", "true");
 //			if (control.getParams().getRows()>1)
 				attr(buffer, "rows", control.getParams().getRows());
