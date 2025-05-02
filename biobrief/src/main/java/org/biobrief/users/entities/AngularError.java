@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Document(collection="routes") @Data @EqualsAndHashCode(callSuper=true)
+@Document(collection="errors") @Data @EqualsAndHashCode(callSuper=true)
 public class AngularError extends AbstractMongoEntity
 {
 	protected String server;
