@@ -1,6 +1,7 @@
 package org.biobrief.users;
 
 import org.biobrief.users.dao.ActivityDao;
+import org.biobrief.users.dao.AngularErrorDao;
 import org.biobrief.users.dao.LoginDao;
 import org.biobrief.users.dao.RouteDao;
 import org.biobrief.users.dao.UserDao;
@@ -52,6 +53,12 @@ public class UsersConfiguration
 	RouteDao routeDao()
 	{
 		return new RouteDao();
+	}
+	
+	@Bean
+	AngularErrorDao angularErrorDao()
+	{
+		return new AngularErrorDao();
 	}
 	
 	@Bean

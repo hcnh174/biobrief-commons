@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.biobrief.users.entities.AngularError;
 import org.biobrief.users.entities.Login;
 import org.biobrief.users.entities.Route;
 import org.biobrief.util.CException;
@@ -27,6 +28,7 @@ public class NotificationService
 	
 	public static final String LOGIN_TOPIC="login";
 	public static final String ROUTE_TOPIC="route";
+	public static final String ERROR_TOPIC="error";
 	public static final String FILEMANAGER_TOPIC="filemanager";
 	
 	private final EmailService emailService;
@@ -96,6 +98,11 @@ public class NotificationService
 	public void notifyRoute(Route route, Context context)
 	{
 		notify(ROUTE_TOPIC, Route.getSubject(route), Route.getMessage(route), context);
+	}
+	
+	public void notifyError(AngularError error, Context context)
+	{
+		notify(ERROR_TOPIC, AngularError.getSubject(error), AngularError.getMessage(error), context);
 	}
 	
 	/////////////////////////////////////////////////////////
