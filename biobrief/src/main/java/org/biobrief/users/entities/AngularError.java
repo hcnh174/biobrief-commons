@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.compress.utils.Lists;
 import org.biobrief.mongo.AbstractMongoEntity;
 import org.biobrief.util.DateHelper;
+import org.biobrief.util.StringHelper;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -39,6 +40,7 @@ public class AngularError extends AbstractMongoEntity
 		StringBuilder buffer=new StringBuilder();
 		buffer.append("username: "+error.getUsername()+"\n");
 		buffer.append("server: "+error.getServer()+"\n");
+		buffer.append("additional: ["+StringHelper.join(error.getAdditional())+"]\n");
 		buffer.append("date: "+DateHelper.format(error.getDate(), DateHelper.DATETIME_PATTERN)+"\n");
 		buffer.append("message: "+error.getMessage()+"\n");
 		return buffer.toString();

@@ -28,7 +28,7 @@ public class VirtualFileSystem
 	public VirtualFileSystem(String dir)
 	{
 		this.dir=dir;
-		System.out.println("loading virtual file system: "+dir);
+		//System.out.println("loading virtual file system: "+dir);
 		this.root=new VirtualFileSystem.VirtualFolder(dir, "root");
 	}
 	
@@ -436,7 +436,7 @@ public class VirtualFileSystem
 		
 		public void load()
 		{
-			System.out.println("loading folder: path="+path);
+			//System.out.println("loading folder: path="+path);
 			nodes.clear();
 			for (String dir : FileHelper.listDirectories(path, true))
 			{
