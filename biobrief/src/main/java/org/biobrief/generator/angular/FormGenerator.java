@@ -244,25 +244,31 @@ public class FormGenerator extends AbstractLayoutGenerator
 		
 		protected void writeAngular(PrimeForm form)
 		{
-			String filename=getAngularDir()+"/"+form.getFile();
-			String html=render(form);
-			if (!FileHelper.exists(filename))
-				throw new CException("cannot find form template file: "+filename);
-			writer.println("form template file: "+filename);
-			String str=FileHelper.readFile(filename);
-			str=Util.insertHtml(str, html, true);
-			overwriteFile(filename, str);
+			for (String file : form.getFiles())
+			{
+				String filename=getAngularDir()+"/"+file;
+				String html=render(form);
+				if (!FileHelper.exists(filename))
+					throw new CException("cannot find form template file: "+filename);
+				writer.println("form template file: "+filename);
+				String str=FileHelper.readFile(filename);
+				str=Util.insertHtml(str, html, true);
+				overwriteFile(filename, str);
+			}
 		}
 		
 		protected void writeFreemarker(PrimeForm form)
 		{
-			String filename=getFreemarkerDir()+"/"+form.getFile();
-			writer.println("using form template file: "+filename);
-			String str=FileHelper.readFile(filename);
-			String ftl=render(form);
-			str=Util.insertFtl(str, ftl, true);
-			writer.println("writing freemarker file: "+filename);
-			overwriteFile(filename, str);
+			for (String file : form.getFiles())
+			{
+				String filename=getFreemarkerDir()+"/"+file;
+				writer.println("using form template file: "+filename);
+				String str=FileHelper.readFile(filename);
+				String ftl=render(form);
+				str=Util.insertFtl(str, ftl, true);
+				writer.println("writing freemarker file: "+filename);
+				overwriteFile(filename, str);
+			}
 		}
 		
 		protected String render(PrimeForm form)

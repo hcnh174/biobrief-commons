@@ -258,19 +258,25 @@ public class FormLayout extends TableLayout
 		private String path;
 		private String root="model";
 		private String title;
-		private String file;
-//		private RenderMode renderMode;
-//		private String srcfile;
-//		private String outfile;
+		//private String file;
+		//private List<String> files=Lists.newArrayList();
 		
 		public FormParams(Map<String, Object> values)
 		{
 			setParams(values);
 		}
 		
+//		@Override
+//		public void setParam(String name, String value)
+//		{
+//			if (name.equals("files"))
+//				this.files=StringHelper.split(value, ",", true);
+//			else super.setParam(name, value);
+//		}
+		
 		public RenderMode getRenderMode()
 		{
-			return RenderMode.findByFilename(this.file);
+			return RenderMode.findByFilename(this.files.get(0));
 		}
 		
 		@Override

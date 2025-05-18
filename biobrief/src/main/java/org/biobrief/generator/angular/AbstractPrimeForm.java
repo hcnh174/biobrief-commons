@@ -1,5 +1,7 @@
 package org.biobrief.generator.angular;
 
+import java.util.List;
+
 import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.generator.angular.Controls.Control;
 import org.biobrief.generator.templates.Form;
@@ -40,20 +42,10 @@ public abstract class AbstractPrimeForm extends CssGrid implements AngularLayout
 		return check(this.form.getParams().getRenderMode());
 	}
 	
-	public String getFile()
+	public List<String> getFiles()
 	{
-		return check(this.form.getParams().getFile());
+		return check(this.form.getParams().getFiles());
 	}
-	
-//	public String getSrcfile()
-//	{
-//		return check(this.form.getParams().getSrcfile());
-//	}
-//	
-//	public String getOutfile()
-//	{
-//		return check(this.form.getParams().getOutfile());
-//	}
 	
 	private static <T> T check(T value)
 	{
@@ -68,7 +60,7 @@ public abstract class AbstractPrimeForm extends CssGrid implements AngularLayout
 	}
 	
 	@Override
-	protected CssGridCell createCell(TableLayout.Cell cell)
+	protected CssGridCell createCell(TableLayout.Cell cell) 
 	{
 		//System.out.println("creating cell["+cell.getRow()+":"+cell.getCol()+"]: colspan="+cell.getColspan()+" rowspan="+cell.getRowspan());//+value="+cell.getValue()+"
 		return new ControlTableCell(cell);

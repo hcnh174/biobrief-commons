@@ -1,7 +1,9 @@
 package org.biobrief.generator.templates;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.compress.utils.Lists;
 import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.util.BeanHelper;
 import org.biobrief.util.CException;
@@ -17,8 +19,9 @@ public abstract class AbstractParams
 	private BeanHelper beanhelper=new BeanHelper();
 	protected Mode mode=Mode.none;
 	protected RenderMode renderMode;
-	protected String htmlFilename;
-	protected String typescriptFilename;
+	protected List<String> files=Lists.newArrayList();
+	//protected String htmlFilename;
+	//protected String typescriptFilename;
 
 	public void setParam(String name, String value)
 	{
@@ -28,6 +31,11 @@ public abstract class AbstractParams
 				return;
 			if (name.equals(MODE))// handle in setParams to call mode first and then allow other params to override
 				return;
+			if (name.equals("files"))
+			{
+				this.files=StringHelper.split(value, ",", true);
+				return;
+			}
 			//System.out.println("setParam name="+name+" value="+value);
 			beanhelper.setPropertyFromString(this, name, value);
 		}
@@ -36,7 +44,7 @@ public abstract class AbstractParams
 			throw new CException("failed to set param: "+name+"="+value);//LogUtil.logUnknownParam(name, this));
 		}
 	}
-
+	
 	public void setParams(Map<String, Object> values)
 	{
 		//System.out.println("Params.setParams:\n"+StringHelper.toString(values));
@@ -113,12 +121,15 @@ public abstract class AbstractParams
 	
 	public RenderMode getRenderMode(){return this.renderMode;}
 	public void setRenderMode(final RenderMode renderMode){this.renderMode=renderMode;}
+	
+	public List<String> getFiles(){return this.files;}
+	public void setFiles(final List<String> files){this.files=files;}
 
-	public String getHtmlFilename(){return this.htmlFilename;}
-	public void setHtmlFilename(final String htmlFilename){this.htmlFilename=htmlFilename;}
-
-	public String getTypescriptFilename(){return this.typescriptFilename;}
-	public void setTypescriptFilename(final String typescriptFilename){this.typescriptFilename=typescriptFilename;}
+//	public String getHtmlFilename(){return this.htmlFilename;}
+//	public void setHtmlFilename(final String htmlFilename){this.htmlFilename=htmlFilename;}
+//
+//	public String getTypescriptFilename(){return this.typescriptFilename;}
+//	public void setTypescriptFilename(final String typescriptFilename){this.typescriptFilename=typescriptFilename;}
 	
 	@Override
 	public String toString()

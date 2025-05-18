@@ -1,5 +1,8 @@
 package org.biobrief.generator.angular;
 
+import java.util.List;
+
+import org.apache.commons.compress.utils.Lists;
 import org.biobrief.generator.GeneratorConstants.RenderMode;
 import org.biobrief.generator.templates.Grid;
 
@@ -25,13 +28,25 @@ public abstract class AbstractAngularGrid extends AbstractHtmlRenderer implement
 	
 	public String getHtmlFilename()
 	{
-		return grid.getParams().getHtmlFilename();
+		return findFiles(".html").get(0);
+		//return grid.getParams().getHtmlFilename();
 	}
 	
 	public String getTypescriptFilename()
 	{
-		return grid.getParams().getTypescriptFilename();
-		//return getFilenameRoot(srcDir)+".ts";
+		return findFiles(".ts").get(0);
+		//return grid.getParams().getTypescriptFilename();
+	}
+	
+	private List<String> findFiles(String suffix)
+	{
+		List<String> list=Lists.newArrayList();
+		for (String filename : grid.getParams().getFiles())
+		{
+			if (filename.endsWith(suffix))
+				list.add(filename);
+		}
+		return list;
 	}
 	
 	/*
