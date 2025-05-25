@@ -57,7 +57,6 @@ public class SynologyAuthenticationService implements UserDetailsService
 		//System.out.println("SynologyAuthenticationProvider.loadUserByUsername result: "+JsonHelper.toJson(result));
 		List<GrantedAuthority> authorities=getAuthorities(result.getGroups());
 		User user=new User(username, username, authorities);
-
 		//System.out.println("SynologyAuthenticationProvider.loadUserByUsername user: "+JsonHelper.toJson(user));
 		return user;
 	}
@@ -72,6 +71,7 @@ public class SynologyAuthenticationService implements UserDetailsService
 	public List<GrantedAuthority> getAuthorities(Collection<String> groups)
 	{
 		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
+		//authorities.add(new SimpleGrantedAuthority(username));
 		for (String group : groups)
 		{
 			authorities.add(new SimpleGrantedAuthority(group));
