@@ -43,7 +43,7 @@ public abstract class AbstractFileCacheService
 		return false;
 	}
 	
-	protected String getValue(String key, MessageWriter out)
+	public String getValue(String key, MessageWriter out)
 	{
 		String filename=getFilename(key);
 		//out.println("reading filename: "+filename);
