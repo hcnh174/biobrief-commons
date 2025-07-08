@@ -2,6 +2,7 @@ package org.biobrief.util;
 
 import java.time.LocalDateTime;
 
+import org.biobrief.web.WebHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 //import org.springframework.mail.SimpleMailMessage;
@@ -72,7 +73,10 @@ public class LogUtil
 	
 	public static String getLogDir()
 	{
-		return getBaseLogDir()+"/"+TIMESTAMP;
+		String server=WebHelper.getServerName();
+		if (server.contains("."))
+			server=server.substring(0, server.indexOf("."));
+		return getBaseLogDir()+"/"+TIMESTAMP+"-"+server;
 	}
 	
 	public static String getPrivateLogDir()
