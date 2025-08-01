@@ -204,8 +204,8 @@ dependencies {
 //version = '0.1.0'
 group = 'org.biobrief'
 
-sourceCompatibility = 1.17
-targetCompatibility = 1.17
+//sourceCompatibility = 1.17
+//targetCompatibility = 1.17
 
 //apply plugin: 'org.owasp.dependencycheck'
 
