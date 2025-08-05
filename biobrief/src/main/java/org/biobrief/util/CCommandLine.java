@@ -1,6 +1,5 @@
 package org.biobrief.util;
 
-import java.io.File;
 import java.util.List;
 
 import org.apache.commons.exec.CommandLine;
@@ -22,12 +21,8 @@ public class CCommandLine
 	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(CCommandLine.class);
 	
 	protected CommandLine commandLine=null;
-//	protected File workingDir=null;
-//	protected Integer watchdog=null;
-//	protected Integer exitValue=null;
 	protected boolean throwExceptionIfOutputStream=false;
 	protected boolean throwExceptionIfErrorStream=false;
-//	protected boolean cygwin=false;
 	protected boolean debug=true;
 	protected PlatformType.Platform platform=PlatformType.find().getPlatform();
 
@@ -50,22 +45,6 @@ public class CCommandLine
 	public CCommandLine(List<String> commands)
 	{
 		addArgs(commands);
-	}
-
-//	public CommandLine getCommandLine()
-//	{
-//		if (this.cygwin && this.platform==PlatformType.Platform.WINDOWS)
-//			return getCygwinCommandLine(this.commandLine);
-//		return this.commandLine;
-//	}
-	
-	public static CommandLine getCygwinCommandLine(CommandLine commandLine)
-	{
-		CCommandLine commands=new CCommandLine("bash");
-		commands.addArg("--login");
-		commands.addArg("-c");
-		commands.addArg(commandLine.toString(), true);
-		return commands.getCommandLine();
 	}
 	
 	public void addArg(Object value)
@@ -117,11 +96,6 @@ public class CCommandLine
 		addArg(value);
 	}
 	
-//	public void setWorkingDir(String dir)
-//	{
-//		setWorkingDir(new File(dir));
-//	}
-	
 	public int execute()
 	{
 		try
@@ -137,82 +111,20 @@ public class CCommandLine
 		{
 			throw new CException("Command failed: "+commandLine.toString(), e);
 		}
-	} 
-	
-//	public File getWorkingDir(){return this.workingDir;}
-//	public void setWorkingDir(final File workingDir){this.workingDir=workingDir;}
-//	
-//	public Integer getWatchdog(){return this.watchdog;}
-//	public void setWatchdog(int watchdog){this.watchdog=watchdog;}
-//	
-//	public Integer getExitValue(){return this.exitValue;}
-//	public void setExitValue(int exitValue){this.exitValue=exitValue;}
-//	
-//	public boolean getThrowExceptionIfOutputStream(){return this.throwExceptionIfOutputStream;}
-//	public void setThrowExceptionIfOutputStream(final boolean throwExceptionIfOutputStream){this.throwExceptionIfOutputStream=throwExceptionIfOutputStream;}
-//	
-//	public boolean getThrowExceptionIfErrorStream(){return this.throwExceptionIfErrorStream;}
-//	public void setThrowExceptionIfErrorStream(final boolean throwExceptionIfErrorStream){this.throwExceptionIfErrorStream=throwExceptionIfErrorStream;}
-//	
-//	public boolean getCygwin(){return this.cygwin;}
-//	public void setCygwin(final boolean cygwin){this.cygwin=cygwin;}
-//	
-//	public PlatformType.Platform getPlatform(){return this.platform;}
-//	public void setPlatform(final PlatformType.Platform platform){this.platform=platform;}
+	}
 	
 	public DefaultExecutor createExecutor()
 	{
-		//Executor exec = DefaultExecutor.builder().get();
 		DefaultExecutor.Builder<?> builder=DefaultExecutor.builder();
-		//if (this.workingDir!=null)
-	//		builder.setWorkingDirectory(this.workingDir);
-//		if (this.exitValue!=null)
-//			builder.setExitValue(this.exitValue);
-//		if (this.watchdog!=null)
-//			builder.setWatchdog();
 		DefaultExecutor exec=builder.get();
-		//exec.setWatchdog(new ExecuteWatchdog(this.watchdog));
 		return exec;
 	}
-	
-	
-	
-//	public DefaultExecutor createExecutor()
-//	{
-//		DefaultExecutor.builder();
-//		if (this.workingDir!=null)
-//			DefaultExecutor.builder().setWorkingDirectory(this.workingDir);
-//		if (this.exitValue!=null)
-//			DefaultExecutor.builder().setExitValue(this.exitValue);
-//		if (this.watchdog!=null)
-//			DefaultExecutor.builder().setWatchdog()
-//			builder.setWatchdog(new ExecuteWatchdog(this.watchdog));
-//		return builder.get();
-//	} 
-	
-//	@SuppressWarnings("deprecation")
-//	public DefaultExecutor createExecutor()
-//	{
-//		DefaultExecutor executor = new DefaultExecutor();
-//		if (this.workingDir!=null)
-//			executor.setWorkingDirectory(this.workingDir);
-//		if (this.exitValue!=null)
-//			executor.setExitValue(this.exitValue);
-//		if (this.watchdog!=null)
-//			executor.setWatchdog(new ExecuteWatchdog(this.watchdog));
-//		return executor;
-//	} 
 	
 	@Override
 	public String toString()
 	{
 		return this.commandLine.toString();
 	}
-	
-//	public static boolean isWindows() 
-//	{
-//		return System.getProperty("os.name").toLowerCase().startsWith("windows");
-//	}
 	
 	public static class Output
 	{
@@ -247,3 +159,52 @@ public class CCommandLine
 		}
 	}
 }
+
+//public void setWorkingDir(String dir)
+//{
+//	setWorkingDir(new File(dir));
+//}
+//public DefaultExecutor createExecutor()
+//{
+//	DefaultExecutor.builder();
+//	if (this.workingDir!=null)
+//		DefaultExecutor.builder().setWorkingDirectory(this.workingDir);
+//	if (this.exitValue!=null)
+//		DefaultExecutor.builder().setExitValue(this.exitValue);
+//	if (this.watchdog!=null)
+//		DefaultExecutor.builder().setWatchdog()
+//		builder.setWatchdog(new ExecuteWatchdog(this.watchdog));
+//	return builder.get();
+//} 
+
+//@SuppressWarnings("deprecation")
+//public DefaultExecutor createExecutor()
+//{
+//	DefaultExecutor executor = new DefaultExecutor();
+//	if (this.workingDir!=null)
+//		executor.setWorkingDirectory(this.workingDir);
+//	if (this.exitValue!=null)
+//		executor.setExitValue(this.exitValue);
+//	if (this.watchdog!=null)
+//		executor.setWatchdog(new ExecuteWatchdog(this.watchdog));
+//	return executor;
+//}
+//public static boolean isWindows() 
+//{
+//	return System.getProperty("os.name").toLowerCase().startsWith("windows");
+//}
+
+//public CommandLine getCommandLine()
+//{
+//	if (this.cygwin && this.platform==PlatformType.Platform.WINDOWS)
+//		return getCygwinCommandLine(this.commandLine);
+//	return this.commandLine;
+//}
+//public static CommandLine getCygwinCommandLine(CommandLine commandLine)
+//{
+//	CCommandLine commands=new CCommandLine("bash");
+//	commands.addArg("--login");
+//	commands.addArg("-c");
+//	commands.addArg(commandLine.toString(), true);
+//	return commands.getCommandLine();
+//}
