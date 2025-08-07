@@ -3,6 +3,7 @@ package org.biobrief.users;
 import org.biobrief.users.dao.ActivityDao;
 import org.biobrief.users.dao.AngularErrorDao;
 import org.biobrief.users.dao.LoginDao;
+import org.biobrief.users.dao.LogoutDao;
 import org.biobrief.users.dao.RouteDao;
 import org.biobrief.users.dao.UserDao;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -16,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableAutoConfiguration
-//@ComponentScan(basePackages={"edu.hiro.users"})
 @EnableConfigurationProperties(UsersProperties.class)
 @EntityScan(basePackages={"org.biobrief.users"})
 @EnableMongoRepositories(basePackages={"org.biobrief.users"})
@@ -47,6 +47,12 @@ public class UsersConfiguration
 	LoginDao loginDao()
 	{
 		return new LoginDao();
+	}
+	
+	@Bean
+	LogoutDao logoutDao()
+	{
+		return new LogoutDao();
 	}
 	
 	@Bean

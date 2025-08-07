@@ -18,6 +18,7 @@ public class Login extends AbstractMongoEntity
 	protected boolean succeeded;
 	protected String username;
 	protected String message;
+	protected String server;
 
 	public Login(){}
 	
@@ -27,6 +28,7 @@ public class Login extends AbstractMongoEntity
 		this.succeeded = succeeded;
 		this.username = username;
 		this.message = message;
+		this.server=WebHelper.getServerName();
 	}
 	
 	public Login(AbstractAuthenticationEvent event)
@@ -36,6 +38,7 @@ public class Login extends AbstractMongoEntity
 		this.succeeded=auth.isAuthenticated();
 		this.username=auth.getName();
 		this.message=getMessage(event);
+		this.server=WebHelper.getServerName();
 	}
 	
 	public static String getMessage(AbstractAuthenticationEvent event)
