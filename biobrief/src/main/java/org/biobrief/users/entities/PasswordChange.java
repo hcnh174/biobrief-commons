@@ -29,6 +29,6 @@ public class PasswordChange extends AbstractMongoEntity
 	
 	public String getSubject()
 	{
-		return "password changed: username+"+username;
+		return "password changed: username="+username;
 	}
 }
