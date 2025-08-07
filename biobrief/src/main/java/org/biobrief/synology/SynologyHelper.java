@@ -55,6 +55,11 @@ public class SynologyHelper
 		return new SynogroupMembersCommand(group, usernames);
 	}
 	
+	public static SynouserSetPasswordCommand setPassword(String username, String password)
+	{
+		return new SynouserSetPasswordCommand(username, password);
+	}
+	
 	////////////////////////////////////////////////////////////
 	
 	public static String format(List<AbstractCommand> commands)
@@ -267,6 +272,11 @@ public class SynologyHelper
 			{
 				this.groups.add(group);
 			}
+			
+			public boolean matchesGroup(String group)
+			{
+				return this.groups.contains(group);
+			}
 		}
 	}
 	
@@ -364,6 +374,46 @@ public class SynologyHelper
 			if (str.equals("LOGIN failed."))
 				return false;
 			throw new CException("unexpected login response: ["+str+"]");
+		}
+	}
+	
+	@Data @EqualsAndHashCode(callSuper=true)
+	public static class SynouserSetPasswordCommand extends SynouserCommand
+	{
+		protected String password;
+		
+		public SynouserSetPasswordCommand(String username, String password)
+		{
+			super(username);
+			this.password=password;
+		}
+		
+		//sudo synouser --setpw username 'passwd'
+		@Override
+		public void format(StringBuilder buffer)
+		{
+			super.format(buffer);
+			buffer.append(" --setpw");
+			buffer.append(" "+username);
+			buffer.append(" '"+StringHelper.escapeSingleQuotesBash(password)+"'");
+			buffer.append("\n");
+		}
+		
+		@Override
+		public void check()
+		{
+			super.check();
+			StringHelper.checkHasContent(password);
+		}
+		
+		public boolean parse(String str)
+		{
+			str=str.trim();
+			if (str.equals(""))
+				return true;
+			if (str.contains("failed"))
+				return false;
+			throw new CException("unexpected setpw response: ["+str+"]");
 		}
 	}
 	

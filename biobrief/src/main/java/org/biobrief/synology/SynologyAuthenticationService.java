@@ -23,6 +23,8 @@ import com.google.common.collect.Sets;
 @Service
 public class SynologyAuthenticationService implements UserDetailsService
 {
+	private static final String KEY_DELIMITER=":";
+	
 	@Autowired protected SynologyService synologyService;
 	protected Set<String> logins=Sets.newHashSet();
 	protected MessageWriter out=new MessageWriter();//new PrintWriter(System.out));
@@ -33,7 +35,7 @@ public class SynologyAuthenticationService implements UserDetailsService
 	{
 		if (username.equals(admin_username) && password.equals(admin_password))
 			return true;
-		String key=username+":"+password;
+		String key=username+KEY_DELIMITER+password;
 		if (logins.contains(key))
 		{
 			//System.out.println("SynologyAuthenticationService.authenticate found login in cache username: "+username);
@@ -78,4 +80,25 @@ public class SynologyAuthenticationService implements UserDetailsService
 		}
 		return authorities;
 	}
+	
+	public void clearCache()
+	{
+		this.logins.clear();
+	}
+	
+	public void clearCachedUser(String username)
+	{
+		String delkey=null;
+		for (String key : this.logins)
+		{
+			if (key.startsWith(username+KEY_DELIMITER))
+			{
+				delkey=key;
+				break;
+			}
+		}
+		this.logins.remove(delkey);
+	}
+	
+	//////////////////////////////
 }

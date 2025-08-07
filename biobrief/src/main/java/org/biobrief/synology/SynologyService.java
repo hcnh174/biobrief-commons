@@ -5,6 +5,7 @@ import org.biobrief.services.FileService;
 import org.biobrief.synology.SynologyHelper.SynogroupGetCommand;
 import org.biobrief.synology.SynologyHelper.SynouserGetCommand;
 import org.biobrief.synology.SynologyHelper.SynouserLoginCommand;
+import org.biobrief.util.CException;
 import org.biobrief.util.LogUtil;
 import org.biobrief.util.MessageWriter;
 import org.biobrief.util.RemoteProperties;
@@ -46,6 +47,21 @@ public class SynologyService extends AbstractRemoteService
 		return SynogroupGetCommand.parse(response);
 	}
 	
+	public boolean setPassword(String username, String password1, String password2, MessageWriter out)
+	{
+		if (!StringHelper.hasContent(username))
+			throw new CException("setPassword failed: username is null or empty: ["+username+"]");
+		if (!StringHelper.hasContent(password1))
+			throw new CException("setPassword failed: password1 is null or empty: ["+password1+"]");
+		if (!StringHelper.hasContent(password2))
+			throw new CException("setPassword failed: password2 is null or empty: ["+password2+"]");
+		if (!password1.equals(password2))
+			throw new CException("setPassword failed: password1<>password2: ["+password1+"<>"+password2+"]");
+		SynologyHelper.SynouserSetPasswordCommand command=SynologyHelper.setPassword(username, password1);
+		String response=execute(command.format(), out);
+		return command.parse(response);
+	}
+	
 	//////////////////////////////////////////////
 	
 	private boolean log(String message)
@@ -54,6 +70,7 @@ public class SynologyService extends AbstractRemoteService
 		return false;
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean log(String message, Exception e)
 	{
 		LogUtil.logMessage(LOGFILE, message, e);

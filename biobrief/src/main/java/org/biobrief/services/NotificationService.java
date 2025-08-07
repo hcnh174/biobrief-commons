@@ -7,6 +7,7 @@ import java.util.Set;
 import org.biobrief.users.entities.AngularError;
 import org.biobrief.users.entities.Login;
 import org.biobrief.users.entities.Route;
+import org.biobrief.users.entities.PasswordChange;
 import org.biobrief.util.CException;
 import org.biobrief.util.Context;
 import org.biobrief.util.FileHelper;
@@ -27,6 +28,7 @@ public class NotificationService
 	public enum ServerMode {production, development}
 	
 	public static final String LOGIN_TOPIC="login";
+	public static final String SETPW_TOPIC="setpw";
 	public static final String ROUTE_TOPIC="route";
 	public static final String ERROR_TOPIC="error";
 	public static final String FILEMANAGER_TOPIC="filemanager";
@@ -93,6 +95,11 @@ public class NotificationService
 	public void notifyLogin(Login login, Context context)
 	{
 		notify(LOGIN_TOPIC, login.getSubject(), login.getMessage(), context);
+	}
+	
+	public void notifyChangePassword(PasswordChange change, Context context)
+	{
+		notify(SETPW_TOPIC, change.getSubject(), change.getMessage(), context);
 	}
 	
 	public void notifyRoute(Route route, Context context)
@@ -170,31 +177,6 @@ public class NotificationService
 			return "notification: topic="+topicname+" subject="+subject+" body="+body+" from="+fromAddress+" to="+StringHelper.join(toAddresses);
 		}
 	}
-	
-//	@Data //@EqualsAndHashCode(callSuper=true)
-//	public static class Model //extends LinkedHashMap<String, Object>
-//	{
-//		//private static final long serialVersionUID = 1L;
-//		private String subject;
-//		private String body;
-//		
-//		public Model() {}
-//		
-//		public Model(String subject, String body)
-//		{
-//			this(subject, 
-//		}
-//		
-////		public String format(String template)
-////		{
-////			String formatted=template;
-////			for (String key : keySet())
-////			{
-////				formatted=StringHelper.replace(template, "{{"+key+"}}", get(key).toString());
-////			}
-////			return formatted;
-////		}
-//	}
 	
 	@Data
 	public static class NotificationConfig
@@ -473,3 +455,27 @@ public class NotificationService
 		
 	}
 }
+//@Data //@EqualsAndHashCode(callSuper=true)
+//public static class Model //extends LinkedHashMap<String, Object>
+//{
+//	//private static final long serialVersionUID = 1L;
+//	private String subject;
+//	private String body;
+//	
+//	public Model() {}
+//	
+//	public Model(String subject, String body)
+//	{
+//		this(subject, 
+//	}
+//	
+////	public String format(String template)
+////	{
+////		String formatted=template;
+////		for (String key : keySet())
+////		{
+////			formatted=StringHelper.replace(template, "{{"+key+"}}", get(key).toString());
+////		}
+////		return formatted;
+////	}
+//}

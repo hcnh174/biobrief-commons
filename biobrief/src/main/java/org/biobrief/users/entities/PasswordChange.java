@@ -5,31 +5,30 @@ import java.util.Date;
 import org.biobrief.mongo.AbstractMongoEntity;
 import org.biobrief.web.WebHelper;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.authentication.event.LogoutSuccessEvent;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Document(collection="logouts") @Data @EqualsAndHashCode(callSuper=true)
-public class Logout extends AbstractMongoEntity
+@Document(collection="passwordchanges") @Data @EqualsAndHashCode(callSuper=true)
+public class PasswordChange extends AbstractMongoEntity
 {
 	protected Date date;
 	protected String username;
 	protected String server;
 	protected String message;
 
-	public Logout(){}
+	public PasswordChange(){}
 	
-	public Logout(String username)
+	public PasswordChange(String username)
 	{
 		this.date=new Date();
 		this.username = username;
 		this.server=WebHelper.getServerName();
-		this.message="logout: usename="+username+" server="+server;
+		this.message="password change: usename="+username+" server="+server;
 	}
 	
-	public Logout(LogoutSuccessEvent event)
+	public String getSubject()
 	{
-		this(event.getAuthentication().getName());
+		return "password changed: username+"+username;
 	}
 }
