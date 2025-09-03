@@ -3,7 +3,6 @@ package org.biobrief.pipelines.commands;
 import java.util.List;
 import java.util.Optional;
 
-import org.biobrief.pipelines.commands.CommandTemplate.Parameter;
 import org.biobrief.util.CException;
 import org.biobrief.util.Constants.IO;
 import org.biobrief.util.StringHelper;

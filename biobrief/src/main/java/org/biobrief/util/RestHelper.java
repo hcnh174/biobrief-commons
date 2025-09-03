@@ -66,7 +66,7 @@ public class RestHelper
 	
 	//https://attacomsian.com/blog/spring-boot-resttemplate-get-request-parameters-headers
 	//https://stackoverflow.com/questions/21101250/sending-get-request-with-authentication-headers-using-resttemplate
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	public static String get(RestTemplate restTemplate, String url, Headers headers, MessageWriter out)
 	{
 		HttpEntity request = new HttpEntity(headers.getHttpHeaders());

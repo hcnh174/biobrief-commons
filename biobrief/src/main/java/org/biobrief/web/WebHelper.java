@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,7 +49,6 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 
 import jakarta.servlet.ServletException;
@@ -139,7 +139,7 @@ public final class WebHelper
 		String qs=request.getQueryString();
 		try
 		{
-			qs=URLDecoder.decode(qs,Charsets.UTF_8.toString());//"UTF-8");
+			qs=URLDecoder.decode(qs, StandardCharsets.UTF_8.toString());
 		}
 		catch(UnsupportedEncodingException e)
 		{
@@ -483,7 +483,7 @@ public final class WebHelper
 	{
 		//if (debug)
 		//	js=JsBeautifier.jsBeautify(js);
-		byte[] data=js.getBytes(Charsets.UTF_8);
+		byte[] data=js.getBytes(StandardCharsets.UTF_8);
 		String ifNoneMatch = request.getHeader("If-None-Match");
 		String etag = "\"0" + DigestUtils.md5DigestAsHex(data) + "\"";
 		if (etag.equals(ifNoneMatch))

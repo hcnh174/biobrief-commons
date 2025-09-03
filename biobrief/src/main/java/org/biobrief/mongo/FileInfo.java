@@ -4,36 +4,30 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import org.biobrief.util.CTable;
+import org.biobrief.util.StringHelper;
 import org.bson.Document;
 
 import com.google.common.collect.Maps;
 import com.mongodb.client.gridfs.model.GridFSFile;
-
-import org.biobrief.util.CTable;
-import org.biobrief.util.MathHelper;
-import org.biobrief.util.StringHelper;
 
 public class FileInfo
 {	
 	private final String id;
 	private final Map<String,String> metadata=Maps.newLinkedHashMap();
 
-	// DECLARATIONS_START
-	//protected Integer dbno; //Dbno
 	protected String filename; //Filename
 	protected String contentType; //Content-type
 	protected Integer size; //Size
 	protected Date date; //Date
 	protected String note; //Note
 	protected String username; //Username
-	// DECLARATIONS_END
 	
 	public FileInfo(GridFSFile file)
 	{
 		System.out.println("GridFSFile()="+StringHelper.toString(file));
 		Document meta=file.getMetadata();
 		id=file.getId().asObjectId().getValue().toString();
-		//dbno=MathHelper.parseInt(meta.get("dbno"));
 		note=StringHelper.dflt(meta.get("note"));
 		username=StringHelper.dflt(meta.get("username"));
 		filename=file.getFilename();
@@ -59,7 +53,6 @@ public class FileInfo
 		{
 			CTable.Row row=table.addRow();
 			row.add(file.getId());
-			//row.add(file.getDbno());
 			row.add(file.getFilename());
 			row.add(file.getContentType());
 			row.add(file.getSize());
@@ -69,7 +62,6 @@ public class FileInfo
 	}
 	
 	public String getId(){return this.id;}
-	//public Integer getDbno(){return this.dbno;}
 	public String getFilename(){return this.filename;}
 	public String getContentType(){return this.contentType;}
 	public Integer getSize(){return size;}// hack! should be Long

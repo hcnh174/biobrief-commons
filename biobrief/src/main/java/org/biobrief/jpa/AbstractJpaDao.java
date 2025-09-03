@@ -40,7 +40,7 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	
 	public T getOne(Integer id)
 	{
-		return (T)repository.getOne(id);
+		return (T)repository.getReferenceById(id);
 	}
 	
 	public List<T> findAll()
@@ -62,19 +62,6 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	{
 		throw new CException("Page<T> findAll(String query, Pageable paging) not implemented for "+this.getClass().getName());
 	}
-	
-//	public Page<T> findAll(Optional<Predicate> filter, Pageable paging)
-//	{
-//		if (filter.isPresent())
-//			return findAll(filter.get(), paging);
-//		else return findAll(paging);
-//	}
-	/*
-	public Page<T> findAll(Predicate filter, Pageable paging)
-	{
-		throw new CException("Page<T> findAll(Predicate query, Pageable paging) not implemented for "+this.getClass().getName());
-	}
-	*/
 	
 	public void save(T item)
 	{
@@ -145,10 +132,11 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	
 	public void delete(List<T> items)
 	{
-		for (T item : items)
-		{
-			delete(item);
-		}
+		repository.deleteAllInBatch(items);
+//		for (T item : items)
+//		{
+//			delete(item);
+//		}
 	}
 	
 	public void delete(T item)
@@ -182,3 +170,17 @@ public abstract class AbstractJpaDao<T extends AbstractJpaEntity, R extends JpaR
 	
 	protected static void doNothing(){}
 }
+
+
+//public Page<T> findAll(Optional<Predicate> filter, Pageable paging)
+//{
+//	if (filter.isPresent())
+//		return findAll(filter.get(), paging);
+//	else return findAll(paging);
+//}
+/*
+public Page<T> findAll(Predicate filter, Pageable paging)
+{
+	throw new CException("Page<T> findAll(Predicate query, Pageable paging) not implemented for "+this.getClass().getName());
+}
+*/

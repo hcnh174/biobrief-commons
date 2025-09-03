@@ -29,6 +29,7 @@ import lombok.Data;
 
 public class SolrHelper
 {
+	@SuppressWarnings("deprecation")
 	public static SolrClient getSolrClient()
 	{
 		String solrUrl = "http://1703-030.b.hiroshima-u.ac.jp:8983/solr";
@@ -139,32 +140,8 @@ public class SolrHelper
 	}
 	
 	//https://lucene.apache.org/solr/guide/8_4/json-facet-api.html
-//	public static QueryResponse getTermFacet(SolrClient client, String collection, String field)
-//	{
-//		try
-//		{
-//			final TermsFacetMap facet = new TermsFacetMap(field);//.setLimit(3);
-//			final JsonQueryRequest request = new JsonQueryRequest()
-//				.setQuery("*:*")
-//				.setLimit(0)
-//				.withFacet(field, facet);
-//			QueryResponse response = request.process(client, collection);
-//			return response;
-//			//response.
-//		}
-//		catch(SolrServerException e)
-//		{
-//			throw new CException(e);
-//		}
-//		catch(IOException e)
-//		{
-//			throw new CException(e);
-//		}
-//	}
-	
-	
-	//https://lucene.apache.org/solr/guide/8_4/json-facet-api.html
 	//getTermFacet("nctclinicaltrials", "*:*", Arrays.asList("genes", "conditions", "interventions", "phase")_;
+	@SuppressWarnings("deprecation")
 	public static Facets getTermFacet(SolrClient client, String collection, String query, List<String> fields)
 	{
 		try
@@ -264,3 +241,27 @@ public class SolrHelper
 		}
 	}
 }
+
+//https://lucene.apache.org/solr/guide/8_4/json-facet-api.html
+//public static QueryResponse getTermFacet(SolrClient client, String collection, String field)
+//{
+//	try
+//	{
+//		final TermsFacetMap facet = new TermsFacetMap(field);//.setLimit(3);
+//		final JsonQueryRequest request = new JsonQueryRequest()
+//			.setQuery("*:*")
+//			.setLimit(0)
+//			.withFacet(field, facet);
+//		QueryResponse response = request.process(client, collection);
+//		return response;
+//		//response.
+//	}
+//	catch(SolrServerException e)
+//	{
+//		throw new CException(e);
+//	}
+//	catch(IOException e)
+//	{
+//		throw new CException(e);
+//	}
+//}

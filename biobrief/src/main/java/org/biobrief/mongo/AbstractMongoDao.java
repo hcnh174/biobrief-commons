@@ -7,23 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-//import jakarta.transaction.Transactional;
-
 import org.biobrief.util.BeanHelper;
 import org.biobrief.util.CException;
 import org.biobrief.util.Context;
 import org.biobrief.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.index.Index;
-import org.springframework.data.mongodb.core.index.IndexOperations;
-import org.springframework.data.mongodb.core.index.IndexResolver;
-import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -52,16 +44,16 @@ public abstract class AbstractMongoDao<T extends AbstractMongoEntity, R extends 
 		this.entityClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		//System.out.println("AbstractMongoDao() entityClass="+entityClass.getCanonicalName());
 	}
-	//https://docs.spring.io/spring-data/mongodb/reference/mongodb/template-collection-management.html#mongo-template.index-and-collections.index	
-	@EventListener(ApplicationReadyEvent.class)
-	public void initIndicesAfterStartup()
-	{
-		//System.out.println("AbstractMongoDao.initIndicesAfterStartup: "+entityClass.getCanonicalName());
-		IndexOperations indexOps = mongoTemplate.indexOps(entityClass);
-		//indexOps.ensureIndex(new Index().on(null, null))
-		IndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
-		resolver.resolveIndexFor(entityClass).forEach(indexOps::ensureIndex);
-	}
+//	//https://docs.spring.io/spring-data/mongodb/reference/mongodb/template-collection-management.html#mongo-template.index-and-collections.index	
+//	@EventListener(ApplicationReadyEvent.class)
+//	public void initIndicesAfterStartup()
+//	{
+//		//System.out.println("AbstractMongoDao.initIndicesAfterStartup: "+entityClass.getCanonicalName());
+//		IndexOperations indexOps = mongoTemplate.indexOps(entityClass);
+//		//indexOps.ensureIndex(new Index().on(null, null))
+//		IndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
+//		resolver.resolveIndexFor(entityClass).forEach(indexOps::nsureIndex);
+//	}
 		
 	public Optional<T> findById(String id)
 	{

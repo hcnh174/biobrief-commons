@@ -69,11 +69,4 @@ public class SynologyService extends AbstractRemoteService
 		LogUtil.logMessage(LOGFILE, message);
 		return false;
 	}
-	
-	@SuppressWarnings("unused")
-	private boolean log(String message, Exception e)
-	{
-		LogUtil.logMessage(LOGFILE, message, e);
-		return false;
-	}
 }
