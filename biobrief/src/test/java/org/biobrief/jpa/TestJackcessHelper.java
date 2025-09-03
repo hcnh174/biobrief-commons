@@ -7,6 +7,7 @@ import com.healthmarketscience.jackcess.Table;
 
 
 //gradle --stacktrace --info test --tests *TestJackcessHelper
+@SuppressWarnings("unused")
 public class TestJackcessHelper
 {	
 	//private static final String DATAROOM_DIR="h:/sync/dataroom";

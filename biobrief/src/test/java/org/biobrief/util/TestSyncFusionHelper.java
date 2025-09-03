@@ -2,16 +2,11 @@ package org.biobrief.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.biobrief.services.EmailService;
-import org.biobrief.services.NotificationService;
-import org.biobrief.services.SmtpEmailServiceImpl;
 import org.biobrief.users.entities.User;
 import org.biobrief.util.SyncFusionHelper.FileManager;
 import org.biobrief.util.SyncFusionHelper.FileManager.ActionRequest;
 import org.biobrief.util.SyncFusionHelper.FileManager.ReadResponse;
 import org.junit.jupiter.api.Test;
-
-import com.google.common.collect.Lists;
 
 //gradle --stacktrace --info test --tests *TestSyncFusionHelper
 public class TestSyncFusionHelper

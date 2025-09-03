@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 
 //gradle --stacktrace --info :hlsg-pipelines:test --tests *TestPipelineParser
+@SuppressWarnings("unused")
 public class TestPipelineParser
 {
 	private Integer counter=100;

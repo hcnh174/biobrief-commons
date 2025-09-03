@@ -37,6 +37,7 @@ import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.junit.jupiter.api.Test;
 
 //gradle test --info --tests *TestPowerPointHelper
+@SuppressWarnings({"rawtypes", "unused"})
 public class TestPowerPointHelper
 {
 	//@Test

@@ -4,7 +4,6 @@ import java.awt.Insets;
 import java.awt.image.BufferedImage;
 
 import org.biobrief.util.ImageHelper.ScaleDirection;
-import org.junit.jupiter.api.Test;
 
 //gradle test --stacktrace --info --tests *TestImageHelper
 public class TestImageHelper

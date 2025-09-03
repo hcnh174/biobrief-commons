@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 //https://www.petrikainulainen.net/programming/testing/junit-5-tutorial-writing-assertions-with-hamcrest/
 
 //gradle --stacktrace --info :hlsg-pipelines:test --tests *TestPipelineConstants
+@SuppressWarnings("unused")
 public class TestPipelineConstants
 {	
 	@Test

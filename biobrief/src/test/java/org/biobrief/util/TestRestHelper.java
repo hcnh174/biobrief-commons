@@ -86,16 +86,16 @@ public class TestRestHelper
 		}
 	}
 	
-	public static class ServiceUnavailableException extends Exception
-	{
-		
-	}
+//	public static class ServiceUnavailableException extends Exception
+//	{
+//		
+//	}
 	
 	@TestConfiguration
     static class InfoServiceConfiguration
     {
         @Bean
-        public InfoService infoService()
+        InfoService infoService()
         {
             return new InfoService();
         }

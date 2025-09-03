@@ -28,7 +28,7 @@ public class TestPrimeTable
 	private Grid buildGrid()
 	{
 		Dictionary dictionary=new Dictionary("c:/workspace/hlsg/data/dictionary");
-		SimpleMap values=new SimpleMap();
+		SimpleMap<Object> values=new SimpleMap<Object>();
 		values.put("group", "hirodai");
 		values.put("mode", "readonly");
 		values.put("entity", "Ultrasound");
@@ -53,7 +53,7 @@ public class TestPrimeTable
 	
 	private void addColumn(Grid grid, String field, int width, String header)
 	{
-		SimpleMap values=new SimpleMap();
+		SimpleMap<Object> values=new SimpleMap<Object>();
 		values.put("header", header);
 		values.put("body", "${"+field+"}");
 		values.put("width", width);

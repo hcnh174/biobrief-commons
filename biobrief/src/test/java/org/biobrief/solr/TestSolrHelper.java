@@ -19,10 +19,10 @@ import org.biobrief.solr.SolrHelper.Facets;
 import org.biobrief.util.CException;
 import org.biobrief.util.JsonHelper;
 import org.biobrief.util.StringHelper;
-import org.junit.jupiter.api.Test;
 
 //https://lucene.apache.org/solr/guide/8_1/using-solrj.html
 //gradle --stacktrace --info test --tests *TestSolrHelper
+@SuppressWarnings("unused")
 public class TestSolrHelper
 {
 	//@Test
