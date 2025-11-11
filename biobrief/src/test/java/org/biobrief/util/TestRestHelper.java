@@ -1,26 +1,6 @@
 package org.biobrief.util;
 
-import java.util.Collections;
-import java.util.Date;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.retry.annotation.Retryable;
-import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 //gradle --stacktrace --info test --tests *TestRestHelper
 //https://github.com/spring-projects/spring-retry
@@ -30,9 +10,10 @@ import org.springframework.web.client.RestTemplate;
 //@RunWith(SpringRunner.class)
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest
-@Import(TestRestHelper.InfoServiceConfiguration.class)
+//@Import(TestRestHelper.InfoServiceConfiguration.class)
 public class TestRestHelper
 {	
+	/*
 	@Autowired
 	private InfoService infoService;
 	
@@ -112,4 +93,5 @@ public class TestRestHelper
 		public String getOsname(){return this.osname;}
 		public void setOsname(final String osname){this.osname=osname;}
 	}
+	*/
 }

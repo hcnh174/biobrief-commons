@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+//import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 //import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -65,7 +65,7 @@ public final class JsonHelper
 	@SuppressWarnings("deprecation")
 	public static void configureMapper(ObjectMapper mapper)
 	{
-		mapper.registerModule(new Jdk8Module());
+//		mapper.registerModule(new Jdk8Module());
 		//mapper.registerModule(new JavaTimeModule());
 		mapper.setDateFormat(new SimpleDateFormat(LocalDateHelper.YYYYMMDD_PATTERN));
 		//mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
