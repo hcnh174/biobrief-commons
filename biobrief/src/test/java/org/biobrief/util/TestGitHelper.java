@@ -22,7 +22,7 @@ public class TestGitHelper
 		System.out.println("command="+command);
 	}
 	
-	//@Test
+	@Test
 	public void parseGitLog()
 	{
 		GitLog log=GitHelper.parseGitLog(LOGFILE);

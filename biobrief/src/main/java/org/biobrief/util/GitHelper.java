@@ -29,7 +29,7 @@ public final class GitHelper
 		for (String line : FileHelper.readLines(logfile))
 		{
 			//System.out.println("line=["+line+"]");
-			if (line.matches("commit [a-z0-9]+"))
+			if (line.startsWith("commit "))//[a-z0-9]+"))
 			//if (line.startsWith("commit"))
 				commit=log.add(parseCommitLine(line));
 			else if (line.startsWith("Author:"))
@@ -46,8 +46,11 @@ public final class GitHelper
 		return log;
 	}
 	
+	// commit 6e3f9bd4ec901dcc4757d270be6721e598e0f5e3 (HEAD -> upgrade-spring-boot-4, origin/upgrade-spring-boot-4)
 	private static String parseCommitLine(String line)
 	{
+		if (line.contains("("))
+			line=line.substring(0, line.indexOf("(")).trim();
 		return StringHelper.remove(line, "commit").trim();
 	}
 	
