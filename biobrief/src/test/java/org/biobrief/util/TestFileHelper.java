@@ -2,7 +2,18 @@ package org.biobrief.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.biobrief.util.FileHelper.FileInfo;
 import org.junit.jupiter.api.Test;
@@ -11,8 +22,129 @@ import com.google.common.collect.Multimap;
 
 //gradle --stacktrace --info test --tests *TestFileHelper
 public class TestFileHelper
-{	
-	@Test
+{    
+	// Directories to skip (by name, case-insensitive)
+    private static final Set<String> SKIP_DIRECTORIES = Set.of("#recycle", "node_modules", "build", ".git");
+
+    // File extensions to skip (lowercase, without dot)
+    private static final Set<String> SKIP_EXTENSIONS = Set.of("tmp", "log", "bak", "db");
+    
+    @Test
+	public void listAllFilesRecursively3()
+	{    	
+		String dir="x:/";
+    	Path startPath = Paths.get(dir);
+        try (Stream<Path> walk = Files.walk(startPath))
+        {
+        	Date start=new Date();
+            Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() 
+            {
+            	@Override
+                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+            	{
+            		if (dir.getFileName()==null)
+            			 return FileVisitResult.CONTINUE;
+                    String name = dir.getFileName().toString().toLowerCase();
+                    if (SKIP_DIRECTORIES.contains(name))
+                    {
+                        // Skip entire directory subtree
+                        return FileVisitResult.SKIP_SUBTREE;
+                    }
+                    try
+                    {
+                        if (Files.isHidden(dir))
+                        	return FileVisitResult.SKIP_SUBTREE;
+                    }
+                    catch (IOException ignored)
+                    {}
+                    return FileVisitResult.CONTINUE;
+                }
+            	
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                {
+//                	 try {
+//                         if (Files.isHidden(file)) return FileVisitResult.CONTINUE;
+//                     } catch (IOException ignored) {}
+
+                     String name = file.getFileName().toString().toLowerCase();
+                     int dot = name.lastIndexOf('.');
+                     if (dot != -1) {
+                         String ext = name.substring(dot + 1);
+                         if (SKIP_EXTENSIONS.contains(ext)) return FileVisitResult.CONTINUE;
+                     }
+                    //System.out.printf("%s%n", file.toAbsolutePath());
+                    System.out.printf("%s | Size: %d bytes | Modified: %s%n",
+                            file.toAbsolutePath(),
+                            attrs.size(),
+                            attrs.lastModifiedTime());
+                    return FileVisitResult.CONTINUE;
+                }
+	        });
+            Date end=new Date();
+            long elapsed=end.getTime()-start.getTime();
+            System.out.println("tree list: elapsed="+elapsed);
+        }
+        catch (IOException e) {
+            System.err.println("Error listing files: " + e.getMessage());
+        }
+	}
+	
+	//@Test
+	public void listAllFilesRecursively2()
+	{
+		String dir="x:/";
+    	Path startPath = Paths.get(dir);
+        try (Stream<Path> walk = Files.walk(startPath))
+        {
+        	Date start=new Date();
+            Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() 
+            {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                {
+                    System.out.printf("%s | Size: %d bytes | Modified: %s%n",
+                            file.toAbsolutePath(),
+                            attrs.size(),
+                            attrs.lastModifiedTime());
+                    return FileVisitResult.CONTINUE;
+                }
+	        });
+            Date end=new Date();
+            long elapsed=end.getTime()-start.getTime();
+            System.out.println("tree list: elapsed="+elapsed);
+        }
+        catch (IOException e) {
+            System.err.println("Error listing files: " + e.getMessage());
+        }
+	}
+	
+	//@Test
+	public void listAllFilesRecursively()
+	{
+		Date start=new Date();
+		String dir="x:/";
+		Path startPath = Paths.get(dir);
+        try (Stream<Path> walk = Files.walk(startPath))
+        {
+            List<Path> files=walk.filter(Files::isRegularFile) // Filter to include only regular files, exclude directories
+                    .collect(Collectors.toList());
+            
+            System.out.println("Files found in " + dir + " and its subfolders:");
+            for (Path file : files)
+            {
+                System.out.println(file.toAbsolutePath());
+            }
+            Date end=new Date();
+            long elapsed=end.getTime()-start.getTime();
+            System.out.println("tree list: elapsed="+elapsed);
+        }
+        catch (IOException e) {
+            System.err.println("Error listing files: " + e.getMessage());
+        }
+	}
+	
+	//@Test
 	public void getBaseDirectory()
 	{
 		System.out.println("current dir="+FileHelper.getCurrentDirectory());
@@ -20,7 +152,7 @@ public class TestFileHelper
 		//assertThat(FileHelper.getBaseDirectory()).endsWith("/workspace/biobrief");
 	}
 	
-	@Test
+	//@Test
 	public void getWorkspaceDirectory()
 	{
 		String dir=FileHelper.getWorkspaceDirectory();
@@ -76,7 +208,7 @@ public class TestFileHelper
 		System.out.println("map="+StringHelper.toString(map));	
 	}
 	
-	@Test
+	//@Test
 	public void findFilesByWildcard()
 	{
 		String dir="X:\\B301006627782_NCC";
