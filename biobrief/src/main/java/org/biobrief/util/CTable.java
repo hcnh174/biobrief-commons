@@ -448,6 +448,11 @@ public class CTable
 		return buffer.toString();
 	}
 	
+	public String toCsv()
+	{
+		return StringHelper.replace(toText(), "\t", ",");
+	}
+	
 	@Override
 	public String toString()
 	{
