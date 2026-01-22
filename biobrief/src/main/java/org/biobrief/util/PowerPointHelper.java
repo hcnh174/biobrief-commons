@@ -35,6 +35,7 @@ import org.apache.poi.sl.usermodel.TextParagraph.TextAlign;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFPictureData;
 import org.apache.poi.xslf.usermodel.XSLFPictureShape;
+import org.apache.poi.xslf.usermodel.XSLFShape;
 import org.apache.poi.xslf.usermodel.XSLFSimpleShape;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFTable;
@@ -43,6 +44,8 @@ import org.apache.poi.xslf.usermodel.XSLFTableRow;
 import org.apache.poi.xslf.usermodel.XSLFTextBox;
 import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
+import org.apache.poi.xslf.usermodel.XSLFTextShape;
+import org.openxmlformats.schemas.drawingml.x2006.main.CTTextParagraph;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
@@ -462,6 +465,226 @@ public class PowerPointHelper
 			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
 		}
 		return graphics;
+	}
+	
+	////////////////////////////////////////////////////////////////////
+	
+//	public static void highlightFields(XSLFSlide slide, List<String> fields)
+//	{
+//		for (String field : fields)
+//		{
+//			for (XSLFShape shape : slide.getShapes())
+//			{
+//				if (!(shape instanceof XSLFTextShape))
+//					continue;
+//				XSLFTextShape textShape = (XSLFTextShape) shape;
+//				for (XSLFTextParagraph paragraph : textShape.getTextParagraphs())
+//				{
+//					highlightField(paragraph, field);
+//					//highlightInParagraph(paragraph, searchText);
+//				}
+//			}
+//			break;
+//		}
+//	}
+
+	/*
+	public static void highlightFields(XSLFSlide slide, List<String> fields)
+	{
+		String fieldlabel="【"+field+"】";
+		for (XSLFShape shape : slide.getShapes())
+		{
+			if (!(shape instanceof XSLFTextShape))
+				continue;
+			XSLFTextShape textShape = (XSLFTextShape) shape;
+			for (XSLFTextParagraph paragraph : textShape.getTextParagraphs())
+			{
+				String text=getText(paragraph);
+				if (!text.startsWith(fieldlabel))
+					continue;
+				String target=StringHelper.trim(text.substring(fieldlabel.length()));
+				int index=target.indexOf("【");
+				if (index!=-1)
+					target=StringHelper.trim(target.substring(0, index));
+				System.out.println("searching for target to highlight: ["+target+"]");
+				highlightInParagraph(paragraph, target);
+			}
+		}
+	}
+	*/
+	
+	public static void highlightFields(XSLFSlide slide, List<String> fields)
+	{
+		for (XSLFTextParagraph paragraph : getParagraphs(slide))
+		{
+			String text=getText(paragraph);
+			for (String field : fields)
+			{
+				String fieldlabel="【"+field+"】";
+				if (!text.startsWith(fieldlabel))
+					continue;
+				String target=StringHelper.trim(text.substring(fieldlabel.length()));
+				int index=target.indexOf("【");
+				if (index!=-1)
+					target=StringHelper.trim(target.substring(0, index));
+				System.out.println("searching for target to highlight: ["+target+"]");
+				highlightInParagraph(paragraph, target);
+				break;
+			}
+		}
+	}
+	
+	private static List<XSLFTextParagraph> getParagraphs(XSLFSlide slide)
+	{
+		List<XSLFTextParagraph> list=Lists.newArrayList();
+		for (XSLFShape shape : slide.getShapes())
+		{
+			if (!(shape instanceof XSLFTextShape))
+				continue;
+			XSLFTextShape textShape = (XSLFTextShape) shape;
+			for (XSLFTextParagraph paragraph : textShape.getTextParagraphs())
+			{
+				list.add(paragraph);
+			}
+		}
+		return list;
+	}
+	
+	///////////////////////////////////////////////////////////////
+	
+	public static void highlightText(XMLSlideShow pptx, String searchText)
+	{
+		for (XSLFSlide slide : pptx.getSlides())
+		{
+			highlightText(slide, searchText);
+		}
+	}
+	
+	public static void highlightText(XSLFSlide slide, String searchText)
+	{
+		for (XSLFShape shape : slide.getShapes())
+		{
+			if (!(shape instanceof XSLFTextShape))
+				continue;
+			XSLFTextShape textShape = (XSLFTextShape) shape;
+			for (XSLFTextParagraph paragraph : textShape.getTextParagraphs())
+			{
+				highlightInParagraph(paragraph, searchText);
+			}
+		}
+	}
+	
+	private static String getText(XSLFTextParagraph paragraph)
+	{
+		List<XSLFTextRun> originalRuns = paragraph.getTextRuns();
+		if (originalRuns.isEmpty())
+			return "";
+
+		// Snapshot text
+		StringBuilder fullText = new StringBuilder();
+		for (XSLFTextRun r : originalRuns)
+		{
+			fullText.append(r.getRawText());
+		}
+
+		return fullText.toString();
+	}
+	
+	private static void highlightInParagraph(XSLFTextParagraph paragraph, String searchText)
+	{
+		List<XSLFTextRun> originalRuns = paragraph.getTextRuns();
+		if (originalRuns.isEmpty())
+			return;
+
+//		// Snapshot text
+//		StringBuilder fullText = new StringBuilder();
+//		for (XSLFTextRun r : originalRuns)
+//		{
+//			fullText.append(r.getRawText());
+//		}
+//
+//		String text = fullText.toString();
+		
+		String text=getText(paragraph);
+		System.out.println("FULL_TEXT=["+text+"]");
+		int index = text.indexOf(searchText);
+		if (index < 0)
+			return;
+
+		// Snapshot style BEFORE clearing
+		TextRunStyle baseStyle = captureStyle(originalRuns.get(0));
+
+		// Clear paragraph safely
+		clearParagraphText(paragraph);
+
+		// Before
+		if (index > 0)
+		{
+			XSLFTextRun before = paragraph.addNewTextRun();
+			applyStyle(baseStyle, before);
+			before.setText(text.substring(0, index));
+		}
+
+		// Highlight
+		XSLFTextRun match = paragraph.addNewTextRun();
+		applyStyle(baseStyle, match);
+		match.setText(searchText);
+		match.setHighlightColor(Color.YELLOW);
+
+		// After
+		int end = index + searchText.length();
+		if (end < text.length())
+		{
+			XSLFTextRun after = paragraph.addNewTextRun();
+			applyStyle(baseStyle, after);
+			after.setText(text.substring(end));
+		}
+	}
+	
+	private static void clearParagraphText(XSLFTextParagraph paragraph)
+	{
+		CTTextParagraph ctP = paragraph.getXmlObject();
+
+		// Remove all text runs
+		ctP.getRList().clear();
+
+		// Remove line breaks if present
+		ctP.getBrList().clear();
+	}
+	
+	//////////////////////////////
+	
+	private static TextRunStyle captureStyle(XSLFTextRun run)
+	{
+		TextRunStyle s = new TextRunStyle();
+		//s.fontColor = run.getFontColor();
+		s.fontSize = run.getFontSize();
+		s.bold = run.isBold();
+		s.italic = run.isItalic();
+		s.underlined = run.isUnderlined();
+		s.fontFamily = run.getFontFamily();
+		return s;
+	}
+	
+	private static void applyStyle(TextRunStyle s, XSLFTextRun run)
+	{
+		//if (s.fontColor != null) run.setFontColor(s.fontColor);
+		if (s.fontSize != null)
+			run.setFontSize(s.fontSize);
+		run.setBold(s.bold);
+		run.setItalic(s.italic);
+		run.setUnderlined(s.underlined);
+		if (s.fontFamily != null)
+			run.setFontFamily(s.fontFamily);
+	}
+	
+	static class TextRunStyle {
+		//PaintStyle fontColor;
+		Double fontSize;
+		boolean bold;
+		boolean italic;
+		boolean underlined;
+		String fontFamily;
 	}
 	
 	////////////////////////////////////////////////////////////////
