@@ -291,11 +291,24 @@ public final class MathHelper
 		return intersects;
 	}
 	
-	public static double log2(double num)
+//	public static double log2(double num)
+//	{
+//		if (num==0)
+//			throw new CException("can't take log of 0");
+//		return (Math.log(num)/Math.log(2));
+//	}
+	
+	public static double log2(double logNumber)
+	{
+		return customLog(2.0, logNumber);
+	}
+	
+	//https://www.baeldung.com/java-logarithms
+	public static double customLog(double base, double num)
 	{
 		if (num==0)
 			throw new CException("can't take log of 0");
-		return (Math.log(num)/Math.log(2));
+		return Math.log(num) / Math.log(base);
 	}
 	
 	public static int getNumbatches(int total, int batchsize)

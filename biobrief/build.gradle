@@ -37,7 +37,7 @@ dependencyManagement
 dependencies {
 
 	implementation("org.checkerframework:checker-qual:${property('checker-qual.version')}")
-	implementation("com.google.errorprone:error_prone_annotations:${property('error_prone_annotations.version')}")//2.20.0
+	implementation("com.google.errorprone:error_prone_annotations:${property('error_prone_annotations.version')}")
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
