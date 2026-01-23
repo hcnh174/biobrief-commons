@@ -285,6 +285,8 @@ public class PowerPointHelper
 			run.setFontColor(style.getFontColor().toColor());
 		run.setItalic(style.getItalics());
 		run.setBold(style.getBold());
+		if (style.getHighlighted())
+			run.setHighlightColor(style.getHighlightColor());
 		return run;
 	}
 	
@@ -469,50 +471,6 @@ public class PowerPointHelper
 	
 	////////////////////////////////////////////////////////////////////
 	
-//	public static void highlightFields(XSLFSlide slide, List<String> fields)
-//	{
-//		for (String field : fields)
-//		{
-//			for (XSLFShape shape : slide.getShapes())
-//			{
-//				if (!(shape instanceof XSLFTextShape))
-//					continue;
-//				XSLFTextShape textShape = (XSLFTextShape) shape;
-//				for (XSLFTextParagraph paragraph : textShape.getTextParagraphs())
-//				{
-//					highlightField(paragraph, field);
-//					//highlightInParagraph(paragraph, searchText);
-//				}
-//			}
-//			break;
-//		}
-//	}
-
-	/*
-	public static void highlightFields(XSLFSlide slide, List<String> fields)
-	{
-		String fieldlabel="【"+field+"】";
-		for (XSLFShape shape : slide.getShapes())
-		{
-			if (!(shape instanceof XSLFTextShape))
-				continue;
-			XSLFTextShape textShape = (XSLFTextShape) shape;
-			for (XSLFTextParagraph paragraph : textShape.getTextParagraphs())
-			{
-				String text=getText(paragraph);
-				if (!text.startsWith(fieldlabel))
-					continue;
-				String target=StringHelper.trim(text.substring(fieldlabel.length()));
-				int index=target.indexOf("【");
-				if (index!=-1)
-					target=StringHelper.trim(target.substring(0, index));
-				System.out.println("searching for target to highlight: ["+target+"]");
-				highlightInParagraph(paragraph, target);
-			}
-		}
-	}
-	*/
-	
 	public static void highlightFields(XSLFSlide slide, List<String> fields)
 	{
 		for (XSLFTextParagraph paragraph : getParagraphs(slide))
@@ -527,8 +485,8 @@ public class PowerPointHelper
 				int index=target.indexOf("【");
 				if (index!=-1)
 					target=StringHelper.trim(target.substring(0, index));
-				System.out.println("searching for target to highlight: ["+target+"]");
-				highlightInParagraph(paragraph, target);
+				//System.out.println("searching for target to highlight: ["+target+"]");
+				highlightInParagraph(paragraph, target, Color.YELLOW);
 				break;
 			}
 		}
@@ -552,15 +510,15 @@ public class PowerPointHelper
 	
 	///////////////////////////////////////////////////////////////
 	
-	public static void highlightText(XMLSlideShow pptx, String searchText)
+	public static void highlightText(XMLSlideShow pptx, String searchText, Color color)
 	{
 		for (XSLFSlide slide : pptx.getSlides())
 		{
-			highlightText(slide, searchText);
+			highlightText(slide, searchText, color);
 		}
 	}
 	
-	public static void highlightText(XSLFSlide slide, String searchText)
+	public static void highlightText(XSLFSlide slide, String searchText, Color color)
 	{
 		for (XSLFShape shape : slide.getShapes())
 		{
@@ -569,7 +527,7 @@ public class PowerPointHelper
 			XSLFTextShape textShape = (XSLFTextShape) shape;
 			for (XSLFTextParagraph paragraph : textShape.getTextParagraphs())
 			{
-				highlightInParagraph(paragraph, searchText);
+				highlightInParagraph(paragraph, searchText, color);
 			}
 		}
 	}
@@ -590,23 +548,14 @@ public class PowerPointHelper
 		return fullText.toString();
 	}
 	
-	private static void highlightInParagraph(XSLFTextParagraph paragraph, String searchText)
+	private static void highlightInParagraph(XSLFTextParagraph paragraph, String searchText, Color color)
 	{
 		List<XSLFTextRun> originalRuns = paragraph.getTextRuns();
 		if (originalRuns.isEmpty())
 			return;
-
-//		// Snapshot text
-//		StringBuilder fullText = new StringBuilder();
-//		for (XSLFTextRun r : originalRuns)
-//		{
-//			fullText.append(r.getRawText());
-//		}
-//
-//		String text = fullText.toString();
 		
 		String text=getText(paragraph);
-		System.out.println("FULL_TEXT=["+text+"]");
+		//System.out.println("FULL_TEXT=["+text+"]");
 		int index = text.indexOf(searchText);
 		if (index < 0)
 			return;
@@ -629,7 +578,7 @@ public class PowerPointHelper
 		XSLFTextRun match = paragraph.addNewTextRun();
 		applyStyle(baseStyle, match);
 		match.setText(searchText);
-		match.setHighlightColor(Color.YELLOW);
+		match.setHighlightColor(color);
 
 		// After
 		int end = index + searchText.length();
@@ -734,6 +683,8 @@ public class PowerPointHelper
 		protected Double fontSize=FONT_SIZE;
 		protected Boolean bold=false;
 		protected Boolean italics=false;
+		protected Boolean highlighted=false;
+		protected Color highlightColor=Color.YELLOW;
 		
 		public Style setAlign(final TextAlign align){this.align=align; return this;}
 		public Style setFontColor(final Color fontColor){this.fontColor=new RgbColor(fontColor); return this;}
@@ -744,6 +695,8 @@ public class PowerPointHelper
 		public Style setFontSize(final Double fontSize){this.fontSize=fontSize; return this;}
 		public Style setBold(final Boolean bold){this.bold=bold; return this;}
 		public Style setItalics(final Boolean italics){this.italics=italics; return this;}
+		public Style setHighlighted(final Boolean highlighted){this.highlighted=highlighted; return this;}
+		public Style setHighlightColor(final Color highlightColor){this.highlightColor=highlightColor; return this;}
 	}
 	
 	@Data

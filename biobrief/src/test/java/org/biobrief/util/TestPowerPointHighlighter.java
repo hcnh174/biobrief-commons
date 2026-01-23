@@ -48,7 +48,7 @@ public class TestPowerPointHighlighter {
 //
 //		XMLSlideShow pptx=PowerPointHelper.loadPptxFile(infile, "A5189");
 //
-//		PowerPointHelper.highlightText(pptx, "肺腺癌");
+//		PowerPointHelper.highlightText(pptx, "肺腺癌", Color.YELLOW);
 //		//highlightText(pptx, "肺腺癌");
 //		//highlightText(pptx, "あり（オンコマインDx；アクショナブル遺伝子変異認めず）");
 //
