@@ -3,6 +3,12 @@ package org.biobrief.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.chrono.JapaneseChronology;
+import java.time.chrono.JapaneseDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -547,8 +553,47 @@ public final class DateHelper
 		//throw new CException("cannot parse Imperial year: "+value);
 	}
 	
+	public static Date parseJapaneseDate(String value)//令和7年2月7日  平成26年03月26日
+	{	
+		try
+		{
+			DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+				.appendPattern("GGGGy年M月d日")
+				.toFormatter(Locale.JAPAN)
+				.withChronology(JapaneseChronology.INSTANCE);
+			
+			JapaneseDate japaneseDate = JapaneseDate.from(formatter.parse(value));
+			LocalDate isoDate = LocalDate.from(japaneseDate);
+			//System.out.println(isoDate);  // 2024-02-27
+			Date date = Date.from(isoDate.atStartOfDay(ZoneId.of("Asia/Tokyo")).toInstant());
+			return date;
+		}
+		catch (Exception e)
+		{
+			throw new CException("cannot parse Japanese date: "+value);
+		}
+	}
+	
+	public static Date parseJapaneseDate(String value, boolean strict)//平成26年03月26日
+	{
+		if (!StringHelper.hasContent(value) && !strict)
+			return null;
+		try
+		{
+			return parseJapaneseDate(value);
+		}
+		catch (Exception e)
+		{
+			if (!strict)
+				return null;
+			throw e;
+		}
+	}
+	
+	
+	/*
 	//http://docs.oracle.com/javase/7/docs/technotes/guides/intl/calendar.doc.html
-	public static Date parseJapaneseDate(String value)//平成26年03月26日
+	public static Date parseJapaneseDate(String value)//令和7年2月7日  平成26年03月26日
 	{
 		//LocalDate date=LocalDate.parse(value, DateTimeFormatter);
 		//return date.from
@@ -578,6 +623,7 @@ public final class DateHelper
 			throw e;
 		}
 	}
+	*/
 	
 	//////////////////////////////////////////////////////////////
 
