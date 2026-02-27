@@ -89,6 +89,8 @@ dependencies {
 	api("org.apache.poi:poi-scratchpad:${property('poi.version')}")
 	api("org.apache.poi:ooxml-security:1.1")
 	
+	api("org.apache.xmlgraphics:batik-bridge:1.19")
+	
 	api("org.mongodb:mongodb-driver-core:${property('mongodb.version')}")
 	api("org.mongodb:mongodb-driver-sync:${property('mongodb.version')}")
 	
