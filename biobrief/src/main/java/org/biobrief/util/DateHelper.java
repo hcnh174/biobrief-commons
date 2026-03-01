@@ -557,6 +557,8 @@ public final class DateHelper
 	{	
 		try
 		{
+			value=value.replace("元年", "1年");
+			
 			DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 				.appendPattern("GGGGy年M月d日")
 				.toFormatter(Locale.JAPAN)

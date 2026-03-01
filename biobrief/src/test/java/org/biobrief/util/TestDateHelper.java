@@ -46,41 +46,9 @@ public class TestDateHelper
 	@Test
 	public void parseJapaneseDate()
 	{
-		String value="令和7年2月7日";
+		//String value="令和7年2月7日";
+		String value="令和元年9月27日";
 		Date date=DateHelper.parseJapaneseDate(value, true);
 		System.out.println("JP date: "+date.toString());
-		
-		//String value = "令和6年2月27日";
-//		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-//			.appendPattern("GGGGy年M月d日")
-//			.toFormatter(Locale.JAPAN)
-//			.withChronology(JapaneseChronology.INSTANCE);
-//		
-//		JapaneseDate japaneseDate = JapaneseDate.from(formatter.parse(value));
-//		LocalDate isoDate = LocalDate.from(japaneseDate);
-//		
-//		System.out.println(isoDate);  // 2024-02-27
-//		
-//		Date date = Date.from(isoDate.atStartOfDay(ZoneId.of("Asia/Tokyo")).toInstant());
-//		
-//		System.out.println("date="+date);  // 2024-02-27
-		
-//		//String value="令和7年2月7日";
-//		String value="成26年03月26日";
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("GGGGy年M月d日").withLocale(Locale.JAPAN);
-//
-//		try
-//		{
-//			JapaneseDate jdate = JapaneseDate.from(formatter.parse(value));
-//			System.out.println("JP date: "+jdate.toString());
-//		}
-//		catch (DateTimeParseException e)
-//		{
-//			e.printStackTrace();
-//		}
-
-		
-		//Date date=DateHelper.parseJapaneseDate("令和7年2月7日", true);
-		//System.out.println("JP date: "+date.toString());
 	}
 }
