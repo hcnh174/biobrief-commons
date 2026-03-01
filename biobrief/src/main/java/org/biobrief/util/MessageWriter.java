@@ -6,11 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//import jakarta.servlet.http.HttpServletResponse;
-
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
 public class MessageWriter
 {
 	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(MessageWriter.class);
@@ -36,6 +31,7 @@ public class MessageWriter
 		//if (echo && !isSystemOut)
 		if (!isSystemOut)
 			System.out.println(str);
+		log.info(str);
 	}
 	
 	public void println(String str)
