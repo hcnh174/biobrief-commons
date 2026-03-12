@@ -592,41 +592,6 @@ public final class DateHelper
 		}
 	}
 	
-	
-	/*
-	//http://docs.oracle.com/javase/7/docs/technotes/guides/intl/calendar.doc.html
-	public static Date parseJapaneseDate(String value)//令和7年2月7日  平成26年03月26日
-	{
-		//LocalDate date=LocalDate.parse(value, DateTimeFormatter);
-		//return date.from
-		try
-		{
-			DateFormat df=DateFormat.getDateInstance(DateFormat.FULL, new Locale("ja", "JP", "JP"));
-			return df.parse(value);
-		}
-		catch (ParseException e)
-		{
-			throw new CException("cannot parse Japanese date: "+value);
-		}
-	}
-	
-	public static Date parseJapaneseDate(String value, boolean strict)//平成26年03月26日
-	{
-		if (!StringHelper.hasContent(value) && !strict)
-			return null;
-		try
-		{
-			return parseJapaneseDate(value);
-		}
-		catch (Exception e)
-		{
-			if (!strict)
-				return null;
-			throw e;
-		}
-	}
-	*/
-	
 	//////////////////////////////////////////////////////////////
 
 	public static Date findClosestDate(Date target, Date min, Date max, Collection<Date> dates)

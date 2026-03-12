@@ -3,12 +3,9 @@ package org.biobrief.util;
 import java.io.PrintWriter;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class MessageWriter
 {
-	@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(MessageWriter.class);
+	//@SuppressWarnings("unused")	private static final Logger log=LoggerFactory.getLogger(MessageWriter.class);
 	
 	protected final PrintWriter writer;
 	protected final boolean isSystemOut;
@@ -31,7 +28,7 @@ public class MessageWriter
 		//if (echo && !isSystemOut)
 		if (!isSystemOut)
 			System.out.println(str);
-		log.info(str);
+		//log.info(str);
 	}
 	
 	public void println(String str)
