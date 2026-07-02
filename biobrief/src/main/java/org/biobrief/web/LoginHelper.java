@@ -6,11 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import org.biobrief.util.CException;
 import org.biobrief.util.StringHelper;
 import org.passay.CharacterCharacteristicsRule;
@@ -31,6 +26,11 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public final class LoginHelper
 {
@@ -245,6 +245,36 @@ public final class LoginHelper
 	//https://www.baeldung.com/java-generate-secure-password
 	//https://www.passay.org/reference/
 	//https://www.baeldung.com/java-passay
+//	public static String generatePassword(int length)
+//	{
+//		CharacterRule specialCharacters=new CharacterRule(new CharacterData() {
+//			@Override
+//			public String getErrorCode() {
+//				return CharacterCharacteristicsRule.ERROR_CODE;
+//			}
+//
+//			@Override
+//			public String getCharacters() {
+//				return "!@#$%&*+";//return "!@#$%^&*()_+";
+//			}
+//		}, 1);
+//		
+//		List<CharacterRule> rules = Arrays.asList(
+//			// at least one upper-case character
+//			new CharacterRule(EnglishCharacterData.UpperCase, 1),
+//			// at least one lower-case character
+//			new CharacterRule(EnglishCharacterData.LowerCase, 1),
+//			// at least one digit character
+//			new CharacterRule(EnglishCharacterData.Digit, 1),
+//			// at least one symbol (special character)
+//			//new CharacterRule(EnglishCharacterData.Special, 1),
+//			specialCharacters
+//		);
+//		PasswordGenerator generator = new PasswordGenerator(length, rules);
+//		// Generated password is 12 characters long, which complies with polic
+//		return generator.generate().toString();
+//	}
+	
 	public static String generatePassword(int length)
 	{
 		CharacterRule specialCharacters=new CharacterRule(new CharacterData() {
