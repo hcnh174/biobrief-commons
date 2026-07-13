@@ -1,17 +1,18 @@
-package org.biobrief.solr;
+package org.biobrief.util;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
 import org.apache.tika.Tika;
+import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.PasswordProvider;
 import org.apache.tika.parser.pdf.PDFParser;
 import org.apache.tika.sax.BodyContentHandler;
-import org.biobrief.util.CException;
-import org.biobrief.util.FileHelper;
 
 //https://www.baeldung.com/apache-tika
 public class TikaHelper
@@ -111,8 +112,9 @@ public class TikaHelper
 			Metadata metadata=new Metadata();
 			ParseContext context=createParseContext(password);
 			FileHelper.checkExists(filename);
-			stream=FileHelper.openFileInputStream(filename);
-			parser.parse(stream, handler, metadata, context);
+			stream=new FileInputStream(new File(filename));
+			TikaInputStream tikaStream = TikaInputStream.get(stream);
+			parser.parse(tikaStream, handler, metadata, context); // Resolves the error
 			return handler.toString();
 		}
 		catch (Exception e)
@@ -132,6 +134,39 @@ public class TikaHelper
 			}
 		}
 	}
+	
+//	public static String extractPdfContent(String filename, Optional<String> password)
+//	{
+//		InputStream stream=null;
+//		try
+//		{
+//			//System.out.println("extractPdfContent: "+filename);
+//			PDFParser parser=createPdfParser();
+//			BodyContentHandler handler=new BodyContentHandler(-1);
+//			Metadata metadata=new Metadata();
+//			ParseContext context=createParseContext(password);
+//			FileHelper.checkExists(filename);
+//			stream=FileHelper.openFileInputStream(filename);
+//			parser.parse(stream, handler, metadata, context);
+//			return handler.toString();
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CException(e);
+//		}
+//		finally
+//		{
+//			try
+//			{
+//				if (stream!=null)
+//					stream.close();
+//			}
+//			catch(Exception e)
+//			{
+//				System.err.println("could not close stream for file: "+filename);
+//			}
+//		}
+//	}
 	
 	private static PDFParser createPdfParser()
 	{

@@ -8,11 +8,11 @@ import java.util.Optional;
 
 import org.biobrief.util.CException;
 import org.biobrief.util.StringHelper;
-import org.passay.CharacterCharacteristicsRule;
-import org.passay.CharacterData;
-import org.passay.CharacterRule;
-import org.passay.EnglishCharacterData;
-import org.passay.PasswordGenerator;
+//import org.passay.CharacterCharacteristicsRule;
+//import org.passay.CharacterData;
+//import org.passay.CharacterRule;
+//import org.passay.EnglishCharacterData;
+//import org.passay.PasswordGenerator;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -275,35 +275,35 @@ public final class LoginHelper
 //		return generator.generate().toString();
 //	}
 	
-	public static String generatePassword(int length)
-	{
-		CharacterRule specialCharacters=new CharacterRule(new CharacterData() {
-			@Override
-			public String getErrorCode() {
-				return CharacterCharacteristicsRule.ERROR_CODE;
-			}
-
-			@Override
-			public String getCharacters() {
-				return "!@#$%&*+";//return "!@#$%^&*()_+";
-			}
-		}, 1);
-		
-		List<CharacterRule> rules = Arrays.asList(
-			// at least one upper-case character
-			new CharacterRule(EnglishCharacterData.UpperCase, 1),
-			// at least one lower-case character
-			new CharacterRule(EnglishCharacterData.LowerCase, 1),
-			// at least one digit character
-			new CharacterRule(EnglishCharacterData.Digit, 1),
-			// at least one symbol (special character)
-			//new CharacterRule(EnglishCharacterData.Special, 1),
-			specialCharacters
-		);
-		PasswordGenerator generator = new PasswordGenerator();
-		// Generated password is 12 characters long, which complies with polic
-		return generator.generatePassword(length, rules);
-	}
+//	public static String generatePassword(int length)
+//	{
+//		CharacterRule specialCharacters=new CharacterRule(new CharacterData() {
+//			@Override
+//			public String getErrorCode() {
+//				return CharacterCharacteristicsRule.ERROR_CODE;
+//			}
+//
+//			@Override
+//			public String getCharacters() {
+//				return "!@#$%&*+";//return "!@#$%^&*()_+";
+//			}
+//		}, 1);
+//		
+//		List<CharacterRule> rules = Arrays.asList(
+//			// at least one upper-case character
+//			new CharacterRule(EnglishCharacterData.UpperCase, 1),
+//			// at least one lower-case character
+//			new CharacterRule(EnglishCharacterData.LowerCase, 1),
+//			// at least one digit character
+//			new CharacterRule(EnglishCharacterData.Digit, 1),
+//			// at least one symbol (special character)
+//			//new CharacterRule(EnglishCharacterData.Special, 1),
+//			specialCharacters
+//		);
+//		PasswordGenerator generator = new PasswordGenerator();
+//		// Generated password is 12 characters long, which complies with polic
+//		return generator.generatePassword(length, rules);
+//	}
 	
 	////////////////////////////////////////////////////////////////
 

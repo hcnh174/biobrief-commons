@@ -34,17 +34,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parsers-standard-package/3.3.0/eb763842ada1f7d3f1ec38900e35f1bbd2966ca7/tika-parsers-standard-package-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parsers-standard-package/3.3.0/544bf8a55334110f609393fecd0b57f41d9047ba/tika-parsers-standard-package-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-cad-module/4.0.0-beta-1/5a5198431fac12c492590f710afd129ca8bd69ff/tika-parser-cad-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-cad-module/4.0.0-beta-1/1854b9204590c75c23f675e6d3583e492a1754d6/tika-parser-cad-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-cad-module/3.3.0/57a4e67e3164afad6c3ab6e5c2fef3284cfcd557/tika-parser-cad-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-cad-module/3.3.0/e0f253495d5328ab3e44a608581194780841433e/tika-parser-cad-module-3.3.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-microsoft-module/3.3.0/61f6936f053b6544a296e9abd0edcc2ca014b6b2/tika-parser-microsoft-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-microsoft-module/3.3.0/d689f9e7298246d1d5d8cdd8f4c37cbbddab2b41/tika-parser-microsoft-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-microsoft-module/4.0.0-beta-1/a0a6f1ec5e3e6a43683018908087ff4d452daeac/tika-parser-microsoft-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-microsoft-module/4.0.0-beta-1/2cccebf2ee3c1cbd97f26ff6257a95e0f46a0aff/tika-parser-microsoft-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -59,7 +54,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-miscoffice-module/3.3.0/8353f49b662db4b3ef5b55d88c991db049f4c788/tika-parser-miscoffice-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-miscoffice-module/3.3.0/c5568cde287ce18642f0576fbead159796d522b1/tika-parser-miscoffice-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-miscoffice-module/4.0.0-beta-1/2f71dd99b965604a40ddda5c9ad433d3825ba8fd/tika-parser-miscoffice-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-miscoffice-module/4.0.0-beta-1/ba4eea8e3b69c7cffd8c416fa30c3666d43dadd4/tika-parser-miscoffice-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -94,7 +89,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-sync/5.7.0/7a21a0d99a87e740ff62e33d36d12c1a44549a99/mongodb-driver-sync-5.7.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-sync/5.7.0/2d3d20e20bc092f1f1bfd5494bd5145320de5c66/mongodb-driver-sync-5.7.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-sync/5.9.0/8d080fd966bb88668f8ef074ec4d88522f64016a/mongodb-driver-sync-5.9.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-sync/5.9.0/56324f66b7c8951c002eda44f8fedb35ea233c69/mongodb-driver-sync-5.9.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -109,7 +104,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-core/5.7.0/ce60222412e8398f2f031e334c5284cb140653b9/mongodb-driver-core-5.7.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-core/5.7.0/6debd97423fc455a37be2b0f6a0216a0fc4d43f0/mongodb-driver-core-5.7.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-core/5.9.0/ad43bc8df6f1cf0bffcdfc7b37ae4de62e72f4a2/mongodb-driver-core-5.9.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/mongodb-driver-core/5.9.0/bfb87f93f4f799b384a7bb9227028fc26f8e3dbb/mongodb-driver-core-5.9.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -119,37 +114,32 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-process-killer/1.11/1df504a045dfa6b0c95913f6c3e0e803813a5a0e/zt-process-killer-1.11-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-process-killer/1.11/ea7b731af49f155013e8bf48102637d0ca27ad3e/zt-process-killer-1.11.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlunit/htmlunit/2.70.0/fc4edf1d8ec66b9d29c242a4e3ea3fe7b631ab89/htmlunit-2.70.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlunit/htmlunit/2.70.0/4b068e6c05abb1740e8fabaf040e4eaf1e4c0e4d/htmlunit-2.70.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.healthmarketscience.jackcess/jackcess/4.0.10/bef7363412ec87bf06f332cf63c81e47b5f1941/jackcess-4.0.10-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.healthmarketscience.jackcess/jackcess/4.0.10/24555824afc5b876e7d916a6e1087f96edfa5adb/jackcess-4.0.10.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.healthmarketscience.jackcess/jackcess/4.0.11/d08db3495f48026aaf98f45ce24725b348b362c4/jackcess-4.0.11-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.healthmarketscience.jackcess/jackcess/4.0.11/b66bf29a97e35033a2e17af6f8f5a0ff9fbab59a/jackcess-4.0.11.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-webarchive-module/3.3.0/8024461c607ed7ddc677988edd96cf4f732ceb4/tika-parser-webarchive-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-webarchive-module/3.3.0/1b10c8081288704dfd813ec049b21e35907c51aa/tika-parser-webarchive-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-webarchive-module/4.0.0-beta-1/bb14b60800428dea0617b5bdb2e1822ddeb1e962/tika-parser-webarchive-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-webarchive-module/4.0.0-beta-1/da3b56f322a62432c9540caeb83d93963c38e2ba/tika-parser-webarchive-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-apple-module/3.3.0/bf88d4a679846ae4007a1137f18a2a9a74dec25c/tika-parser-apple-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-apple-module/3.3.0/faf3297fc5c51ee2b0828b357fc9a9bbf946c973/tika-parser-apple-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-apple-module/4.0.0-beta-1/6632b2e746945a143a4ae48a090c3c68d5fe41e/tika-parser-apple-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-apple-module/4.0.0-beta-1/3c27d5d41cfb65b4fac11e06e172d5a5b6e0a05f/tika-parser-apple-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pkg-module/3.3.0/b7a51bce917b8c4141005dfbde3bc500b889e08a/tika-parser-pkg-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pkg-module/3.3.0/aecda4c84ec1d3c2d7de1354a886a78fd901126/tika-parser-pkg-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pkg-module/4.0.0-beta-1/4055b4bd329e6db90570e58c1d3d9cb644994189/tika-parser-pkg-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pkg-module/4.0.0-beta-1/30fbbbe0a51de5857480ebf21dea6ac9b1d23def/tika-parser-pkg-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-zip-commons/3.3.0/c7615a4d641f7e1192f02457bc761ec187decda5/tika-parser-zip-commons-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-zip-commons/3.3.0/e420fe42456c05c3de88d774a491fdbe933e1cd1/tika-parser-zip-commons-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-zip-commons/4.0.0-beta-1/1325d1d61caa9761a9490cc241af7526f9e282ce/tika-parser-zip-commons-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-zip-commons/4.0.0-beta-1/5adba7e30d74c163d67d97de1d3b9b7761af6801/tika-parser-zip-commons-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -159,12 +149,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-code-module/3.3.0/b90cce01bff4c77c74faaadb0abc63e1d9eedbe8/tika-parser-code-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-code-module/3.3.0/7b612796da63fb556281b7fc9ddc3ccc27ef6ef1/tika-parser-code-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-code-module/4.0.0-beta-1/cca2d1b650fc213dbf8d351aefa8e1eac00c802b/tika-parser-code-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-code-module/4.0.0-beta-1/35c8ded1bb4ef9ee6dd6522a680b1dc69ff33f7b/tika-parser-code-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-ocr-module/3.3.0/74bf522060bc7db65bec90267eea6bf6388f8a9a/tika-parser-ocr-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-ocr-module/3.3.0/5f7ff72b0658742cbd5be45cb3285786c1dfb73a/tika-parser-ocr-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-ocr-module/4.0.0-beta-1/a775c6ce896f97d2992a3544fa7d572a7c1593f4/tika-parser-ocr-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-ocr-module/4.0.0-beta-1/28dd2bc8b58ec1c6d2010de3e15f5e695a62166b/tika-parser-ocr-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -179,12 +169,42 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-exec/1.12/cf36f4e0fae8d794299fb1192e94dfa8a10c596c/zt-exec-1.12-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-exec/1.12/51a8d135518365a169a8c94e074c7eaaf864e147/zt-exec-1.12.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-exec/1.13.0/fd852570e1996ddecdb5b0b459417890d3bed991/zt-exec-1.13.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-exec/1.13.0/a985d691f3f1b9f47232078482e263551de05006/zt-exec-1.13.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-core/3.3.0/acf783d03b97ba6dce84470ed2236d405709b82b/tika-core-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-core/3.3.0/1b733d4c478e583cb4c5e75aca9e5485d04ea830/tika-core-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-process-killer/1.12.0/72c2e017c31f0bc2f348b197ace1e6d33329b853/zt-process-killer-1.12.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.zeroturnaround/zt-process-killer/1.12.0/980ac04b1be87850bffad86db0a13130eccc4c3a/zt-process-killer-1.12.0.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-encoding-detector-html/4.0.0-beta-1/4d4ce2b197159da2996eb70e110bab3da8b9eb71/tika-encoding-detector-html-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-encoding-detector-html/4.0.0-beta-1/12d235210004dc26befcda9845a97c6810ea07cd/tika-encoding-detector-html-4.0.0-beta-1.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-ml-junkdetect/4.0.0-beta-1/cbb0efe9e9a336b6bb093a96529701d08b40dd33/tika-ml-junkdetect-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-ml-junkdetect/4.0.0-beta-1/d134c0cedbaefcc5505854093c33fc26359698fc/tika-ml-junkdetect-4.0.0-beta-1.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-module/4.0.0-beta-1/15816dd49efa04992e4712762ad03ed886d1faf2/tika-parser-mail-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-module/4.0.0-beta-1/8f414741e1560095b140fd73fd68c27124d98a5c/tika-parser-mail-module-4.0.0-beta-1.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-text-module/4.0.0-beta-1/813470980a41bd065d629c757660fb2b14cbf806/tika-parser-text-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-text-module/4.0.0-beta-1/24626a55db00c5e47646fd4f80d5fc84c97ca565/tika-parser-text-module-4.0.0-beta-1.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-encoding-detector-mojibuster/4.0.0-beta-1/862b210284fdc921f8d96f5733c33bfb5402cf9b/tika-encoding-detector-mojibuster-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-encoding-detector-mojibuster/4.0.0-beta-1/eaced41a7fce0802c4cb2c1f8df93ebb1445fce/tika-encoding-detector-mojibuster-4.0.0-beta-1.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-core/4.0.0-beta-1/5b8fb7b34d84996acc2063999f3790d68878e639/tika-core-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-core/4.0.0-beta-1/bee3f906ef0dc2c732472f203a22f73d1d98f3e0/tika-core-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -234,12 +254,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.codelibs/jhighlight/1.1.1/3991662fd33e0dcd45210b44c99a4e98845bb1e4/jhighlight-1.1.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.codelibs/jhighlight/1.1.1/d1c5462e9e5590e7fea899d4a640531b0335691a/jhighlight-1.1.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.codelibs/jhighlight/2.0.0/5ca9d70a051330fc93251a7dfb12044b0cbf54d1/jhighlight-2.0.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.codelibs/jhighlight/2.0.0/93b4daa011998a80db954c65b46b785e9581fc48/jhighlight-2.0.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pdf-module/3.3.0/82baa9941fd2c9e1161efca5b79be6cab2011ee8/tika-parser-pdf-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pdf-module/3.3.0/92f5f0d014dd65d34702145fb40964801cf217ea/tika-parser-pdf-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pdf-module/4.0.0-beta-1/bc72e9e54c8a726e8277eb29324729bd9a50e822/tika-parser-pdf-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-pdf-module/4.0.0-beta-1/722103c258b19fda309df909f5614df9da8dfd2c/tika-parser-pdf-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -249,32 +269,22 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-module/3.3.0/504bcbed529727ab473fa85d132c6e068baf4d7b/tika-parser-mail-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-module/3.3.0/6ead57d54aec1b676135b1b50ef812905ce61e36/tika-parser-mail-module-3.3.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-text-module/3.3.0/febc3d959ce239d6d9547087890036591c67b933/tika-parser-text-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-text-module/3.3.0/36281c7deac11ff886b70423eb3478a60a50c1b6/tika-parser-text-module-3.3.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-csv/1.14.1/63872070241c316281491f8051152ff10ec09746/commons-csv-1.14.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-csv/1.14.1/467354980fade8528b6a9f9bdf7f4f19ab9b3373/commons-csv-1.14.1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-commons/3.3.0/9e91ea7d4d8c2ce02bf91caa9eeb808b5e326e11/tika-parser-mail-commons-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-commons/3.3.0/d8cf0e79c23a941dcbda47117e0e63da87dfe258/tika-parser-mail-commons-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-commons/4.0.0-beta-1/5f16a48b4d19d3dba8dde3ff0b3577c9520ad448/tika-parser-mail-commons-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-mail-commons/4.0.0-beta-1/a39549586473950df66cd52208d095cd16e18ea0/tika-parser-mail-commons-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-dom/0.8.13/d7b5296f725b1245e32490e42a50dd29622dd1b5/apache-mime4j-dom-0.8.13-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-dom/0.8.13/19b4c87fce0173318131d90fcc518ea294ee2bee/apache-mime4j-dom-0.8.13.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-dom/0.8.14/279c26cea72c8065a45d522d43b3b936b4e1f4da/apache-mime4j-dom-0.8.14-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-dom/0.8.14/3c7fd61ca38b75b470ddd2ce9521597ea29e2031/apache-mime4j-dom-0.8.14.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-core/0.8.13/6d62409bce4b866f96a04db42911e5f27d14b3cc/apache-mime4j-core-0.8.13-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-core/0.8.13/ef536e762f426a6943653a90aa59463b43fe45b1/apache-mime4j-core-0.8.13.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-core/0.8.14/797752ca93e9507c4d2cdd451cc064eb9f022394/apache-mime4j-core-0.8.14-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.james/apache-mime4j-core/0.8.14/799881495e349e71c1b9a29f7658b03e263d6002/apache-mime4j-core-0.8.14.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -309,11 +319,6 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj/9.10.1/c6a22d9d29ae32d5a9e5482063b980466d54b51b/solr-solrj-9.10.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj/9.10.1/19cf2612ee6ccfc8428b209f8c62791eb52ce2ab/solr-solrj-9.10.1.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.5.14/c13f53f11ae71339906acec9a746ccf0bf57dee0/httpmime-4.5.14-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.5.14/6662758a1f1cb1149cf916bdac28332e0902ec44/httpmime-4.5.14.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
@@ -330,6 +335,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.dataformat/jackson-dataformat-properties/2.21.4/553625ee150c228c0e2ce1c2f37c8473d3682d00/jackson-dataformat-properties-2.21.4-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.dataformat/jackson-dataformat-properties/2.21.4/7a8f3edea8ad9d769a68c0b7efba06956d6c8628/jackson-dataformat-properties-2.21.4.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.21.4/359df95c8eec003ab95c7830fdd98371f7dfc7f4/jackson-datatype-jdk8-2.21.4-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.21.4/a1b9fe3b6e8d4418fe09a1ba9a8f6640137cfb5/jackson-datatype-jdk8-2.21.4.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -399,7 +409,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-html-module/3.3.0/9b2ee620e139f6e3fe460599dfb2f88398caafab/tika-parser-html-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-html-module/3.3.0/1a881bde01bf437027b9923a9d8ed063ed1ed20e/tika-parser-html-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-html-module/4.0.0-beta-1/637fdfcf8229c23d27b11e90a7a1874c09a45b60/tika-parser-html-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-html-module/4.0.0-beta-1/f20c62be71ec62fa921c9369d1625a6ada31c54b/tika-parser-html-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -415,6 +425,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-data-jpa/4.1.0/252e31911d5042a8ae811ad9bfc3e18ec4ac42a5/spring-boot-starter-data-jpa-4.1.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-data-jpa/4.1.0/252e31911d5042a8ae811ad9bfc3e18ec4ac42a5/spring-boot-starter-data-jpa-4.1.0.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj/10.0.0/57481106416293efa8ea18bbf76496d145806f48/solr-solrj-10.0.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj/10.0.0/14bc98a779223cb982b86744ca3eab5a5d5d0a25/solr-solrj-10.0.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -439,17 +454,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.passay/passay/1.6.6/da1467c5f5b0c4eba63c3f1897f7d1bbc1d4c94/passay-1.6.6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.passay/passay/1.6.6/a53d96ffc554e1309481e67017c11e602ccb273/passay-1.6.6.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.46/e114bc06aa39e4932147e3359b601f4f5d5a196f/lombok-1.18.46-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.46/a5cfe99fdf320e84955ef653f2ce1bf789d11385/lombok-1.18.46.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/4.1.0/267e514d2d92df479872bb29d631b3ab8e105f10/checker-qual-4.1.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/4.1.0/127f572d0f7e9dfb205bc4667dc361056e536c88/checker-qual-4.1.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/4.2.1/705a975cb54a223a310a6b7e02a157cdbd5998a8/checker-qual-4.2.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/4.2.1/3682819352501a44fd79ccdfc0c54c6f80b3656d/checker-qual-4.2.1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -519,7 +529,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.49.0/c1150aa967596e30ddc12a86b4b29102dbc8491f/error_prone_annotations-2.49.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.49.0/8b42a2e3865f6e0576da3fad51dbb96732ff0f14/error_prone_annotations-2.49.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.50.0/af21e9b138b01efccae9fd17fb9ed5930bf63d1f/error_prone_annotations-2.50.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.50.0/74ba43e49ab1184d41634af2ef0047e82c4064b0/error_prone_annotations-2.50.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -779,12 +789,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-digest-commons/3.3.0/1166cf2d93fcda683fcc214d89972e2e6ab165af/tika-parser-digest-commons-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-digest-commons/3.3.0/b7632a4f58365f2669ecde705552c82e28f0d1cc/tika-parser-digest-commons-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-digest-commons/4.0.0-beta-1/f7c28920028697c23ad3075995e07c160c5c1bf2/tika-parser-digest-commons-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-digest-commons/4.0.0-beta-1/d0b46bc3e243ddfd30c66c673239637e39fc4474/tika-parser-digest-commons-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xml-module/3.3.0/b4cdf649440e99782bee590ea98f5246a23773f0/tika-parser-xml-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xml-module/3.3.0/c1a246e35a39c74c090227e62a58992705d84dd1/tika-parser-xml-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xml-module/4.0.0-beta-1/c2e84b75d2607f6cb43a61511e83b7735e10b0f3/tika-parser-xml-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xml-module/4.0.0-beta-1/f07d304b85dd239d41cef38ea447519c79b3ad13/tika-parser-xml-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -849,7 +859,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson/5.7.0/34a716c2928237bc2cf392cf15b355d72de9792b/bson-5.7.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson/5.7.0/a9ab710adfb79bb53392fe35cb6b7292b89738fc/bson-5.7.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson/5.9.0/728b5138fadc61a93ff0ebdf77b8fd8c477efa21/bson-5.9.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson/5.9.0/8e1b80976b12389e48bf7230ce7158e02bd416c8/bson-5.9.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -859,17 +869,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-client/10.0.26/a9167d83ea3487c1312eff6ebe9540f6fc33e264/http2-client-10.0.26-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-client/10.0.26/f9af87dd14ae4ea173d9d84dbd954acf752cbfe5/http2-client-10.0.26.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/2.0.18/1bbe6944b0309d2e48f314fce12e7ea5ab1cd5e3/jcl-over-slf4j-2.0.18-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/2.0.18/fb36c10c70e27bb427bb3cec86ac30bb83f667c7/jcl-over-slf4j-2.0.18.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-news-module/3.3.0/7b88530d632e0dbf135aa96cbc0fc98c0cfde30e/tika-parser-news-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-news-module/3.3.0/7fd7c47169e00162da5c29dfefe416fe94455af8/tika-parser-news-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-news-module/4.0.0-beta-1/cd1bf5e247dfc62417ec867cd0f5115bfd6b213f/tika-parser-news-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-news-module/4.0.0-beta-1/4b433993d14a9bfbbb57ce6df33ceb7ec4d37262/tika-parser-news-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -890,16 +895,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-alpn-client/12.1.10/e46109f36fd6ac4714833fb6221eac8ba82262e8/jetty-alpn-client-12.1.10-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-alpn-client/12.1.10/94ab4407094de3ce38133d13ab59780498d3c90c/jetty-alpn-client-12.1.10.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-common/10.0.26/cc7455ef10d6b02a64e41cfa265a98878f31426f/http2-common-10.0.26-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-common/10.0.26/f0bb00a8329c76cf2719650de98b7a01f26bcd10/http2-common-10.0.26.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-hpack/10.0.26/1ce997e03424dafde9c7f5952d992ccc99687168/http2-hpack-10.0.26-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-hpack/10.0.26/7aba5eaf7c9becd8caa0c3030b6cb6e84ad583a7/http2-hpack-10.0.26.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -969,7 +964,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.13.0/e55ddc56d092866b6d59822f825c253960a6e504/jna-5.13.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.13.0/1200e7ebeedbe0d10062093f32925a912020e747/jna-5.13.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.19.1/490cced5cbed7e7cec693d5601c195ad87beb480/jna-5.19.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.19.1/ca303052cd617c1af2e2c8d344c98a706fb63143/jna-5.19.1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -994,7 +989,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-font-module/3.3.0/4458eab72494df6b5457513403f072f25d6b9d81/tika-parser-font-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-font-module/3.3.0/fdf263c8e3469642745b4baa90367f1b80122ff2/tika-parser-font-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-font-module/4.0.0-beta-1/6e985a35d71686efe8e498336c6c121cbcca912d/tika-parser-font-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-font-module/4.0.0-beta-1/ba40933ab878743dd871db0bd1258aba4387526a/tika-parser-font-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1009,12 +1004,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-image-module/3.3.0/cbd0e8a084aa23c38754c633446777c5c6e3401d/tika-parser-image-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-image-module/3.3.0/565e8df047316ad58b7f9e1c7fce322b46a24851/tika-parser-image-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-image-module/4.0.0-beta-1/cd3144338f34611c0180d3e072a8b56ef2cb0717/tika-parser-image-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-image-module/4.0.0-beta-1/c40fe9f62e1222c9f8c93a6db4ac939c14c65439/tika-parser-image-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xmp-commons/3.3.0/6f23e5db85533cc57bb3ee020aa310e20c4e56e9/tika-parser-xmp-commons-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xmp-commons/3.3.0/60555ef75517dfd9674edee62119a1875bcdfc40/tika-parser-xmp-commons-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xmp-commons/4.0.0-beta-1/f56ab174945ab4f3a28a17478779542e4cc8696a/tika-parser-xmp-commons-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-xmp-commons/4.0.0-beta-1/89e96c48c4d81e27330d68a9935df519e219dbff/tika-parser-xmp-commons-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1035,6 +1030,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.6/9256bb1fc9d420e70bb1dc9defc33553903b6ebc/snakeyaml-2.6-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.6/2bc14918a2f8d5414749ab12d0c590cd3198b8c1/snakeyaml-2.6.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-api/10.0.0/a9ffef100c8fed490a4f6229ca020667f332e98e/solr-api-10.0.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-api/10.0.0/c865e60dae5851259af260a1d6704dd7b5438cbe/solr-api-10.0.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1104,27 +1104,27 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-api/9.10.1/1745937d929046673a973f51206da9de1711c1a5/solr-api-9.10.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-api/9.10.1/2aebd1a45b6e518a51d582fc820e40434b18e039/solr-api-9.10.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.commonmark/commonmark-ext-gfm-tables/0.29.0/5b0b0d8d37c9275b6109034f2659191ffd029c04/commonmark-ext-gfm-tables-0.29.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.commonmark/commonmark-ext-gfm-tables/0.29.0/da367fd37e477053302559e40c4f4151b971bab2/commonmark-ext-gfm-tables-0.29.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-audiovideo-module/3.3.0/67a2ad534234ae4cad537b4b96ea9c8d96a5e960/tika-parser-audiovideo-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-audiovideo-module/3.3.0/14254f0f1e049345dfe5a330563d9bc565dedbd/tika-parser-audiovideo-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.commonmark/commonmark-ext-gfm-strikethrough/0.29.0/50b6fec5abcf94e05a66fdf2bda71361813fb50a/commonmark-ext-gfm-strikethrough-0.29.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.commonmark/commonmark-ext-gfm-strikethrough/0.29.0/4a7a86e5166926d3dea973ceb4129ba0bd23a167/commonmark-ext-gfm-strikethrough-0.29.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-crypto-module/3.3.0/d391c6c81e25b34ed5c1a01548e3b66905cd34c5/tika-parser-crypto-module-3.3.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-crypto-module/3.3.0/58597b5229a7dfa6eb431bb54493bba7fcc671ca/tika-parser-crypto-module-3.3.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.commonmark/commonmark/0.29.0/1d6894104e84fea2dff9827ac77deef109e555a/commonmark-0.29.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.commonmark/commonmark/0.29.0/afd6755ebe69fc302f8cfbbd4a6bc056ac73ba94/commonmark-0.29.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.gagravarr/vorbis-java-tika/0.8/74c98e4a8e6c778acb9ff6210196a2f2cf8c98ad/vorbis-java-tika-0.8-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.gagravarr/vorbis-java-tika/0.8/4ddbb27ac5884a0f0398a63d46a89d3bc87dc457/vorbis-java-tika-0.8.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-audiovideo-module/4.0.0-beta-1/cc40bbe6ad8c422d3c9390024284c4e2d180a28f/tika-parser-audiovideo-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-audiovideo-module/4.0.0-beta-1/2c2705718151a260782f749b59b1e8257689ed1e/tika-parser-audiovideo-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.gagravarr/vorbis-java-core/0.8/4a20b54b3f51be036a3ddafb20a7bb1a37ce3c8d/vorbis-java-core-0.8-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.gagravarr/vorbis-java-core/0.8/7e9937c2575cda2e3fc116415117c74f23e43fa6/vorbis-java-core-0.8.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-crypto-module/4.0.0-beta-1/d23c9bea6c16a7280b0da762ba796d306c14e209/tika-parser-crypto-module-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-parser-crypto-module/4.0.0-beta-1/24ef261ef7ee0278359a7f4613bb58510f304b8f/tika-parser-crypto-module-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1169,32 +1169,42 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.drewnoakes/metadata-extractor/2.19.0/b71d8f05908d3720d13ed7eaeeca3f6ed5167fa4/metadata-extractor-2.19.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.drewnoakes/metadata-extractor/2.19.0/4d3ab42dd9965b8f2b8bd1b7572e028d6f90a34f/metadata-extractor-2.19.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.drewnoakes/metadata-extractor/2.20.0/b21f350450c595ca6e54874265c140980bc6c8d5/metadata-extractor-2.20.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.drewnoakes/metadata-extractor/2.20.0/17c0487e724f94e8abf3f5951f917146e7c1d3ad/metadata-extractor-2.20.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.9.1/9a30a1a3eae07094ec49776df22eb69896554049/asm-9.9.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.9.1/2ceea6ab43bcae1979b2a6d85fc0ca429877e5ab/asm-9.9.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.gagravarr/vorbis-java-core/0.8/4a20b54b3f51be036a3ddafb20a7bb1a37ce3c8d/vorbis-java-core-0.8-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.gagravarr/vorbis-java-core/0.8/7e9937c2575cda2e3fc116415117c74f23e43fa6/vorbis-java-core-0.8.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcjmail-jdk18on/1.83/ef0b9c6b38667b7f68652d3c9545ba7cef8110f7/bcjmail-jdk18on-1.83-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcjmail-jdk18on/1.83/1cdd7c1e46f03cdfc7b6126fc132d0fab82d2d71/bcjmail-jdk18on-1.83.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.10.1/9f9a96aa17fd1113b218fa2dd6c4dc075192aa2e/asm-9.10.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.10.1/ada2141c0cc52ee8f5c48cd5fa4ce0e794f22236/asm-9.10.1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk18on/1.83/810779785a791ca8be5437cbef4a605f02e5a1e9/bcpkix-jdk18on-1.83-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk18on/1.83/3f4300d0441459bfa64a481c80062b002ff0cf65/bcpkix-jdk18on-1.83.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcjmail-jdk18on/1.84/3f8813e58f057e53c7de0c6141c8cd23606d570e/bcjmail-jdk18on-1.84-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcjmail-jdk18on/1.84/a2f3abe797f58d668643772cff56beb5fb39cb01/bcjmail-jdk18on-1.84.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcutil-jdk18on/1.83/ff8edd38a76c3bc5939903b6ca24cdccdb407e25/bcutil-jdk18on-1.83-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcutil-jdk18on/1.83/da0747f51fe1774f8e922b498b9c3e0ebe87b2d4/bcutil-jdk18on-1.83.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk18on/1.84/a6bfacbbdc77e09c3358de94f150b1df18c36a56/bcpkix-jdk18on-1.84-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk18on/1.84/dab889a3259e27caec6e6c2f3bde94af036b2fcc/bcpkix-jdk18on-1.84.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk18on/1.83/248f7d9de5899cb4b60d1bfcf853c925b7e3c197/bcprov-jdk18on-1.83-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk18on/1.83/310e719f391bd9f4ee5103ca299c172643efb595/bcprov-jdk18on-1.83.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcutil-jdk18on/1.84/1b6ef1b761a259c85377380dbac044563a682512/bcutil-jdk18on-1.84-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcutil-jdk18on/1.84/79bfd1f9c6bd7431ff22e29935ec20f12f0af0d3/bcutil-jdk18on-1.84.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk18on/1.84/cfab92f569d4b36a297416af3e376756de7a91a6/bcprov-jdk18on-1.84-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk18on/1.84/2d5651789941d2f8ae9b8771f23356de6b61e96b/bcprov-jdk18on-1.84.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-ml-core/4.0.0-beta-1/bf742e856c4f1c88f11025151775b07a6002d819/tika-ml-core-4.0.0-beta-1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-ml-core/4.0.0-beta-1/4012c9e3558123fee67eb589b96927a4c6037619/tika-ml-core-4.0.0-beta-1.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1204,7 +1214,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.pdfbox/jbig2-imageio/3.0.4/e477bff5d962ea62a431dd2d732a9ab78e20261a/jbig2-imageio-3.0.4-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.pdfbox/jbig2-imageio/3.0.4/ad09a9bb94ea791ea81fb6c5bc2b13dd77872598/jbig2-imageio-3.0.4.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.pdfbox/jbig2-imageio/3.0.5/dd7588c29b2f975d1018af32e4d54c286833d262/jbig2-imageio-3.0.5-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.pdfbox/jbig2-imageio/3.0.5/6e857678510425518c9082fe46c677068bd4257d/jbig2-imageio-3.0.5.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1234,17 +1244,12 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.junrar/junrar/7.5.8/e97d16c3f5fe3f16cf9c5ef0cc6b4bae60debdb7/junrar-7.5.8-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.junrar/junrar/7.5.8/b09a4c610ef33c114045b6eab0a2b8153cb73de4/junrar-7.5.8.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.junrar/junrar/7.6.0/62e48056db56def9fa7a2799e648c35557f5d977/junrar-7.6.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.junrar/junrar/7.6.0/95fe6eb87643e41b21f21f2a4c7caa0b3ce8e0fd/junrar-7.6.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.albfernandez/juniversalchardet/2.5.0/69704466979e4887c8502c617505fd5de1b056c/juniversalchardet-2.5.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.albfernandez/juniversalchardet/2.5.0/423123a1ddfe458d07948bc09cfa0170037a9e3d/juniversalchardet-2.5.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.netpreserve/jwarc/0.35.0/8101601c72130ec2b9e000201c69a9ed7399f4b5/jwarc-0.35.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.netpreserve/jwarc/0.35.0/ef8acb785d8c3fab45db2f3ff480b33329c93c96/jwarc-0.35.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.netpreserve/jwarc/0.36.0/3055d9c19cca3bf6b288d50f80391834fa0654ca/jwarc-0.36.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.netpreserve/jwarc/0.36.0/d34da69793e8ef589c22587623c44174f81d498e/jwarc-0.36.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1309,11 +1314,6 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.luben/zstd-jni/1.5.7-4/4e0fc456868037aef19e40fcc0dd77d96347cf5c/zstd-jni-1.5.7-4-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.github.luben/zstd-jni/1.5.7-4/62289c6759a134f76a230e104aa0d2aad2386c91/zstd-jni-1.5.7-4.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-websocket/11.0.22/221a03e7a3c42b5c660f87e12cebc579d4fb0233/tomcat-embed-websocket-11.0.22-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-websocket/11.0.22/5686ff1ad745491d981d771514027d8fc55aed4f/tomcat-embed-websocket-11.0.22.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
@@ -1369,47 +1369,22 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj-streaming/9.10.1/785f8654c3f2fcf8505c14737103b5dd568bd976/solr-solrj-streaming-9.10.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj-streaming/9.10.1/ee7a8a3c510e2366eb9365997e725833df966b69/solr-solrj-streaming-9.10.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.postgresql/postgresql/42.7.13/d25b198ba70f049bd8823d613df0be4ef68d94f/postgresql-42.7.13-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.postgresql/postgresql/42.7.13/a6e1bd21b412d6ffb3df23cd13d507bc2cc9e37d/postgresql-42.7.13.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj-zookeeper/9.10.1/2e19601965ecc2d2fbeb5e013b45bcf1753eb59d/solr-solrj-zookeeper-9.10.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.solr/solr-solrj-zookeeper/9.10.1/775f50f5b1e678925bf15d9b480473f6a688d0b5/solr-solrj-zookeeper-9.10.1.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.semver4j/semver4j/6.0.0/9d734cd8a321c5a48e44c0a9a6ef07a138467ed2/semver4j-6.0.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.semver4j/semver4j/6.0.0/995a8afc0b9d9a700c7858843a36ece815852d72/semver4j-6.0.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.zookeeper/zookeeper/3.9.4/cee8490bd0cd3d6553462097ae0d0284cd42a616/zookeeper-3.9.4-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.zookeeper/zookeeper/3.9.4/5ab49d76fcac9a33c255b0585bc1fc92e24166db/zookeeper-3.9.4.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.postgresql/postgresql/42.7.11/6948688a0bb0fe5afed873754fc81868955a733e/postgresql-42.7.11-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.postgresql/postgresql/42.7.11/4c21cdd1b3938f400703716d37c4e8ca4d332808/postgresql-42.7.11.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.semver4j/semver4j/5.8.0/4368fd3e5c970fe409863b7232e215c99591cd1f/semver4j-5.8.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.semver4j/semver4j/5.8.0/de9e15db8fbe3a800a6498b575c916428b7cc86e/semver4j-5.8.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson-record-codec/5.7.0/da09f3a0481faee6f82f519dce1fa38399e08d3a/bson-record-codec-5.7.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson-record-codec/5.7.0/18c90685176d0bb77f7a485d2f82c106a3766c73/bson-record-codec-5.7.0.jar">
+	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson-record-codec/5.9.0/80b62a06955c1df82ec80a4d9d7528068623d1a3/bson-record-codec-5.9.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.mongodb/bson-record-codec/5.9.0/61d06b1d541dc9e349cf7495515f1e9e8b41666c/bson-record-codec-5.9.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.hierynomus/asn-one/0.6.0/22985c1b531117d5d4af28bffb01bce18e0b3f17/asn-one-0.6.0-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/com.hierynomus/asn-one/0.6.0/7f6141541e0a4d3ae0b02c901c2c1e9a772eb3d7/asn-one-0.6.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-http-client-transport/10.0.26/e176f2ff082f9064295727e16531d28174034136/http2-http-client-transport-10.0.26-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.http2/http2-http-client-transport/10.0.26/663c36154c5d5a5e5572a5a3aca422304e9b551f/http2-http-client-transport-10.0.26.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-alpn-java-client/12.1.10/f56c3be0b2491f651987a8becf63fa27bd4fbf8a/jetty-alpn-java-client-12.1.10-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-alpn-java-client/12.1.10/2af3d913959286bfb414162fe7aa0ef0faa72d38/jetty-alpn-java-client-12.1.10.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1454,27 +1429,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.zookeeper/zookeeper-jute/3.9.4/43758c9107f195e90db0c8972f6371a7926f114b/zookeeper-jute-3.9.4-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.apache.zookeeper/zookeeper-jute/3.9.4/db554b1c2b284a95274626126d9e1acb0e21ae4a/zookeeper-jute-3.9.4.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.angus/angus-mail/2.0.5/44544d7ff45359cf1f6ba6de2a9be91fb705d24f/angus-mail-2.0.5-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/org.eclipse.angus/angus-mail/2.0.5/427f6d52ec0782f7efaca0c0732042e347a6cb4f/angus-mail-2.0.5.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-handler/4.2.15.Final/ae366da643e7df61ed2a0b9f2f00aecdb9875a42/netty-handler-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-handler/4.2.15.Final/d5344afd1148e3b9927a74be019605ebb0937a93/netty-handler-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-epoll/4.2.15.Final/2848a6c577e3ef20784fee29217dde76bcbe7a55/netty-transport-native-epoll-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-epoll/4.2.15.Final/ce256127f8ed3f076756f1f4dcb5877d65d1f1c2/netty-transport-native-epoll-4.2.15.Final-linux-x86_64.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-tcnative-boringssl-static/2.0.77.Final/198423766777baeccc839de7668ed20a2fb0df5b/netty-tcnative-boringssl-static-2.0.77.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-tcnative-boringssl-static/2.0.77.Final/d362cc5969c00d1c4cf9dc177283e241fb8d429c/netty-tcnative-boringssl-static-2.0.77.Final.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -1490,46 +1445,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/jakarta.inject/jakarta.inject-api/2.0.1/569d6c5f18d6ff83c82152d1870cf0faf830c594/jakarta.inject-api-2.0.1-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/jakarta.inject/jakarta.inject-api/2.0.1/4c28afe1991a941d7702fe1362c365f0a8641d1e/jakarta.inject-api-2.0.1.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-classes-epoll/4.2.15.Final/64349588ed5fefab13165c8091776c9686f43cdb/netty-transport-classes-epoll-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-classes-epoll/4.2.15.Final/44bafba9c9993800e955b365bba4981326f3f3b1/netty-transport-classes-epoll-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-unix-common/4.2.15.Final/7de38e9d3e41d53388a66e7e9dbeba805bc70eef/netty-transport-native-unix-common-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-unix-common/4.2.15.Final/efb6943b4de9e0226a5ac35330f232605424af02/netty-transport-native-unix-common-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-base/4.2.15.Final/71e85076eb364b927d6d18cebb557870512e54e5/netty-codec-base-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-base/4.2.15.Final/e97149fdd5fb04858efa90e314651c8d700dc68b/netty-codec-base-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.2.15.Final/2424761f5140337da4a264d5def6d25081deafcd/netty-transport-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.2.15.Final/a000c3a6196ee40207b73ac619dcb339409dd62f/netty-transport-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-resolver/4.2.15.Final/bd4bfe4f715c267c359f1719b743c1af3c42a67e/netty-resolver-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-resolver/4.2.15.Final/b961a16d379b508b473e064ba06842bba280f4e3/netty-resolver-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.2.15.Final/7bd654d07f4c92c8b1021ae21dfb29713a940384/netty-buffer-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.2.15.Final/2beb620803bf871cda2dd5d46b8f831e8015dd34/netty-buffer-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-common/4.2.15.Final/355a9f140aa774b056fb7632f4c8fefc0612afa1/netty-common-4.2.15.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-common/4.2.15.Final/7222492c1af9c2d4d78d521eea340a619e242fda/netty-common-4.2.15.Final.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-tcnative-classes/2.0.77.Final/339df9d7bf2cd208ba1358ca89f5e5a74049542b/netty-tcnative-classes-2.0.77.Final-sources.jar" kind="lib" path="C:/Users/nelson/.gradle/caches/modules-2/files-2.1/io.netty/netty-tcnative-classes/2.0.77.Final/f58362f70036d0738e995347987b6462f3408204/netty-tcnative-classes-2.0.77.Final.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>

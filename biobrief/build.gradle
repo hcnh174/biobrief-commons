@@ -128,6 +128,7 @@ dependencies {
 	api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
 	api("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
 	api("com.fasterxml.jackson.dataformat:jackson-dataformat-properties")
+	api("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
 	//api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${property('jackson.version')}")
 	//api("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${property('jackson.version')}")
 	//api("com.fasterxml.jackson.dataformat:jackson-dataformat-properties:${property('jackson.version')}")
@@ -188,7 +189,7 @@ dependencies {
 
 	// users	
 	api("org.springframework.boot:spring-boot-starter-security")
-	api("org.passay:passay:${property('passay.version')}")
+	//api("org.passay:passay:${property('passay.version')}")
 }
 
 //version = '0.1.0'
