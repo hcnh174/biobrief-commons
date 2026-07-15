@@ -41,7 +41,7 @@ public class JsoupHelper
 		}
 		catch (Exception e)
 		{
-			throw new CException(e);
+			throw new CException("failed to parse url: "+url, e);
 		}
 	}
 
