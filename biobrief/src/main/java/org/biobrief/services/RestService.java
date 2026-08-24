@@ -2,10 +2,10 @@ package org.biobrief.services;
 
 import org.biobrief.util.JsonHelper;
 import org.biobrief.util.MessageWriter;
-import org.biobrief.util.RestHelper;
-import org.biobrief.util.RestHelper.Headers;
+import org.biobrief.util.RestClientHelper;
+import org.biobrief.util.RestClientHelper.Headers;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -15,12 +15,12 @@ import lombok.EqualsAndHashCode;
 @Service @Data @EqualsAndHashCode(callSuper=false)
 public class RestService extends AbstractFileCacheService
 {
-	private final RestTemplate restTemplate;
+	private final RestClient restClient;
 
-	public RestService(RestTemplate restTemplate, String cacheDir, Long sleeptime, Integer maxAge)
+	public RestService(RestClient restClient, String cacheDir, Long sleeptime, Integer maxAge)
 	{
 		super(cacheDir, sleeptime, maxAge, ".json");
-		this.restTemplate=restTemplate;
+		this.restClient=restClient;
 	}
 	
 	//////////////////////////////////
@@ -30,7 +30,7 @@ public class RestService extends AbstractFileCacheService
 		if (containsKey(key, out))
 			return getValue(key, out);
 		sleep(out);
-		String json=RestHelper.get(restTemplate, url, out);
+		String json=RestClientHelper.get(restClient, url, out);
 		setValue(key, json, out);
 		//return json;
 		return getValue(key, out);
@@ -41,7 +41,7 @@ public class RestService extends AbstractFileCacheService
 		if (containsKey(key, out))
 			return getValue(key, out);
 		sleep(out);
-		String json=RestHelper.get(restTemplate, url, headers, out);
+		String json=RestClientHelper.get(restClient, url, headers, out);
 		setValue(key, json, out);
 		//return json;
 		return getValue(key, out);
@@ -52,7 +52,7 @@ public class RestService extends AbstractFileCacheService
 		if (containsKey(key, out))
 			return getValue(key, out);
 		sleep(out);
-		String json=RestHelper.post(restTemplate, url, params, out);
+		String json=RestClientHelper.post(restClient, url, params, out);
 		setValue(key, json, out);
 		//return json;
 		return getValue(key, out);

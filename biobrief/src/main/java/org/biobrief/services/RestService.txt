@@ -1,82 +1,68 @@
 package org.biobrief.services;
 
-import org.biobrief.util.HashMapRestCache;
+import org.biobrief.util.JsonHelper;
 import org.biobrief.util.MessageWriter;
-import org.biobrief.util.RestCache;
 import org.biobrief.util.RestHelper;
-import org.biobrief.util.RestHelper.Headers;
-import org.biobrief.util.StringHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-public class RestService
+import com.fasterxml.jackson.databind.JsonNode;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Service @Data @EqualsAndHashCode(callSuper=false)
+public class RestService extends AbstractFileCacheService
 {
 	private final RestTemplate restTemplate;
-	private final RestCache cache;
-	private Integer millis=10000;
 
-	public RestService(RestTemplate restTemplate, RestCache cache)
+	public RestService(RestTemplate restTemplate, String cacheDir, Long sleeptime, Integer maxAge)
 	{
+		super(cacheDir, sleeptime, maxAge, ".json");
 		this.restTemplate=restTemplate;
-		this.cache=cache;
 	}
 	
-	public RestService()
-	{
-		this(new RestTemplate(), new HashMapRestCache());
-	}
+	//////////////////////////////////
 	
-	public RestTemplate getRestTemplate()
+	public String get(String key, String url, MessageWriter out)
 	{
-		return restTemplate;
-	}
-	
-	public String get(String url, MessageWriter out)
-	{
-		String key=RestHelper.createKey(url);
-		if (cache.containsKey(key))
-			return cache.getValue(key);
+		if (containsKey(key, out))
+			return getValue(key, out);
+		sleep(out);
 		String json=RestHelper.get(restTemplate, url, out);
-		setValue(key, json);
-		sleep(out);
-		return json;
+		setValue(key, json, out);
+		//return json;
+		return getValue(key, out);
 	}
 	
-	public String get(String url, Headers headers, MessageWriter out)
+	public String get(String key, String url, Headers headers, MessageWriter out)
 	{
-		String key=RestHelper.createKey(url);
-		if (cache.containsKey(key))
-			return cache.getValue(key);
+		if (containsKey(key, out))
+			return getValue(key, out);
+		sleep(out);
 		String json=RestHelper.get(restTemplate, url, headers, out);
-		setValue(key, json);
-		sleep(out);
-		return json;
+		setValue(key, json, out);
+		//return json;
+		return getValue(key, out);
 	}
 	
-	public <P> String post(String url, P params, MessageWriter out)
+	public <P> String post(String key, String url, P params, MessageWriter out)
 	{
-		String key=RestHelper.createKey(url, params);
-		if (cache.containsKey(key))
-			return cache.getValue(key);
+		if (containsKey(key, out))
+			return getValue(key, out);
+		sleep(out);
 		String json=RestHelper.post(restTemplate, url, params, out);
-		setValue(key, json);
-		sleep(out);
-		return json;
+		setValue(key, json, out);
+		//return json;
+		return getValue(key, out);
 	}
 	
-	public String dump()
-	{
-		return StringHelper.toString(cache.getKeys());
-	}
+	////////////////////////////////////
 	
-	private void setValue(String key, String json)
+	@Override
+	protected String format(String json)
 	{
-		cache.setValue(key, json);
-	}
-	
-	private void sleep(MessageWriter out)
-	{
-		RestHelper.sleep(out);
+		JsonNode node=JsonHelper.parse(json);
+		return node.toPrettyString();
 	}
 }

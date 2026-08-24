@@ -5,7 +5,7 @@ import java.util.Date;
 import org.biobrief.util.DateHelper;
 import org.biobrief.util.FileHelper;
 import org.biobrief.util.MessageWriter;
-import org.biobrief.util.RestHelper;
+import org.biobrief.util.RestClientHelper;
 
 import lombok.Data;
 
@@ -91,6 +91,6 @@ public abstract class AbstractFileCacheService
 		if (waittime<0)
 			waittime=0;
 		out.println("lastRequest="+lastRequest+" sleeptime="+sleeptime+" waittime="+waittime);
-		RestHelper.sleep(waittime, out);
+		RestClientHelper.sleep(waittime, out);
 	}
 }
