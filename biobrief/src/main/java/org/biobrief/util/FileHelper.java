@@ -59,6 +59,7 @@ import com.google.common.io.Resources;
 import com.jcraft.jzlib.GZIPInputStream;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import net.lingala.zip4j.ZipFile;
 
 public final class FileHelper
@@ -338,6 +339,13 @@ public final class FileHelper
 		return files;
 	}
 	
+	public static boolean matchesGlob(String text, String globPattern)
+	{
+		// Syntax format for NIO is "glob:<pattern>"
+		PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + globPattern);
+		return matcher.matches(Paths.get(text));
+	}
+	
 	@Data
 	public static class FileInfo
 	{
@@ -347,6 +355,8 @@ public final class FileHelper
 		protected String size;
 		protected Date date;
 		protected Type type;
+		
+		public FileInfo() {}
 		
 		public FileInfo(String filename, String size, Date date, Type type)
 		{
@@ -359,6 +369,38 @@ public final class FileHelper
 		public FileInfo(String filename, String size, Date date)
 		{
 			this(filename, size, date, Type.File);
+		}
+	}
+	
+	@SuppressWarnings("serial")
+	@Data @EqualsAndHashCode(callSuper=true)
+	public static class FileInfoList extends ArrayList<FileInfo>
+	{
+		public List<String> findFilesByWildcard(List<String> patterns)
+		{
+			List<String> filenames=Lists.newArrayList();
+			for (String pattern : patterns)
+			{
+				filenames.addAll(findFilesByWildcard(pattern));
+			}
+			return filenames;
+		}
+		
+		/*
+		patterns: ['*ComprehensiveReport.pdf']
+		patterns: ['Seq_*.xml', '*_Seq*.xml']
+		patterns: ['c-cat*.pdf']
+		*/
+		public List<String> findFilesByWildcard(String pattern)
+		{
+			List<String> filenames=Lists.newArrayList();
+			for (FileHelper.FileInfo info : this)
+			{
+				String filename=FileHelper.stripPath(info.getFilename());
+				if (matchesGlob(filename, pattern))
+					filenames.add(filename);
+			}
+			return filenames;
 		}
 	}
 	
@@ -1765,224 +1807,223 @@ public final class FileHelper
 			java.nio.file.Files.walkFileTree(rootDir, matcherVisitor);
 			return matchesList;
 		}
+	}	
+}
+/*
+public static String unzip(String zipfile)
+{
+	try
+	{
+		System.out.println("zipfile="+zipfile);
+		String dir=FileHelper.stripFilename(zipfile)+"/"+FileHelper.stripPath(FileHelper.stripExtension(zipfile));
+		System.out.println("dir="+dir);
+		File destDir = new File(dir);
+		byte[] buffer = new byte[1024];
+		
+		ZipInputStream zis = new ZipInputStream(new FileInputStream(zipfile));
+		ZipEntry zipEntry = zis.getNextEntry();
+		while (zipEntry != null)
+		{
+			File newFile = unzip(destDir, zipEntry);
+			FileOutputStream fos = new FileOutputStream(newFile);
+			int len;
+			while ((len = zis.read(buffer)) > 0) {
+				fos.write(buffer, 0, len);
+			}
+			fos.close();
+			zipEntry = zis.getNextEntry();
+		}
+		zis.closeEntry();
+		zis.close();
+		return dir;
+	}
+	catch (IOException e)
+	{
+		throw new CException(e);
+	}
+}
+*/
+
+
+/*
+public class UnzipFile {
+	public static void main(String[] args) throws IOException {
+		String fileZip = "src/main/resources/unzipTest/compressed.zip";
+		File destDir = new File("src/main/resources/unzipTest");
+		byte[] buffer = new byte[1024];
+		ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
+		ZipEntry zipEntry = zis.getNextEntry();
+		while (zipEntry != null) {
+			File newFile = newFile(destDir, zipEntry);
+			FileOutputStream fos = new FileOutputStream(newFile);
+			int len;
+			while ((len = zis.read(buffer)) > 0) {
+				fos.write(buffer, 0, len);
+			}
+			fos.close();
+			zipEntry = zis.getNextEntry();
+		}
+		zis.closeEntry();
+		zis.close();
+	}
+	 
+	public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
+		File destFile = new File(destinationDir, zipEntry.getName());
+		 
+		String destDirPath = destinationDir.getCanonicalPath();
+		String destFilePath = destFile.getCanonicalPath();
+		 
+		if (!destFilePath.startsWith(destDirPath + File.separator)) {
+			throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
+		}
+		 
+		return destFile;
+	}
+}
+*/
+
+/*
+public abstract static class ZipFileReader
+{		
+	protected String encoding;
+	public ZipFileReader(String encoding)
+	{
+		this.encoding=encoding;
 	}
 	
-	/*
-	public static String unzip(String zipfile)
+	public void loadFile(String filename)
 	{
 		try
 		{
-			System.out.println("zipfile="+zipfile);
-			String dir=FileHelper.stripFilename(zipfile)+"/"+FileHelper.stripPath(FileHelper.stripExtension(zipfile));
-			System.out.println("dir="+dir);
-			File destDir = new File(dir);
-			byte[] buffer = new byte[1024];
-			
-			ZipInputStream zis = new ZipInputStream(new FileInputStream(zipfile));
-			ZipEntry zipEntry = zis.getNextEntry();
-			while (zipEntry != null)
+			ZipFile zipFile = new ZipFile(filename);
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+			while (enumeration.hasMoreElements())
 			{
-				File newFile = unzip(destDir, zipEntry);
-				FileOutputStream fos = new FileOutputStream(newFile);
-				int len;
-				while ((len = zis.read(buffer)) > 0) {
-					fos.write(buffer, 0, len);
-				}
-				fos.close();
-				zipEntry = zis.getNextEntry();
+				ZipEntry zipEntry = enumeration.nextElement();
+				String str=read(zipFile, zipEntry);
+				handle(zipFile, zipEntry, str);
 			}
-			zis.closeEntry();
-			zis.close();
-			return dir;
+		}
+		catch (FileNotFoundException e)
+		{
+			throw new CException(e);
 		}
 		catch (IOException e)
 		{
 			throw new CException(e);
 		}
 	}
-	*/
 	
-
-	/*
-	public class UnzipFile {
-		public static void main(String[] args) throws IOException {
-			String fileZip = "src/main/resources/unzipTest/compressed.zip";
-			File destDir = new File("src/main/resources/unzipTest");
-			byte[] buffer = new byte[1024];
-			ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
-			ZipEntry zipEntry = zis.getNextEntry();
-			while (zipEntry != null) {
-				File newFile = newFile(destDir, zipEntry);
-				FileOutputStream fos = new FileOutputStream(newFile);
-				int len;
-				while ((len = zis.read(buffer)) > 0) {
-					fos.write(buffer, 0, len);
-				}
-				fos.close();
-				zipEntry = zis.getNextEntry();
-			}
-			zis.closeEntry();
-			zis.close();
-		}
-		 
-		public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
-			File destFile = new File(destinationDir, zipEntry.getName());
-			 
-			String destDirPath = destinationDir.getCanonicalPath();
-			String destFilePath = destFile.getCanonicalPath();
-			 
-			if (!destFilePath.startsWith(destDirPath + File.separator)) {
-				throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
-			}
-			 
-			return destFile;
-		}
-	}
-	*/
-	
-	/*
-	public abstract static class ZipFileReader
-	{		
-		protected String encoding;
-		public ZipFileReader(String encoding)
-		{
-			this.encoding=encoding;
-		}
-		
-		public void loadFile(String filename)
-		{
-			try
-			{
-				ZipFile zipFile = new ZipFile(filename);
-				Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-				while (enumeration.hasMoreElements())
-				{
-					ZipEntry zipEntry = enumeration.nextElement();
-					String str=read(zipFile, zipEntry);
-					handle(zipFile, zipEntry, str);
-				}
-			}
-			catch (FileNotFoundException e)
-			{
-				throw new CException(e);
-			}
-			catch (IOException e)
-			{
-				throw new CException(e);
-			}
-		}
-		
-		private String read(ZipFile zipFile, ZipEntry zipEntry) throws IOException
-		{
-			//logger.debug("Unzipping: " + zipEntry.getName());
-			BufferedInputStream in = new BufferedInputStream(zipFile.getInputStream(zipEntry));
-			int size;
-			byte[] buffer = new byte[2048];
-			ByteArrayOutputStream out=new ByteArrayOutputStream();
-			while ((size = in.read(buffer, 0, buffer.length)) != -1)
-			{
-				out.write(buffer, 0, size);
-			}
-			out.flush();
-			String str=out.toString(encoding);
-			out.close();
-			in.close();
-			return str;
-		}
-		
-		protected abstract void handle(ZipFile zipFile, ZipEntry zipEntry, String str);
-	}
-	*/
-	
-	/*
-	//https://www.baeldung.com/java-nio2-watchservice
-	//https://www.thecoderscorner.com/team-blog/java-and-jvm/java-nio/36-watching-files-in-java-7-with-watchservice/
-	//https://stackoverflow.com/questions/18701242/how-to-watch-a-folder-and-subfolders-for-changes
-	//https://gist.github.com/fabriziofortino/83eb36c7b48e9b900c1da1d8508245cd
-	//https://fabriziofortino.github.io/articles/recursive-watchservice-java8/
-	//https://howtodoinjava.com/java8/java-8-watchservice-api-tutorial/
-	//https://fabriziofortino.github.io/articles/recursive-watchservice-java8/
-	public static void watch(String dir, WatchQueueCallback callback)
+	private String read(ZipFile zipFile, ZipEntry zipEntry) throws IOException
 	{
-		try
+		//logger.debug("Unzipping: " + zipEntry.getName());
+		BufferedInputStream in = new BufferedInputStream(zipFile.getInputStream(zipEntry));
+		int size;
+		byte[] buffer = new byte[2048];
+		ByteArrayOutputStream out=new ByteArrayOutputStream();
+		while ((size = in.read(buffer, 0, buffer.length)) != -1)
 		{
-			Path path = Paths.get(dir);
-			if(path == null)
-				throw new UnsupportedOperationException("Directory not found: "+dir);
-			
-			// make a new watch service that we can register interest in directories and files with.
-			WatchService watchService = path.getFileSystem().newWatchService();
-			
-			// start the file watcher thread below
-			WatchQueueReader fileWatcher = new WatchQueueReader(watchService, callback);
-			
-			System.out.println("watching for events in dir: "+dir);
-			Thread th = new Thread(fileWatcher, "FileWatcher");
-			th.start();
-			
-			// register a file
-			path.register(watchService,
-					StandardWatchEventKinds.ENTRY_CREATE,
-					StandardWatchEventKinds.ENTRY_DELETE, 
-					StandardWatchEventKinds.ENTRY_MODIFY);
-			th.join();
+			out.write(buffer, 0, size);
 		}
-		catch (Exception e)
-		{
-			throw new CException(e);
-		}
+		out.flush();
+		String str=out.toString(encoding);
+		out.close();
+		in.close();
+		return str;
 	}
 	
-	/**
-	 * This Runnable is used to constantly attempt to take from the watch
-	 * queue, and will receive all events that are registered with the
-	 * fileWatcher it is associated. In this sample for simplicity we
-	 * just output the kind of event and name of the file affected to
-	 * standard out.
-	 */
-//	public static class WatchQueueReader implements Runnable
-//	{
-//		private final WatchService watcher;
-//		private final WatchQueueCallback callback;
-//		
-//		public WatchQueueReader(WatchService watcher, WatchQueueCallback callback)
-//		{
-//			this.watcher = watcher;
-//			this.callback=callback;
-//		}
-//
-//		/**
-//		 * In order to implement a file watcher, we loop forever
-//		 * ensuring requesting to take the next item from the file
-//		 * watchers queue.
-//		 */
-//		@SuppressWarnings("rawtypes")
-//		@Override
-//		public void run()
-//		{
-//			try
-//			{
-//				// get the first event before looping
-//				WatchKey key = watcher.take();
-//				while(key != null)
-//				{
-//					// we have a polled event, now we traverse it and
-//					// receive all the states from it
-//					for (WatchEvent event : key.pollEvents())
-//					{
-//						System.out.printf("Received %s event for file: %s\n", event.kind(), event.context());
-//						callback.onEvent(event);
-//					}
-//					System.out.println("resetting");
-//					key.reset();
-//					key = watcher.take();
-//				}
-//			}
-//			catch (InterruptedException e)
-//			{
-//				throw new CException(e);
-//			}
-//			System.out.println("Stopping thread");
-//		}
-//	}
+	protected abstract void handle(ZipFile zipFile, ZipEntry zipEntry, String str);
 }
+*/
+
+/*
+//https://www.baeldung.com/java-nio2-watchservice
+//https://www.thecoderscorner.com/team-blog/java-and-jvm/java-nio/36-watching-files-in-java-7-with-watchservice/
+//https://stackoverflow.com/questions/18701242/how-to-watch-a-folder-and-subfolders-for-changes
+//https://gist.github.com/fabriziofortino/83eb36c7b48e9b900c1da1d8508245cd
+//https://fabriziofortino.github.io/articles/recursive-watchservice-java8/
+//https://howtodoinjava.com/java8/java-8-watchservice-api-tutorial/
+//https://fabriziofortino.github.io/articles/recursive-watchservice-java8/
+public static void watch(String dir, WatchQueueCallback callback)
+{
+	try
+	{
+		Path path = Paths.get(dir);
+		if(path == null)
+			throw new UnsupportedOperationException("Directory not found: "+dir);
+		
+		// make a new watch service that we can register interest in directories and files with.
+		WatchService watchService = path.getFileSystem().newWatchService();
+		
+		// start the file watcher thread below
+		WatchQueueReader fileWatcher = new WatchQueueReader(watchService, callback);
+		
+		System.out.println("watching for events in dir: "+dir);
+		Thread th = new Thread(fileWatcher, "FileWatcher");
+		th.start();
+		
+		// register a file
+		path.register(watchService,
+				StandardWatchEventKinds.ENTRY_CREATE,
+				StandardWatchEventKinds.ENTRY_DELETE, 
+				StandardWatchEventKinds.ENTRY_MODIFY);
+		th.join();
+	}
+	catch (Exception e)
+	{
+		throw new CException(e);
+	}
+}
+
+/**
+ * This Runnable is used to constantly attempt to take from the watch
+ * queue, and will receive all events that are registered with the
+ * fileWatcher it is associated. In this sample for simplicity we
+ * just output the kind of event and name of the file affected to
+ * standard out.
+ */
+//public static class WatchQueueReader implements Runnable
+//{
+//	private final WatchService watcher;
+//	private final WatchQueueCallback callback;
+//	
+//	public WatchQueueReader(WatchService watcher, WatchQueueCallback callback)
+//	{
+//		this.watcher = watcher;
+//		this.callback=callback;
+//	}
+//
+//	/**
+//	 * In order to implement a file watcher, we loop forever
+//	 * ensuring requesting to take the next item from the file
+//	 * watchers queue.
+//	 */
+//	@SuppressWarnings("rawtypes")
+//	@Override
+//	public void run()
+//	{
+//		try
+//		{
+//			// get the first event before looping
+//			WatchKey key = watcher.take();
+//			while(key != null)
+//			{
+//				// we have a polled event, now we traverse it and
+//				// receive all the states from it
+//				for (WatchEvent event : key.pollEvents())
+//				{
+//					System.out.printf("Received %s event for file: %s\n", event.kind(), event.context());
+//					callback.onEvent(event);
+//				}
+//				System.out.println("resetting");
+//				key.reset();
+//				key = watcher.take();
+//			}
+//		}
+//		catch (InterruptedException e)
+//		{
+//			throw new CException(e);
+//		}
+//		System.out.println("Stopping thread");
+//	}
+//}

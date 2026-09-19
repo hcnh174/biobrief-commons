@@ -40,6 +40,16 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings({"rawtypes", "unused"})
 public class TestPowerPointHelper
 {
+	@Test
+	public void testLoadPptxFile()
+	{
+		//String filename="D:\\temp\\ppt\\TODO.pptx";
+		String filename="X:\\AH600614498125_HS\\PP_AH600614498125.pptx";
+		String password="AH6006";
+		loadPptxFile(filename, password);
+		//XMLSlideShow pptx=PowerPointHelper.loadPptxFile(filename, password);
+	}
+	
 	//@Test
 	public void convertPptxToPpt()
 	{		
@@ -108,11 +118,8 @@ public class TestPowerPointHelper
 	}
 	
 	//@Test
-	public void loadPptxFile()
+	private void loadPptxFile(String filename, String password)
 	{
-		String filename="D:\\temp\\ppt\\TODO.pptx";
-		String password="TODO";
-		
 		String prefix=FileHelper.getRoot(filename);
 		String outdir="D:/temp/ppt";//Constants.BIOBRIEF_DIR+"/.temp/ppt";
 		FileHelper.createDirectory(outdir);

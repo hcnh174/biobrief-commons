@@ -8,13 +8,11 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import org.biobrief.util.FileHelper.FileInfo;
-
-import com.google.common.collect.Lists;
+import org.biobrief.util.FileHelper.FileInfoList;
 
 public class FileTreeBuilder
 {	
@@ -31,9 +29,9 @@ public class FileTreeBuilder
 		this.dir=dir;
 	}
 	
-	public List<FileInfo> build(Context context)
+	public FileInfoList build(Context context)
 	{
-		List<FileInfo> items=Lists.newArrayList();
+		FileInfoList items=new FileInfoList();
 		Path startPath = Paths.get(dir);
 		try (Stream<Path> walk = Files.walk(startPath))
 		{
@@ -92,37 +90,4 @@ public class FileTreeBuilder
 		FileInfo.Type type=Files.isDirectory(path) ? FileInfo.Type.Folder : FileInfo.Type.File;
 		return new FileInfo(filename, size.toString(), date, type);
 	}
-	
-//	@Data
-//	public static class Item
-//	{
-//		protected Path path;
-//		protected long size;
-//		protected FileTime filetime;
-//		
-//		public Item(Path path, long size, FileTime filetime)
-//		{
-//			//System.out.printf("%s | Size: %d bytes | Modified: %s%n", path, size, filetime);
-//			this.path=path;
-//			this.size=size;
-//			this.filetime=filetime;
-//		}
-//		
-//		public String getFilename()
-//		{
-//			String filename=path.toString();
-//			filename=FileHelper.normalize(filename);
-//			return filename;
-//		}
-//		
-//		public Date getDate()
-//		{
-//			return new Date(filetime.toMillis());
-//		}
-//		
-//		public boolean isDirectory()
-//		{
-//			return Files.isDirectory(path);
-//		}
-//	}
 }

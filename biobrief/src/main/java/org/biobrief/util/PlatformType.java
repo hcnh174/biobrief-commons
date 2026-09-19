@@ -21,8 +21,8 @@ public enum PlatformType
 	WIN7("Windows 7",Platform.WINDOWS),
 	WIN8("Windows 8",Platform.WINDOWS),
 	WIN81("Windows 8.1",Platform.WINDOWS),
-	//WIN10("Windows 8.1",Platform.WINDOWS),
 	WIN10("Windows 10",Platform.WINDOWS),
+	WIN11("Windows 11",Platform.WINDOWS),
 	WINSERVER2012("Windows Server 2012",Platform.WINDOWS),
 	WINVISTA("Windows NT (unknown)",Platform.WINDOWS);
 	

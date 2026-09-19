@@ -18,7 +18,6 @@ import org.springframework.web.client.RestClient;
 //https://www.baeldung.com/spring-boot-restclient
 //https://spring.io/blog/2023/07/13/new-in-spring-6-1-restclient
 //https://medium.com/@javedmj786/from-restClient-to-restclient-webclient-in-spring-boot-4-a-practical-migration-guide-dd2e02708f66?sk=60c20acf38525c601663352432e4abb2
-////https://medium.com/@javedmj786/from-restClient-to-restclient-webclient-in-spring-boot-4-a-practical-migration-guide-dd2e02708f66
 public class RestClientHelper
 {
 	public static final Integer TIMEOUT=10;//seconds
@@ -42,19 +41,6 @@ public class RestClientHelper
 				.body(cls);
 	}
 	
-//	@SuppressWarnings("unchecked")
-//	public static <T> T get(RestClient restClient, String server, RestParams params, Class<?> cls, MessageWriter out)
-//	{
-//		Map<String, Object> vars = params.getVars();
-//		String url=server+params.getUrl();//"/" // todo breaking change! check for errors
-//		System.out.println("RestHelper.get url="+url);
-//		return (T)restClient.get()
-//				.uri(url)
-//				.accept(MediaType.APPLICATION_JSON)
-//				.retrieve()
-//				.body(cls);
-//	}
-	
 	public static String get(RestClient restClient, String url, Headers headers, MessageWriter out)
 	{
 		ResponseEntity<String> response=restClient.get()
@@ -67,17 +53,7 @@ public class RestClientHelper
 		return response.getBody();
 	}
 	
-	//https://attacomsian.com/blog/spring-boot-restClient-get-request-parameters-headers
-	//https://stackoverflow.com/questions/21101250/sending-get-request-with-authentication-headers-using-restClient
-//	@SuppressWarnings({ "rawtypes" })
-//	public static String get(RestClient restClient, String url, Headers headers, MessageWriter out)
-//	{
-//		HttpEntity request = new HttpEntity(headers.getHttpHeaders());
-//		ResponseEntity<String> response = restClient.exchange(url, HttpMethod.GET, request, String.class, 1);
-//		if (response.getStatusCode() != HttpStatus.OK)
-//			throw new CException("request failed: "+response.getStatusCode()+" for url "+url);
-//		return response.getBody(); 
-//	}
+	///////////////////////////////////////////////////////////////////////////////////////
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T post(RestClient restClient, String server, RestParams params, Class<?> cls, MessageWriter out)
@@ -94,22 +70,6 @@ public class RestClientHelper
 		out.println(StringHelper.toString(response));
 		return response;
 	}
-	
-	/*
-	@SuppressWarnings("unchecked")
-	public static <T> T post(RestClient restClient, String server, RestParams params, Class<?> cls, MessageWriter out)
-	{
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		MultiValueMap<String, Object> map=createMultiValueMap(params);
-		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(map, headers);
-		String url=server+params.getUrl();//"/"+ // todo breaking change! check for errors
-		out.println("RestHelper.post url="+url);
-		ResponseEntity<T> response = (ResponseEntity<T>)restClient.postForEntity(url, request , cls);
-		out.println(StringHelper.toString(response));
-		return response.getBody();
-	}
-	*/
 
 	public static <P> String post(RestClient restClient, String url, P params, MessageWriter out)
 	{
@@ -120,24 +80,6 @@ public class RestClientHelper
 				.body(String.class);
 	}
 	
-	/*
-	public static <P> String post(RestClient restClient, String url, P params, MessageWriter out)
-	{		
-		HttpEntity<P> request = new HttpEntity<P>(params);
-		ResponseEntity<String> response = (ResponseEntity<String>)restClient.postForEntity(url, request , String.class);
-		return response.getBody();
-	}
-	*/
-
-//	//https://www.baeldung.com/spring-restClient-post-json
-//	public static String postJson(RestTemplate restTemplate, String url, String json, MessageWriter out)
-//	{
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		HttpEntity<String> request = new HttpEntity<String>(json, headers);
-//		return restTemplate.postForObject(url, request , String.class);
-//	}
-	
 	public static String postJson(RestClient restClient, String url, String json, MessageWriter out)
 	{
 		return restClient.post()
@@ -147,6 +89,8 @@ public class RestClientHelper
 			.retrieve()
 			.body(String.class);
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	public static BufferedImage getImage(String server, String url, MessageWriter out)
 	{
@@ -179,29 +123,6 @@ public class RestClientHelper
 			throw new CException(e);
 		}
 	}
-	
-//	//https://javadeveloperzone.com/spring-boot/spring-boot-restClient-download-file-example/
-//	public static boolean downloadFile(RestClient restClient, String url, String filename, MessageWriter out)
-//	{
-//		try
-//		{
-//			HttpHeaders headers = new HttpHeaders();
-//			headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
-//			HttpEntity<String> entity = new HttpEntity<>(headers);
-//			ResponseEntity<byte[]> response = restClient
-//					.exchange(url, HttpMethod.GET, entity, byte[].class);
-//			byte[] body=response.getBody();
-//			System.out.println("respone body: "+body);
-//			if (body==null)
-//				return false;
-//			Files.write(Paths.get(filename), response.getBody());
-//			return true;
-//		}
-//		catch (Exception e)
-//		{
-//			throw new CException(e);
-//		}
-//	}
 	
 	///////////////////////////////////////////////////////
 	
@@ -238,18 +159,6 @@ public class RestClientHelper
 		{
 			put(name, value);
 		}
-		
-//		public HttpHeaders getHttpHeaders()
-//		{
-//			HttpHeaders httpHeaders = new HttpHeaders();
-//			httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//			httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-//			for (String name : keySet())
-//			{
-//				httpHeaders.set(name,  get(name));
-//			}
-//			return httpHeaders;
-//		}
 	}
 	
 	public static String createKey(String url)
